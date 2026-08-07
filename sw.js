@@ -6,10 +6,16 @@
  * budget keeps it current when there is a connection, and falls back instantly
  * when there is not.
  *
- * Set files are cached as they are opened rather than all up front, so adding
- * a twentieth collection does not slow down the first install.
+ * Everything is precached, sets and capsule codes included. That reverses an
+ * earlier decision to fetch sets lazily: the code lookup is the one feature
+ * that exists to be used in a shop, and fetching it on first open would mean it
+ * failed in exactly the place it was built for. The whole payload is under
+ * 60KB — less than one photo — so there is nothing to be gained by being clever.
+ *
+ * tests/install.test.mjs asserts this list covers every set in the index, so a
+ * sixth series cannot be added without also being made available offline.
  */
-const CACHE = 'collect-v1';
+const CACHE = 'collect-v2';
 
 const SHELL = [
   '/collect/',
@@ -22,6 +28,16 @@ const SHELL = [
   '/collect/icon-180.png',
   '/collect/icon-512.png',
   '/collect/icon-maskable-512.png',
+  '/collect/sets/sw-galaxy-peek-s1.json',
+  '/collect/sets/sw-galaxy-peek-s2.json',
+  '/collect/sets/sw-galaxy-peek-s3.json',
+  '/collect/sets/sw-galaxy-peek-s4.json',
+  '/collect/sets/sw-galaxy-peek-s5.json',
+  '/collect/sets/codes-sw-galaxy-peek-s1.json',
+  '/collect/sets/codes-sw-galaxy-peek-s2.json',
+  '/collect/sets/codes-sw-galaxy-peek-s3.json',
+  '/collect/sets/codes-sw-galaxy-peek-s4.json',
+  '/collect/sets/codes-sw-galaxy-peek-s5.json',
 ];
 
 const NETWORK_TIMEOUT_MS = 2500;
@@ -61,6 +77,19 @@ function networkFirst(request) {
       settled = true;
       resolve(response);
     };
+
+    /*
+     * When the device says it has no connection at all, believe it and answer
+     * from the cache straight away. Waiting out the timeout would put a dead
+     * two and a half seconds in front of every tap in a shop with no signal —
+     * which is precisely the situation this app is meant to be good at.
+     *
+     * The reverse is not trusted: onLine true only means an interface exists,
+     * not that anything is reachable, so the timeout still governs that case.
+     */
+    if (self.navigator && self.navigator.onLine === false) {
+      caches.match(key).then((cached) => { if (cached) finish(cached); });
+    }
 
     const timer = setTimeout(() => {
       caches.match(key).then((cached) => { if (cached) finish(cached); });

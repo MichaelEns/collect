@@ -25,6 +25,7 @@
   const state = {
     index: [],
     set: null,
+    codes: null,
     progress: {},
     figure: null,
     photoUrl: null,
@@ -262,17 +263,29 @@
 
     const sourced = $('sourced');
     sourced.innerHTML = '';
+    // The caveats matter as much as the roster: what the capsule looks like,
+    // whether there may be more figures than we know, and how firm the rarity
+    // is. They belong on screen, not only in the data file.
+    const caveats = [set.packagingNote, set.countNote, set.rarityNote].filter(Boolean);
+    for (const text of caveats) {
+      const p = document.createElement('p');
+      p.className = 'caveat';
+      p.textContent = text;
+      sourced.appendChild(p);
+    }
     if (set.sourced) {
-      sourced.appendChild(document.createTextNode(set.sourced));
+      const p = document.createElement('p');
+      p.appendChild(document.createTextNode(set.sourced));
       if (set.official) {
-        sourced.appendChild(document.createTextNode(' '));
+        p.appendChild(document.createTextNode(' '));
         const a = document.createElement('a');
         a.href = set.official;
         a.target = '_blank';
         a.rel = 'noopener noreferrer';
         a.textContent = 'Official page ↗';
-        sourced.appendChild(a);
+        p.appendChild(a);
       }
+      sourced.appendChild(p);
     }
 
     const grid = $('grid');
@@ -352,18 +365,28 @@
     }
 
     /*
-     * Codes are the child's own findings, not shipped data.
+     * Codes are the child's own findings, and — where the community has worked
+     * them out — a shipped lookup as well.
      *
-     * The community does maintain code-to-figure spreadsheets, but the codes
-     * differ between production batches and Just Play has never published
-     * them. Shipping a guessed mapping would have a child putting a capsule
-     * back on the shelf because the app told him the wrong thing. So the app
-     * explains where to look, links the community list, and records what he
-     * actually finds — which is right for his batch by construction.
+     * The codes do differ between production batches: the letter at the front
+     * of the code IS the batch. That was once the reason not to ship them at
+     * all, which was an overcorrection. Collectors have mapped the batches, so
+     * the lookup keys on the whole code and is right for every batch it knows.
+     * Where contributors disagreed about a code the app says so rather than
+     * picking a side, and a code it has never seen is reported as unknown
+     * rather than guessed. Anything moulded on a capsule he opens still goes
+     * in by hand.
      */
     renderCodes();
+    renderKnownCodes();
     $('code-note').textContent = state.set.codeNote || '';
     $('code-note').hidden = !state.set.codeNote;
+
+    const credit = $('code-credit');
+    const source = state.codes && state.codes.source;
+    credit.hidden = !source;
+    if (source) credit.textContent = `Codes worked out and shared by ${source.credit}.`;
+
     const codeLink = $('code-link');
     codeLink.hidden = !state.set.codeLink;
     if (state.set.codeLink) {
@@ -421,6 +444,173 @@
     renderCodes();
   });
 
+  /* ----------------------------------------------------------- capsule codes */
+
+  /** Same folding on the way in and on lookup, so O and 0 cannot diverge. */
+  function normaliseCode(raw) {
+    return String(raw || '').trim().toUpperCase().replace(/[\s\-_.]+/g, '');
+  }
+
+  const figureById = (id) => (state.set ? state.set.figures.find((f) => f.id === id) : null);
+
+  /**
+   * What do we know about this code?
+   *
+   * Returns one of:
+   *   { status: 'agreed',   figures }  every contributor listed the same four
+   *   { status: 'disputed', variants } contributors disagreed; all are shown
+   *   { status: 'unknown' }            nobody has recorded this one
+   */
+  function lookupCode(raw) {
+    const code = normaliseCode(raw);
+    if (!code || !state.codes) return { status: 'unknown', code };
+    const agreed = state.codes.codes || {};
+    if (agreed[code]) {
+      return { status: 'agreed', code, figures: agreed[code].map(figureById).filter(Boolean) };
+    }
+    const disputed = (state.codes.disputed || {})[code];
+    if (disputed) {
+      return {
+        status: 'disputed',
+        code,
+        variants: disputed.map((ids) => ids.map(figureById).filter(Boolean)),
+      };
+    }
+    return { status: 'unknown', code };
+  }
+
+  /** Every known code whose capsule contains this figure. */
+  function codesContaining(figureId) {
+    if (!state.codes) return [];
+    return Object.entries(state.codes.codes || {})
+      .filter(([, ids]) => ids.includes(figureId))
+      .map(([code]) => code)
+      .sort();
+  }
+
+  function figureChip(figure) {
+    const got = entry(figure.id);
+    const rarity = rarityOf(figure);
+    const chip = document.createElement('button');
+    chip.type = 'button';
+    chip.className = 'chip' + (got.have ? ' have' : ' want');
+    chip.innerHTML = `
+      <span class="chip-mark">${got.have ? '✓' : '★'}</span>
+      <span class="chip-name">${escapeHtml(figure.name)}</span>
+      <span class="rarity-dot" style="background:${rarity ? escapeHtml(rarity.colour) : 'var(--line)'}"></span>`;
+    chip.addEventListener('click', () => openSheet(figure));
+    return chip;
+  }
+
+  function renderCodeResult(raw) {
+    const box = $('code-result');
+    box.innerHTML = '';
+    const typed = normaliseCode(raw);
+    $('code-clear').hidden = !typed;
+    if (!typed) return;
+
+    const found = lookupCode(typed);
+    const say = (className, text) => {
+      const p = document.createElement('p');
+      p.className = className;
+      p.textContent = text;
+      box.appendChild(p);
+      return p;
+    };
+
+    if (found.status === 'unknown') {
+      say('finder-verdict unknown', `We do not know code ${typed}.`);
+      say('finder-sub', 'Nobody has written this one down yet. Open it, then add'
+        + ' the code to whichever figures were inside — that makes it yours.');
+      return;
+    }
+
+    const lists = found.status === 'agreed' ? [found.figures] : found.variants;
+
+    if (found.status === 'agreed') {
+      const missing = found.figures.filter((f) => !entry(f.id).have);
+      // The verdict answers the question actually being asked, which is
+      // whether to buy this capsule — not merely what is in it.
+      if (!found.figures.length) {
+        say('finder-verdict unknown', `We do not know code ${typed}.`);
+        return;
+      }
+      if (missing.length === 0) {
+        say('finder-verdict got', 'You already have all four of these.');
+      } else {
+        say('finder-verdict want', missing.length === 1
+          ? 'This one has 1 you still need!'
+          : `This one has ${missing.length} you still need!`);
+      }
+    } else {
+      say('finder-verdict disputed', `Code ${typed} is not agreed on.`);
+      say('finder-sub', 'Collectors have reported different figures for this'
+        + ' code, so it could be any of these. Both are shown rather than'
+        + ' guessing at one.');
+    }
+
+    for (const [i, figures] of lists.entries()) {
+      if (lists.length > 1) {
+        const h = document.createElement('p');
+        h.className = 'finder-sub';
+        h.textContent = `Someone found these four:`;
+        if (i > 0) h.textContent = 'Someone else found these four:';
+        box.appendChild(h);
+      }
+      const row = document.createElement('div');
+      row.className = 'chip-row';
+      for (const f of figures) row.appendChild(figureChip(f));
+      box.appendChild(row);
+    }
+  }
+
+  function renderFinder() {
+    const finder = $('finder');
+    const count = state.codes ? Object.keys(state.codes.codes || {}).length : 0;
+    finder.hidden = count === 0;
+    if (!count) return;
+    const batches = Object.keys(state.codes.batches || {}).length;
+    $('finder-hint').textContent = `Type the code moulded into the bottom of the`
+      + ` capsule and we will tell you what is inside. We know ${count} codes`
+      + `${batches ? ` across ${batches} batches` : ''}.`;
+    $('code-input').value = '';
+    renderCodeResult('');
+  }
+
+  function renderKnownCodes() {
+    const wrap = $('known-codes');
+    const list = $('known-code-list');
+    const more = $('known-code-more');
+    list.innerHTML = '';
+    const codes = codesContaining(state.figure.id);
+    wrap.hidden = codes.length === 0;
+    if (!codes.length) return;
+
+    // A figure can appear in dozens of capsules. Showing every one turns the
+    // useful list into a wall, so it is capped and counted.
+    const SHOWN = 12;
+    for (const code of codes.slice(0, SHOWN)) {
+      const li = document.createElement('li');
+      li.className = 'known-code';
+      li.textContent = code;
+      list.appendChild(li);
+    }
+    more.hidden = codes.length <= SHOWN;
+    if (codes.length > SHOWN) {
+      more.textContent = `…and ${codes.length - SHOWN} more capsules contain it.`;
+    }
+  }
+
+  $('code-input').addEventListener('input', (event) => {
+    renderCodeResult(event.target.value);
+  });
+
+  $('code-clear').addEventListener('click', () => {
+    $('code-input').value = '';
+    renderCodeResult('');
+    $('code-input').focus();
+  });
+
   function renderSheetState() {
     const got = entry(state.figure.id);
     const have = $('sheet-have');
@@ -464,6 +654,9 @@
     const total = state.set.figures.length;
     const found = state.set.figures.filter((f) => entry(f.id).have).length;
     renderCollection();
+    // The verdict counts what is still missing, so ticking a figure while a
+    // code is on screen has to re-run it or it contradicts the grid behind it.
+    renderCodeResult($('code-input').value);
     if (have && found === total && total > 0) {
       cheer(`You finished\n${state.set.name}!`);
     } else if (have) {
@@ -523,11 +716,28 @@
       .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
   }
 
+  /** Bumped on every route so a superseded one can abandon itself. */
+  let routeTicket = 0;
+
   async function route() {
     closeSheet();
+
+    /*
+     * Routing is asynchronous and can be re-entered before it finishes — a
+     * tap on Back then another set, or simply a slow read. Offline that gap is
+     * seconds wide, and without a guard the FIRST request to finish last wins:
+     * the app settles on a collection the child is no longer looking at, with
+     * the right title and the wrong figures.
+     *
+     * Each run takes a ticket and abandons itself if another has started.
+     */
+    const ticket = (routeTicket += 1);
+    const superseded = () => ticket !== routeTicket;
+
     const match = /#set=(.+)$/.exec(location.hash || '');
     if (!match) {
       state.set = null;
+      state.codes = null;
       $('picker').hidden = false;
       $('collection').hidden = true;
       $('back').hidden = true;
@@ -541,18 +751,41 @@
     const meta = state.index.find((s) => s.id === id);
     if (!meta) { location.hash = ''; return; }
 
+    let set;
     try {
       const resp = await fetch(`/collect/sets/${encodeURIComponent(meta.file)}`);
-      state.set = await resp.json();
+      set = await resp.json();
     } catch {
+      if (superseded()) return;
       $('subtitle').textContent = 'That set could not be loaded.';
       return;
     }
-    state.progress = loadProgress(state.set.id);
+    if (superseded()) return;
+
+    /*
+     * The codes are a separate fetch, and a failure is deliberately not fatal.
+     * They are a bonus on top of the checklist; if they cannot be had, the
+     * finder hides itself and everything else still works offline.
+     */
+    let codes = null;
+    if (set.codeFile) {
+      try {
+        const resp = await fetch(`/collect/sets/${encodeURIComponent(set.codeFile)}`);
+        if (resp.ok) codes = await resp.json();
+      } catch { /* the checklist is the point; the lookup is extra */ }
+    }
+    if (superseded()) return;
+
+    // Nothing is published to the screen until every read is done and this run
+    // is still the current one, so a losing race cannot half-apply.
+    state.set = set;
+    state.codes = codes;
+    state.progress = loadProgress(set.id);
     $('picker').hidden = true;
     $('collection').hidden = false;
     $('back').hidden = false;
     renderCollection();
+    renderFinder();
   }
 
   $('back').addEventListener('click', () => { location.hash = ''; });

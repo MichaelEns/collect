@@ -17,12 +17,50 @@ have Boba Fett.
 - **Counts spares**, because the point of spares is trading them.
 - **Photograph your own figures.** The picture on the card becomes the one you
   took (see below for why).
-- **Write down the capsule codes you find**, which is how you learn to spot a
-  figure before you buy it.
+- **Type a capsule's code and see what is inside it, before you open it.** The
+  headline feature, and the one worth having in a shop.
+- **Write down the capsule codes you find**, for batches nobody has recorded yet.
 - **Progress bar and a celebration** when a set is finished.
 - Everything is saved on the device. Nothing is uploaded anywhere, ever.
 
-## The two things this app refuses to do
+## Telling what is in a capsule before you buy it
+
+There is a short code moulded into the plastic on the **bottom** of every
+capsule — a letter and some numbers, like `A001`. Type it in and the app names
+the four figures inside, and says how many of them you still need.
+
+The letter at the front is the **batch**. Each batch has its own numbering, so
+`A001` and `L002` are different capsules from different production runs. That
+is genuinely why an unknown code shows up occasionally: it is from a batch
+nobody has written down yet, not a bug.
+
+**339 codes ship with the app**, covering all five series:
+
+| Series | Codes | Batches | Figures covered |
+| --- | --- | --- | --- |
+| 1 | 12 | 7 | 20 of 25 |
+| 2 | 177 | 12 (A–L) | 25 of 25 |
+| 3 | 44 | 5 | 25 of 25 |
+| 4 | 69 | 2 | 25 of 25 |
+| 5 | 37 | 2 | 25 of 25 |
+
+Where collectors disagreed about a code — two of them, both in Series 2 — the
+app shows **every** version reported rather than quietly picking one.
+
+### An earlier version of this README was wrong about this
+
+It used to say the app deliberately would not map codes to figures, because
+"the codes change between batches". That was half a true fact acted on badly.
+The codes do vary by batch, but the community has mapped the batches, which is
+why a collector using those sheets finds they essentially always work. Refusing
+to ship them was overcaution, and it cost the app its most useful feature.
+
+The data comes from the code spreadsheet kept by **@FuzzyLuzzi** and the Disney
+Doorables collectors, linked from the Doorables wiki. `tools/build_codes.cjs`
+rebuilds `sets/codes-*.json` from a fresh download of it; the sheet itself is
+not copied into this repo.
+
+## The thing this app still refuses to do
 
 **It does not show official product photos.** There is no legal, free way for a
 private individual to put Just Play or Disney product images into a third-party
@@ -32,22 +70,43 @@ affiliate accounts. So instead the app links out to the official page, and lets
 the child photograph the figures he actually owns. That is legally clean, and
 a shelf of his own photos is better than a borrowed catalogue anyway.
 
-**It does not tell you which code means which figure.** The code system is
-real: there is a short code moulded into the plastic on the bottom of each
-capsule, and collectors do maintain code-to-figure spreadsheets. But those
-codes change between production batches, Just Play has never published them,
-and the community sheets could not be independently verified. A guessed mapping
-would have a child put a capsule back on the shelf because the app told him the
-wrong thing. So the app explains where to look, links the community list, and
-records the codes *he* finds — which are correct for his batch by construction.
+**Fan art does not solve this either**, which is worth writing down because it
+looks like it should. A Creative Commons licence on a drawing of Darth Vader
+covers only the artist's own brushwork; it cannot grant rights in Lucasfilm's
+character design, which is the entire reason anyone would want the picture.
+Under 17 U.S.C. § 103(b) and the US Copyright Office's Circular 14, copyright
+in a derivative work reaches only what the later author added. Creative Commons
+says the same thing in its own FAQ: *"the CC license only applies to the rights
+you have in the work"*. Uploading such a drawing to a CC0 site does not launder
+it. Nothing Star Wars enters the public domain until the 2070s.
+
+Character **names** are fine: names are not copyrightable (37 CFR § 202.1(a)),
+and listing them to identify actual toys is textbook nominative trademark fair
+use. The app carries an unaffiliated-with-Lucasfilm notice to keep that clear.
 
 ## How trustworthy is the data?
 
-The rosters come from the Disney Doorables community wiki, cross-checked
-against HobbyDB, Coleka and trade press. Just Play never published a checklist
-online and has since taken its Series 1 and 2 pages down entirely, so there is
-no official source left to check against. The app says so, on screen, under the
-progress bar.
+Series 1 and 2 were built from the Disney Doorables community wiki, HobbyDB and
+Coleka. Series 3, 4 and 5 came from the code spreadsheet. The two were then
+compared: **for all 50 figures across Series 1 and 2, every name, rarity tier
+and bag number agreed exactly** — two independent sources, no conflicts. That
+is why the later three are trusted from the sheet alone.
+
+Just Play never published a checklist online and has taken several of its own
+product pages down, so there is no official source left to check against. The
+app says so, on screen, under the progress bar.
+
+Where something is *not* confirmed, the app says that too, in the same place:
+
+- **Series 3 and 4 capsule colours are unknown.** The capsule is also no longer
+  a Death Star from Series 3 onward — 3 and 4 are cargo-drop capsules and 5 is
+  a grey AT-AT. Getting that wrong would send a child to the wrong box, so the
+  app names the shape and tells him to check the printed series number.
+- **Series 4 may have 50 figures in two waves.** Just Play's own description
+  says 50 while shops list 25. The app ships the 25 that have recorded codes
+  and says the rest may exist.
+- **Series 5 rarities are unofficial.** Just Play had not published the rarity
+  sheet, and collectors disagree.
 
 Two entries — the two Anakin Skywalkers in Series 2 — are marked with a **?**
 because the words distinguishing them come from collectors rather than from the
@@ -63,14 +122,18 @@ appear in the Series 2 file.
 Drop a JSON file into `sets/` and name it in `sets/index.json`. No code
 changes. `sets/FORMAT.json` documents every field, and `tests/sets.test.mjs`
 enforces it — including the honesty rules: a set must say where its roster came
-from, must not ship codes it cannot verify, and must not claim to be verified
-while containing unconfirmed entries.
+from, a shipped code mapping must carry its provenance and must name four real
+figures from its own set, a disputed code must keep every version reported
+rather than picking one, and a set must not claim to be verified while
+containing unconfirmed entries.
 
 ```
-index.html            one page: picker, grid, figure card
-app.js                storage, photos, rendering
-sets/                 one file per collection
-tools/make_icons.py   regenerates the home screen icons
+index.html              one page: picker, grid, finder, figure card
+app.js                  storage, photos, code lookup, rendering
+sets/                   one file per collection, plus codes-*.json
+tools/build_codes.cjs   rebuilds the code files from the community sheet
+tools/build_sets.cjs    rebuilds the set files and the index
+tools/make_icons.py     regenerates the home screen icons
 ```
 
 Progress lives in `localStorage`; photos live in IndexedDB, shrunk to 480px
@@ -80,12 +143,24 @@ taking the progress data down with them.
 ## Tests
 
 ```powershell
-node --test tests/sets.test.mjs                    # the data, and its honesty
-node --test tests/install.test.mjs                 # installable and offline-capable
-node tests/collect.cjs "<path to msedge.exe>"      # drives the real page
-node tools/screenshots.cjs                         # one shot per screen
+node --test "tests/*.test.mjs"                    # the data, and its honesty
+node tests/collect.cjs "<path to msedge.exe>"     # drives the real page
+node tools/screenshots.cjs                        # one shot per screen
 ```
 
 `collect.cjs` picks a set, marks a figure, records a code, reloads to prove the
-progress survived, checks the two sets keep separate progress, then **kills the
-server** and reopens it to prove the whole checklist still works offline.
+progress survived, checks the sets keep separate progress, exercises the code
+finder, then **kills the server and tells the browser it is offline** and
+reopens a set that was never opened while online — proving both the checklist
+and the code lookup come from the precache.
+
+Two regressions it now pins, both found the hard way:
+
+- **Routes could race.** Switching sets before the first finished loading let
+  the abandoned one finish last and win, leaving the right title above the
+  wrong figures. Offline that window is seconds wide. The test holds one set's
+  read open, opens another on top of it, and fails if the wrong one wins.
+- **Offline used to cost 2.5 seconds a tap.** The service worker waited out its
+  network timeout before falling back to cache, even when the device already
+  knew it had no connection. It now answers immediately in that case — 2322ms
+  to 110ms — and the test asserts the timing, not just the outcome.

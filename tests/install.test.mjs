@@ -88,6 +88,28 @@ test('the shell and the set index are precached', () => {
   assert.deepStrictEqual(missing, [], `not precached: ${missing.join(', ')}`);
 });
 
+test('every set and its codes are precached, because the shop is where the signal dies', () => {
+  /*
+   * The capsule finder exists to be used standing in an aisle with a capsule in
+   * hand. Fetching a set or its codes on first open would mean the one feature
+   * built for that moment is the one feature that fails in it.
+   *
+   * This reads the index rather than a hardcoded list, so adding a sixth series
+   * without making it available offline fails here.
+   */
+  const sw = read('sw.js');
+  const shell = sw.slice(sw.indexOf('const SHELL'), sw.indexOf('];', sw.indexOf('const SHELL')));
+  const index = JSON.parse(read('sets/index.json'));
+  const missing = [];
+  for (const meta of index) {
+    const set = JSON.parse(read(`sets/${meta.file}`));
+    for (const f of [meta.file, set.codeFile].filter(Boolean)) {
+      if (!shell.includes(`'/collect/sets/${f}'`)) missing.push(f);
+    }
+  }
+  assert.deepStrictEqual(missing, [], `not precached: ${missing.join(', ')}`);
+});
+
 test('the cache is versioned, or an update never reaches an installed copy', () => {
   assert.match(read('sw.js'), /const CACHE = '[\w-]+v\d+'/);
 });
@@ -126,7 +148,18 @@ test('photos are shrunk before they are stored', () => {
 
 test('no manufacturer artwork is bundled with the app', () => {
   // The only images shipped are the icons this repo draws itself.
-  const images = fs.readdirSync(ROOT).filter((f) => /\.(png|jpe?g|webp|gif)$/i.test(f));
+  //
+  // Screenshots are excluded because .gitignore already excludes them, so they
+  // cannot reach anyone. Keeping them here would mean running the screenshot
+  // tool breaks the build, which trains people to ignore this check — and this
+  // check is the one standing between the app and someone else's copyright.
+  const ignored = fs.readFileSync(path.join(ROOT, '.gitignore'), 'utf8');
+  assert.match(ignored, /^c-\*\.png$/m,
+    '.gitignore no longer excludes screenshots, so this exemption is unsafe');
+
+  const images = fs.readdirSync(ROOT)
+    .filter((f) => /\.(png|jpe?g|webp|gif)$/i.test(f))
+    .filter((f) => !/^c-.*\.png$/i.test(f));
   const allowed = new Set(['icon-180.png', 'icon-512.png', 'icon-maskable-512.png']);
   const unexpected = images.filter((f) => !allowed.has(f));
   assert.deepStrictEqual(unexpected, [],

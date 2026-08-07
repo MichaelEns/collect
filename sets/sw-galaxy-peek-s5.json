@@ -1,0 +1,197 @@
+{
+ "id": "sw-galaxy-peek-s5",
+ "brand": "Star Wars Doorables",
+ "name": "Galaxy Peek Series 5",
+ "packaging": "Grey AT-AT capsule",
+ "packagingNote": "This one is an AT-AT walker rather than a Death Star, and it opens out into a diorama.",
+ "theme": "Bounty hunters, and the creatures of the galaxy",
+ "emoji": "🪐",
+ "official": "https://justplayproducts.com/collections/star-wars-doorables/",
+ "figuresPerCapsule": 4,
+ "verified": false,
+ "sourced": "Roster, rarity and bag numbers come from the community code spreadsheet kept by @FuzzyLuzzi and the Doorables collectors, which lists 25 figures for this series. For Series 1 and 2 that sheet agreed with the Doorables wiki, HobbyDB and Coleka on every single figure, which is why the later series are trusted too — but Just Play has never published an official checklist, so this is very good community data rather than gospel.",
+ "numberLabel": "Bag #",
+ "numberNote": "The number printed beside each figure on the paper checklist inside the capsule.",
+ "figures": [
+  {
+   "id": "leia",
+   "name": "Leia",
+   "rarity": "common",
+   "number": "01"
+  },
+  {
+   "id": "imperial-royal-guard",
+   "name": "Imperial Royal Guard",
+   "rarity": "common",
+   "number": "02"
+  },
+  {
+   "id": "jango-fett",
+   "name": "Jango Fett",
+   "rarity": "common",
+   "number": "03"
+  },
+  {
+   "id": "darth-maul",
+   "name": "Darth Maul",
+   "rarity": "common",
+   "number": "04"
+  },
+  {
+   "id": "shaak-ti",
+   "name": "Shaak Ti",
+   "rarity": "common",
+   "number": "05"
+  },
+  {
+   "id": "watto",
+   "name": "Watto",
+   "rarity": "common",
+   "number": "06"
+  },
+  {
+   "id": "aurra-sing",
+   "name": "Aurra Sing",
+   "rarity": "common",
+   "number": "07"
+  },
+  {
+   "id": "boba-fett",
+   "name": "Boba Fett",
+   "rarity": "common",
+   "number": "08"
+  },
+  {
+   "id": "lando-calrissian",
+   "name": "Lando Calrissian",
+   "rarity": "rare",
+   "number": "09"
+  },
+  {
+   "id": "emperor-palpatine",
+   "name": "Emperor Palpatine",
+   "rarity": "rare",
+   "number": "10"
+  },
+  {
+   "id": "tusken-raider",
+   "name": "Tusken Raider",
+   "rarity": "rare",
+   "number": "11"
+  },
+  {
+   "id": "luke-skywalker",
+   "name": "Luke Skywalker",
+   "rarity": "rare",
+   "number": "12"
+  },
+  {
+   "id": "supreme-leader-snoke",
+   "name": "Supreme Leader Snoke",
+   "rarity": "rare",
+   "number": "13"
+  },
+  {
+   "id": "bossk",
+   "name": "Bossk",
+   "rarity": "rare",
+   "number": "14"
+  },
+  {
+   "id": "dengar",
+   "name": "Dengar",
+   "rarity": "rare",
+   "number": "15"
+  },
+  {
+   "id": "han-solo",
+   "name": "Han Solo",
+   "rarity": "ultra",
+   "number": "16"
+  },
+  {
+   "id": "embo",
+   "name": "Embo",
+   "rarity": "ultra",
+   "number": "17"
+  },
+  {
+   "id": "max-rebo",
+   "name": "Max Rebo",
+   "rarity": "ultra",
+   "number": "18"
+  },
+  {
+   "id": "porg",
+   "name": "Porg",
+   "rarity": "ultra",
+   "number": "19"
+  },
+  {
+   "id": "4-lom",
+   "name": "4-Lom",
+   "rarity": "ultra",
+   "number": "20"
+  },
+  {
+   "id": "wampa",
+   "name": "Wampa",
+   "rarity": "special",
+   "number": "21"
+  },
+  {
+   "id": "tauntaun",
+   "name": "Tauntaun",
+   "rarity": "special",
+   "number": "23"
+  },
+  {
+   "id": "blurrg",
+   "name": "Blurrg",
+   "rarity": "special",
+   "number": "25"
+  },
+  {
+   "id": "bantha",
+   "name": "Bantha",
+   "rarity": "special",
+   "numberUnknown": true
+  },
+  {
+   "id": "purrgil",
+   "name": "Purrgil",
+   "rarity": "special",
+   "numberUnknown": true
+  }
+ ],
+ "rarities": [
+  {
+   "id": "common",
+   "label": "Common",
+   "colour": "#8fa3d9"
+  },
+  {
+   "id": "rare",
+   "label": "Rare",
+   "colour": "#7ee8ff"
+  },
+  {
+   "id": "ultra",
+   "label": "Ultra Rare",
+   "colour": "#ffc93d"
+  },
+  {
+   "id": "special",
+   "label": "Special Edition",
+   "colour": "#ff8ad8"
+  }
+ ],
+ "codeNote": "Every capsule has a short code pressed into the plastic on the BOTTOM — a letter and some numbers, like A001. It is moulded rather than printed, so tilt it to the light or feel for it with a fingernail. Type it into the box at the top and this app will tell you which four figures are inside, before you open it. The letter at the front is the batch, and every batch has its own codes — so if a code comes back unknown it is most likely from a newer batch nobody has written down yet. These come from collectors rather than from Just Play, who have never published them, so they are very good but not official.",
+ "codeFile": "codes-sw-galaxy-peek-s5.json",
+ "codeLink": "https://disney-doorables.fandom.com/wiki/Star_Wars_Galaxy_Peek_Series_2",
+ "codeLinkLabel": "Community code spreadsheet (via the Doorables wiki)",
+ "itemNumber": "50111",
+ "upc": "886144501111",
+ "released": "2026-07",
+ "rarityNote": "Just Play had not published the rarity sheet for Series 5 when this was made, and collectors do not all agree on it. The rare ones here come from the same community list as the codes."
+}

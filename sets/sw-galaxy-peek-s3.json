@@ -1,0 +1,191 @@
+{
+ "id": "sw-galaxy-peek-s3",
+ "brand": "Star Wars Doorables",
+ "name": "Galaxy Peek Series 3",
+ "packaging": "Cargo-drop capsule",
+ "packagingNote": "From Series 3 the capsule stopped being a Death Star. This one is a cargo drop that opens out into a display. We could not confirm its colour, so check the series number printed on the packet.",
+ "theme": "Jedi of the High Republic, and the crew of Rogue One",
+ "emoji": "⭐",
+ "official": "https://justplayproducts.com/collections/star-wars-doorables/",
+ "figuresPerCapsule": 4,
+ "verified": false,
+ "sourced": "Roster, rarity and bag numbers come from the community code spreadsheet kept by @FuzzyLuzzi and the Doorables collectors, which lists 25 figures for this series. For Series 1 and 2 that sheet agreed with the Doorables wiki, HobbyDB and Coleka on every single figure, which is why the later series are trusted too — but Just Play has never published an official checklist, so this is very good community data rather than gospel.",
+ "numberLabel": "Bag #",
+ "numberNote": "The number printed beside each figure on the paper checklist inside the capsule.",
+ "figures": [
+  {
+   "id": "yoda",
+   "name": "Yoda",
+   "rarity": "common",
+   "number": "01"
+  },
+  {
+   "id": "ki-adi-mundi",
+   "name": "Ki-Adi-Mundi",
+   "rarity": "common",
+   "number": "02"
+  },
+  {
+   "id": "aayla-secura",
+   "name": "Aayla Secura",
+   "rarity": "common",
+   "number": "03"
+  },
+  {
+   "id": "cassian-andor",
+   "name": "Cassian Andor",
+   "rarity": "common",
+   "number": "04"
+  },
+  {
+   "id": "osha-aniseya",
+   "name": "Osha Aniseya",
+   "rarity": "common",
+   "number": "05"
+  },
+  {
+   "id": "kelnacca",
+   "name": "Kelnacca",
+   "rarity": "common",
+   "number": "06"
+  },
+  {
+   "id": "director-orson-krennic",
+   "name": "Director Orson Krennic",
+   "rarity": "common",
+   "number": "07"
+  },
+  {
+   "id": "admiral-ackbar",
+   "name": "Admiral Ackbar",
+   "rarity": "common",
+   "number": "08"
+  },
+  {
+   "id": "porg",
+   "name": "Porg",
+   "rarity": "common",
+   "number": "09"
+  },
+  {
+   "id": "princess-leia",
+   "name": "Princess Leia",
+   "rarity": "common",
+   "number": "10"
+  },
+  {
+   "id": "nien-nunb",
+   "name": "Nien Nunb",
+   "rarity": "common",
+   "number": "11"
+  },
+  {
+   "id": "rey",
+   "name": "Rey",
+   "rarity": "common",
+   "number": "12"
+  },
+  {
+   "id": "jedi-master-sol",
+   "name": "Jedi Master Sol",
+   "rarity": "rare",
+   "number": "13"
+  },
+  {
+   "id": "yaddle",
+   "name": "Yaddle",
+   "rarity": "rare",
+   "number": "14"
+  },
+  {
+   "id": "kit-fisto",
+   "name": "Kit Fisto",
+   "rarity": "rare",
+   "number": "15"
+  },
+  {
+   "id": "k-2so",
+   "name": "K-2SO",
+   "rarity": "rare",
+   "number": "16"
+  },
+  {
+   "id": "mace-windu",
+   "name": "Mace Windu",
+   "rarity": "rare",
+   "number": "17"
+  },
+  {
+   "id": "darth-vader",
+   "name": "Darth Vader",
+   "rarity": "rare",
+   "number": "18"
+  },
+  {
+   "id": "grogu",
+   "name": "Grogu",
+   "rarity": "rare",
+   "number": "19"
+  },
+  {
+   "id": "yoda-rare-version",
+   "name": "Yoda (rare version)",
+   "rarity": "rare",
+   "number": "20"
+  },
+  {
+   "id": "mae-assassin",
+   "name": "Mae (Assassin)",
+   "rarity": "ultra",
+   "number": "21"
+  },
+  {
+   "id": "mon-mothma",
+   "name": "Mon Mothma",
+   "rarity": "ultra",
+   "number": "22"
+  },
+  {
+   "id": "reva",
+   "name": "Reva",
+   "rarity": "ultra",
+   "number": "23"
+  },
+  {
+   "id": "lando-calrissian",
+   "name": "Lando Calrissian",
+   "rarity": "ultra",
+   "number": "24"
+  },
+  {
+   "id": "luke-skywalker",
+   "name": "Luke Skywalker",
+   "rarity": "ultra",
+   "number": "25"
+  }
+ ],
+ "rarities": [
+  {
+   "id": "common",
+   "label": "Common",
+   "colour": "#8fa3d9"
+  },
+  {
+   "id": "rare",
+   "label": "Rare",
+   "colour": "#7ee8ff"
+  },
+  {
+   "id": "ultra",
+   "label": "Ultra Rare",
+   "colour": "#ffc93d"
+  }
+ ],
+ "codeNote": "Every capsule has a short code pressed into the plastic on the BOTTOM — a letter and some numbers, like A001. It is moulded rather than printed, so tilt it to the light or feel for it with a fingernail. Type it into the box at the top and this app will tell you which four figures are inside, before you open it. The letter at the front is the batch, and every batch has its own codes — so if a code comes back unknown it is most likely from a newer batch nobody has written down yet. These come from collectors rather than from Just Play, who have never published them, so they are very good but not official.",
+ "codeFile": "codes-sw-galaxy-peek-s3.json",
+ "codeLink": "https://disney-doorables.fandom.com/wiki/Star_Wars_Galaxy_Peek_Series_2",
+ "codeLinkLabel": "Community code spreadsheet (via the Doorables wiki)",
+ "itemNumber": "44992",
+ "upc": "886144449925",
+ "released": "2025-02"
+}

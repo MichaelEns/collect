@@ -1,0 +1,94 @@
+{
+ "setId": "sw-galaxy-peek-s1",
+ "source": {
+  "title": "Doorables Codes 5 : StarWars",
+  "credit": "@FuzzyLuzzi and the Disney Doorables collecting community",
+  "url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-cMlB9x1cjW3EGZUMDsx-7lryPflBjSGkZTVaOFvNlfPzHnEmWLGDeJXPHVdmKQyD3DFxo1S9U/pubhtml",
+  "via": "https://disney-doorables.fandom.com/wiki/Star_Wars_Galaxy_Peek_Series_2",
+  "retrieved": "2026-08-07"
+ },
+ "batches": {
+  "#": 2,
+  "AF": 1,
+  "K": 1,
+  "M": 5,
+  "N": 1,
+  "Q": 1,
+  "TL": 1
+ },
+ "codes": {
+  "9": [
+   "ahsoka-tano",
+   "professor-huyang",
+   "stormtrooper",
+   "yoda"
+  ],
+  "12": [
+   "darth-vader",
+   "sabine-wren",
+   "stormtrooper",
+   "wicket"
+  ],
+  "AF036": [
+   "bb-8",
+   "bo-katan-kryze",
+   "chopper",
+   "jabba-the-hutt"
+  ],
+  "K001": [
+   "c-3po",
+   "jawa",
+   "r2-d2",
+   "yoda"
+  ],
+  "M003": [
+   "grogu",
+   "luke-skywalker",
+   "rey",
+   "stormtrooper"
+  ],
+  "M010": [
+   "grogu",
+   "jawa",
+   "the-mandalorian",
+   "wicket"
+  ],
+  "M012": [
+   "jabba-the-hutt",
+   "jawa",
+   "r2-d2",
+   "rey"
+  ],
+  "M014": [
+   "ahsoka-tano",
+   "professor-huyang",
+   "stormtrooper",
+   "yoda"
+  ],
+  "M017": [
+   "ahsoka-tano",
+   "lando-calrissian",
+   "the-mandalorian",
+   "yoda"
+  ],
+  "N002": [
+   "grogu",
+   "jawa",
+   "the-mandalorian",
+   "wicket"
+  ],
+  "Q016": [
+   "jabba-the-hutt",
+   "jawa",
+   "princess-leia",
+   "r2-d2"
+  ],
+  "TL001": [
+   "ahsoka-tano",
+   "bb-8",
+   "bo-katan-kryze",
+   "c-3po"
+  ]
+ },
+ "disputed": {}
+}

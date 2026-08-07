@@ -48,12 +48,35 @@
       <p id="sourced" class="sourced"></p>
     </div>
 
+    <!--
+      The one question worth answering in a shop: is this capsule worth buying?
+      It goes above the grid because that is the moment it is needed, with the
+      capsule in hand and the grid not yet relevant.
+    -->
+    <section id="finder" class="finder" hidden aria-labelledby="finder-title">
+      <h2 id="finder-title">What is inside this capsule?</h2>
+      <p class="finder-hint" id="finder-hint"></p>
+      <div class="finder-row">
+        <input id="code-input" type="text" inputmode="latin" autocomplete="off"
+               autocapitalize="characters" spellcheck="false" maxlength="8"
+               aria-describedby="finder-hint" placeholder="A001" />
+        <button id="code-clear" type="button" aria-label="Clear the code" hidden>✕</button>
+      </div>
+      <div id="code-result" class="finder-result" role="status" aria-live="polite"></div>
+    </section>
+
     <div id="grid" class="grid"></div>
 
     <p id="legend" class="legend"></p>
   </section>
 
 </main>
+
+<p id="disclaimer" class="disclaimer">
+  An unofficial fan-made tracker. Not affiliated with, endorsed by or sponsored
+  by Just Play, Lucasfilm Ltd. or The Walt Disney Company. Figure names are used
+  only to identify the toys themselves.
+</p>
 
 <!-- One figure, close up: codes, photo, duplicates. -->
 <div id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="sheet-name">
@@ -73,12 +96,19 @@
     <p id="sheet-note" class="note" hidden></p>
 
     <div id="sheet-codes">
+      <div id="known-codes" hidden>
+        <h3>Capsules with this one inside</h3>
+        <ul id="known-code-list" class="known-code-list"></ul>
+        <p id="known-code-more" class="caveat" hidden></p>
+      </div>
+
       <h3>Codes you have found</h3>
       <ul id="code-list" class="code-list"></ul>
       <button id="code-add" type="button" class="code-add">
         ＋ Add the code from a capsule
       </button>
       <p id="code-note" class="caveat"></p>
+      <p id="code-credit" class="caveat" hidden></p>
       <a id="code-link" class="link-button" hidden target="_blank" rel="noopener noreferrer"></a>
     </div>
 

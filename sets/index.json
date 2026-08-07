@@ -1,20 +1,47 @@
 [
   {
-    "id": "sw-galaxy-peek-s2",
-    "file": "sw-galaxy-peek-s2.json",
-    "name": "Galaxy Peek Series 2",
-    "brand": "Star Wars Doorables",
-    "packaging": "Red Death Star",
-    "emoji": "🔴",
-    "total": 25
-  },
-  {
     "id": "sw-galaxy-peek-s1",
     "file": "sw-galaxy-peek-s1.json",
     "name": "Galaxy Peek Series 1",
     "brand": "Star Wars Doorables",
-    "packaging": "Blue Death Star",
+    "packaging": "Blue Death Star capsule",
     "emoji": "🔵",
+    "total": 25
+  },
+  {
+    "id": "sw-galaxy-peek-s2",
+    "file": "sw-galaxy-peek-s2.json",
+    "name": "Galaxy Peek Series 2",
+    "brand": "Star Wars Doorables",
+    "packaging": "Red Death Star capsule",
+    "emoji": "🔴",
+    "total": 25
+  },
+  {
+    "id": "sw-galaxy-peek-s3",
+    "file": "sw-galaxy-peek-s3.json",
+    "name": "Galaxy Peek Series 3",
+    "brand": "Star Wars Doorables",
+    "packaging": "Cargo-drop capsule",
+    "emoji": "⭐",
+    "total": 25
+  },
+  {
+    "id": "sw-galaxy-peek-s4",
+    "file": "sw-galaxy-peek-s4.json",
+    "name": "Galaxy Peek Series 4",
+    "brand": "Star Wars Doorables",
+    "packaging": "Cargo-drop capsule, opens into a two-level display",
+    "emoji": "🤖",
+    "total": 25
+  },
+  {
+    "id": "sw-galaxy-peek-s5",
+    "file": "sw-galaxy-peek-s5.json",
+    "name": "Galaxy Peek Series 5",
+    "brand": "Star Wars Doorables",
+    "packaging": "Grey AT-AT capsule",
+    "emoji": "🪐",
     "total": 25
   }
 ]

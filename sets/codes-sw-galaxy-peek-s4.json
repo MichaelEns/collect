@@ -1,0 +1,431 @@
+{
+ "setId": "sw-galaxy-peek-s4",
+ "source": {
+  "title": "Doorables Codes 5 : StarWars",
+  "credit": "@FuzzyLuzzi and the Disney Doorables collecting community",
+  "url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-cMlB9x1cjW3EGZUMDsx-7lryPflBjSGkZTVaOFvNlfPzHnEmWLGDeJXPHVdmKQyD3DFxo1S9U/pubhtml",
+  "via": "https://disney-doorables.fandom.com/wiki/Star_Wars_Galaxy_Peek_Series_2",
+  "retrieved": "2026-08-07"
+ },
+ "batches": {
+  "A": 33,
+  "B": 36
+ },
+ "codes": {
+  "A001": [
+   "bail-organa",
+   "chewbacca",
+   "kanan-jarrus",
+   "super-battle-droid"
+  ],
+  "A002": [
+   "commander-cody",
+   "ezra-bridger",
+   "general-grievous",
+   "princess-leia-and-lola"
+  ],
+  "A004": [
+   "droideka",
+   "loth-cat",
+   "rose-tico",
+   "super-battle-droid"
+  ],
+  "A005": [
+   "chewbacca",
+   "garazeb-zeb-orrelios",
+   "general-grievous",
+   "rio-durant"
+  ],
+  "A007": [
+   "ezra-bridger",
+   "imperial-probe-droid",
+   "r2-d2",
+   "rose-tico"
+  ],
+  "A008": [
+   "commander-cody",
+   "han-solo",
+   "jawa",
+   "loth-cat"
+  ],
+  "A010": [
+   "hera-syndulla",
+   "imperial-probe-droid",
+   "kanan-jarrus",
+   "r4-a22"
+  ],
+  "A011": [
+   "ev-9d9",
+   "general-grievous",
+   "han-solo",
+   "loth-cat"
+  ],
+  "A012": [
+   "commander-cody",
+   "r4-p17",
+   "rio-durant",
+   "salacious-b-crumb"
+  ],
+  "A013": [
+   "commander-cody",
+   "hera-syndulla",
+   "salacious-b-crumb",
+   "super-battle-droid"
+  ],
+  "A014": [
+   "chewbacca",
+   "ezra-bridger",
+   "han-solo",
+   "imperial-probe-droid"
+  ],
+  "A015": [
+   "bail-organa",
+   "battle-droid",
+   "commander-cody",
+   "loth-cat"
+  ],
+  "A016": [
+   "bail-organa",
+   "droideka",
+   "general-grievous",
+   "imperial-probe-droid"
+  ],
+  "A017": [
+   "droideka",
+   "kanan-jarrus",
+   "rio-durant",
+   "rose-tico"
+  ],
+  "A018": [
+   "chewbacca",
+   "ev-9d9",
+   "han-solo",
+   "imperial-probe-droid"
+  ],
+  "A019": [
+   "commander-cody",
+   "general-grievous",
+   "r2-d2",
+   "super-battle-droid"
+  ],
+  "A020": [
+   "ezra-bridger",
+   "gonk-droid",
+   "loth-cat",
+   "rose-tico"
+  ],
+  "A021": [
+   "chewbacca",
+   "garazeb-zeb-orrelios",
+   "hera-syndulla",
+   "kanan-jarrus"
+  ],
+  "A022": [
+   "jawa",
+   "kanan-jarrus",
+   "princess-leia-and-lola",
+   "rose-tico"
+  ],
+  "A023": [
+   "general-grievous",
+   "princess-leia-and-lola",
+   "r2-d2",
+   "salacious-b-crumb"
+  ],
+  "A024": [
+   "c-3po",
+   "loth-cat",
+   "rio-durant",
+   "salacious-b-crumb"
+  ],
+  "A025": [
+   "ezra-bridger",
+   "imperial-probe-droid",
+   "loth-cat",
+   "princess-leia-and-lola"
+  ],
+  "A026": [
+   "bail-organa",
+   "hera-syndulla",
+   "imperial-probe-droid",
+   "salacious-b-crumb"
+  ],
+  "A027": [
+   "commander-cody",
+   "droideka",
+   "rose-tico",
+   "super-battle-droid"
+  ],
+  "A028": [
+   "battle-droid",
+   "ezra-bridger",
+   "general-grievous",
+   "loth-cat"
+  ],
+  "A029": [
+   "chewbacca",
+   "garazeb-zeb-orrelios",
+   "kanan-jarrus",
+   "princess-leia-and-lola"
+  ],
+  "A030": [
+   "general-grievous",
+   "r2-d2",
+   "rio-durant",
+   "rose-tico"
+  ],
+  "A031": [
+   "chewbacca",
+   "commander-cody",
+   "ev-9d9",
+   "han-solo"
+  ],
+  "A032": [
+   "bail-organa",
+   "kanan-jarrus",
+   "salacious-b-crumb",
+   "super-battle-droid"
+  ],
+  "A033": [
+   "c-3po",
+   "kanan-jarrus",
+   "rio-durant",
+   "rose-tico"
+  ],
+  "A034": [
+   "chewbacca",
+   "han-solo",
+   "imperial-probe-droid",
+   "r4-p17"
+  ],
+  "A035": [
+   "garazeb-zeb-orrelios",
+   "general-grievous",
+   "hera-syndulla",
+   "salacious-b-crumb"
+  ],
+  "A036": [
+   "commander-cody",
+   "han-solo",
+   "loth-cat",
+   "r4-a22"
+  ],
+  "B001": [
+   "ezra-bridger",
+   "imperial-probe-droid",
+   "r2-d2",
+   "rose-tico"
+  ],
+  "B002": [
+   "chewbacca",
+   "ezra-bridger",
+   "han-solo",
+   "imperial-probe-droid"
+  ],
+  "B003": [
+   "jawa",
+   "kanan-jarrus",
+   "princess-leia-and-lola",
+   "rose-tico"
+  ],
+  "B004": [
+   "battle-droid",
+   "ezra-bridger",
+   "general-grievous",
+   "loth-cat"
+  ],
+  "B005": [
+   "c-3po",
+   "kanan-jarrus",
+   "rio-durant",
+   "rose-tico"
+  ],
+  "B006": [
+   "ezra-bridger",
+   "imperial-probe-droid",
+   "loth-cat",
+   "princess-leia-and-lola"
+  ],
+  "B007": [
+   "commander-cody",
+   "han-solo",
+   "loth-cat",
+   "r4-a22"
+  ],
+  "B008": [
+   "ev-9d9",
+   "general-grievous",
+   "han-solo",
+   "loth-cat"
+  ],
+  "B009": [
+   "commander-cody",
+   "ezra-bridger",
+   "general-grievous",
+   "princess-leia-and-lola"
+  ],
+  "B010": [
+   "droideka",
+   "kanan-jarrus",
+   "rio-durant",
+   "rose-tico"
+  ],
+  "B011": [
+   "chewbacca",
+   "commander-cody",
+   "ev-9d9",
+   "han-solo"
+  ],
+  "B012": [
+   "battle-droid",
+   "hera-syndulla",
+   "imperial-probe-droid",
+   "salacious-b-crumb"
+  ],
+  "B013": [
+   "chewbacca",
+   "han-solo",
+   "imperial-probe-droid",
+   "r4-p17"
+  ],
+  "B014": [
+   "ezra-bridger",
+   "gonk-droid",
+   "loth-cat",
+   "rose-tico"
+  ],
+  "B015": [
+   "c-3po",
+   "loth-cat",
+   "rio-durant",
+   "salacious-b-crumb"
+  ],
+  "B016": [
+   "commander-cody",
+   "han-solo",
+   "jawa",
+   "loth-cat"
+  ],
+  "B017": [
+   "droideka",
+   "loth-cat",
+   "rose-tico",
+   "super-battle-droid"
+  ],
+  "B018": [
+   "garazeb-zeb-orrelios",
+   "general-grievous",
+   "hera-syndulla",
+   "salacious-b-crumb"
+  ],
+  "B019": [
+   "general-grievous",
+   "princess-leia-and-lola",
+   "r2-d2",
+   "salacious-b-crumb"
+  ],
+  "B020": [
+   "commander-cody",
+   "r4-p17",
+   "rio-durant",
+   "salacious-b-crumb"
+  ],
+  "B021": [
+   "chewbacca",
+   "garazeb-zeb-orrelios",
+   "general-grievous",
+   "rio-durant"
+  ],
+  "B022": [
+   "hera-syndulla",
+   "imperial-probe-droid",
+   "kanan-jarrus",
+   "r4-a22"
+  ],
+  "B023": [
+   "general-grievous",
+   "r2-d2",
+   "rio-durant",
+   "rose-tico"
+  ],
+  "B024": [
+   "bail-organa",
+   "droideka",
+   "general-grievous",
+   "imperial-probe-droid"
+  ],
+  "B025": [
+   "battle-droid",
+   "chewbacca",
+   "princess-leia-and-lola",
+   "rose-tico"
+  ],
+  "B026": [
+   "bail-organa",
+   "ev-9d9",
+   "kanan-jarrus",
+   "salacious-b-crumb"
+  ],
+  "B027": [
+   "chewbacca",
+   "garazeb-zeb-orrelios",
+   "hera-syndulla",
+   "kanan-jarrus"
+  ],
+  "B028": [
+   "bail-organa",
+   "kanan-jarrus",
+   "salacious-b-crumb",
+   "super-battle-droid"
+  ],
+  "B029": [
+   "chewbacca",
+   "ev-9d9",
+   "han-solo",
+   "imperial-probe-droid"
+  ],
+  "B030": [
+   "bail-organa",
+   "chewbacca",
+   "kanan-jarrus",
+   "super-battle-droid"
+  ],
+  "B031": [
+   "commander-cody",
+   "hera-syndulla",
+   "salacious-b-crumb",
+   "super-battle-droid"
+  ],
+  "B032": [
+   "commander-cody",
+   "general-grievous",
+   "r2-d2",
+   "super-battle-droid"
+  ],
+  "B033": [
+   "chewbacca",
+   "garazeb-zeb-orrelios",
+   "kanan-jarrus",
+   "princess-leia-and-lola"
+  ],
+  "B034": [
+   "commander-cody",
+   "droideka",
+   "rose-tico",
+   "super-battle-droid"
+  ],
+  "B035": [
+   "bail-organa",
+   "hera-syndulla",
+   "imperial-probe-droid",
+   "salacious-b-crumb"
+  ],
+  "B036": [
+   "bail-organa",
+   "battle-droid",
+   "commander-cody",
+   "loth-cat"
+  ]
+ },
+ "disputed": {}
+}

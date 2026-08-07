@@ -1,0 +1,197 @@
+{
+ "id": "sw-galaxy-peek-s4",
+ "brand": "Star Wars Doorables",
+ "name": "Galaxy Peek Series 4",
+ "packaging": "Cargo-drop capsule, opens into a two-level display",
+ "packagingNote": "We could not confirm this capsule's colour, so check the series number printed on the packet.",
+ "theme": "Droids, and the crew of the Ghost",
+ "emoji": "🤖",
+ "official": "https://justplayproducts.com/collections/star-wars-doorables/",
+ "figuresPerCapsule": 4,
+ "verified": false,
+ "sourced": "Roster, rarity and bag numbers come from the community code spreadsheet kept by @FuzzyLuzzi and the Doorables collectors, which lists 25 figures for this series. For Series 1 and 2 that sheet agreed with the Doorables wiki, HobbyDB and Coleka on every single figure, which is why the later series are trusted too — but Just Play has never published an official checklist, so this is very good community data rather than gospel.",
+ "numberLabel": "Bag #",
+ "numberNote": "The number printed beside each figure on the paper checklist inside the capsule.",
+ "figures": [
+  {
+   "id": "chewbacca",
+   "name": "Chewbacca",
+   "rarity": "common",
+   "number": "01"
+  },
+  {
+   "id": "kanan-jarrus",
+   "name": "Kanan Jarrus",
+   "rarity": "common",
+   "number": "02"
+  },
+  {
+   "id": "general-grievous",
+   "name": "General Grievous",
+   "rarity": "common",
+   "number": "03"
+  },
+  {
+   "id": "commander-cody",
+   "name": "Commander Cody",
+   "rarity": "common",
+   "number": "04"
+  },
+  {
+   "id": "imperial-probe-droid",
+   "name": "Imperial Probe Droid",
+   "rarity": "common",
+   "number": "05"
+  },
+  {
+   "id": "salacious-b-crumb",
+   "name": "Salacious B. Crumb",
+   "rarity": "common",
+   "number": "06"
+  },
+  {
+   "id": "rose-tico",
+   "name": "Rose Tico",
+   "rarity": "common",
+   "number": "07"
+  },
+  {
+   "id": "loth-cat",
+   "name": "Loth-cat",
+   "rarity": "common",
+   "number": "08"
+  },
+  {
+   "id": "super-battle-droid",
+   "name": "Super Battle Droid",
+   "rarity": "rare",
+   "number": "09"
+  },
+  {
+   "id": "princess-leia-and-lola",
+   "name": "Princess Leia and Lola",
+   "rarity": "rare",
+   "number": "10"
+  },
+  {
+   "id": "hera-syndulla",
+   "name": "Hera Syndulla",
+   "rarity": "rare",
+   "number": "11"
+  },
+  {
+   "id": "han-solo",
+   "name": "Han Solo",
+   "rarity": "rare",
+   "number": "12"
+  },
+  {
+   "id": "bail-organa",
+   "name": "Bail Organa",
+   "rarity": "rare",
+   "number": "14"
+  },
+  {
+   "id": "ezra-bridger",
+   "name": "Ezra Bridger",
+   "rarity": "rare",
+   "number": "15"
+  },
+  {
+   "id": "battle-droid",
+   "name": "Battle Droid",
+   "rarity": "ultra",
+   "number": "16"
+  },
+  {
+   "id": "droideka",
+   "name": "Droideka",
+   "rarity": "ultra",
+   "number": "17"
+  },
+  {
+   "id": "garazeb-zeb-orrelios",
+   "name": "Garazeb \"Zeb\" Orrelios",
+   "rarity": "ultra",
+   "number": "18"
+  },
+  {
+   "id": "ev-9d9",
+   "name": "EV-9D9",
+   "rarity": "ultra",
+   "number": "19"
+  },
+  {
+   "id": "r2-d2",
+   "name": "R2-D2",
+   "rarity": "ultra",
+   "number": "20"
+  },
+  {
+   "id": "jawa",
+   "name": "Jawa",
+   "rarity": "special",
+   "number": "21"
+  },
+  {
+   "id": "gonk-droid",
+   "name": "Gonk Droid",
+   "rarity": "special",
+   "number": "22"
+  },
+  {
+   "id": "c-3po",
+   "name": "C-3PO",
+   "rarity": "special",
+   "numberUnknown": true
+  },
+  {
+   "id": "r4-a22",
+   "name": "R4-A22",
+   "rarity": "special",
+   "numberUnknown": true
+  },
+  {
+   "id": "r4-p17",
+   "name": "R4-P17",
+   "rarity": "special",
+   "numberUnknown": true
+  },
+  {
+   "id": "rio-durant",
+   "name": "Rio Durant",
+   "rarity": "rare",
+   "numberUnknown": true
+  }
+ ],
+ "rarities": [
+  {
+   "id": "common",
+   "label": "Common",
+   "colour": "#8fa3d9"
+  },
+  {
+   "id": "rare",
+   "label": "Rare",
+   "colour": "#7ee8ff"
+  },
+  {
+   "id": "ultra",
+   "label": "Ultra Rare",
+   "colour": "#ffc93d"
+  },
+  {
+   "id": "special",
+   "label": "Special Edition",
+   "colour": "#ff8ad8"
+  }
+ ],
+ "codeNote": "Every capsule has a short code pressed into the plastic on the BOTTOM — a letter and some numbers, like A001. It is moulded rather than printed, so tilt it to the light or feel for it with a fingernail. Type it into the box at the top and this app will tell you which four figures are inside, before you open it. The letter at the front is the batch, and every batch has its own codes — so if a code comes back unknown it is most likely from a newer batch nobody has written down yet. These come from collectors rather than from Just Play, who have never published them, so they are very good but not official.",
+ "codeFile": "codes-sw-galaxy-peek-s4.json",
+ "codeLink": "https://disney-doorables.fandom.com/wiki/Star_Wars_Galaxy_Peek_Series_2",
+ "codeLinkLabel": "Community code spreadsheet (via the Doorables wiki)",
+ "itemNumber": "50033",
+ "upc": "886144500336",
+ "released": "2025-10-21",
+ "countNote": "Just Play's own description of Series 4 mentions 50 figures while shops list 25, so there may be a second wave we do not have. These 25 are the ones collectors have recorded codes for."
+}

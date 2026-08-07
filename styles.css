@@ -590,3 +590,202 @@ body {
   #progress-fill { transition: none; }
   #sheet-card, #cheer { animation: none; }
 }
+
+/* ------------------------------------------------------- the capsule finder */
+
+.finder {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 16px;
+  margin: 0 0 18px;
+}
+
+.finder h2 {
+  margin: 0 0 4px;
+  font-size: 1.05rem;
+  color: var(--ink);
+}
+
+.finder-hint {
+  margin: 0 0 12px;
+  font-size: .82rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.finder-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+#code-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  font: 700 1.5rem/1.2 inherit;
+  letter-spacing: .16em;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--bg-1);
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+
+#code-input::placeholder { color: var(--line); letter-spacing: .16em; }
+#code-input:focus { outline: none; border-color: var(--accent); }
+
+#code-clear {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  font-size: 1.1rem;
+  color: var(--muted);
+  background: var(--bg-1);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.finder-result:not(:empty) { margin-top: 14px; }
+
+.finder-verdict {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.finder-verdict.want { color: var(--gold); }
+.finder-verdict.got { color: var(--green); }
+.finder-verdict.unknown,
+.finder-verdict.disputed { color: var(--muted); }
+
+.finder-sub {
+  margin: 0 0 10px;
+  font-size: .8rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font: inherit;
+  font-size: .85rem;
+  color: var(--ink);
+  background: var(--bg-1);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 7px 12px;
+  cursor: pointer;
+}
+
+.chip.have {
+  background: var(--card-found);
+  border-color: var(--green);
+  color: var(--muted);
+}
+
+.chip.want { border-color: var(--gold); }
+.chip-mark { font-size: .9rem; }
+.chip.have .chip-mark { color: var(--green); }
+.chip.want .chip-mark { color: var(--gold); }
+.chip-name { font-weight: 600; }
+.chip.have .chip-name { font-weight: 400; }
+
+/* ------------------------------------------ codes known to hold this figure */
+
+.known-code-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0 0 8px;
+  padding: 0;
+  list-style: none;
+}
+
+.known-code {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: .82rem;
+  letter-spacing: .06em;
+  color: var(--ink);
+  background: var(--bg-1);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 5px 9px;
+}
+
+/* ------------------------------------------------------------- small print */
+
+.disclaimer {
+  max-width: 720px;
+  margin: 28px auto 0;
+  padding: 0 18px 22px;
+  font-size: .72rem;
+  line-height: 1.55;
+  text-align: center;
+  color: var(--line);
+}
+
+/*
+ * Caveats inside the sourcing block. They sit above the provenance line and
+ * are given a little more presence than it, because "this capsule is not a
+ * Death Star" is something to act on rather than footnote.
+ */
+.sourced .caveat {
+  margin: 0 0 8px;
+  padding: 8px 10px;
+  font-size: .74rem;
+  text-align: left;
+  color: var(--ink);
+  background: rgba(255, 201, 61, .09);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+}
+
+.sourced p:last-child { margin-bottom: 0; }
+
+/*
+ * Chip corrections.
+ *
+ * .rarity-dot is a full-width bar on a grid card, which is right there and
+ * quite wrong inside a chip, where it stretched into a long stripe. In a chip
+ * it goes back to being a dot.
+ *
+ * One figure per row: four capsule-mates with names like "Anakin Skywalker
+ * (Padawan)" wrapped to three lines each when they shared rows, which is hard
+ * work for a six-year-old scanning for a name he wants.
+ */
+.chip-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+@media (min-width: 520px) {
+  .chip-row { grid-template-columns: 1fr 1fr; }
+}
+
+.chip {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.chip .rarity-dot {
+  flex: 0 0 auto;
+  width: 10px;
+  height: 10px;
+  margin-left: auto;
+}
+
+.chip-name { flex: 1 1 auto; }

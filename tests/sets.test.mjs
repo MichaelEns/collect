@@ -16,8 +16,10 @@ const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const SETS = path.join(ROOT, 'sets');
 
 const read = (f) => JSON.parse(fs.readFileSync(path.join(SETS, f), 'utf8'));
-const setFiles = () => fs.readdirSync(SETS)
+const allJson = () => fs.readdirSync(SETS)
   .filter((f) => f.endsWith('.json') && f !== 'index.json' && f !== 'FORMAT.json');
+const setFiles = () => allJson().filter((f) => !f.startsWith('codes-'));
+const codeFiles = () => allJson().filter((f) => f.startsWith('codes-'));
 
 test('there is an index, and it lists every set file exactly once', () => {
   const index = read('index.json');
@@ -131,18 +133,95 @@ test('a set that ships codes also ships the caveat about them', () => {
   }
 });
 
-test('no set ships a code-to-figure mapping', () => {
-  // The community does maintain these, but codes differ between production
-  // batches and Just Play has never published them. A guessed mapping would
-  // have a child put a capsule back on the shelf because the app told him the
-  // wrong thing. Codes in this app are recorded by the child, from capsules
-  // he actually opened, which is correct for his batch by construction.
+test('a shipped code mapping says where it came from', () => {
+  /*
+   * Codes used to be banned from this app outright, on the grounds that they
+   * differ between production batches. That was half right and wrongly acted
+   * on: the letter at the front of a code IS the batch, and collectors have
+   * mapped the batches, so a lookup keyed on the whole code is correct for
+   * every batch it knows about.
+   *
+   * What still matters is that the data is attributable and that the app never
+   * invents an answer. So rather than forbidding codes, this requires them to
+   * carry provenance — and separate tests below require that disagreements are
+   * preserved instead of resolved by guesswork.
+   */
+  for (const file of codeFiles()) {
+    const data = read(file);
+    assert.ok(data.source, `${file}: ships codes with no source`);
+    for (const key of ['title', 'credit', 'url', 'retrieved']) {
+      assert.ok(data.source[key], `${file}: source has no ${key}`);
+    }
+    assert.match(data.source.url, /^https:\/\//, `${file}: source url is not a link`);
+    assert.match(data.source.retrieved, /^\d{4}-\d{2}-\d{2}$/,
+      `${file}: retrieved date is not a plain date`);
+  }
+});
+
+test('every shipped code names four real figures from its own set', () => {
+  // A code pointing at a figure that is not in the set would render a blank
+  // chip, and a capsule of three would quietly mislead.
+  for (const file of codeFiles()) {
+    const data = read(file);
+    const set = read(`${data.setId}.json`);
+    const ids = new Set(set.figures.map((f) => f.id));
+    const seen = Object.entries(data.codes);
+    assert.ok(seen.length > 0, `${file}: ships no codes at all`);
+    for (const [code, figures] of seen) {
+      assert.strictEqual(figures.length, set.figuresPerCapsule || 4,
+        `${file}: code ${code} does not hold a full capsule`);
+      assert.strictEqual(new Set(figures).size, figures.length,
+        `${file}: code ${code} lists the same figure twice`);
+      for (const id of figures) {
+        assert.ok(ids.has(id), `${file}: code ${code} names "${id}", which is not in ${data.setId}`);
+      }
+    }
+  }
+});
+
+test('codes look like codes, and none is both agreed and disputed', () => {
+  for (const file of codeFiles()) {
+    const data = read(file);
+    const disputed = data.disputed || {};
+    for (const code of Object.keys(data.codes)) {
+      assert.match(code, /^[A-Z0-9]+$/, `${file}: "${code}" is not a plain code`);
+      assert.ok(!(code in disputed), `${file}: ${code} is listed as both settled and disputed`);
+    }
+  }
+});
+
+test('a disputed code keeps every version rather than picking one', () => {
+  // Silently choosing a side would tell a child something false with total
+  // confidence. Showing both is honest and still useful.
+  for (const file of codeFiles()) {
+    const data = read(file);
+    for (const [code, variants] of Object.entries(data.disputed || {})) {
+      assert.ok(Array.isArray(variants) && variants.length > 1,
+        `${file}: ${code} is filed as disputed but has fewer than two versions`);
+      const seen = new Set(variants.map((v) => [...v].sort().join('|')));
+      assert.strictEqual(seen.size, variants.length,
+        `${file}: ${code} lists the same version twice`);
+    }
+  }
+});
+
+test('every set the codes claim to describe actually exists', () => {
+  const files = new Set(setFiles());
+  for (const file of codeFiles()) {
+    const data = read(file);
+    assert.ok(data.setId, `${file}: has no setId`);
+    assert.ok(files.has(`${data.setId}.json`), `${file}: points at a set that does not exist`);
+    assert.strictEqual(file, `codes-${data.setId}.json`,
+      `${file}: is named for a different set than it declares`);
+  }
+});
+
+test('a set that points at a code file gets one, and vice versa', () => {
   for (const file of setFiles()) {
     const set = read(file);
-    for (const figure of set.figures) {
-      assert.ok(!figure.codes,
-        `${file}: "${figure.id}" ships packaging codes we cannot verify`);
-    }
+    if (!set.codeFile) continue;
+    assert.ok(fs.existsSync(path.join(SETS, set.codeFile)),
+      `${file}: names a code file that is not there, so the finder silently vanishes`);
   }
 });
 
@@ -151,8 +230,13 @@ test('a set that mentions codes explains where they are and how far to trust the
     const set = read(file);
     if (!set.codeNote) continue;
     assert.match(set.codeNote, /bottom/i, `${file}: codeNote does not say where to look`);
-    assert.ok(/batch|change|never published|not published/i.test(set.codeNote),
-      `${file}: codeNote does not say the codes are unofficial and can change`);
+    // The batch letter is the whole reason a code can come back unknown. If
+    // the note does not explain it, an unknown code reads as the app being
+    // broken rather than as a batch nobody has recorded yet.
+    assert.match(set.codeNote, /batch/i,
+      `${file}: codeNote does not explain that the leading letter is the batch`);
+    assert.ok(/not official|unofficial|never published|collectors/i.test(set.codeNote),
+      `${file}: codeNote does not say the codes are unofficial`);
   }
 });
 

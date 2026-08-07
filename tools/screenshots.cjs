@@ -109,6 +109,24 @@ function rpc(ws, id, m, p) {
   await new Promise((r) => setTimeout(r, 900));
   await shoot('c-sheet.png');
 
+  // The capsule finder, mid-answer: this is the screen that gets used in a shop.
+  await run("document.getElementById('sheet-close').click();");
+  await new Promise((r) => setTimeout(r, 500));
+  await run("(function () {"
+    + " var el = document.getElementById('code-input');"
+    + " el.value = 'C004';"
+    + " el.dispatchEvent(new Event('input', { bubbles: true }));"
+    + " window.scrollTo(0, 0);"
+    + "})();");
+  await new Promise((r) => setTimeout(r, 800));
+  await shoot('c-finder.png');
+
+  // Series 5: the newest set, and the one carrying the most caveats — a
+  // different capsule shape, and a rarity list Just Play has not published.
+  await rpc(ws, id++, 'Page.navigate', { url: base + '#set=sw-galaxy-peek-s5' });
+  await new Promise((r) => setTimeout(r, 2500));
+  await shoot('c-series5.png');
+
   ws.close();
   try { process.kill(proc.pid); } catch { /* gone */ }
   srv.close();

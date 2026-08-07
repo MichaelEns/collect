@@ -152,7 +152,13 @@ async function main() {
       sets: [...document.querySelectorAll('.set-card h2')].map(h => h.textContent),
       counts: [...document.querySelectorAll('.set-card-count')].map(c => c.textContent),
     })`));
-    check('both sets are offered', picker.sets.length === 2, JSON.stringify(picker.sets));
+    // Read the expected count off the index rather than pinning a number, so
+    // adding a series does not fail a test that is not about counting.
+    const expectedSets = JSON.parse(
+      fs.readFileSync(path.join(__dirname, '..', 'sets', 'index.json'), 'utf8')
+    ).length;
+    check(`all ${expectedSets} sets are offered`,
+      picker.sets.length === expectedSets, JSON.stringify(picker.sets));
     check('and each shows how far along it is',
       picker.counts.every((c) => /^0\/25$/.test(c)), JSON.stringify(picker.counts));
 
@@ -190,6 +196,101 @@ async function main() {
       ['Queen Amidala', 'Wrecker', 'Cad Bane', 'Boba Fett', 'Captain Phasma']
         .every((n) => grid.names.includes(n)),
       JSON.stringify(grid.names.slice(20)));
+
+    /* ------------------------------------------- two routes racing */
+
+    console.log('\n--- switching sets faster than they load ---');
+    /*
+     * Deterministic, not timing-dependent: the slow set's read is held open
+     * while a second set is opened on top of it. Whichever finishes last, the
+     * one the child actually asked for has to be the one on screen.
+     *
+     * This is a real bug that shipped and was caught offline, where the gap
+     * between starting a read and finishing it is seconds wide.
+     */
+    await evalJs(`(() => {
+      window.__realFetch = window.fetch;
+      window.fetch = (u, o) => (/s1\\.json/.test(String(u))
+        ? new Promise((res) => setTimeout(() => res(window.__realFetch(u, o)), 900))
+        : window.__realFetch(u, o));
+      return 1;
+    })()`);
+    await evalJs("location.hash = ''; 1");
+    await new Promise((r) => setTimeout(r, 250));
+    await evalJs("location.hash = '#set=sw-galaxy-peek-s1'; 1");
+    await new Promise((r) => setTimeout(r, 120));
+    await evalJs("location.hash = '#set=sw-galaxy-peek-s3'; 1");
+    await new Promise((r) => setTimeout(r, 1800));
+    const raced = JSON.parse(await evalJs(`JSON.stringify({
+      title: document.getElementById('title').textContent,
+      stateSet: (window.__collect.state.set || {}).id || null,
+      first: (document.querySelector('.fig-name') || {}).textContent || null,
+    })`));
+    check('the set asked for last is the one shown',
+      raced.stateSet === 'sw-galaxy-peek-s3' && /Series 3/.test(raced.title),
+      JSON.stringify(raced));
+    check('and its figures match its title, not the abandoned set',
+      raced.first === 'Yoda', 'first figure: ' + raced.first);
+    await evalJs('window.fetch = window.__realFetch; 1');
+    // Put Series 2 back, since the checks that follow are written against it.
+    await evalJs("location.hash = '#set=sw-galaxy-peek-s2'; 1");
+    await new Promise((r) => setTimeout(r, 700));
+
+    /* ------------------------------------------------- the capsule finder */
+
+    console.log('\n--- the capsule finder ---');
+    const typeCode = async (code) => {
+      await evalJs(`(() => {
+        const el = document.getElementById('code-input');
+        el.value = ${JSON.stringify(code)};
+        el.dispatchEvent(new Event('input', { bubbles: true }));
+        return 1;
+      })()`);
+      await new Promise((r) => setTimeout(r, 220));
+      return JSON.parse(await evalJs(`JSON.stringify({
+        verdict: (document.querySelector('.finder-verdict') || {}).textContent || '',
+        cls: (document.querySelector('.finder-verdict') || {}).className || '',
+        chips: [...document.querySelectorAll('.chip-name')].map(c => c.textContent),
+        want: document.querySelectorAll('.chip.want').length,
+        have: document.querySelectorAll('.chip.have').length,
+      })`));
+    };
+
+    const finderShown = await evalJs("String(!document.getElementById('finder').hidden)");
+    check('the finder is offered when the set has codes', finderShown === 'true');
+
+    // A001 is the first Series 2 capsule in the community sheet.
+    const a001 = await typeCode('A001');
+    check('a known code names its four figures',
+      a001.chips.length === 4, JSON.stringify(a001.chips));
+    check('and they are the four the sheet records',
+      ['Anakin Skywalker (young)', 'Anakin Skywalker (Padawan)',
+        'Clone Captain Rex', 'Queen Amidala'].every((n) => a001.chips.includes(n)),
+      JSON.stringify(a001.chips));
+    check('with a verdict about what is still missing',
+      /still need/.test(a001.verdict) && /want/.test(a001.cls), a001.verdict);
+
+    // Lower case, spaces and a stray dash must all reach the same capsule, or
+    // a six-year-old typing carefully still gets told "unknown".
+    const messy = await typeCode(' a-0 0 1 ');
+    check('a messily typed code finds the same capsule',
+      JSON.stringify(messy.chips) === JSON.stringify(a001.chips), JSON.stringify(messy.chips));
+
+    const nonsense = await typeCode('ZZ999');
+    check('an unrecorded code says so rather than guessing',
+      /do not know/i.test(nonsense.verdict) && nonsense.chips.length === 0,
+      nonsense.verdict);
+
+    // Ticking a figure has to change the verdict, or the finder contradicts
+    // the grid behind it.
+    await evalJs("window.__collect.setHave('queen-amidala', true); 1");
+    await new Promise((r) => setTimeout(r, 250));
+    const afterTick = await typeCode('A001');
+    check('the verdict drops as figures are found',
+      afterTick.have === 1 && afterTick.want === 3, JSON.stringify(afterTick));
+    await evalJs("window.__collect.setHave('queen-amidala', false); 1");
+    await new Promise((r) => setTimeout(r, 250));
+    await typeCode('');
 
     /* ------------------------------------------------------------ finding */
 
@@ -289,6 +390,21 @@ async function main() {
 
     server.closeAllConnections();
     await new Promise((r) => server.close(r));
+
+    /*
+     * Closing the server makes requests fail, but the machine still has a
+     * network so navigator.onLine stays true — which is a weak-signal phone,
+     * not the no-signal phone this app is built for. Telling the browser it is
+     * offline as well gives the real case.
+     *
+     * Both are needed: emulateNetworkConditions does not reach a service
+     * worker's own fetches, so without closing the server the worker would
+     * still be served by the network it is supposedly cut off from.
+     */
+    await rpc(ws, id++, 'Network.enable', {});
+    await rpc(ws, id++, 'Network.emulateNetworkConditions', {
+      offline: true, latency: 0, downloadThroughput: 0, uploadThroughput: 0,
+    });
     const probe = await evalJs(`fetch('${base}never-existed-' + Date.now())
       .then(r => r.status).catch(() => 'threw')`);
     check('the network really is down for the test that follows',
@@ -306,6 +422,63 @@ async function main() {
       offline.figures === 25 && /1 of 25/.test(offline.progress) && offline.have === 1,
       JSON.stringify(offline));
     check('including its styling', offline.styled === '16px', offline.styled);
+
+    /*
+     * The finder is the reason everything is precached, so proving the
+     * checklist survives offline is not enough — the lookup itself has to
+     * answer. This is a set that was never opened while the network was up,
+     * so its codes can only come from the precache.
+     *
+     * The figures are named explicitly. An earlier version of this check only
+     * counted four chips, and passed while the page was still showing the
+     * previous set entirely.
+     */
+    await evalJs("location.hash = '#set=sw-galaxy-peek-s4'; 1");
+    // Timed, not merely awaited. This originally waited 1200ms and reported a
+    // failure that was purely its own impatience: the service worker's network
+    // timeout is 2500ms, so anything under that reads the previous set. The
+    // worker now answers immediately when the device reports no connection,
+    // and this asserts that rather than trusting it.
+    const routeStart = Date.now();
+    let routed = false;
+    for (let i = 0; i < 40 && !routed; i += 1) {
+      await new Promise((r) => setTimeout(r, 100));
+      routed = (await evalJs(
+        "String((window.__collect.state.set || {}).id === 'sw-galaxy-peek-s4')"
+      )) === 'true';
+    }
+    const routeMs = Date.now() - routeStart;
+    check('a set never opened online really opens offline', routed, `after ${routeMs}ms`);
+    check('and it opens promptly, not after the network timeout',
+      routed && routeMs < 2000, `took ${routeMs}ms, worker timeout is 2500ms`);
+
+    await evalJs(`(() => {
+      const el = document.getElementById('code-input');
+      el.value = 'A001';
+      el.dispatchEvent(new Event('input', { bubbles: true }));
+      return 1;
+    })()`);
+    await new Promise((r) => setTimeout(r, 350));
+    const offlineFinder = JSON.parse(await evalJs(`JSON.stringify({
+      shown: !document.getElementById('finder').hidden,
+      title: document.getElementById('title').textContent,
+      names: [...document.querySelectorAll('.fig-name')].map(n => n.textContent),
+      chips: [...document.querySelectorAll('.chip-name')].map(c => c.textContent),
+      verdict: (document.querySelector('.finder-verdict') || {}).textContent || '',
+    })`));
+    const s4 = JSON.parse(fs.readFileSync(
+      path.join(__dirname, '..', 'sets', 'codes-sw-galaxy-peek-s4.json'), 'utf8'
+    ));
+    const s4set = JSON.parse(fs.readFileSync(
+      path.join(__dirname, '..', 'sets', 'sw-galaxy-peek-s4.json'), 'utf8'
+    ));
+    const wantNames = s4.codes.A001.map((id) => s4set.figures.find((f) => f.id === id).name).sort();
+    check('showing the right set, not the one before it',
+      /Series 4/.test(offlineFinder.title) && offlineFinder.names.includes('Bail Organa'),
+      offlineFinder.title + ' :: ' + offlineFinder.names.slice(0, 3).join(', '));
+    check('and its capsule lookup answers with no network at all',
+      JSON.stringify(offlineFinder.chips.slice().sort()) === JSON.stringify(wantNames),
+      JSON.stringify(offlineFinder.chips) + ' want ' + JSON.stringify(wantNames));
 
     const offlineProblems = problems.slice(problemsBeforeOffline)
       .filter((p) => !/ERR_FAILED|ERR_CONNECTION|Failed to load resource/i.test(p));

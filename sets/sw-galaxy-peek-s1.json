@@ -1,49 +1,190 @@
 {
-  "id": "sw-galaxy-peek-s1",
-  "brand": "Star Wars Doorables",
-  "name": "Galaxy Peek Series 1",
-  "packaging": "Blue Death Star capsule",
-  "emoji": "🔵",
-  "official": "https://justplayproducts.com/collections/star-wars-doorables/",
-  "released": "2024-02",
-  "figuresPerCapsule": 4,
-  "verified": false,
-  "sourced": "25 figures, cross-checked against the Disney Doorables community wiki and trade press coverage from February 2024. Just Play has not published an official checklist online, so treat this as very good community data rather than gospel.",
-  "numberLabel": "Bag #",
-  "numberNote": "The number printed beside each figure on the paper checklist inside the capsule.",
-  "codeNote": "Every capsule has a short code pressed into the plastic on the BOTTOM — a letter and two numbers. It is moulded rather than printed, so tilt it to the light or feel for it with a fingernail. The codes change between batches and Just Play has never published them, so write down the code you find when you open one and it becomes your own key.",
-  "codeLink": "https://disney-doorables.fandom.com/wiki/Star_Wars_Galaxy_Peek_Series_1",
-  "codeLinkLabel": "Community code spreadsheet (via the Doorables wiki)",
-  "rarities": [
-    { "id": "common", "label": "Common", "colour": "#8fa3d9" },
-    { "id": "rare", "label": "Rare", "colour": "#7ee8ff" },
-    { "id": "ultra", "label": "Ultra Rare", "colour": "#ffc93d" }
-  ],
-  "figures": [
-    { "id": "luke-skywalker", "number": "01", "name": "Luke Skywalker", "rarity": "common" },
-    { "id": "princess-leia", "number": "02", "name": "Princess Leia", "rarity": "common" },
-    { "id": "stormtrooper", "number": "03", "name": "Stormtrooper", "rarity": "common" },
-    { "id": "r2-d2", "number": "04", "name": "R2-D2", "rarity": "common" },
-    { "id": "yoda", "number": "05", "name": "Yoda", "rarity": "common" },
-    { "id": "jawa", "number": "06", "name": "Jawa", "rarity": "common" },
-    { "id": "wicket", "number": "07", "name": "Wicket", "rarity": "common" },
-    { "id": "lando-calrissian", "number": "08", "name": "Lando Calrissian", "rarity": "common" },
-    { "id": "rey", "number": "09", "name": "Rey", "rarity": "common" },
-    { "id": "the-mandalorian", "number": "10", "name": "The Mandalorian", "rarity": "common" },
-    { "id": "sabine-wren", "number": "11", "name": "Sabine Wren", "rarity": "common" },
-    { "id": "professor-huyang", "number": "12", "name": "Professor Huyang", "rarity": "common" },
-    { "id": "c-3po", "number": "13", "name": "C-3PO", "rarity": "rare" },
-    { "id": "darth-vader", "number": "14", "name": "Darth Vader", "rarity": "rare" },
-    { "id": "jabba-the-hutt", "number": "15", "name": "Jabba the Hutt", "rarity": "rare" },
-    { "id": "han-solo", "number": "16", "name": "Han Solo", "rarity": "rare" },
-    { "id": "chewbacca", "number": "17", "name": "Chewbacca", "rarity": "rare" },
-    { "id": "bo-katan-kryze", "number": "18", "name": "Bo-Katan Kryze", "rarity": "rare" },
-    { "id": "grogu", "number": "19", "name": "Grogu", "rarity": "rare" },
-    { "id": "ahsoka-tano", "number": "20", "name": "Ahsoka Tano", "rarity": "rare" },
-    { "id": "greedo", "number": "21", "name": "Greedo", "rarity": "ultra" },
-    { "id": "princess-leia-hologram", "number": "22", "name": "Princess Leia (hologram)", "rarity": "ultra" },
-    { "id": "bb-8", "number": "23", "name": "BB-8", "rarity": "ultra" },
-    { "id": "hera-syndulla", "number": "24", "name": "Hera Syndulla", "rarity": "ultra" },
-    { "id": "chopper", "number": "25", "name": "Chopper (C1-10P)", "rarity": "ultra" }
-  ]
+ "id": "sw-galaxy-peek-s1",
+ "brand": "Star Wars Doorables",
+ "name": "Galaxy Peek Series 1",
+ "packaging": "Blue Death Star capsule",
+ "emoji": "🔵",
+ "official": "https://justplayproducts.com/collections/star-wars-doorables/",
+ "released": "2024-02",
+ "figuresPerCapsule": 4,
+ "verified": false,
+ "sourced": "25 figures, cross-checked against the Disney Doorables community wiki and trade press coverage from February 2024. Just Play has not published an official checklist online, so treat this as very good community data rather than gospel.",
+ "numberLabel": "Bag #",
+ "numberNote": "The number printed beside each figure on the paper checklist inside the capsule.",
+ "codeNote": "Every capsule has a short code pressed into the plastic on the BOTTOM — a letter and some numbers, like A001. It is moulded rather than printed, so tilt it to the light or feel for it with a fingernail. Type it into the box at the top and this app will tell you which four figures are inside, before you open it. The letter at the front is the batch, and every batch has its own codes — so if a code comes back unknown it is most likely from a newer batch nobody has written down yet. These come from collectors rather than from Just Play, who have never published them, so they are very good but not official.",
+ "codeLink": "https://disney-doorables.fandom.com/wiki/Star_Wars_Galaxy_Peek_Series_2",
+ "codeLinkLabel": "Community code spreadsheet (via the Doorables wiki)",
+ "rarities": [
+  {
+   "id": "common",
+   "label": "Common",
+   "colour": "#8fa3d9"
+  },
+  {
+   "id": "rare",
+   "label": "Rare",
+   "colour": "#7ee8ff"
+  },
+  {
+   "id": "ultra",
+   "label": "Ultra Rare",
+   "colour": "#ffc93d"
+  }
+ ],
+ "figures": [
+  {
+   "id": "luke-skywalker",
+   "name": "Luke Skywalker",
+   "rarity": "common",
+   "number": "01"
+  },
+  {
+   "id": "princess-leia",
+   "name": "Princess Leia",
+   "rarity": "common",
+   "number": "02"
+  },
+  {
+   "id": "stormtrooper",
+   "name": "Stormtrooper",
+   "rarity": "common",
+   "number": "03"
+  },
+  {
+   "id": "r2-d2",
+   "name": "R2-D2",
+   "rarity": "common",
+   "number": "04"
+  },
+  {
+   "id": "yoda",
+   "name": "Yoda",
+   "rarity": "common",
+   "number": "05"
+  },
+  {
+   "id": "jawa",
+   "name": "Jawa",
+   "rarity": "common",
+   "number": "06"
+  },
+  {
+   "id": "wicket",
+   "name": "Wicket",
+   "rarity": "common",
+   "number": "07"
+  },
+  {
+   "id": "lando-calrissian",
+   "name": "Lando Calrissian",
+   "rarity": "common",
+   "number": "08"
+  },
+  {
+   "id": "rey",
+   "name": "Rey",
+   "rarity": "common",
+   "number": "09"
+  },
+  {
+   "id": "the-mandalorian",
+   "name": "The Mandalorian",
+   "rarity": "common",
+   "number": "10"
+  },
+  {
+   "id": "sabine-wren",
+   "name": "Sabine Wren",
+   "rarity": "common",
+   "number": "11"
+  },
+  {
+   "id": "professor-huyang",
+   "name": "Professor Huyang",
+   "rarity": "common",
+   "number": "12"
+  },
+  {
+   "id": "c-3po",
+   "name": "C-3PO",
+   "rarity": "rare",
+   "number": "13"
+  },
+  {
+   "id": "darth-vader",
+   "name": "Darth Vader",
+   "rarity": "rare",
+   "number": "14"
+  },
+  {
+   "id": "jabba-the-hutt",
+   "name": "Jabba the Hutt",
+   "rarity": "rare",
+   "number": "15"
+  },
+  {
+   "id": "han-solo",
+   "name": "Han Solo",
+   "rarity": "rare",
+   "number": "16"
+  },
+  {
+   "id": "chewbacca",
+   "name": "Chewbacca",
+   "rarity": "rare",
+   "number": "17"
+  },
+  {
+   "id": "bo-katan-kryze",
+   "name": "Bo-Katan Kryze",
+   "rarity": "rare",
+   "number": "18"
+  },
+  {
+   "id": "grogu",
+   "name": "Grogu",
+   "rarity": "rare",
+   "number": "19"
+  },
+  {
+   "id": "ahsoka-tano",
+   "name": "Ahsoka Tano",
+   "rarity": "rare",
+   "number": "20"
+  },
+  {
+   "id": "greedo",
+   "name": "Greedo",
+   "rarity": "ultra",
+   "number": "21"
+  },
+  {
+   "id": "princess-leia-hologram",
+   "name": "Princess Leia (hologram)",
+   "rarity": "ultra",
+   "number": "22"
+  },
+  {
+   "id": "bb-8",
+   "name": "BB-8",
+   "rarity": "ultra",
+   "number": "23"
+  },
+  {
+   "id": "hera-syndulla",
+   "name": "Hera Syndulla",
+   "rarity": "ultra",
+   "number": "24"
+  },
+  {
+   "id": "chopper",
+   "name": "Chopper (C1-10P)",
+   "rarity": "ultra",
+   "number": "25"
+  }
+ ],
+ "codeFile": "codes-sw-galaxy-peek-s1.json",
+ "theme": "The heroes and villains everyone knows",
+ "itemNumber": "44822",
+ "upc": "886144448225"
 }

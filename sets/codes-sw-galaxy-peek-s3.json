@@ -1,0 +1,284 @@
+{
+ "setId": "sw-galaxy-peek-s3",
+ "source": {
+  "title": "Doorables Codes 5 : StarWars",
+  "credit": "@FuzzyLuzzi and the Disney Doorables collecting community",
+  "url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-cMlB9x1cjW3EGZUMDsx-7lryPflBjSGkZTVaOFvNlfPzHnEmWLGDeJXPHVdmKQyD3DFxo1S9U/pubhtml",
+  "via": "https://disney-doorables.fandom.com/wiki/Star_Wars_Galaxy_Peek_Series_2",
+  "retrieved": "2026-08-07"
+ },
+ "batches": {
+  "A": 8,
+  "B": 12,
+  "C": 11,
+  "D": 12,
+  "TL": 1
+ },
+ "codes": {
+  "A001": [
+   "grogu",
+   "ki-adi-mundi",
+   "mae-assassin",
+   "yoda"
+  ],
+  "A004": [
+   "kit-fisto",
+   "mon-mothma",
+   "nien-nunb",
+   "princess-leia"
+  ],
+  "A006": [
+   "admiral-ackbar",
+   "darth-vader",
+   "ki-adi-mundi",
+   "nien-nunb"
+  ],
+  "A007": [
+   "darth-vader",
+   "osha-aniseya",
+   "porg",
+   "reva"
+  ],
+  "A008": [
+   "director-orson-krennic",
+   "grogu",
+   "kelnacca",
+   "princess-leia"
+  ],
+  "A010": [
+   "cassian-andor",
+   "jedi-master-sol",
+   "lando-calrissian",
+   "yoda"
+  ],
+  "A011": [
+   "mace-windu",
+   "nien-nunb",
+   "osha-aniseya",
+   "yaddle"
+  ],
+  "A012": [
+   "aayla-secura",
+   "kit-fisto",
+   "luke-skywalker",
+   "porg"
+  ],
+  "B001": [
+   "k-2so",
+   "porg",
+   "rey",
+   "yoda"
+  ],
+  "B002": [
+   "grogu",
+   "ki-adi-mundi",
+   "mae-assassin",
+   "yoda"
+  ],
+  "B003": [
+   "aayla-secura",
+   "kit-fisto",
+   "luke-skywalker",
+   "porg"
+  ],
+  "B004": [
+   "cassian-andor",
+   "jedi-master-sol",
+   "lando-calrissian",
+   "yoda"
+  ],
+  "B005": [
+   "cassian-andor",
+   "jedi-master-sol",
+   "kelnacca",
+   "yoda-rare-version"
+  ],
+  "B006": [
+   "admiral-ackbar",
+   "darth-vader",
+   "ki-adi-mundi",
+   "nien-nunb"
+  ],
+  "B007": [
+   "admiral-ackbar",
+   "director-orson-krennic",
+   "k-2so",
+   "yaddle"
+  ],
+  "B008": [
+   "kit-fisto",
+   "mon-mothma",
+   "nien-nunb",
+   "princess-leia"
+  ],
+  "B009": [
+   "mace-windu",
+   "nien-nunb",
+   "osha-aniseya",
+   "yaddle"
+  ],
+  "B010": [
+   "director-orson-krennic",
+   "grogu",
+   "kelnacca",
+   "princess-leia"
+  ],
+  "B011": [
+   "aayla-secura",
+   "mace-windu",
+   "rey",
+   "yoda-rare-version"
+  ],
+  "B012": [
+   "darth-vader",
+   "osha-aniseya",
+   "porg",
+   "reva"
+  ],
+  "C001": [
+   "kit-fisto",
+   "mon-mothma",
+   "nien-nunb",
+   "princess-leia"
+  ],
+  "C002": [
+   "aayla-secura",
+   "mace-windu",
+   "rey",
+   "yoda-rare-version"
+  ],
+  "C003": [
+   "k-2so",
+   "porg",
+   "rey",
+   "yoda"
+  ],
+  "C004": [
+   "grogu",
+   "ki-adi-mundi",
+   "mae-assassin",
+   "yoda"
+  ],
+  "C005": [
+   "admiral-ackbar",
+   "director-orson-krennic",
+   "k-2so",
+   "yaddle"
+  ],
+  "C007": [
+   "cassian-andor",
+   "jedi-master-sol",
+   "kelnacca",
+   "yoda-rare-version"
+  ],
+  "C008": [
+   "aayla-secura",
+   "kit-fisto",
+   "luke-skywalker",
+   "porg"
+  ],
+  "C009": [
+   "director-orson-krennic",
+   "grogu",
+   "kelnacca",
+   "princess-leia"
+  ],
+  "C010": [
+   "darth-vader",
+   "osha-aniseya",
+   "porg",
+   "reva"
+  ],
+  "C011": [
+   "cassian-andor",
+   "jedi-master-sol",
+   "lando-calrissian",
+   "yoda"
+  ],
+  "C012": [
+   "admiral-ackbar",
+   "darth-vader",
+   "ki-adi-mundi",
+   "nien-nunb"
+  ],
+  "D001": [
+   "aayla-secura",
+   "mace-windu",
+   "rey",
+   "yoda-rare-version"
+  ],
+  "D002": [
+   "kit-fisto",
+   "mon-mothma",
+   "nien-nunb",
+   "princess-leia"
+  ],
+  "D003": [
+   "cassian-andor",
+   "jedi-master-sol",
+   "kelnacca",
+   "yoda-rare-version"
+  ],
+  "D004": [
+   "director-orson-krennic",
+   "grogu",
+   "kelnacca",
+   "princess-leia"
+  ],
+  "D005": [
+   "mace-windu",
+   "nien-nunb",
+   "osha-aniseya",
+   "yaddle"
+  ],
+  "D006": [
+   "darth-vader",
+   "osha-aniseya",
+   "porg",
+   "reva"
+  ],
+  "D007": [
+   "admiral-ackbar",
+   "darth-vader",
+   "ki-adi-mundi",
+   "nien-nunb"
+  ],
+  "D008": [
+   "grogu",
+   "ki-adi-mundi",
+   "mae-assassin",
+   "yoda"
+  ],
+  "D009": [
+   "aayla-secura",
+   "kit-fisto",
+   "luke-skywalker",
+   "porg"
+  ],
+  "D010": [
+   "cassian-andor",
+   "jedi-master-sol",
+   "lando-calrissian",
+   "yoda"
+  ],
+  "D011": [
+   "k-2so",
+   "porg",
+   "rey",
+   "yoda"
+  ],
+  "D012": [
+   "admiral-ackbar",
+   "director-orson-krennic",
+   "k-2so",
+   "yaddle"
+  ],
+  "TL001": [
+   "grogu",
+   "porg",
+   "yaddle",
+   "yoda"
+  ]
+ },
+ "disputed": {}
+}
