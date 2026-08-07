@@ -1,0 +1,592 @@
+/*
+ * A collection tracker for a six-year-old.
+ *
+ * Same two rules as the birthday app: every target is at least a fingertip
+ * wide, and the state of a thing is obvious at a glance from across a room.
+ * A found figure and a missing one have to be tellable apart without reading.
+ */
+
+:root {
+  --bg-1: #12193a;
+  --bg-2: #241a4d;
+  --card: #1e2650;
+  --card-found: #16351f;
+  --ink: #f2f4ff;
+  --muted: #a3aad0;
+  --line: #333c73;
+  --gold: #ffc93d;
+  --green: #43d17c;
+  --accent: #7ee8ff;
+  --shadow: rgba(0, 0, 0, .45);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background: linear-gradient(170deg, var(--bg-1), var(--bg-2)) fixed;
+  color: var(--ink);
+}
+
+body {
+  font-family: "Baloo 2", "Comic Sans MS", "Chalkboard SE", "Segoe UI Rounded",
+               system-ui, -apple-system, sans-serif;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+           env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+/* ---------------------------------------------------------------- topbar */
+
+#topbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  background: rgba(18, 25, 58, .92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+
+#back {
+  flex: 0 0 auto;
+  width: 46px;
+  height: 46px;
+  border: 0;
+  border-radius: 14px;
+  background: var(--card);
+  color: var(--ink);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+#back[hidden] { display: none; }
+
+#titles { min-width: 0; }
+
+#title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 800;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#subtitle {
+  margin: 2px 0 0;
+  font-size: .8rem;
+  color: var(--muted);
+}
+
+#main { padding: 14px; max-width: 900px; margin: 0 auto; }
+
+/* ------------------------------------------------------------ set picker */
+
+.set-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+
+.set-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  min-height: 84px;
+  padding: 14px;
+  border: 2px solid var(--line);
+  border-radius: 18px;
+  background: var(--card);
+  color: var(--ink);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.set-card:active { transform: scale(.98); }
+
+.set-badge {
+  flex: 0 0 auto;
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: linear-gradient(150deg, #3a2a7a, #7a3aa0);
+  font-size: 1.7rem;
+}
+
+.set-card-body { min-width: 0; flex: 1 1 auto; }
+.set-card h2 { margin: 0; font-size: 1.05rem; font-weight: 800; }
+.set-card p { margin: 2px 0 0; font-size: .8rem; color: var(--muted); }
+
+.set-card-count {
+  flex: 0 0 auto;
+  font-weight: 800;
+  font-size: .95rem;
+  color: var(--gold);
+}
+
+.empty { color: var(--muted); text-align: center; padding: 30px 10px; }
+
+/* -------------------------------------------------------------- progress */
+
+#progress-panel { margin-bottom: 16px; }
+
+#progress-track {
+  height: 22px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, .35);
+  overflow: hidden;
+  border: 2px solid var(--line);
+}
+
+#progress-fill {
+  height: 100%;
+  width: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--green), var(--accent));
+  transition: width .45s cubic-bezier(.2, .9, .3, 1);
+}
+
+#progress-text {
+  margin: 8px 0 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.sourced {
+  margin: 6px 0 0;
+  font-size: .72rem;
+  line-height: 1.4;
+  color: var(--muted);
+  text-align: center;
+}
+
+.sourced a { color: var(--accent); }
+
+/* ------------------------------------------------------------------ grid */
+
+.grid {
+  display: grid;
+  /* Three across on a phone, more on anything wider, without a media query. */
+  grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+  gap: 10px;
+}
+
+.fig {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  /* Comfortably more than a fingertip in both directions. */
+  min-height: 132px;
+  padding: 10px 8px 8px;
+  border: 2px solid var(--line);
+  border-radius: 16px;
+  background: var(--card);
+  color: var(--ink);
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform .12s ease, border-color .2s ease, background .2s ease;
+}
+
+.fig:active { transform: scale(.95); }
+
+/* Found and missing differ in colour, border, brightness AND a tick, so the
+ * difference survives a colourblind eye and a sunlit screen. */
+.fig.have {
+  background: var(--card-found);
+  border-color: var(--green);
+}
+
+.fig-art {
+  width: 62px;
+  height: 62px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: rgba(0, 0, 0, .3);
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--muted);
+}
+
+.fig-art img { width: 100%; height: 100%; object-fit: cover; }
+
+.fig.have .fig-art { background: rgba(67, 209, 124, .18); color: var(--green); }
+
+.fig-name {
+  font-size: .72rem;
+  font-weight: 700;
+  line-height: 1.15;
+  text-align: center;
+  /* Two lines maximum, so one long name cannot make its card taller than the
+   * rest of the row. */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.fig:not(.have) .fig-name { color: var(--muted); }
+
+.fig-tick {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--green);
+  color: #06301a;
+  font-size: .85rem;
+  font-weight: 900;
+}
+
+.fig:not(.have) .fig-tick { display: none; }
+
+.fig-dupe {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--gold);
+  color: #40230a;
+  font-size: .72rem;
+  font-weight: 900;
+  display: grid;
+  place-items: center;
+}
+
+.rarity-dot {
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--line);
+}
+
+/* An unconfirmed entry is marked, rather than quietly presented as fact. */
+.fig.unverified::after {
+  content: "?";
+  position: absolute;
+  bottom: 6px;
+  right: 8px;
+  font-size: .8rem;
+  font-weight: 900;
+  color: var(--gold);
+  opacity: .85;
+}
+
+.legend {
+  margin: 16px 0 0;
+  font-size: .74rem;
+  line-height: 1.5;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* ----------------------------------------------------------------- sheet */
+
+#sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: end center;
+  background: rgba(0, 0, 0, .6);
+  padding: 0;
+}
+
+#sheet[hidden] { display: none; }
+
+#sheet-card {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  max-height: 92vh;
+  overflow-y: auto;
+  padding: 22px 18px calc(22px + env(safe-area-inset-bottom));
+  border-radius: 24px 24px 0 0;
+  background: #1b2350;
+  border-top: 3px solid var(--line);
+  animation: rise .25s ease-out;
+}
+
+@keyframes rise { from { transform: translateY(30px); } to { transform: none; } }
+
+#sheet-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .12);
+  color: var(--ink);
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+#sheet-photo-wrap {
+  width: 128px;
+  height: 128px;
+  margin: 0 auto 12px;
+  border-radius: 22px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, .3);
+  display: grid;
+  place-items: center;
+}
+
+#sheet-photo { width: 100%; height: 100%; object-fit: cover; }
+
+.placeholder {
+  font-size: 2.6rem;
+  font-weight: 900;
+  color: var(--muted);
+}
+
+#sheet-name {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 900;
+  text-align: center;
+}
+
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.number-tag {
+  padding: 4px 14px;
+  border-radius: 999px;
+  font-size: .78rem;
+  font-weight: 800;
+  background: rgba(0, 0, 0, .35);
+  border: 2px solid var(--line);
+  font-family: ui-monospace, "SF Mono", Consolas, monospace;
+}
+
+.rarity-tag {
+  margin: 0;
+  width: fit-content;
+  padding: 4px 14px;
+  border-radius: 999px;
+  font-size: .78rem;
+  font-weight: 800;
+  background: var(--line);
+}
+
+.note {
+  margin: 10px 0 0;
+  font-size: .85rem;
+  line-height: 1.45;
+  color: var(--muted);
+  text-align: center;
+}
+
+#sheet-codes { margin-top: 18px; }
+
+#sheet-codes h3 {
+  margin: 0 0 8px;
+  font-size: .8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--muted);
+}
+
+.code-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.code-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 10px 10px 14px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, .35);
+  border: 2px solid var(--line);
+  /* A code is read off a capsule and compared character by character, so it
+   * has to be unambiguous: a monospace face keeps 0/O and 1/l apart. */
+  font-family: ui-monospace, "SF Mono", Consolas, "Liberation Mono", monospace;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+}
+
+.code-list li.code-empty {
+  border-style: dashed;
+  background: none;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: .85rem;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.code-remove {
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .12);
+  color: var(--muted);
+  font-size: .8rem;
+  cursor: pointer;
+}
+
+.code-add {
+  display: block;
+  width: 100%;
+  min-height: 52px;
+  margin-top: 10px;
+  border: 2px dashed var(--line);
+  border-radius: 14px;
+  background: none;
+  color: var(--accent);
+  font-family: inherit;
+  font-size: .92rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.caveat {
+  margin: 10px 0 0;
+  font-size: .74rem;
+  line-height: 1.45;
+  color: var(--gold);
+}
+
+.sheet-actions { margin-top: 20px; }
+
+.primary {
+  width: 100%;
+  min-height: 62px;
+  border: 0;
+  border-radius: 16px;
+  background: var(--green);
+  color: #06301a;
+  font-family: inherit;
+  font-weight: 900;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 5px 0 rgba(0, 0, 0, .35);
+}
+
+.primary.undo { background: var(--line); color: var(--ink); }
+.primary:active { transform: translateY(3px); box-shadow: 0 2px 0 rgba(0, 0, 0, .35); }
+
+.dupe-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.dupe-row button {
+  width: 52px;
+  height: 52px;
+  border: 2px solid var(--line);
+  border-radius: 14px;
+  background: var(--card);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 1.5rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+#dupe-count { font-size: 1.5rem; font-weight: 900; min-width: 32px; text-align: center; }
+.dupe-label { font-size: .8rem; color: var(--muted); }
+
+.photo-button {
+  display: block;
+  margin-top: 16px;
+  padding: 15px;
+  border: 2px dashed var(--line);
+  border-radius: 14px;
+  text-align: center;
+  font-size: .92rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.link-button {
+  display: block;
+  margin-top: 10px;
+  padding: 12px;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font-family: inherit;
+  font-size: .85rem;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* ----------------------------------------------------------------- cheer */
+
+#cheer {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  text-align: center;
+  font-size: clamp(1.6rem, 8vw, 3rem);
+  font-weight: 900;
+  line-height: 1.1;
+  text-shadow: 0 4px 0 var(--shadow);
+  pointer-events: none;
+  animation: pop-in .5s cubic-bezier(.2, 1.7, .4, 1);
+}
+
+#cheer[hidden] { display: none; }
+
+@keyframes pop-in {
+  from { transform: scale(.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+#fx {
+  position: fixed;
+  inset: 0;
+  z-index: 25;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #progress-fill { transition: none; }
+  #sheet-card, #cheer { animation: none; }
+}

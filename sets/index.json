@@ -1,0 +1,20 @@
+[
+  {
+    "id": "sw-galaxy-peek-s2",
+    "file": "sw-galaxy-peek-s2.json",
+    "name": "Galaxy Peek Series 2",
+    "brand": "Star Wars Doorables",
+    "packaging": "Red Death Star",
+    "emoji": "🔴",
+    "total": 25
+  },
+  {
+    "id": "sw-galaxy-peek-s1",
+    "file": "sw-galaxy-peek-s1.json",
+    "name": "Galaxy Peek Series 1",
+    "brand": "Star Wars Doorables",
+    "packaging": "Blue Death Star",
+    "emoji": "🔵",
+    "total": 25
+  }
+]

@@ -1,0 +1,38 @@
+{
+  "id": "/collect/",
+  "name": "My Collection Tracker",
+  "short_name": "Collection",
+  "description": "Keep track of which mystery-box figures you have found.",
+  "start_url": "/collect/",
+  "scope": "/collect/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#12193a",
+  "theme_color": "#12193a",
+  "icons": [
+    {
+      "src": "/collect/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/collect/icon-180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/collect/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/collect/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

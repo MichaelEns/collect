@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Collection checklist">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#12193a"/>
+      <stop offset="1" stop-color="#3a1e60"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="96" fill="url(#sky)"/>
+  <g>
+    <rect x="87" y="87" width="104" height="104" rx="26" fill="#43d17c"/>
+    <path d="M112 140 l20 22 l38 -46" fill="none" stroke="#0a4a28" stroke-width="17"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="204" y="87" width="104" height="104" rx="26" fill="#43d17c"/>
+    <path d="M229 140 l20 22 l38 -46" fill="none" stroke="#0a4a28" stroke-width="17"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="321" y="87" width="104" height="104" rx="26" fill="#2c3670" stroke="#48549e" stroke-width="6"/>
+
+    <rect x="87" y="204" width="104" height="104" rx="26" fill="#43d17c"/>
+    <path d="M112 257 l20 22 l38 -46" fill="none" stroke="#0a4a28" stroke-width="17"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="204" y="204" width="104" height="104" rx="26" fill="#43d17c"/>
+    <path d="M229 257 l20 22 l38 -46" fill="none" stroke="#0a4a28" stroke-width="17"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="321" y="204" width="104" height="104" rx="26" fill="#2c3670" stroke="#48549e" stroke-width="6"/>
+
+    <rect x="87" y="321" width="104" height="104" rx="26" fill="#43d17c"/>
+    <path d="M112 374 l20 22 l38 -46" fill="none" stroke="#0a4a28" stroke-width="17"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="204" y="321" width="104" height="104" rx="26" fill="#2c3670" stroke="#48549e" stroke-width="6"/>
+    <rect x="321" y="321" width="104" height="104" rx="26" fill="#2c3670" stroke="#ffc93d" stroke-width="8"/>
+    <path d="M373 344 l10 21 l23 3 l-17 16 l4 23 l-20 -11 l-20 11 l4 -23 l-17 -16 l23 -3 z" fill="#ffc93d"/>
+  </g>
+</svg>

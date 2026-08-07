@@ -1,0 +1,38 @@
+/*
+ * The shape of a collectible set.
+ *
+ * Everything the app knows about a collection lives in one of these files, so
+ * adding a new mystery-box line means dropping a JSON file into sets/ and
+ * naming it in sets/index.json. No code changes.
+ *
+ * This file is the contract, kept next to the data it describes. It is loaded
+ * by the tests, so a set file that drifts from it fails the build rather than
+ * failing quietly on a child's tablet.
+ */
+{
+  "$comment": "Not JSON Schema — deliberately small and readable. See tests/sets.test.mjs.",
+
+  "required": ["id", "brand", "name", "figures"],
+
+  "fields": {
+    "id": "Stable slug. Used as the localStorage key, so changing it loses progress.",
+    "brand": "Who makes it, e.g. 'Disney Doorables'.",
+    "name": "The set name, e.g. 'Galaxy Peek Series 2'.",
+    "packaging": "Optional. How to recognise the box on a shelf, e.g. 'Red Death Star'.",
+    "official": "Optional URL to the manufacturer's own page for this product.",
+    "sourced": "Where the roster came from. Shown to the user. Be honest here.",
+    "verified": "true only if every figure is confirmed against an official source.",
+    "codeLabel": "Optional. What the codes are called on the packaging, if the set has them.",
+    "rarities": "Optional list of { id, label, colour } in increasing rarity.",
+    "figures": "The roster."
+  },
+
+  "figure": {
+    "id": "Stable slug, unique within the set. The key progress is stored under.",
+    "name": "What it is called.",
+    "rarity": "Optional. Must match a rarities[].id.",
+    "codes": "Optional list of packaging codes that identify this figure.",
+    "verified": "false marks it as unconfirmed, and the app says so on the card.",
+    "note": "Optional free text shown on the detail card."
+  }
+}

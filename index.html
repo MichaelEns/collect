@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>My Collection</title>
+<meta name="description" content="Keep track of which mystery-box figures you have found." />
+<meta name="theme-color" content="#12193a" />
+
+<link rel="manifest" href="/collect/manifest.webmanifest" />
+<link rel="icon" href="/collect/icon.svg" type="image/svg+xml" />
+<!--
+  iOS installs the page you are looking at rather than the manifest's
+  start_url, and it will not accept an SVG here. Without a PNG it screenshots
+  the page and uses that as the home screen icon.
+-->
+<link rel="apple-touch-icon" href="/collect/icon-180.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-title" content="Collection" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<link rel="stylesheet" href="/collect/styles.css" />
+</head>
+<body>
+
+<header id="topbar">
+  <button id="back" type="button" hidden aria-label="Back to all collections">←</button>
+  <div id="titles">
+    <h1 id="title">My Collection</h1>
+    <p id="subtitle">Pick a set to start</p>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- Which collection are we looking at. -->
+  <section id="picker" aria-label="Your collections">
+    <ul id="set-list" class="set-list"></ul>
+    <p id="picker-empty" class="empty" hidden>No sets are installed yet.</p>
+  </section>
+
+  <!-- One collection, as a grid of figures. -->
+  <section id="collection" hidden aria-label="Figures in this set">
+    <div id="progress-panel">
+      <div id="progress-track"><div id="progress-fill"></div></div>
+      <p id="progress-text">0 of 0</p>
+      <p id="sourced" class="sourced"></p>
+    </div>
+
+    <div id="grid" class="grid"></div>
+
+    <p id="legend" class="legend"></p>
+  </section>
+
+</main>
+
+<!-- One figure, close up: codes, photo, duplicates. -->
+<div id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="sheet-name">
+  <div id="sheet-card">
+    <button id="sheet-close" type="button" aria-label="Close">✕</button>
+
+    <div id="sheet-photo-wrap">
+      <img id="sheet-photo" alt="" hidden />
+      <div id="sheet-placeholder" class="placeholder"></div>
+    </div>
+
+    <h2 id="sheet-name">—</h2>
+    <div class="tag-row">
+      <span id="sheet-number" class="number-tag" hidden></span>
+      <span id="sheet-rarity" class="rarity-tag" hidden></span>
+    </div>
+    <p id="sheet-note" class="note" hidden></p>
+
+    <div id="sheet-codes">
+      <h3>Codes you have found</h3>
+      <ul id="code-list" class="code-list"></ul>
+      <button id="code-add" type="button" class="code-add">
+        ＋ Add the code from a capsule
+      </button>
+      <p id="code-note" class="caveat"></p>
+      <a id="code-link" class="link-button" hidden target="_blank" rel="noopener noreferrer"></a>
+    </div>
+
+    <div class="sheet-actions">
+      <button id="sheet-have" type="button" class="primary">I found it!</button>
+      <div class="dupe-row">
+        <button id="dupe-down" type="button" aria-label="One fewer">−</button>
+        <span id="dupe-count">0</span>
+        <button id="dupe-up" type="button" aria-label="One more">+</button>
+        <span class="dupe-label">spares</span>
+      </div>
+    </div>
+
+    <label id="photo-label" class="photo-button">
+      <input id="photo-input" type="file" accept="image/*" capture="environment" hidden />
+      <span id="photo-button-text">📷 Add a photo of yours</span>
+    </label>
+    <button id="photo-remove" type="button" class="link-button" hidden>Remove photo</button>
+
+    <a id="sheet-official" class="link-button" hidden target="_blank" rel="noopener noreferrer">
+      Look it up on the official site ↗
+    </a>
+  </div>
+</div>
+
+<div id="cheer" hidden aria-live="polite"></div>
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<script src="/collect/app.js"></script>
+</body>
+</html>
