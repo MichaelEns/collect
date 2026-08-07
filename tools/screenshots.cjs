@@ -109,6 +109,14 @@ function rpc(ws, id, m, p) {
   await new Promise((r) => setTimeout(r, 900));
   await shoot('c-sheet.png');
 
+  // The worst case for the capsule list: 45 codes across all 12 batches.
+  await run("document.getElementById('sheet-close').click();");
+  await new Promise((r) => setTimeout(r, 400));
+  await run("window.__collect.openSheet("
+    + "window.__collect.state.set.figures.find(function (f) { return f.id === 'anakin-padawan'; }));");
+  await new Promise((r) => setTimeout(r, 800));
+  await shoot('c-capsules.png');
+
   // The capsule finder, mid-answer: this is the screen that gets used in a shop.
   await run("document.getElementById('sheet-close').click();");
   await new Promise((r) => setTimeout(r, 500));

@@ -47,6 +47,12 @@ nobody has written down yet, not a bug.
 Where collectors disagreed about a code — two of them, both in Series 2 — the
 app shows **every** version reported rather than quietly picking one.
 
+Open a figure's card and it also works the other way round: it lists **every**
+capsule known to contain that figure, grouped by batch. No truncation. One
+figure appears in 45 different capsules across all 12 batches, and all 45 are
+shown — a capped list quietly answers "no" for the codes it hides, which is the
+opposite of useful when it is being checked against a capsule in hand.
+
 ### An earlier version of this README was wrong about this
 
 It used to say the app deliberately would not map codes to figures, because

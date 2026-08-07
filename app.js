@@ -586,19 +586,47 @@
     wrap.hidden = codes.length === 0;
     if (!codes.length) return;
 
-    // A figure can appear in dozens of capsules. Showing every one turns the
-    // useful list into a wall, so it is capped and counted.
-    const SHOWN = 12;
-    for (const code of codes.slice(0, SHOWN)) {
-      const li = document.createElement('li');
-      li.className = 'known-code';
-      li.textContent = code;
-      list.appendChild(li);
+    /*
+     * Every code, never a "…and 28 more".
+     *
+     * This was capped at twelve to stop it becoming a wall of text. That was
+     * the wrong trade: the list exists to be checked against a capsule in his
+     * hand, and a truncated list quietly answers "no" for the codes it hid.
+     *
+     * Grouping by batch letter is what makes the full list readable — the
+     * leading letter is the batch, so the code in his hand is inside exactly
+     * one of these rows and he only has to scan that one.
+     */
+    const byBatch = new Map();
+    for (const code of codes) {
+      const letter = (code.match(/^[A-Z]+/) || ['#'])[0];
+      if (!byBatch.has(letter)) byBatch.set(letter, []);
+      byBatch.get(letter).push(code);
     }
-    more.hidden = codes.length <= SHOWN;
-    if (codes.length > SHOWN) {
-      more.textContent = `…and ${codes.length - SHOWN} more capsules contain it.`;
+
+    for (const [letter, group] of [...byBatch].sort((a, b) => a[0].localeCompare(b[0]))) {
+      const row = document.createElement('li');
+      row.className = 'known-batch';
+      const tag = document.createElement('span');
+      tag.className = 'batch-tag';
+      tag.textContent = letter === '#' ? 'no letter' : `batch ${letter}`;
+      row.appendChild(tag);
+      const codesWrap = document.createElement('span');
+      codesWrap.className = 'batch-codes';
+      for (const code of group) {
+        const chip = document.createElement('span');
+        chip.className = 'known-code';
+        chip.textContent = code;
+        codesWrap.appendChild(chip);
+      }
+      row.appendChild(codesWrap);
+      list.appendChild(row);
     }
+
+    more.textContent = codes.length === 1
+      ? 'That is the only capsule we know of with this one inside.'
+      : `${codes.length} capsules in ${byBatch.size} `
+        + `${byBatch.size === 1 ? 'batch' : 'batches'} have this one inside.`;
   }
 
   $('code-input').addEventListener('input', (event) => {

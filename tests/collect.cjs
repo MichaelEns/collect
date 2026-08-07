@@ -308,6 +308,46 @@ async function main() {
     check('showing the ultra rare it is', sheet.name === 'Queen Amidala' && /Ultra/.test(sheet.rarity),
       JSON.stringify(sheet));
     check('and its checklist number', /21/.test(sheet.number), sheet.number);
+
+    /*
+     * Every capsule containing this figure is listed, with no truncation.
+     * A capped list quietly answers "no" for the codes it hides, which is
+     * exactly wrong when it is being checked against a capsule in hand.
+     *
+     * Checked against the worst case in the set rather than a convenient one:
+     * Anakin (Padawan) is in 45 capsules across all 12 batches, so if the
+     * layout survives him it survives anyone.
+     */
+    await evalJs("document.getElementById('sheet-close').click(); 1");
+    await new Promise((r) => setTimeout(r, 300));
+    await evalJs("window.__collect.openSheet("
+      + "window.__collect.state.set.figures.find(f => f.id === 'anakin-padawan')); 1");
+    await new Promise((r) => setTimeout(r, 500));
+    const known = JSON.parse(await evalJs(`JSON.stringify({
+      shown: [...document.querySelectorAll('#known-code-list .known-code')].map(c => c.textContent),
+      batches: [...document.querySelectorAll('#known-code-list .batch-tag')].map(b => b.textContent),
+      count: document.getElementById('known-code-more').textContent,
+      truncated: /and \\d+ more/i.test(document.getElementById('known-codes').textContent),
+    })`));
+    const s2codes = JSON.parse(fs.readFileSync(
+      path.join(__dirname, '..', 'sets', 'codes-sw-galaxy-peek-s2.json'), 'utf8'
+    ));
+    const expected = Object.entries(s2codes.codes)
+      .filter(([, ids]) => ids.includes('anakin-padawan')).map(([c]) => c).sort();
+    check('every capsule containing it is listed, not just the first few',
+      JSON.stringify(known.shown.slice().sort()) === JSON.stringify(expected),
+      `showed ${known.shown.length} of ${expected.length}`);
+    check('nothing is hidden behind an "and N more"',
+      known.truncated === false, known.count);
+    check('and they are grouped by batch so the list stays scannable',
+      known.batches.length === 12 && known.batches.every((b) => /^batch [A-Z]+$/.test(b)),
+      `${known.batches.length} batch rows for ${known.shown.length} codes`);
+
+    // Back to Queen Amidala, since the checks that follow are written for her.
+    await evalJs("document.getElementById('sheet-close').click(); 1");
+    await new Promise((r) => setTimeout(r, 300));
+    await evalJs("document.querySelectorAll('.fig')[20].click(); 1");
+    await new Promise((r) => setTimeout(r, 400));
     check('with the note about where codes live', sheet.codeNote.length > 10, sheet.codeNote);
 
     await evalJs("document.getElementById('sheet-have').click(); 1");
