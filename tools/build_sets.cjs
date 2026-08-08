@@ -115,6 +115,25 @@ const META = {
 
 const EMOJI = { 1: '🌑', 2: '🔴', 3: '⭐', 4: '🤖', 5: '🪐' };
 
+/*
+ * The wiki page for each series, where the figure pictures live.
+ *
+ * Every set used to point at the Series 2 page, so four sets out of five sent
+ * you to the wrong checklist — and the page named in the app is the one place
+ * you can go to see what a figure actually looks like before hunting it.
+ *
+ * The titles are not consistent, which is why the obvious guesses fail: the
+ * Series 3 and 4 pages are NOT called "Galaxy Peek", and the URLs you would
+ * predict both 404. These five were each confirmed to return 200.
+ */
+const WIKI = {
+  1: 'Star_Wars_Galaxy_Peek_Series_1',
+  2: 'Star_Wars_Galaxy_Peek_Series_2',
+  3: 'Star_Wars_Series_3',
+  4: 'Star_Wars_S4',
+  5: 'Star_Wars_Galaxy_Peek_Series_5',
+};
+
 function build(series) {
   const setId = `sw-galaxy-peek-s${series}`;
   const file = path.join(setsDir, `${setId}.json`);
@@ -174,8 +193,8 @@ function build(series) {
   set.rarities = RARITIES.filter((r) => figures.some((f) => f.rarity === r.id));
   set.codeNote = CODE_NOTE;
   set.codeFile = `codes-${setId}.json`;
-  set.codeLink = 'https://disney-doorables.fandom.com/wiki/Star_Wars_Galaxy_Peek_Series_2';
-  set.codeLinkLabel = 'Community code spreadsheet (via the Doorables wiki)';
+  set.codeLink = `https://disney-doorables.fandom.com/wiki/${WIKI[series]}`;
+  set.codeLinkLabel = `Series ${series} on the Doorables wiki — pictures and codes`;
 
   fs.writeFileSync(file, `${JSON.stringify(set, null, 1)}\n`);
   const tally = {};

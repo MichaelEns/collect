@@ -12,8 +12,8 @@
  "numberLabel": "Bag #",
  "numberNote": "The number printed beside each figure on the paper checklist inside the capsule.",
  "codeNote": "Every capsule has a short code pressed into the plastic on the BOTTOM — a letter and some numbers, like A001. It is moulded rather than printed, so tilt it to the light or feel for it with a fingernail. Type it into the box at the top and this app will tell you which four figures are inside, before you open it. The letter at the front is the batch, and every batch has its own codes — so if a code comes back unknown it is most likely from a newer batch nobody has written down yet. These come from collectors rather than from Just Play, who have never published them, so they are very good but not official.",
- "codeLink": "https://disney-doorables.fandom.com/wiki/Star_Wars_Galaxy_Peek_Series_2",
- "codeLinkLabel": "Community code spreadsheet (via the Doorables wiki)",
+ "codeLink": "https://disney-doorables.fandom.com/wiki/Star_Wars_Galaxy_Peek_Series_1",
+ "codeLinkLabel": "Series 1 on the Doorables wiki — pictures and codes",
  "rarities": [
   {
    "id": "common",

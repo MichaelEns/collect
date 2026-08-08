@@ -401,6 +401,28 @@ test('two figures sharing a name are separated by more than the tile alone', () 
  */
 const LOCK = 'ids.lock.json';
 
+test('every set points at its own wiki page, not somebody else\'s', () => {
+  /*
+   * All five sets used to link to the Series 2 page, so four times out of five
+   * the app sent you to the wrong checklist — and that link is the one route
+   * from the app to a picture of the figure you are hunting.
+   *
+   * The page titles are genuinely inconsistent (Series 3 and 4 are not called
+   * "Galaxy Peek" on the wiki), so this cannot be checked by pattern-matching
+   * the series number. What it can check is that no two sets share a link,
+   * which is what actually went wrong.
+   */
+  const seen = new Map();
+  for (const meta of read('index.json')) {
+    const set = read(meta.file);
+    if (!set.codeLink) continue;
+    assert.ok(!seen.has(set.codeLink),
+      `${meta.id} and ${seen.get(set.codeLink)} both link to ${set.codeLink};`
+      + ' one of them is sending a child to the wrong series');
+    seen.set(set.codeLink, meta.id);
+  }
+});
+
 test('the id lock covers every set that exists', () => {
   const lock = read(LOCK);
   assert.ok(lock && lock.sets, 'sets/ids.lock.json is missing or malformed');
