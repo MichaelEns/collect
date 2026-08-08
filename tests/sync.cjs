@@ -417,6 +417,37 @@ async function main() {
     check('and the working code is still in place',
       (await b.evalJs('window.CollectSync.getCode()')) === code);
 
+    console.log('\n--- coming back to the app catches up ---');
+    /*
+     * There is deliberately no periodic poll. A device sitting untouched with
+     * the app open will show stale data until something wakes it, and that is
+     * an accepted trade: the browser fires visibilitychange whenever the app
+     * is switched away from, the screen is locked, or the tab is changed, and
+     * a child picking up a tablet has almost always done one of those.
+     *
+     * What makes the trade safe is the merge rather than the timing. Being
+     * stale costs a stale SCREEN, never data: when the device does sync, the
+     * union rule means nothing it holds is dropped and per-figure newest-wins
+     * means nothing it did is overwritten. It catches up rather than losing.
+     *
+     * So the refocus path carries the whole design, and it is pinned here.
+     */
+    await b.tick(FIVE);
+    await b.syncNow();
+    const beforeWake = await a.found();
+    check('an untouched device is allowed to be stale',
+      !beforeWake.includes(FIVE), JSON.stringify(beforeWake));
+
+    await a.evalJs("document.dispatchEvent(new Event('visibilitychange')); 1");
+    await new Promise((r) => setTimeout(r, LIVE ? 2500 : 1500));
+    const afterWake = await a.found();
+    check('but catches up the moment it is looked at again',
+      afterWake.includes(FIVE), JSON.stringify(afterWake));
+
+    // Put it back, so the offline check below starts from a known state.
+    await a.tick(FIVE, false);
+    await a.syncNow();
+
     console.log('\n--- offline is not an error the child has to care about ---');
     if (sync) {
       await new Promise((r) => { sync.closeAllConnections(); sync.close(r); });

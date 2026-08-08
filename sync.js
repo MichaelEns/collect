@@ -279,8 +279,27 @@
 
   document.addEventListener('collect:changed', schedule);
 
-  // Coming back to the app is the moment another device's work is most likely
-  // to be waiting, and the moment he is most likely to look at the screen.
+  /*
+   * When a device syncs
+   * -------------------
+   *   - shortly after the app opens
+   *   - after an edit, once things go quiet
+   *   - when the app is brought back to the front
+   *   - when the network comes back
+   *
+   * There is deliberately NO periodic poll. A device sitting untouched with
+   * the app open will show stale data until something wakes it.
+   *
+   * That is safe because of the merge rather than the timing: being stale
+   * costs a stale SCREEN, never data. When the device does sync, the union
+   * rule means nothing it holds is dropped, and per-figure newest-wins means
+   * nothing it did is overwritten. It catches up rather than losing.
+   *
+   * Coming back to the app is also the only moment the staleness could
+   * matter, since it is the moment somebody looks at the screen — and phones
+   * fire visibilitychange on app switch, tab change and screen lock, so in
+   * practice it fires constantly.
+   */
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible' && getCode()) run();
   });

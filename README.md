@@ -187,6 +187,23 @@ can never disagree about what merging means. Two rules carry it:
 A device whose clock is set wrong is clamped to server time, or its timestamps
 would beat everything real forever and freeze the collection.
 
+### When it syncs
+
+Shortly after the app opens, after an edit once things go quiet, when the app
+is brought back to the front, and when the network comes back.
+
+**There is no periodic poll.** A device left untouched with the app open will
+show stale data until something wakes it. That is a deliberate trade, and it is
+safe because of the merge rather than the timing: being stale costs a stale
+*screen*, never data. When that device does sync, the union rule means nothing
+it holds is dropped and per-figure newest-wins means nothing it did is
+overwritten — it catches up rather than losing.
+
+Coming back to the app is also the only moment staleness could matter, since it
+is the moment somebody looks at the screen. Phones fire that event on app
+switch, tab change and screen lock, so in practice it fires constantly. The
+two-device test pins it.
+
 ### How safe is it?
 
 The code is the only protection, which is a deliberate trade. It is generated,
