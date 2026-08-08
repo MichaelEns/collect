@@ -2,8 +2,8 @@
  "id": "sw-galaxy-peek-s1",
  "brand": "Star Wars Doorables",
  "name": "Galaxy Peek Series 1",
- "packaging": "Blue Death Star capsule",
- "emoji": "🔵",
+ "packaging": "Grey Death Star capsule",
+ "emoji": "🌑",
  "official": "https://justplayproducts.com/collections/star-wars-doorables/",
  "released": "2024-02",
  "figuresPerCapsule": 4,
@@ -186,5 +186,6 @@
  "codeFile": "codes-sw-galaxy-peek-s1.json",
  "theme": "The heroes and villains everyone knows",
  "itemNumber": "44822",
- "upc": "886144448225"
+ "upc": "886144448225",
+ "packagingNote": "The Death Star itself is grey. The packet around it has blue on it, so this one is sometimes called the blue series — but grey capsule, blue packet is what you will have in your hand. Series 2 is the red Death Star."
 }

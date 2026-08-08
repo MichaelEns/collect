@@ -51,14 +51,20 @@ const CODE_NOTE = 'Every capsule has a short code pressed into the plastic on'
  * Descriptions a child can act on.
  *
  * The capsule is how he tells them apart on a shelf, so it is the one field
- * worth getting right. It is NOT a Death Star throughout: Just Play changed
- * the moulding after Series 2, which an earlier draft of this file got wrong.
+ * worth getting right, and two earlier drafts of this file got it wrong.
+ * Series 1 is a GREY Death Star, not a blue one — the blue is on the packet
+ * around it, not the capsule you end up holding. And it is NOT a Death Star
+ * throughout: Just Play changed the moulding after Series 2.
  * Where the colour could not be confirmed it is left unstated rather than
  * guessed, and the set carries a note saying to check the printed number.
  */
 const META = {
   1: {
-    packaging: 'Blue Death Star capsule',
+    packaging: 'Grey Death Star capsule',
+    packagingNote: 'The Death Star itself is grey. The packet around it has'
+      + ' blue on it, so this one is sometimes called the blue series — but'
+      + ' grey capsule, blue packet is what you will have in your hand.'
+      + ' Series 2 is the red Death Star.',
     itemNumber: '44822',
     upc: '886144448225',
     released: '2024-02',
@@ -107,7 +113,7 @@ const META = {
   },
 };
 
-const EMOJI = { 1: '🔵', 2: '🔴', 3: '⭐', 4: '🤖', 5: '🪐' };
+const EMOJI = { 1: '🌑', 2: '🔴', 3: '⭐', 4: '🤖', 5: '🪐' };
 
 function build(series) {
   const setId = `sw-galaxy-peek-s${series}`;
