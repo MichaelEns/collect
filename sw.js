@@ -15,13 +15,15 @@
  * tests/install.test.mjs asserts this list covers every set in the index, so a
  * sixth series cannot be added without also being made available offline.
  */
-const CACHE = 'collect-v3';
+const CACHE = 'collect-v4';
 
 const SHELL = [
   '/collect/',
   '/collect/index.html',
+  '/collect/hunt.html',
   '/collect/styles.css',
   '/collect/app.js',
+  '/collect/hunt.js',
   '/collect/sync.js',
   '/collect/sync-ui.js',
   '/collect/manifest.webmanifest',
@@ -61,13 +63,20 @@ self.addEventListener('activate', (event) => {
 });
 
 /*
- * One page, reached as /collect/ or /collect/#set=whatever. The fragment never
- * reaches the server, but the bare directory and index.html must land on the
- * same cache entry or one of the two misses offline.
+ * There are two real pages now, and a navigation has to land on the right one.
+ *
+ * The collection is reached as /collect/ or /collect/#set=whatever — the
+ * fragment never reaches the server, but the bare directory and index.html
+ * must share a cache entry or one of the two misses offline. The hunt page is
+ * a genuinely different document, so mapping every navigation to index.html
+ * (which is what this did when there was only one page) would silently serve
+ * the collection to anyone opening the hunt page without a connection.
  */
 function cacheKeyFor(request) {
-  if (request.mode === 'navigate') return '/collect/index.html';
-  return request;
+  if (request.mode !== 'navigate') return request;
+  const path = new URL(request.url).pathname;
+  if (path.endsWith('/hunt.html')) return '/collect/hunt.html';
+  return '/collect/index.html';
 }
 
 function networkFirst(request) {

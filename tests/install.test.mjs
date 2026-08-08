@@ -17,6 +17,10 @@ const manifest = () => JSON.parse(read('manifest.webmanifest'));
 
 const PUBLISHED_AT = '/collect/';
 
+/** Every real page the app ships. A new one that nothing here knows about
+ *  would escape the offline and boundary checks entirely. */
+const PAGES = ['index.html', 'hunt.html'];
+
 test('the manifest is valid JSON with everything an install needs', () => {
   const m = manifest();
   for (const key of ['id', 'name', 'short_name', 'start_url', 'scope', 'display', 'icons']) {
@@ -70,10 +74,21 @@ test('the theme colour in the page matches the manifest', () => {
   assert.strictEqual(m[1].toLowerCase(), manifest().theme_color.toLowerCase());
 });
 
-test('every asset the page references is an absolute published path', () => {
-  for (const m of read('index.html').matchAll(/(?:href|src)="(?!https?:|data:|#)([^"]+)"/g)) {
-    assert.ok(m[1].startsWith(PUBLISHED_AT), `"${m[1]}" is relative`);
+test('every asset every page references is an absolute published path', () => {
+  for (const page of PAGES) {
+    for (const m of read(page).matchAll(/(?:href|src)="(?!https?:|data:|#)([^"]+)"/g)) {
+      assert.ok(m[1].startsWith(PUBLISHED_AT), `${page}: "${m[1]}" is relative`);
+    }
   }
+});
+
+test('every page the app ships is precached, or it is blank offline', () => {
+  // A second page arriving without being added here would work perfectly in
+  // testing and fail in the one place this app exists for.
+  const sw = read('sw.js');
+  const shell = sw.slice(sw.indexOf('const SHELL'), sw.indexOf('];', sw.indexOf('const SHELL')));
+  const missing = PAGES.filter((p) => !shell.includes(`'${PUBLISHED_AT}${p}'`));
+  assert.deepStrictEqual(missing, [], `not precached: ${missing.join(', ')}`);
 });
 
 test('the shell and the set index are precached', () => {
@@ -114,29 +129,50 @@ test('the cache is versioned, or an update never reaches an installed copy', () 
   assert.match(read('sw.js'), /const CACHE = '[\w-]+v\d+'/);
 });
 
-test('a navigation maps to the one page, fragment and all', () => {
+test('a navigation lands on the page that was actually asked for', () => {
+  /*
+   * With one page, mapping every navigation to index.html was right. With two
+   * it is a trap: opening the hunt page offline would silently serve the
+   * collection instead, which looks like the link being broken.
+   *
+   * Read the routing function rather than the whole file — the page name
+   * appears in the precache list too, so searching the file at large would
+   * pass on a router that never mentions it.
+   */
   const sw = read('sw.js');
-  assert.match(sw, /request\.mode === 'navigate'/);
-  assert.match(sw, /return '\/collect\/index\.html'/);
+  const start = sw.indexOf('function cacheKeyFor');
+  assert.ok(start !== -1, 'sw.js no longer has a cacheKeyFor function');
+  const router = sw.slice(start, sw.indexOf('\n}', start));
+  assert.match(router, /request\.mode !== 'navigate'/);
+  assert.match(router, /return '\/collect\/index\.html'/);
+  for (const page of PAGES) {
+    if (page === 'index.html') continue;
+    assert.ok(router.includes(page),
+      `${page} is a page, but no navigation ever resolves to it`);
+  }
 });
 
 /* ------------------------------------------------------------ boundaries */
 
-/** Every script the page actually ships. Miss one and the checks below lie. */
-const SCRIPTS = ['app.js', 'sync.js', 'sync-ui.js', 'sw.js'];
+/** Every script the app actually ships. Miss one and the checks below lie. */
+const SCRIPTS = ['app.js', 'hunt.js', 'sync.js', 'sync-ui.js', 'sw.js'];
 
-test('the boundary checks cover every script the page loads', () => {
+test('the boundary checks cover every script every page loads', () => {
   /*
    * This guard exists because the privacy test below used to read app.js only.
    * Sync then arrived in a new file and sent data off the device without the
    * test noticing a thing. A list of filenames is worth nothing unless
-   * something checks it against the page.
+   * something checks it against the pages.
+   *
+   * It reads every page rather than index.html alone, because a second page
+   * loading a second script is the same hole in a new shape.
    */
-  const html = read('index.html');
-  const loaded = [...html.matchAll(/<script src="\/collect\/([^"]+)"/g)].map((m) => m[1]);
-  const missing = loaded.filter((f) => !SCRIPTS.includes(f));
-  assert.deepStrictEqual(missing, [],
-    `index.html loads ${missing.join(', ')}, which no boundary test inspects`);
+  for (const page of PAGES) {
+    const loaded = [...read(page).matchAll(/<script src="\/collect\/([^"]+)"/g)].map((m) => m[1]);
+    const missing = loaded.filter((f) => !SCRIPTS.includes(f));
+    assert.deepStrictEqual(missing, [],
+      `${page} loads ${missing.join(', ')}, which no boundary test inspects`);
+  }
   assert.ok(SCRIPTS.includes('sw.js'), 'the service worker fetches too');
 });
 

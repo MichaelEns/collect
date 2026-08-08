@@ -261,6 +261,163 @@ body {
 
 .fig.have .fig-qual { background: rgba(67, 209, 124, .18); color: var(--green); }
 
+/* --------------------------------------------------------------- hunt page */
+
+/*
+ * The way through to "what should we buy next". It is a link rather than a
+ * button because it goes to a real page, which means it can be opened in
+ * another tab and shows up in history like anything else.
+ */
+.hunt-link {
+  display: block;
+  margin: 22px 0 8px;
+  padding: 14px 16px;
+  border: 2px solid var(--line);
+  border-radius: 16px;
+  background: var(--card);
+  color: var(--ink);
+  font-weight: 800;
+  text-decoration: none;
+  text-align: center;
+}
+
+.hunt-link:hover,
+.hunt-link:focus-visible { border-color: var(--accent); }
+
+.hunt-link-sub {
+  display: block;
+  margin-top: 3px;
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+/* The back arrow on the hunt page is an anchor, so it needs the button look. */
+#hunt-back {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink);
+  font-size: 1.3rem;
+  text-decoration: none;
+}
+
+.hunt-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  margin: 14px 0 6px;
+}
+
+.hunt-filter {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: .82rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.hunt-filter select {
+  font: inherit;
+  font-weight: 700;
+  color: var(--ink);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 7px 10px;
+}
+
+.hunt-best { display: grid; gap: 10px; }
+
+.hunt-row {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--card);
+  padding: 10px 12px;
+}
+
+.hunt-row-head {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.hunt-code {
+  font: 800 1rem ui-monospace, Consolas, monospace;
+  color: var(--gold);
+  background: rgba(0, 0, 0, .3);
+  padding: 3px 9px;
+  border-radius: 8px;
+}
+
+.hunt-adds {
+  font-size: .76rem;
+  font-weight: 800;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .08);
+}
+
+.hunt-series-name { font-size: .76rem; color: var(--muted); margin-left: auto; }
+
+.hunt-inside {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 8px;
+  margin-top: 9px;
+}
+
+.hunt-fig {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  padding: 5px 7px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, .2);
+}
+
+/* Already found: still shown, because knowing a capsule is half spares is the
+ * point, but dimmed so the new ones are what the eye lands on. */
+.hunt-fig.got { opacity: .45; }
+
+.hunt-pic {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  border-radius: 8px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, .06);
+  color: var(--green);
+  font-weight: 900;
+}
+
+.hunt-pic img { width: 100%; height: 100%; object-fit: contain; }
+
+.hunt-fig-name { font-size: .74rem; font-weight: 700; line-height: 1.15; }
+
+.hunt-set-name { margin: 20px 0 8px; font-size: 1rem; }
+
+.fig.starred { border-color: var(--gold); }
+
+.fig-star {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  font-size: .9rem;
+  color: var(--gold);
+}
+
 .fig-tick {
   position: absolute;
   top: 6px;

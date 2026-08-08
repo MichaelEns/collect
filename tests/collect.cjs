@@ -454,6 +454,96 @@ async function main() {
       JSON.stringify(s1.names.slice(0, 5)));
     check('which are not Series 2 figures', !s1.names.includes('Wrecker'));
 
+    /* -------------------------------------------------- the hunt page */
+
+    console.log('\n--- the hunt page reads the same collection ---');
+    /*
+     * The whole claim of this page is that it shares the app's data rather
+     * than keeping a copy. It is a separate document, so that claim is only
+     * true because it is on the same origin and reads the same localStorage
+     * keys — which is exactly the sort of thing that works until someone
+     * renames a key. So: tick things in the app, then check the hunt page
+     * sees them without anything being exported.
+     */
+    await evalJs("location.hash = '#set=sw-galaxy-peek-s2'; 1");
+    await new Promise((r) => setTimeout(r, 900));
+    const appSide = JSON.parse(await evalJs(`JSON.stringify({
+      found: window.__collect.countFound(),
+      link: document.getElementById('hunt-link').getAttribute('href'),
+      visible: !document.getElementById('hunt-link').closest('section').hidden,
+    })`));
+    check('the collection page offers a way through to it',
+      appSide.visible && /hunt\.html/.test(appSide.link), JSON.stringify(appSide));
+    check('and carries the set through, so it opens on the right series',
+      /#set=sw-galaxy-peek-s2/.test(appSide.link), appSide.link);
+    check('the app has figures ticked to compare against',
+      appSide.found > 0, 'found=' + appSide.found);
+
+    await rpc(ws, id++, 'Page.navigate', { url: base + 'hunt.html#set=sw-galaxy-peek-s2' });
+    await new Promise((r) => setTimeout(r, 2500));
+
+    const hunt = JSON.parse(await evalJs(`JSON.stringify({
+      title: document.getElementById('title').textContent,
+      summary: document.getElementById('progress-text').textContent,
+      rows: document.querySelectorAll('.hunt-row').length,
+      figures: document.querySelectorAll('#hunt-grid .fig').length,
+      ticked: document.querySelectorAll('#hunt-grid .fig.have').length,
+      series: document.getElementById('hunt-series').value,
+    })`));
+    check('the hunt page opens', /hunt/i.test(hunt.title), hunt.title);
+    check('filtered to the series it was opened from',
+      hunt.series === 'sw-galaxy-peek-s2', hunt.series);
+    check('showing that set only', hunt.figures === 25, 'figures=' + hunt.figures);
+    check('and it sees exactly the ticks made in the app, with nothing exported',
+      hunt.ticked === appSide.found, `app=${appSide.found} hunt=${hunt.ticked}`);
+    check('the same count appears in its summary',
+      hunt.summary.startsWith(String(appSide.found) + ' of'), hunt.summary);
+    check('it ranked some capsules', hunt.rows > 0, 'rows=' + hunt.rows);
+
+    console.log('\n--- and it ranks by what is still missing ---');
+    const ranking = JSON.parse(await evalJs(`JSON.stringify((() => {
+      const rows = [...document.querySelectorAll('.hunt-row')];
+      let wrong = 0, unsorted = 0, last = 99;
+      for (const r of rows) {
+        const claimed = parseInt(r.querySelector('.hunt-adds').textContent, 10);
+        const actual = r.querySelectorAll('.hunt-fig:not(.got)').length;
+        if (claimed !== actual) wrong++;
+        if (claimed > last) unsorted++;
+        last = claimed;
+      }
+      return { rows: rows.length, wrong, unsorted, top: rows.length
+        ? rows[0].querySelector('.hunt-code').textContent : null };
+    })())`));
+    check('every row counts the figures it actually shows as missing',
+      ranking.wrong === 0, JSON.stringify(ranking));
+    check('and the best capsule is first', ranking.unsorted === 0, JSON.stringify(ranking));
+
+    console.log('\n--- it never writes progress, because the app owns that ---');
+    const progressBefore = await evalJs(
+      'window.localStorage.getItem("collect.progress.sw-galaxy-peek-s2")');
+    await evalJs('document.getElementById("hunt-mode").click(); 1');
+    await new Promise((r) => setTimeout(r, 400));
+    await evalJs('document.querySelectorAll("#hunt-grid .fig")[3].click(); 1');
+    await new Promise((r) => setTimeout(r, 400));
+    const progressAfter = await evalJs(
+      'window.localStorage.getItem("collect.progress.sw-galaxy-peek-s2")');
+    check('starring a figure leaves the shared collection untouched',
+      progressBefore === progressAfter, 'progress changed under the hunt page');
+    const stars = await evalJs(
+      'Object.keys(JSON.parse(window.localStorage.getItem("collect.wishlist")||"{}")).length');
+    check('and the star is kept separately', stars === 1, 'stars=' + stars);
+
+    console.log('\n--- back to the collection ---');
+    const backHref = await evalJs(
+      'document.getElementById("hunt-back").getAttribute("href")');
+    check('there is a way back', backHref === '/collect/', backHref);
+
+    await rpc(ws, id++, 'Page.navigate', { url: base + '#set=sw-galaxy-peek-s2' });
+    await new Promise((r) => setTimeout(r, 1800));
+    const stillThere = await evalJs('window.__collect.countFound()');
+    check('and the collection is exactly as it was left',
+      stillThere === appSide.found, `was ${appSide.found}, now ${stillThere}`);
+
     /* ------------------------------------------------------------ offline */
 
     console.log('\n--- offline, halfway down a shop aisle ---');
@@ -562,6 +652,104 @@ async function main() {
       .filter((p) => !/ERR_FAILED|ERR_CONNECTION|Failed to load resource/i.test(p));
     check('nothing broke offline beyond the fetch we killed on purpose',
       offlineProblems.length === 0, offlineProblems.slice(0, 3).join(' | '));
+
+    /*
+     * The hunt page offline.
+     *
+     * This is the check that matters most for it, and the one most likely to
+     * be got wrong: the service worker used to map EVERY navigation to
+     * index.html, so an untested hunt page would have quietly served the
+     * collection instead — a bug that only ever appears with no signal, which
+     * is exactly when this app is being used.
+     */
+    console.log('\n--- and the hunt page works in the aisle too ---');
+    const cached = JSON.parse(await evalJs(`caches.keys()
+      .then(async (names) => {
+        const out = {};
+        for (const n of names) {
+          const c = await caches.open(n);
+          out[n] = (await c.keys()).map(r => new URL(r.url).pathname).sort();
+        }
+        return JSON.stringify(out);
+      })`));
+    const names = Object.keys(cached);
+    const entries = names.length ? cached[names[0]] : [];
+    check('the precache holds the hunt page and its script',
+      entries.includes('/collect/hunt.html') && entries.includes('/collect/hunt.js'),
+      `cache ${names.join(',')} holds ${entries.length} entries: `
+      + entries.filter((e) => /hunt|app\.js/.test(e)).join(', '));
+
+    await rpc(ws, id++, 'Page.navigate', { url: base + 'hunt.html#set=sw-galaxy-peek-s2' });
+
+    /*
+     * Polled, not slept through. Offline the sets come from the cache only
+     * after the service worker's own network timeout, so a fixed 2500ms wait
+     * measured this test's patience rather than the page: it reported an empty
+     * page three times over that was in fact still loading and finished a
+     * moment later.
+     */
+    const huntStart = Date.now();
+    let huntReady = false;
+    for (let i = 0; i < 150 && !huntReady; i += 1) {
+      await new Promise((r) => setTimeout(r, 100));
+      huntReady = (await evalJs(
+        'String(!!(window.__hunt && window.__hunt.state.sets.length))'
+      )) === 'true';
+    }
+    const huntMs = Date.now() - huntStart;
+    const pageLoadMs = Number(await evalJs(
+      'String((window.__hunt && window.__hunt.state.loadMs) || -1)'));
+    /*
+     * The index has to arrive before anything else can be asked for, so it is
+     * excluded: what matters is that the ten DATA files then go out together
+     * rather than in a chain. Including the index made this flaky — when it
+     * happened to be in the HTTP cache the spread was 32ms, and when it was
+     * not it was 2051ms, neither of which says anything about the code.
+     */
+    const timing = JSON.parse(await evalJs(`JSON.stringify((() => {
+      const j = performance.getEntriesByType('resource')
+        .filter(e => /\\/sets\\//.test(e.name) && !/index\\.json/.test(e.name))
+        .map(e => Math.round(e.startTime));
+      return { count: j.length, spread: j.length ? Math.round(Math.max(...j) - Math.min(...j)) : -1 };
+    })())`));
+    check('the hunt page loads its data with no network at all',
+      huntReady, `gave up after ${huntMs}ms`);
+
+    /*
+     * Offline, every one of these waits out the service worker's network
+     * timeout before falling back to the cache — so what this really measures
+     * is whether they wait CONCURRENTLY. They must: the first version fetched
+     * them three round trips deep and took four and a half seconds, which in a
+     * shop looks like a broken link.
+     *
+     * (A real phone with no signal is quicker still: the worker answers from
+     * the cache immediately when the device reports itself offline, which
+     * emulated conditions here do not reproduce inside a worker. So the
+     * absolute number below is generous on purpose — the spread is the part
+     * that says something about this code.)
+     */
+    check('and every set and code file is asked for at once, not in a chain',
+      timing.count === 10 && timing.spread >= 0 && timing.spread < 500,
+      `${timing.count} data files, ${timing.spread}ms between first and last start`);
+    check('so the page is ready in a couple of timeout windows, not eleven',
+      pageLoadMs >= 0 && pageLoadMs < 8000, `the page itself took ${pageLoadMs}ms`);
+
+    const huntOffline = JSON.parse(await evalJs(`JSON.stringify({
+      title: document.getElementById('title').textContent,
+      isHuntPage: !!document.getElementById('hunt-best'),
+      setsLoaded: window.__hunt ? window.__hunt.state.sets.length : -1,
+      rows: document.querySelectorAll('.hunt-row').length,
+      figures: document.querySelectorAll('#hunt-grid .fig').length,
+      ticked: document.querySelectorAll('#hunt-grid .fig.have').length,
+      styled: getComputedStyle(document.querySelector('.hunt-row') || document.body).borderRadius,
+    })`));
+    check('the hunt page itself is served, not the collection',
+      huntOffline.isHuntPage && /hunt/i.test(huntOffline.title), JSON.stringify(huntOffline));
+    check('with its sets and codes out of the precache',
+      huntOffline.figures === 25 && huntOffline.rows > 0, JSON.stringify(huntOffline));
+    check('still reading the same ticks', huntOffline.ticked === 1, 'ticked=' + huntOffline.ticked);
+    check('and styled, so it is its own page rather than a fallback',
+      huntOffline.styled === '14px', huntOffline.styled);
 
     console.log(fails === 0 ? '\nTRACKER VERIFIED \u2705' : `\n${fails} CHECK(S) FAILED`);
   } finally {

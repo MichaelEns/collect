@@ -115,6 +115,12 @@ function rpc(ws, id, m, p) {
   await run("document.querySelectorAll('.fig')[20].click();");
   await new Promise((r) => setTimeout(r, 900));
   await shoot('c-sheet.png');
+  // The way through to the hunt page, which sits under the grid.
+  await run("document.getElementById('sheet-close').click();");
+  await new Promise((r) => setTimeout(r, 400));
+  await run("document.getElementById('hunt-link').scrollIntoView({ block: 'center' });");
+  await new Promise((r) => setTimeout(r, 500));
+  await shoot('c-hunt-link.png');
 
   // The worst case for the capsule list: 45 codes across all 12 batches.
   await run("document.getElementById('sheet-close').click();");
@@ -141,6 +147,11 @@ function rpc(ws, id, m, p) {
   await rpc(ws, id++, 'Page.navigate', { url: base + '#set=sw-galaxy-peek-s5' });
   await new Promise((r) => setTimeout(r, 2500));
   await shoot('c-series5.png');
+
+  // The hunt page, reading the ticks made above rather than any copy of them.
+  await rpc(ws, id++, 'Page.navigate', { url: base + 'hunt.html#set=sw-galaxy-peek-s2' });
+  await new Promise((r) => setTimeout(r, 2500));
+  await shoot('c-hunt.png');
 
   ws.close();
   try { process.kill(proc.pid); } catch { /* gone */ }

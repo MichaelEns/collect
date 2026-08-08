@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>What to hunt next</title>
+<meta name="description" content="Which capsule to look for next, from what you already have." />
+<meta name="theme-color" content="#12193a" />
+
+<link rel="icon" href="/collect/icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/collect/icon-180.png" />
+<link rel="stylesheet" href="/collect/styles.css" />
+</head>
+<body>
+
+<header id="topbar">
+  <a id="hunt-back" href="/collect/" aria-label="Back to the collection">←</a>
+  <div id="titles">
+    <h1 id="title">What to hunt next</h1>
+    <p id="subtitle">Working out which capsule is worth buying</p>
+  </div>
+</header>
+
+<main id="main">
+  <section id="hunt" aria-label="What to hunt next">
+
+    <div id="hunt-summary" class="progress-panel"></div>
+
+    <!--
+      Which series to consider. A capsule belongs to exactly one series, so
+      narrowing this is how you plan a trip to one shelf rather than all five.
+    -->
+    <div class="hunt-controls">
+      <label class="hunt-filter">
+        <span>Series</span>
+        <select id="hunt-series"></select>
+      </label>
+      <button id="hunt-mode" type="button" class="link-button">
+        Star the ones he wants
+      </button>
+    </div>
+
+    <p id="hunt-mode-hint" class="caveat" hidden>
+      Tap a figure to star it. Starred ones are pushed to the top of the list
+      below. Stars are kept on this device only — they are not part of the
+      shared collection.
+    </p>
+
+    <!-- The answer: which codes to look for. -->
+    <section aria-labelledby="hunt-best-title">
+      <h2 id="hunt-best-title">Best capsules to look for</h2>
+      <div id="hunt-best" class="hunt-best"></div>
+    </section>
+
+    <!-- The pictures, for deciding which ones are worth wanting. -->
+    <section aria-labelledby="hunt-grid-title">
+      <h2 id="hunt-grid-title">Everyone in this collection</h2>
+      <p id="hunt-grid-hint" class="caveat"></p>
+      <div id="hunt-grid"></div>
+    </section>
+
+  </section>
+</main>
+
+<p id="disclaimer" class="disclaimer">
+  An unofficial fan-made tracker. Not affiliated with, endorsed by or sponsored
+  by Just Play, Lucasfilm Ltd. or The Walt Disney Company. Figure names are used
+  only to identify the toys themselves.
+</p>
+
+<script src="/collect/hunt.js"></script>
+</body>
+</html>

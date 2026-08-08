@@ -205,9 +205,15 @@ function build(series) {
 for (let s = 1; s <= 5; s += 1) build(s);
 
 // The index the app reads to offer the sets, in series order.
+//
+// It lists the code file as well as the set file, so a reader that needs both
+// can ask for them together. Without it the only way to learn a set's code
+// file is to fetch the set first, which forces a third round trip — offline,
+// where every one of those waits out the service worker, that was the
+// difference between the hunt page appearing at once and taking four seconds.
 const index = [1, 2, 3, 4, 5].map((s) => {
   const set = JSON.parse(fs.readFileSync(path.join(setsDir, `sw-galaxy-peek-s${s}.json`), 'utf8'));
-  return {
+  const entry = {
     id: set.id,
     file: `${set.id}.json`,
     name: set.name,
@@ -216,6 +222,8 @@ const index = [1, 2, 3, 4, 5].map((s) => {
     emoji: set.emoji,
     total: set.figures.length,
   };
+  if (set.codeFile) entry.codeFile = set.codeFile;
+  return entry;
 });
 fs.writeFileSync(path.join(setsDir, 'index.json'), `${JSON.stringify(index, null, 2)}\n`);
 console.log(`index.json: ${index.length} sets`);

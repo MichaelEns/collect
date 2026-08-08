@@ -458,6 +458,10 @@
       bits.push('A “?” marks an entry we could not confirm against an official list.');
     }
     $('legend').textContent = bits.join(' — ');
+
+    // Carry the set through, so the hunt page opens on the series he was just
+    // looking at rather than all five at once.
+    $('hunt-link').href = `/collect/hunt.html#set=${encodeURIComponent(set.id)}`;
   }
 
   /*
