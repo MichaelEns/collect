@@ -205,6 +205,7 @@ turn sharing off and on again for a new code.
 node --test "tests/*.test.mjs"                    # data, honesty, install, merge
 node tests/collect.cjs "<path to msedge.exe>"     # drives the real page
 node tests/sync.cjs "<path to msedge.exe>"        # two real browsers, one collection
+node tests/sync.cjs "<path to msedge.exe>" --live # ...against the PUBLISHED site and worker
 node tools/check_live.cjs                         # the deployed worker, over the internet
 node tools/screenshots.cjs                        # one shot per screen
 ```

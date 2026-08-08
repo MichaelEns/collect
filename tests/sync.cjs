@@ -7,6 +7,12 @@
  * the merge that actually ships.
  *
  *   node tests/sync.cjs "<path to msedge.exe>"
+ *
+ * With --live it drives the PUBLISHED site against the DEPLOYED worker
+ * instead, which is the only way to catch things the local double gets wrong
+ * (KV's eventual consistency being the one that already bit):
+ *
+ *   node tests/sync.cjs "<path to msedge.exe>" --live
  */
 'use strict';
 
@@ -17,6 +23,8 @@ const http = require('node:http');
 const { spawn } = require('node:child_process');
 
 const BROWSER = process.argv[2];
+const LIVE = process.argv.includes('--live');
+const LIVE_URL = 'https://michaelens.github.io/collect/';
 const SITE_PORT = 8797;
 const SYNC_PORT = 8798;
 const ROOT = path.dirname(__dirname);
@@ -181,8 +189,10 @@ async function openDevice(label) {
 
   await rpc('Page.enable');
   await rpc('Runtime.enable');
-  await rpc('Page.navigate', { url: `http://127.0.0.1:${SITE_PORT}${PUB}` });
-  await new Promise((r) => setTimeout(r, 2200));
+  await rpc('Page.navigate', {
+    url: LIVE ? LIVE_URL : `http://127.0.0.1:${SITE_PORT}${PUB}`,
+  });
+  await new Promise((r) => setTimeout(r, LIVE ? 4000 : 2200));
 
   return {
     label,
@@ -197,7 +207,13 @@ async function openDevice(label) {
     },
     async syncNow() {
       await evalJs('window.CollectSync.syncNow()');
-      await new Promise((r) => setTimeout(r, 700));
+      await new Promise((r) => setTimeout(r, LIVE ? 1500 : 700));
+    },
+    async offline() {
+      await rpc('Network.enable', {});
+      await rpc('Network.emulateNetworkConditions', {
+        offline: true, latency: 0, downloadThroughput: 0, uploadThroughput: 0,
+      });
     },
     async found() {
       return JSON.parse(await evalJs(
@@ -216,9 +232,17 @@ async function openDevice(label) {
 /* -------------------------------------------------------------------- main */
 
 async function main() {
-  if (!BROWSER) throw new Error('usage: node tests/sync.cjs <browser>');
-  const site = await serveSite();
-  const { server: sync, kv } = await serveSync();
+  if (!BROWSER) throw new Error('usage: node tests/sync.cjs <browser> [--live]');
+  console.log(LIVE
+    ? `\nDRIVING THE PUBLISHED SITE at ${LIVE_URL} against the deployed worker`
+    : '\nDriving a local copy against the worker code in-process');
+
+  // In live mode there is nothing to serve and nothing to fake: the real site
+  // and the real worker are already out there.
+  const site = LIVE ? null : await serveSite();
+  const local = LIVE ? null : await serveSync();
+  const sync = local ? local.server : null;
+  const kv = local ? local.kv : null;
 
   /*
    * Figure ids come from the set file, not from memory. A first draft of this
@@ -249,9 +273,21 @@ async function main() {
     await a.tick(ONE);
     await a.tick(TWO);
     await a.syncNow();
-    const stored = JSON.parse(kv.get(`p:${code}`) || '{}')[SET] || {};
-    check('what he ticks reaches the server',
-      Object.keys(stored).length === 2, Object.keys(stored).join(','));
+    if (kv) {
+      const stored = JSON.parse(kv.get(`p:${code}`) || '{}')[SET] || {};
+      check('what he ticks reaches the server',
+        Object.keys(stored).length === 2, Object.keys(stored).join(','));
+    } else {
+      // Live: ask the worker what it holds rather than peeking into storage.
+      const seen = await a.evalJs(`(async () => {
+        const r = await fetch(window.CollectSync.endpoint + '/v1/collection',
+          { headers: { 'X-Family-Code': window.CollectSync.getCode() } });
+        const j = await r.json();
+        return JSON.stringify(Object.keys((j.progress || {})['${SET}'] || {}).sort());
+      })()`);
+      check('what he ticks reaches the server',
+        JSON.parse(seen || '[]').length === 2, seen);
+    }
 
     console.log('\n--- a second device joins with the same code ---');
     b = await openDevice('b');
@@ -321,9 +357,19 @@ async function main() {
 
     await a.syncNow();
     await new Promise((r) => setTimeout(r, 900));
-    const uploaded = [...kv.keys()].filter((k) => k.startsWith(`ph:${code}:`));
-    check('and it reaches the server',
-      uploaded.length === 1 && uploaded[0].endsWith(`${SET}:${ONE}`), uploaded.join(','));
+    if (kv) {
+      const uploaded = [...kv.keys()].filter((k) => k.startsWith(`ph:${code}:`));
+      check('and it reaches the server',
+        uploaded.length === 1 && uploaded[0].endsWith(`${SET}:${ONE}`), uploaded.join(','));
+    } else {
+      const listed = await a.evalJs(`(async () => {
+        const r = await fetch(window.CollectSync.endpoint + '/v1/collection',
+          { headers: { 'X-Family-Code': window.CollectSync.getCode() } });
+        return JSON.stringify((await r.json()).photos || {});
+      })()`);
+      check('and it reaches the server',
+        JSON.parse(listed || '{}')[`${SET}:${ONE}`] !== undefined, listed);
+    }
 
     await b.syncNow();
     await new Promise((r) => setTimeout(r, 1200));
@@ -372,7 +418,12 @@ async function main() {
       (await b.evalJs('window.CollectSync.getCode()')) === code);
 
     console.log('\n--- offline is not an error the child has to care about ---');
-    await new Promise((r) => { sync.closeAllConnections(); sync.close(r); });
+    if (sync) {
+      await new Promise((r) => { sync.closeAllConnections(); sync.close(r); });
+    } else {
+      // Live: cut the browser off rather than the deployed worker.
+      await a.offline();
+    }
     await a.tick(FIVE);
     await a.syncNow();
     const offline = JSON.parse(await a.evalJs('JSON.stringify(window.CollectSync.status())'));
@@ -384,8 +435,8 @@ async function main() {
   } finally {
     if (a) a.close();
     if (b) b.close();
-    site.close();
-    try { sync.close(); } catch { /* already closed */ }
+    if (site) site.close();
+    if (sync) { try { sync.close(); } catch { /* already closed */ } }
   }
 
   console.log(fails === 0 ? '\nSYNC VERIFIED \u2705' : `\n${fails} CHECK(S) FAILED`);
