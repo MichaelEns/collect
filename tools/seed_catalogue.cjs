@@ -18,13 +18,26 @@
  *   It follows that this script never sources pictures itself. It uploads a
  *   folder you assembled and are entitled to use.
  *
- * The folder is flat, one image per figure, named by figure id:
+ * Name each image after the figure id:
  *
  *   pics/grogu.jpg  pics/r2-d2.jpg  pics/darth-vader.jpg
  *
+ * ...or after the series AND the figure, when the same character appears in
+ * more than one series with a different sculpt:
+ *
+ *   pics/sw-galaxy-peek-s1__luke-skywalker.jpg
+ *   pics/sw-galaxy-peek-s5__luke-skywalker.jpg
+ *
+ * That second form matters more than it looks. Eighteen ids appear in several
+ * series — 42 cards in all — and Luke in Series 1 is not the same figure as
+ * Luke in Series 5. A flat name is sent to EVERY series carrying that id, so
+ * where a character recurs it necessarily shows the wrong sculpt on all but
+ * one card. Flat names still work and are still the easy path; they are simply
+ * refused for the recurring ids, where being right requires saying which
+ * series you mean.
+ *
  * Ids are checked against the set files, so a typo is reported rather than
- * quietly uploading nothing. A figure appearing in several series is uploaded
- * once per series it appears in.
+ * quietly uploading nothing.
  */
 'use strict';
 
@@ -98,15 +111,45 @@ if (!files.length) die(`no ${EXTS.join('/')} files in ${dir}`);
 const uploads = [];
 const unknown = [];
 const tooBig = [];
+const ambiguous = [];
+
+/*
+ * "<setId>__<figureId>" names one card exactly; a bare "<figureId>" names the
+ * character wherever it appears. The separator is a double underscore because
+ * every set id and figure id already contains single hyphens, so anything
+ * shorter could not be split back apart reliably.
+ */
+function parseName(file) {
+  const stem = path.basename(file, path.extname(file)).toLowerCase();
+  const split = stem.indexOf('__');
+  if (split === -1) return { figureId: stem, setId: null };
+  return { setId: stem.slice(0, split), figureId: stem.slice(split + 2) };
+}
 
 for (const file of files) {
-  const id = path.basename(file, path.extname(file)).toLowerCase();
-  if (!wanted.has(id)) { unknown.push(file); continue; }
+  const { setId, figureId } = parseName(file);
+  if (!wanted.has(figureId)) { unknown.push(file); continue; }
+  const series = wanted.get(figureId);
+  if (setId && !series.includes(setId)) {
+    unknown.push(`${file} — "${figureId}" is not in ${setId} (it is in ${series.join(', ')})`);
+    continue;
+  }
+  /*
+   * A flat name for a character that recurs cannot be right for every series
+   * it lands in, and quietly picking one sculpt to show on all of them is the
+   * kind of confidently-wrong answer this app exists not to give.
+   */
+  if (!setId && series.length > 1) {
+    ambiguous.push(`${file} — "${figureId}" is in ${series.length} series (${series.join(', ')})`);
+    continue;
+  }
   const full = path.join(dir, file);
   const bytes = fs.readFileSync(full);
   if (bytes.length > MAX_BYTES) { tooBig.push(`${file} (${Math.round(bytes.length / 1024)}KB)`); continue; }
   const hash = crypto.createHash('sha256').update(bytes).digest('hex').slice(0, 16);
-  for (const setId of wanted.get(id)) uploads.push({ setId, figureId: id, bytes, hash, file });
+  for (const target of setId ? [setId] : series) {
+    uploads.push({ setId: target, figureId, bytes, hash, file });
+  }
 }
 
 /*
@@ -116,8 +159,17 @@ for (const file of files) {
  */
 if (unknown.length) {
   die(`these file names match no figure id in sets/:\n  ${unknown.join('\n  ')}\n\n`
-    + 'Name each file after the figure id, e.g. grogu.jpg, r2-d2.jpg.\n'
+    + 'Name each file after the figure id, e.g. grogu.jpg, r2-d2.jpg,\n'
+    + 'or after both, e.g. sw-galaxy-peek-s1__luke-skywalker.jpg.\n'
     + `Ids available: ${[...wanted.keys()].slice(0, 8).join(', ')}, ...`);
+}
+if (ambiguous.length) {
+  die('these characters appear in more than one series, so a single flat name\n'
+    + 'cannot say which sculpt it is:\n  ' + ambiguous.join('\n  ') + '\n\n'
+    + 'Name them "<setId>__<figureId>.jpg" instead, e.g.\n'
+    + '  sw-galaxy-peek-s1__luke-skywalker.jpg\n'
+    + '  sw-galaxy-peek-s5__luke-skywalker.jpg\n\n'
+    + 'Uploading one picture to all of them would put the wrong figure on the card.');
 }
 if (tooBig.length) {
   die(`these are over the ${MAX_BYTES / 1024}KB ceiling the worker enforces:\n  ${tooBig.join('\n  ')}\n\n`
@@ -125,10 +177,12 @@ if (tooBig.length) {
 }
 
 const missing = [...wanted.keys()].filter((id) => !files.some(
-  (f) => path.basename(f, path.extname(f)).toLowerCase() === id
+  (f) => parseName(f).figureId === id
 ));
 
-console.log(`${uploads.length} upload(s) across ${setFiles.length} series, from ${files.length} image(s).`);
+const cards = [...wanted.values()].reduce((n, series) => n + series.length, 0);
+console.log(`${uploads.length} upload(s) covering ${cards} card(s) across `
+  + `${setFiles.length} series, from ${files.length} image(s).`);
 if (missing.length) {
   console.log(`${missing.length} figure(s) have no picture yet and will keep their letter tag:`);
   console.log(`  ${missing.slice(0, 12).join(', ')}${missing.length > 12 ? ', ...' : ''}`);
