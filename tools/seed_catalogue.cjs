@@ -64,6 +64,8 @@ function die(message, exitCode = 2) {
   process.exit(exitCode);
 }
 
+const sleep = (ms) => new Promise((resolve) => { setTimeout(resolve, ms); });
+
 if (!dir) {
   die('usage: COLLECT_FAMILY_CODE="..." node tools/seed_catalogue.cjs <folder> [--dry-run]');
 }
@@ -197,27 +199,60 @@ async function main() {
   let skipped = 0;
   let failed = 0;
 
+  /*
+   * The worker rate-limits on IP at 60 requests a minute, and this sends one
+   * request per picture — so firing them off as fast as the network allows
+   * gets the whole run thrown away with 429s, which is exactly what happened
+   * the first time a full folder was seeded. Pace under the limit, and treat
+   * a 429 as "wait, then try again" rather than as a failure: the seeding is
+   * a one-off, so taking three minutes over it costs nothing.
+   */
+  const SPACING_MS = 1100;
+  const MAX_ATTEMPTS = 4;
+
   for (const up of uploads) {
     const url = `${ENDPOINT}/v1/catalogue/${encodeURIComponent(up.setId)}/${encodeURIComponent(up.figureId)}`;
-    try {
-      const response = await fetch(url, {
-        method: 'PUT',
-        headers: { 'X-Family-Code': code, 'X-Photo-Hash': up.hash, 'Content-Type': 'image/jpeg' },
-        body: up.bytes,
-      });
-      if (response.status === 401) die('\nthat family code was not recognised.', 3);
-      if (!response.ok) {
+    let attempt = 0;
+    for (;;) {
+      attempt += 1;
+      try {
+        const response = await fetch(url, {
+          method: 'PUT',
+          headers: { 'X-Family-Code': code, 'X-Photo-Hash': up.hash, 'Content-Type': 'image/jpeg' },
+          body: up.bytes,
+        });
+        if (response.status === 401) die('\nthat family code was not recognised.', 3);
+        if (response.status === 404) {
+          const body = await response.text();
+          if (/no such thing/.test(body)) {
+            die('\nthe deployed worker does not have the /v1/catalogue route.\n'
+              + 'The feature is in this checkout but has not been released:\n'
+              + '  cd worker && npx wrangler deploy\n', 4);
+          }
+        }
+        if (response.status === 429 && attempt < MAX_ATTEMPTS) {
+          // Back off further each time, so a queue that has built up drains
+          // rather than every client retrying into the same window.
+          await sleep(SPACING_MS * 4 * attempt);
+          continue;
+        }
+        if (!response.ok) {
+          failed += 1;
+          console.error(`\n  FAILED ${up.setId}/${up.figureId}: ${response.status} ${await response.text()}`);
+          break;
+        }
+        const body = await response.json().catch(() => ({}));
+        if (body.unchanged) { skipped += 1; } else { sent += 1; }
+        process.stdout.write(`\r  ${sent} sent, ${skipped} already there, ${failed} failed   `);
+        break;
+      } catch (err) {
+        if (attempt < MAX_ATTEMPTS) { await sleep(SPACING_MS * 2 * attempt); continue; }
         failed += 1;
-        console.error(`  FAILED ${up.setId}/${up.figureId}: ${response.status} ${await response.text()}`);
-        continue;
+        console.error(`\n  FAILED ${up.setId}/${up.figureId}: ${err.message}`);
+        break;
       }
-      const body = await response.json().catch(() => ({}));
-      if (body.unchanged) { skipped += 1; } else { sent += 1; }
-      process.stdout.write(`\r  ${sent} sent, ${skipped} already there, ${failed} failed`);
-    } catch (err) {
-      failed += 1;
-      console.error(`\n  FAILED ${up.setId}/${up.figureId}: ${err.message}`);
     }
+    await sleep(SPACING_MS);
   }
 
   console.log(`\n\ndone: ${sent} sent, ${skipped} already there, ${failed} failed.`);
