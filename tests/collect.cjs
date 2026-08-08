@@ -176,6 +176,17 @@ async function main() {
       sourced: document.getElementById('sourced').textContent.slice(0, 60),
       unverifiedMarks: document.querySelectorAll('.fig.unverified').length,
       names: [...document.querySelectorAll('.fig-name')].map(n => n.textContent),
+      tiles: [...document.querySelectorAll('.fig-art')].map(n => n.textContent),
+      faces: [...document.querySelectorAll('.fig')].map(c => [
+        (c.querySelector('.fig-art') || {}).textContent || '',
+        (c.querySelector('.fig-name') || {}).textContent || '',
+        (c.querySelector('.fig-qual') || {}).textContent || '',
+      ].join('|')),
+      // textContent still holds text that CSS has clipped away, so the chips
+      // are measured rather than read: a chip that rendered to nothing would
+      // look fine to any check based on markup alone.
+      quals: [...document.querySelectorAll('.fig-qual')]
+        .map(n => ({ text: n.textContent, h: n.getBoundingClientRect().height })),
     })`));
     check('the right set opened', /Series 2/.test(grid.title), grid.title);
     check('the red capsule is named, so it is findable on a shelf',
@@ -185,6 +196,33 @@ async function main() {
     check('the roster says where it came from', grid.sourced.length > 20, grid.sourced);
     check('the two uncertain entries are marked as uncertain',
       grid.unverifiedMarks === 2, 'marked=' + grid.unverifiedMarks);
+
+    /*
+     * With no bundled artwork, the letters on a tile are the only thing
+     * separating one unfound figure from another. Series 2 shipped two cards
+     * both reading "AS" over "Anakin Skywalker…", which told a child that two
+     * different figures were the same one.
+     *
+     * This reads the rendered DOM rather than the naming rule, because the
+     * rule can be perfect and still not be the thing on screen.
+     */
+    const dupTiles = grid.tiles.filter((t, i) => grid.tiles.indexOf(t) !== i);
+    check('no two tiles in the set show the same letters',
+      dupTiles.length === 0, 'repeated: ' + JSON.stringify([...new Set(dupTiles)]));
+    check('and no tile is blank or a stray bracket',
+      grid.tiles.every((t) => /^[A-Z0-9]{2,4}$/.test(t)),
+      JSON.stringify(grid.tiles.filter((t) => !/^[A-Z0-9]{2,4}$/.test(t))));
+
+    const dupFaces = grid.faces.filter((f, i) => grid.faces.indexOf(f) !== i);
+    check('no two whole cards read identically',
+      dupFaces.length === 0, 'repeated: ' + JSON.stringify([...new Set(dupFaces)]));
+
+    const anakins = grid.faces.filter((f) => /Anakin Skywalker/.test(f));
+    check('the two Anakins are told apart on the card itself',
+      anakins.length === 2 && anakins[0] !== anakins[1], JSON.stringify(anakins));
+    check('and the thing telling them apart is actually drawn, not just present',
+      grid.quals.length === 2 && grid.quals.every((q) => q.text && q.h > 4),
+      JSON.stringify(grid.quals));
 
     // The research turned up AI summaries that confidently put Series 1's
     // ultra-rares in Series 2. If that ever creeps in, this catches it.

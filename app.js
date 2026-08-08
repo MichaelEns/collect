@@ -26,6 +26,7 @@
     index: [],
     set: null,
     codes: null,
+    tags: null,
     progress: {},
     figure: null,
     photoUrl: null,
@@ -231,8 +232,119 @@
     return state.set.rarities.find((r) => r.id === figure.rarity) || null;
   }
 
-  function initials(name) {
-    return String(name).split(/\s+/).slice(0, 2).map((w) => w[0] || '').join('').toUpperCase();
+  /*
+   * The short tag on a figure's tile, for figures with no photo yet.
+   *
+   * First letters of the first two words is not enough on this data. Single
+   * word names collapse to ONE letter, so Yoda and Yaddle both read "Y" and
+   * Bossk, Blurrg and Bantha all read "B"; splitting on spaces alone turns
+   * every astromech into "R"; and the two Anakins in Series 2 differ only in
+   * a bracket the tile threw away. Every one of the five sets had collisions.
+   *
+   * So each name offers candidates from most to least compact, and the set
+   * decides. Names whose first choice is already unique keep it, which is
+   * almost all of them.
+   */
+  function tagCandidates(name) {
+    const raw = String(name).trim();
+    const qualifier = (raw.match(/\(([^)]*)\)/) || [])[1] || '';
+    const tokens = raw.replace(/\([^)]*\)/g, ' ').split(/[^A-Za-z0-9]+/).filter(Boolean);
+    const out = [];
+    const push = (value) => {
+      const tag = String(value || '').toUpperCase();
+      if (tag && !out.includes(tag)) out.push(tag);
+    };
+
+    if (!tokens.length) {
+      push(raw.slice(0, 2));
+      return out.length ? out : ['?'];
+    }
+
+    if (/\d/.test(tokens[0])) {
+      // R2-D2, R4-P17, K-2SO: the leading chunk is how the name is said out
+      // loud, so "R4" beats "RA" and keeps the two R4 droids apart at three.
+      // 4-Lom's leading chunk is a single digit, so it borrows the next word
+      // rather than shipping a one-character tile.
+      const head = tokens[0].length >= 2 || !tokens[1]
+        ? tokens[0].slice(0, 2)
+        : tokens[0] + tokens[1][0];
+      push(head);
+      if (tokens[1]) push(head + tokens[1][0]);
+    } else if (tokens.length > 1) {
+      push(tokens[0][0] + tokens[1][0]);
+      if (tokens[2]) push(tokens[0][0] + tokens[1][0] + tokens[2][0]);
+      if (qualifier) push(tokens[0][0] + tokens[1][0] + qualifier[0]);
+      push(tokens[0].slice(0, 2) + tokens[1][0]);
+    } else {
+      push(tokens[0].slice(0, 2));
+      push(tokens[0].slice(0, 3));
+    }
+    if (qualifier) push(out[0] + qualifier[0]);
+    push(raw.replace(/[^A-Za-z0-9]/g, '').slice(0, 3));
+    return out;
+  }
+
+  /**
+   * Picks one tag per figure so that no two in the same set match. Where two
+   * figures want the same tag BOTH lengthen, rather than the first one winning
+   * and the second looking like the odd one out — except when one of them is a
+   * bracketed variant of the other, where the plain name keeps the short tag.
+   */
+  function assignTags(figures) {
+    const candidates = new Map(figures.map((f) => [f.id, tagCandidates(f.name)]));
+    const groups = new Map();
+    for (const figure of figures) {
+      const first = candidates.get(figure.id)[0];
+      if (!groups.has(first)) groups.set(first, []);
+      groups.get(first).push(figure);
+    }
+
+    const tags = new Map();
+    const used = new Set();
+    const contested = [];
+    for (const [first, members] of groups) {
+      if (members.length === 1) {
+        tags.set(members[0].id, first);
+        used.add(first);
+        continue;
+      }
+      // "Princess Leia" keeps PL and the hologram becomes PLH. Making both
+      // lengthen would give PRL and PLH, which is worse for the common one.
+      const plain = members.filter((f) => !qualifierOf(f.name));
+      if (plain.length === 1) {
+        tags.set(plain[0].id, first);
+        used.add(first);
+        for (const f of members) if (f !== plain[0]) contested.push(f);
+      } else {
+        contested.push(...members);
+      }
+    }
+
+    for (const figure of contested) {
+      const options = candidates.get(figure.id);
+      let pick = options.find((tag, i) => i > 0 && !used.has(tag))
+        || options.find((tag) => !used.has(tag));
+      if (!pick) {
+        // Nothing left to try. Numbering is ugly but it is still readable, and
+        // it beats two tiles a child cannot tell apart.
+        let n = 2;
+        while (used.has(options[0] + n)) n += 1;
+        pick = options[0] + n;
+      }
+      used.add(pick);
+      tags.set(figure.id, pick);
+    }
+    return tags;
+  }
+
+  /** The bracketed part of a name, which is the only thing telling some pairs apart. */
+  function qualifierOf(name) {
+    return (String(name).match(/\(([^)]*)\)/) || [])[1] || '';
+  }
+
+  /** The name without its bracket, since the bracket is shown separately. */
+  function baseName(name) {
+    return String(name).replace(/\([^)]*\)/g, '').replace(/\s+/g, ' ').trim() || String(name);
   }
 
   function renderPicker() {
@@ -300,6 +412,8 @@
 
     const grid = $('grid');
     grid.innerHTML = '';
+    const tags = assignTags(set.figures);
+    state.tags = tags;
     for (const figure of set.figures) {
       const got = entry(figure.id);
       const card = document.createElement('button');
@@ -307,11 +421,13 @@
       card.className = 'fig' + (got.have ? ' have' : '') + (figure.verified === false ? ' unverified' : '');
       card.dataset.figure = figure.id;
       const rarity = rarityOf(figure);
+      const qualifier = qualifierOf(figure.name);
       card.innerHTML = `
         <span class="fig-tick">✓</span>
         ${got.dupes > 0 ? `<span class="fig-dupe">+${got.dupes}</span>` : ''}
-        <span class="fig-art" data-art="${escapeHtml(figure.id)}">${escapeHtml(initials(figure.name))}</span>
-        <span class="fig-name">${escapeHtml(figure.name)}</span>
+        <span class="fig-art" data-art="${escapeHtml(figure.id)}">${escapeHtml(tags.get(figure.id))}</span>
+        <span class="fig-name">${escapeHtml(baseName(figure.name))}</span>
+        ${qualifier ? `<span class="fig-qual">${escapeHtml(qualifier)}</span>` : ''}
         <span class="rarity-dot" style="background:${rarity ? escapeHtml(rarity.colour) : 'var(--line)'}"></span>`;
       card.addEventListener('click', () => openSheet(figure));
       grid.appendChild(card);
@@ -349,7 +465,8 @@
     const got = entry(figure.id);
 
     $('sheet-name').textContent = figure.name;
-    $('sheet-placeholder').textContent = initials(figure.name);
+    $('sheet-placeholder').textContent = (state.tags && state.tags.get(figure.id))
+      || tagCandidates(figure.name)[0];
 
     const rarity = rarityOf(figure);
     const rarityEl = $('sheet-rarity');

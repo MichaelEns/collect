@@ -270,3 +270,114 @@ test('nothing claims to be official artwork we are not allowed to ship', () => {
     }
   }
 });
+
+/*
+ * Because there is no bundled artwork, the two or three letters on a tile are
+ * the ONLY thing distinguishing one unfound figure from another. Two tiles
+ * reading the same thing is therefore not cosmetic — it is the app telling a
+ * child that two different figures are the same one.
+ *
+ * The rule lives in app.js, which is a browser IIFE, so the functions are
+ * lifted out by source rather than imported. That is deliberate: testing a
+ * copy of the rule would pass happily while the app shipped a different one.
+ */
+function tileRules() {
+  const src = fs.readFileSync(path.join(ROOT, 'app.js'), 'utf8');
+  const grab = (name) => {
+    const start = src.indexOf(`function ${name}(`);
+    assert.ok(start !== -1, `app.js no longer defines ${name}(); the tile test needs updating`);
+    let depth = 0;
+    for (let i = src.indexOf('{', start); i < src.length; i += 1) {
+      if (src[i] === '{') depth += 1;
+      else if (src[i] === '}') {
+        depth -= 1;
+        if (depth === 0) return src.slice(start, i + 1);
+      }
+    }
+    throw new Error(`could not read ${name}() out of app.js`);
+  };
+  const names = ['tagCandidates', 'assignTags', 'qualifierOf', 'baseName'];
+  // eslint-disable-next-line no-new-func
+  return new Function(`${names.map(grab).join('\n')}\nreturn {${names.join(',')}};`)();
+}
+
+test('no two figures in a set show the same tile', () => {
+  const { assignTags } = tileRules();
+  for (const file of setFiles()) {
+    const set = read(file);
+    const tags = assignTags(set.figures);
+    const seen = new Map();
+    for (const figure of set.figures) {
+      const tag = tags.get(figure.id);
+      assert.ok(tag, `${file}: "${figure.id}" got no tile at all`);
+      assert.ok(!seen.has(tag),
+        `${file}: "${figure.name}" and "${seen.get(tag)}" both show "${tag}"`);
+      seen.set(tag, figure.name);
+    }
+  }
+});
+
+test('a tile is letters and digits, never a stray bracket or quote', () => {
+  // The previous rule took the first character of the second word, so
+  // "Chopper (C1-10P)" rendered as "C(" and Garazeb "Zeb" Orrelios as 'G"'.
+  const { assignTags } = tileRules();
+  for (const file of setFiles()) {
+    const set = read(file);
+    const tags = assignTags(set.figures);
+    for (const figure of set.figures) {
+      const tag = tags.get(figure.id);
+      assert.match(tag, /^[A-Z0-9]{2,4}$/,
+        `${file}: "${figure.name}" renders as "${tag}", which is not a readable tile`);
+    }
+  }
+});
+
+test('no two cards in a set look the same to a child', () => {
+  /*
+   * Series 2 shipped two figures both reading "AS" and both clamped to
+   * "Anakin Skywalker…", so nothing on either card told them apart.
+   *
+   * What a card actually shows is the tile, the name without its bracket, and
+   * the bracket as a separate chip. All three together must be unique — a
+   * missing chip is itself a distinction ("Princess Leia" vs the same name
+   * plus a "hologram" chip), so the rule is about the whole card, not about
+   * every variant carrying a label.
+   */
+  const { assignTags, qualifierOf, baseName } = tileRules();
+  for (const file of setFiles()) {
+    const set = read(file);
+    const tags = assignTags(set.figures);
+    const seen = new Map();
+    for (const figure of set.figures) {
+      const face = JSON.stringify([
+        tags.get(figure.id),
+        baseName(figure.name).toLowerCase(),
+        qualifierOf(figure.name).toLowerCase(),
+      ]);
+      assert.ok(!seen.has(face),
+        `${file}: "${figure.name}" and "${seen.get(face)}" draw an identical card`);
+      seen.set(face, figure.name);
+    }
+  }
+});
+
+test('two figures sharing a name are separated by more than the tile alone', () => {
+  // A tile is two or three letters and easy to misread, so where two figures
+  // share a base name the words on the card must differ too.
+  const { qualifierOf, baseName } = tileRules();
+  for (const file of setFiles()) {
+    const set = read(file);
+    const byBase = new Map();
+    for (const figure of set.figures) {
+      const base = baseName(figure.name).toLowerCase();
+      if (!byBase.has(base)) byBase.set(base, []);
+      byBase.get(base).push(figure);
+    }
+    for (const [base, members] of byBase) {
+      if (members.length < 2) continue;
+      const labels = members.map((f) => qualifierOf(f.name).toLowerCase());
+      assert.strictEqual(new Set(labels).size, labels.length,
+        `${file}: two figures called "${base}" carry the same label "${labels[0]}"`);
+    }
+  }
+});
