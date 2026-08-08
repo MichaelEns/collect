@@ -17,11 +17,15 @@ have Boba Fett.
 - **Counts spares**, because the point of spares is trading them.
 - **Photograph your own figures.** The picture on the card becomes the one you
   took (see below for why).
+- **Pictures for the ones you have not found yet**, optionally, seeded privately
+  into your own family's store — because those are the ones you need to
+  recognise in a shop, and the ones you cannot photograph.
 - **Type a capsule's code and see what is inside it, before you open it.** The
   headline feature, and the one worth having in a shop.
 - **Write down the capsule codes you find**, for batches nobody has recorded yet.
 - **Progress bar and a celebration** when a set is finished.
-- Everything is saved on the device. Nothing is uploaded anywhere, ever.
+- Everything is saved on the device, and stays there unless you deliberately
+  switch sharing on.
 
 ## Telling what is in a capsule before you buy it
 
@@ -89,6 +93,28 @@ it. Nothing Star Wars enters the public domain until the 2070s.
 Character **names** are fine: names are not copyrightable (37 CFR § 202.1(a)),
 and listing them to identify actual toys is textbook nominative trademark fair
 use. The app carries an unaffiliated-with-Lucasfilm notice to keep that clear.
+
+### What a family may still do privately
+
+None of the above is about pictures existing. It is about **publishing** them.
+
+So there is one path the app does support: a family can seed its *own* pictures
+into its *own* sync store, under its own family code, with
+`tools/seed_catalogue.cjs`. Those never enter this repository, are never served
+from the site, and are readable only by someone holding the four words. That is
+the difference between putting artwork on the public internet and keeping a copy
+at home, and it is why the tool is a separate manual step rather than part of
+the build.
+
+The reason to want this is narrow and real: he can only photograph figures he
+already has, so **the ones he has not found yet are exactly the ones with no
+picture** — and those are the ones he needs to recognise in a shop. A seeded
+picture fills that gap until his own photo replaces it.
+
+Two limits are deliberate. The seeding tool never fetches anything itself; it
+uploads a folder you assembled and are entitled to use. And `.gitignore` blocks
+the staging folders, because the failure that matters is not a bad decision but
+an absent-minded `git add`.
 
 ## How trustworthy is the data?
 
@@ -280,13 +306,22 @@ turn sharing off and on again for a new code.
 
 ```powershell
 node --test "tests/*.test.mjs"                    # data, honesty, install, merge, scan
+node --test tests/catalogue.test.cjs              # catalogue namespace, against the real worker
 node tests/collect.cjs "<path to msedge.exe>"     # drives the real page
+node tests/catalogue_ui.cjs "<path to msedge.exe>"# the v1->v2 upgrade, and which picture wins
 node tests/sync.cjs "<path to msedge.exe>"        # two real browsers, one collection
 node tests/sync.cjs "<path to msedge.exe>" --live # ...against the PUBLISHED site and worker
 node tools/check_live.cjs                         # the deployed worker, over the internet
 node tools/scan_sources.cjs                       # the community sources, over the internet
 node tools/screenshots.cjs                        # one shot per screen
 ```
+
+`catalogue_ui.cjs` earns its place by testing what the main suite structurally
+cannot: it runs on a **fresh profile**, so it creates database v2 outright and
+never exercises the upgrade. This one writes a v1 database containing a photo
+the way the old code did, loads the new app over the top, and checks the photo
+survived — because the cost of getting that wrong is deleting photographs a
+child took himself.
 
 `collect.cjs` picks a set, marks a figure, records a code, reloads to prove the
 progress survived, checks the sets keep separate progress, exercises the code

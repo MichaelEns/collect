@@ -18,6 +18,7 @@
   const PROGRESS_KEY = (setId) => `collect.progress.${setId}`;
   const DB_NAME = 'collect';
   const STORE = 'photos';
+  const CAT_STORE = 'catalogue';
   const PHOTO_MAX_PX = 480;
 
   const $ = (id) => document.getElementById(id);
@@ -76,15 +77,24 @@
    * Photos go in IndexedDB rather than localStorage. localStorage holds
    * strings and caps out around 5MB, so a handful of base64 photos would fill
    * it and start throwing — taking the progress data down with them.
+   *
+   * Two stores, not one with prefixed keys. A catalogue picture shows what a
+   * figure looks like before it is found; his own photo replaces it after. They
+   * therefore coexist for the same figure, and more importantly sync walks
+   * every key in a store — sharing one would upload catalogue pictures as if a
+   * child had taken them.
    */
   let dbPromise = null;
 
   function db() {
     if (!dbPromise) {
       dbPromise = new Promise((resolve, reject) => {
-        const req = indexedDB.open(DB_NAME, 1);
+        // v2 added the catalogue store. Both are created conditionally so a
+        // fresh install and an upgrade from v1 take the same path.
+        const req = indexedDB.open(DB_NAME, 2);
         req.onupgradeneeded = () => {
           if (!req.result.objectStoreNames.contains(STORE)) req.result.createObjectStore(STORE);
+          if (!req.result.objectStoreNames.contains(CAT_STORE)) req.result.createObjectStore(CAT_STORE);
         };
         req.onsuccess = () => resolve(req.result);
         req.onerror = () => reject(req.error);
@@ -93,13 +103,13 @@
     return dbPromise;
   }
 
-  async function photoOp(mode, run) {
+  async function storeOp(storeName, mode, run) {
     const conn = await db();
     if (!conn) return null;
     return new Promise((resolve) => {
       let out = null;
-      const tx = conn.transaction(STORE, mode);
-      const req = run(tx.objectStore(STORE));
+      const tx = conn.transaction(storeName, mode);
+      const req = run(tx.objectStore(storeName));
       if (req) req.onsuccess = () => { out = req.result; };
       tx.oncomplete = () => resolve(out);
       tx.onerror = () => resolve(null);
@@ -107,11 +117,19 @@
     });
   }
 
+  const photoOp = (mode, run) => storeOp(STORE, mode, run);
+  const catOp = (mode, run) => storeOp(CAT_STORE, mode, run);
+
   const photoKey = (figureId) => `${state.set.id}/${figureId}`;
   const getPhoto = (key) => photoOp('readonly', (s) => s.get(key));
   const putPhoto = (key, blob) => photoOp('readwrite', (s) => s.put(blob, key));
   const delPhoto = (key) => photoOp('readwrite', (s) => s.delete(key));
   const photoKeys = () => photoOp('readonly', (s) => s.getAllKeys());
+
+  const getCatalogue = (key) => catOp('readonly', (s) => s.get(key));
+  const putCatalogue = (key, blob) => catOp('readwrite', (s) => s.put(blob, key));
+  const delCatalogue = (key) => catOp('readwrite', (s) => s.delete(key));
+  const catalogueKeys = () => catOp('readonly', (s) => s.getAllKeys());
 
   /**
    * Shrinks a camera photo before storing it. A modern phone photo is several
@@ -431,7 +449,7 @@
         <span class="rarity-dot" style="background:${rarity ? escapeHtml(rarity.colour) : 'var(--line)'}"></span>`;
       card.addEventListener('click', () => openSheet(figure));
       grid.appendChild(card);
-      paintPhoto(figure.id);
+      paintArt(figure.id);
     }
 
     const bits = [];
@@ -442,9 +460,19 @@
     $('legend').textContent = bits.join(' — ');
   }
 
-  /** Swaps a card's initials for the child's own photo, if there is one. */
-  async function paintPhoto(figureId) {
-    const blob = await getPhoto(photoKey(figureId));
+  /*
+   * Puts a picture on a card, if there is one to put.
+   *
+   *   his own photo  >  catalogue picture  >  the letter tag
+   *
+   * The catalogue picture is what a figure looks like before it is found, so he
+   * knows what he is hunting; his own photo takes over the moment he finds one.
+   * The tag stays underneath both and is what shows when there is no picture at
+   * all, which is why it still has to be unique.
+   */
+  async function paintArt(figureId) {
+    const key = photoKey(figureId);
+    const blob = (await getPhoto(key)) || (await getCatalogue(key));
     if (!blob) return;
     const holder = document.querySelector(`.fig-art[data-art="${CSS.escape(figureId)}"]`);
     if (!holder) return;
@@ -776,22 +804,29 @@
 
   async function showSheetPhoto() {
     if (state.photoUrl) { URL.revokeObjectURL(state.photoUrl); state.photoUrl = null; }
-    const blob = await getPhoto(photoKey(state.figure.id));
+    const key = photoKey(state.figure.id);
+    const own = await getPhoto(key);
+    const blob = own || (await getCatalogue(key));
     const img = $('sheet-photo');
     if (blob) {
       state.photoUrl = URL.createObjectURL(blob);
       img.src = state.photoUrl;
       img.hidden = false;
       $('sheet-placeholder').hidden = true;
-      $('photo-remove').hidden = false;
-      $('photo-button-text').textContent = '📷 Take a different photo';
     } else {
       img.hidden = true;
       img.removeAttribute('src');
       $('sheet-placeholder').hidden = false;
-      $('photo-remove').hidden = true;
-      $('photo-button-text').textContent = '📷 Add a photo of yours';
     }
+    /*
+     * The buttons talk about HIS photo only. A catalogue picture is not his to
+     * remove, and while one is showing he still has not taken his own — so the
+     * prompt has to stay "add", not become "take a different one".
+     */
+    $('photo-remove').hidden = !own;
+    $('photo-button-text').textContent = own
+      ? '📷 Take a different photo'
+      : '📷 Add a photo of yours';
   }
 
   function closeSheet() {
@@ -982,6 +1017,12 @@
       put: putPhoto,
       delete: delPhoto,
       keys: async () => (await photoKeys()) || [],
+    },
+    catalogue: {
+      get: getCatalogue,
+      put: putCatalogue,
+      delete: delCatalogue,
+      keys: async () => (await catalogueKeys()) || [],
     },
   };
 

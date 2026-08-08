@@ -5,3 +5,10 @@ tools/rosters.generated.json
 worker/node_modules/
 report.json
 report.txt
+
+# Catalogue pictures are uploaded to the family's own sync store, never
+# committed. This repo is public, and a file here is fetchable by URL whatever
+# the app renders — so manufacturer artwork in the repo would be published to
+# the world rather than kept at home. See tools/seed_catalogue.cjs.
+catalogue-pics/
+pics/

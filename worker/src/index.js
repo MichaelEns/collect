@@ -72,6 +72,22 @@ const photoIndexKey = (code) => `idx:${code}`;
 const photoKey = (code, setId, figureId) => `ph:${code}:${setId}:${figureId}`;
 
 /*
+ * Catalogue pictures live in their own namespace, deliberately.
+ *
+ * A catalogue picture shows what a figure looks like BEFORE it is found, so a
+ * child knows what he is hunting. His own photo replaces it once he finds one.
+ * The two therefore coexist for the same figure, and sharing a key would mean
+ * the seed tool and a phone taking a photo silently overwriting each other.
+ *
+ * These are never bundled into the repo. The repo is public and a file in it is
+ * fetchable whatever the app chooses to render, so manufacturer artwork there
+ * would be published to the world; here it is reachable only with the family
+ * code, which is the difference between publishing and keeping a copy at home.
+ */
+const catalogueIndexKey = (code) => `cidx:${code}`;
+const catalogueKey = (code, setId, figureId) => `cat:${code}:${setId}:${figureId}`;
+
+/*
  * Which photos exist, as an explicit document rather than a KV list().
  *
  * This is not a premature optimisation — list() is EVENTUALLY CONSISTENT, and
@@ -87,17 +103,22 @@ const photoKey = (code, setId, figureId) => `ph:${code}:${setId}:${figureId}`;
  * advertised until that device writes another photo. For a family app where
  * photos are taken occasionally, that is a better failure than the delay.
  */
-async function readPhotoIndex(env, code) {
+async function readIndex(env, key) {
   try {
-    return JSON.parse(await env.COLLECT.get(photoIndexKey(code)) || '{}') || {};
+    return JSON.parse(await env.COLLECT.get(key) || '{}') || {};
   } catch {
     return {};
   }
 }
 
-async function writePhotoIndex(env, code, index) {
-  await env.COLLECT.put(photoIndexKey(code), JSON.stringify(index));
+async function writeIndex(env, key, index) {
+  await env.COLLECT.put(key, JSON.stringify(index));
 }
+
+const readPhotoIndex = (env, code) => readIndex(env, photoIndexKey(code));
+const writePhotoIndex = (env, code, index) => writeIndex(env, photoIndexKey(code), index);
+const readCatalogueIndex = (env, code) => readIndex(env, catalogueIndexKey(code));
+const writeCatalogueIndex = (env, code, index) => writeIndex(env, catalogueIndexKey(code), index);
 
 /** Ids come from our own set files, so anything exotic is a bug or an attack. */
 const SAFE_ID = /^[a-z0-9][a-z0-9-]{0,127}$/;
@@ -149,6 +170,7 @@ async function handle(request, env) {
       return json({
         progress: stored,
         photos: await readPhotoIndex(env, code),
+        catalogue: await readCatalogueIndex(env, code),
         serverTime: Date.now(),
       });
     }
@@ -175,24 +197,40 @@ async function handle(request, env) {
       return json({
         progress: merged,
         photos: await readPhotoIndex(env, code),
+        catalogue: await readCatalogueIndex(env, code),
         serverTime: now,
       });
     }
     return json({ error: 'method' }, 405);
   }
 
-  const photo = /^\/v1\/photo\/([^/]+)\/([^/]+)$/.exec(path);
-  if (photo) {
-    const setId = decodeURIComponent(photo[1]);
-    const figureId = decodeURIComponent(photo[2]);
+  /*
+   * Photos and catalogue pictures differ only in which namespace they land in,
+   * so one handler serves both rather than two that can drift apart.
+   *
+   * Both are writable with the family code. The seed tool being the only thing
+   * that writes catalogue pictures is a convention of ours, not something the
+   * worker can enforce: it authenticates with the same code the app does, so
+   * there is nothing here to tell them apart.
+   */
+  const image = /^\/v1\/(photo|catalogue)\/([^/]+)\/([^/]+)$/.exec(path);
+  if (image) {
+    const kind = image[1];
+    const setId = decodeURIComponent(image[2]);
+    const figureId = decodeURIComponent(image[3]);
     if (!SAFE_ID.test(setId) || !SAFE_ID.test(figureId)) {
       return json({ error: 'bad id' }, 400);
     }
-    const key = photoKey(code, setId, figureId);
+
+    const isPhoto = kind === 'photo';
+    const key = isPhoto ? photoKey(code, setId, figureId) : catalogueKey(code, setId, figureId);
+    const readIdx = isPhoto ? readPhotoIndex : readCatalogueIndex;
+    const writeIdx = isPhoto ? writePhotoIndex : writeCatalogueIndex;
+    const missing = isPhoto ? 'no photo' : 'no picture';
 
     if (request.method === 'GET') {
       const object = await env.COLLECT.getWithMetadata(key, { type: 'arrayBuffer' });
-      if (!object || !object.value) return json({ error: 'no photo' }, 404);
+      if (!object || !object.value) return json({ error: missing }, 404);
       return new Response(object.value, {
         headers: {
           'Content-Type': 'image/jpeg',
@@ -210,8 +248,8 @@ async function handle(request, env) {
       if (bytes.byteLength > MAX_PHOTO_BYTES) return json({ error: 'too big' }, 413);
 
       const wire = `${setId}:${figureId}`;
-      const index = await readPhotoIndex(env, code);
-      // Already have this exact photo: costs a read, not one of the day's writes.
+      const index = await readIdx(env, code);
+      // Already have this exact picture: costs a read, not one of the day's writes.
       if (index[wire] === hash) return json({ ok: true, unchanged: true });
       if (!(wire in index) && Object.keys(index).length >= MAX_PHOTOS) {
         return json({ error: 'too many photos' }, 507);
@@ -219,17 +257,17 @@ async function handle(request, env) {
 
       await env.COLLECT.put(key, bytes, { metadata: { hash, updatedAt: Date.now() } });
       index[wire] = hash;
-      await writePhotoIndex(env, code, index);
+      await writeIdx(env, code, index);
       return json({ ok: true });
     }
 
     if (request.method === 'DELETE') {
       const wire = `${setId}:${figureId}`;
       await env.COLLECT.delete(key);
-      const index = await readPhotoIndex(env, code);
+      const index = await readIdx(env, code);
       if (wire in index) {
         delete index[wire];
-        await writePhotoIndex(env, code, index);
+        await writeIdx(env, code, index);
       }
       return json({ ok: true });
     }

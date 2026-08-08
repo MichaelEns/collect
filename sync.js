@@ -31,6 +31,7 @@
 
   const CODE_KEY = 'collect.familyCode';
   const HASH_KEY = 'collect.photoHashes';
+  const CAT_HASH_KEY = 'collect.catalogueHashes';
   const PROGRESS_KEY = (setId) => `collect.progress.${setId}`;
 
   /*
@@ -112,11 +113,24 @@
 
   /* ---------------------------------------------------------------- photos */
 
-  const hashes = {
-    all() { try { return JSON.parse(store.get(HASH_KEY) || '{}') || {}; } catch { return {}; } },
-    set(key, hash) { const a = hashes.all(); a[key] = hash; store.set(HASH_KEY, JSON.stringify(a)); },
-    drop(key) { const a = hashes.all(); delete a[key]; store.set(HASH_KEY, JSON.stringify(a)); },
-  };
+  /*
+   * Two ledgers, because a photo and a catalogue picture of the same figure
+   * share the key "setId/figureId" — one ledger would have them overwrite each
+   * other's hashes and each would look perpetually changed to the other.
+   */
+  function ledger(storeKey) {
+    const all = () => {
+      try { return JSON.parse(store.get(storeKey) || '{}') || {}; } catch { return {}; }
+    };
+    return {
+      all,
+      set(key, hash) { const a = all(); a[key] = hash; store.set(storeKey, JSON.stringify(a)); },
+      drop(key) { const a = all(); delete a[key]; store.set(storeKey, JSON.stringify(a)); },
+    };
+  }
+
+  const hashes = ledger(HASH_KEY);
+  const catHashes = ledger(CAT_HASH_KEY);
 
   /** First 32 bits of a SHA-256, which is plenty to notice a photo changed. */
   async function hashBlob(blob) {
@@ -126,6 +140,7 @@
   }
 
   const photos = () => (window.__collect && window.__collect.photos) || null;
+  const catalogue = () => (window.__collect && window.__collect.catalogue) || null;
 
   /**
    * Reconciles photos in both directions.
@@ -180,6 +195,59 @@
     return pulled;
   }
 
+  /* ------------------------------------------------------------- catalogue */
+
+  /**
+   * Brings down catalogue pictures. One direction only.
+   *
+   * These are seeded once from a machine at home, not produced on a phone, so a
+   * device has nothing to contribute and should never push. That also means a
+   * device cannot corrupt the set for everyone else by uploading something odd.
+   *
+   * Unlike a photo, a catalogue picture is legitimately replaceable — a better
+   * one may be seeded later — so a changed hash re-pulls rather than being
+   * skipped because a file already exists.
+   */
+  async function syncCatalogue(remote) {
+    const api = catalogue();
+    if (!api) return false;
+    const localKeys = await api.keys();
+    const known = catHashes.all();
+    let changed = false;
+
+    for (const [wire, hash] of Object.entries(remote)) {
+      const [setId, figureId] = wire.split(':');
+      if (!setId || !figureId) continue;
+      const key = `${setId}/${figureId}`;
+      if (localKeys.includes(key) && known[key] === hash) continue;
+      try {
+        const response = await call(
+          `/v1/catalogue/${encodeURIComponent(setId)}/${encodeURIComponent(figureId)}`,
+          { raw: true }
+        );
+        const blob = await response.blob();
+        await api.put(key, blob);
+        catHashes.set(key, hash);
+        changed = true;
+      } catch { /* try again next time */ }
+    }
+
+    // Dropped from the seed means dropped here. A picture withdrawn at home
+    // should stop showing on the tablet rather than living on forever.
+    for (const key of localKeys) {
+      const [setId, figureId] = key.split('/');
+      if (!setId || !figureId) continue;
+      if (`${setId}:${figureId}` in remote) continue;
+      try {
+        await api.delete(key);
+        catHashes.drop(key);
+        changed = true;
+      } catch { /* try again next time */ }
+    }
+
+    return changed;
+  }
+
   /* ------------------------------------------------------------ the cycle */
 
   async function run() {
@@ -203,6 +271,17 @@
 
       const pulled = await syncPhotos(result.photos || {});
       if (pulled) document.dispatchEvent(new CustomEvent('collect:synced'));
+
+      /*
+       * Deliberately gated on the field being present rather than defaulting to
+       * {}. A worker deployed before catalogue support answers without the key
+       * at all, and treating that as "the seed is empty" would have every
+       * device delete every picture it had.
+       */
+      if (result.catalogue) {
+        const catChanged = await syncCatalogue(result.catalogue);
+        if (catChanged) document.dispatchEvent(new CustomEvent('collect:synced'));
+      }
     } catch (err) {
       /*
        * A wrong code is worth interrupting for; anything else is not. Being
