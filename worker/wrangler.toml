@@ -1,0 +1,33 @@
+name = "collect-sync"
+main = "src/index.js"
+compatibility_date = "2025-06-01"
+workers_dev = true
+
+# One more hostname is one more way to reach a family's collection. The code is
+# the real gate, but a per-version preview URL buys nothing here.
+preview_urls = false
+
+# Progress and photos share a namespace, with prefixed keys:
+#   p:<code>                        the whole collection, all sets, ~12KB full
+#   ph:<code>:<setId>:<figureId>    one photo, with { hash } in its metadata
+#
+# Create it once with:
+#   wrangler kv namespace create COLLECT
+# then paste the id below.
+[[kv_namespaces]]
+binding = "COLLECT"
+id = "0397622885f84053bc65c7aa581a88ec"
+
+# Guessing a four-word code means 2^32 attempts, which needs volume from
+# somewhere. This is the rate limiting binding rather than a KV counter on
+# purpose: a KV counter would spend the 1,000 daily writes it exists to protect.
+[[unsafe.bindings]]
+name = "RATE_LIMITER"
+type = "ratelimit"
+namespace_id = "1001"
+simple = { limit = 60, period = 60 }
+
+[vars]
+# Comma separated. Set to the published origin so a random page a child opens
+# cannot read the collection using a code cached in their browser.
+ALLOWED_ORIGINS = "https://michaelens.github.io"

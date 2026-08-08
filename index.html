@@ -38,6 +38,54 @@
   <section id="picker" aria-label="Your collections">
     <ul id="set-list" class="set-list"></ul>
     <p id="picker-empty" class="empty" hidden>No sets are installed yet.</p>
+
+    <!--
+      Sync lives on the picker, not in a settings screen. It is set up once by
+      a grown-up and then never touched, so it belongs somewhere findable
+      rather than somewhere convenient.
+    -->
+    <section id="sync" class="sync" aria-labelledby="sync-title">
+      <h2 id="sync-title">Share this collection</h2>
+
+      <div id="sync-off">
+        <p class="sync-hint">
+          Right now this collection is only saved on this device. Turn on
+          sharing to keep it on a phone and a tablet at once, and to keep a
+          copy if this one is ever lost.
+        </p>
+        <button id="sync-start" type="button" class="primary">Turn on sharing</button>
+        <button id="sync-join-open" type="button" class="link-button">
+          I already have a family code
+        </button>
+      </div>
+
+      <div id="sync-join" hidden>
+        <p class="sync-hint">
+          Type the four words from your other device. Capitals and spaces do
+          not matter.
+        </p>
+        <input id="sync-code-input" type="text" autocomplete="off" autocapitalize="none"
+               spellcheck="false" placeholder="moon-ewok-brave-comet" />
+        <button id="sync-join-go" type="button" class="primary">Join it</button>
+        <button id="sync-join-cancel" type="button" class="link-button">Never mind</button>
+      </div>
+
+      <div id="sync-on" hidden>
+        <p class="sync-hint">Your family code — type it on any other device:</p>
+        <p id="sync-code" class="sync-code"></p>
+        <div class="sync-row">
+          <button id="sync-copy" type="button" class="link-button">Copy it</button>
+          <button id="sync-now" type="button" class="link-button">Sync now</button>
+          <button id="sync-stop" type="button" class="link-button danger">Stop sharing</button>
+        </div>
+        <p class="sync-warn">
+          Anyone with these four words can see and change this collection, so
+          keep them in the family.
+        </p>
+      </div>
+
+      <p id="sync-status" class="sync-status" role="status" aria-live="polite"></p>
+    </section>
   </section>
 
   <!-- One collection, as a grid of figures. -->
@@ -138,5 +186,7 @@
 <canvas id="fx" aria-hidden="true"></canvas>
 
 <script src="/collect/app.js"></script>
+<script src="/collect/sync.js"></script>
+<script src="/collect/sync-ui.js"></script>
 </body>
 </html>

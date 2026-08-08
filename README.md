@@ -146,11 +146,66 @@ Progress lives in `localStorage`; photos live in IndexedDB, shrunk to 480px
 first — a few full-size phone photos would blow the quota and start throwing,
 taking the progress data down with them.
 
+## Sharing a collection between devices
+
+Optional, off until switched on, and the app is fully usable without it.
+
+One **family code** — four words like `comet-ewok-brave-moon` — identifies a
+collection. There is no account and no password, because the person using this
+is six. He can read four words off a sticky note once; he cannot manage a login.
+
+Turn it on, and the code appears. Type it on a second device and the two keep
+each other up to date: found marks, spares, codes he has written down, and his
+photos.
+
+### What it costs
+
+Nothing. It runs on a Cloudflare Worker with a KV namespace, and a family's
+whole collection is about 12KB of progress plus a few tens of KB per photo —
+comfortably inside the free tier.
+
+Workers KV allows 1,000 writes a day but 100,000 reads, so the design spends
+reads instead of writes: a push whose merged result matches what is stored
+costs a read and nothing else, photos are written only when their hash changes,
+and the client waits for a lull before pushing at all. Rate limiting uses the
+Workers rate limiting binding rather than a KV counter, which would have spent
+the budget it exists to protect.
+
+### Not losing a child's collection
+
+The merge lives only on the server, in `worker/src/merge.js`, so two devices
+can never disagree about what merging means. Two rules carry it:
+
+- **The key set is the union of both sides.** Absence is never a delete
+  instruction. A reinstalled device pushes `{}` and gets the whole collection
+  back rather than erasing it — the disaster this design exists to prevent, and
+  the case both test suites check explicitly.
+- **Newest wins per figure**, not per document. Whole-document last-write-wins
+  would throw away everything the other device did since the last sync.
+  Un-ticking still works: it is an edit with a newer timestamp.
+
+A device whose clock is set wrong is clamped to server time, or its timestamps
+would beat everything real forever and freeze the collection.
+
+### How safe is it?
+
+The code is the only protection, which is a deliberate trade. It is generated,
+never chosen, so it cannot be a birthday. 256 words to the fourth power is 4.3
+billion combinations, and the worker rate limits per IP, so guessing is not
+realistic. Requests from any origin other than the app's own are refused, so a
+random page cannot read the collection using a cached code.
+
+What is stored is a list of toy names and photos of toys. Anyone holding the
+four words can read and change it, so keep them in the family; if they leak,
+turn sharing off and on again for a new code.
+
 ## Tests
 
 ```powershell
-node --test "tests/*.test.mjs"                    # the data, and its honesty
+node --test "tests/*.test.mjs"                    # data, honesty, install, merge
 node tests/collect.cjs "<path to msedge.exe>"     # drives the real page
+node tests/sync.cjs "<path to msedge.exe>"        # two real browsers, one collection
+node tools/check_live.cjs                         # the deployed worker, over the internet
 node tools/screenshots.cjs                        # one shot per screen
 ```
 
@@ -160,13 +215,27 @@ finder, then **kills the server and tells the browser it is offline** and
 reopens a set that was never opened while online — proving both the checklist
 and the code lookup come from the precache.
 
-Two regressions it now pins, both found the hard way:
+`sync.cjs` runs **two real browser profiles** against the real worker code and
+checks they converge: both devices edit at once and neither loses its work, an
+un-tick propagates, a photo arrives byte for byte, a deleted photo stays
+deleted, a mistyped code is refused, and an emptied device gets everything back
+instead of wiping the other one.
+
+Regressions these now pin, all found the hard way:
 
 - **Routes could race.** Switching sets before the first finished loading let
   the abandoned one finish last and win, leaving the right title above the
-  wrong figures. Offline that window is seconds wide. The test holds one set's
-  read open, opens another on top of it, and fails if the wrong one wins.
+  wrong figures. Offline that window is seconds wide.
 - **Offline used to cost 2.5 seconds a tap.** The service worker waited out its
   network timeout before falling back to cache, even when the device already
   knew it had no connection. It now answers immediately in that case — 2322ms
   to 110ms — and the test asserts the timing, not just the outcome.
+- **KV `list()` is eventually consistent.** A freshly uploaded photo took about
+  twenty seconds to appear in it, so photos synced late and a deleted one could
+  be resurrected. The worker now keeps an explicit index key, which is strongly
+  consistent. This one only ever failed against the deployed worker, because
+  the local test double answered immediately — so the double now lags on
+  purpose.
+- **The privacy test only read `app.js`.** Sync arrived in new files and sent
+  data off the device without the test noticing. A guard now checks the list of
+  inspected scripts against what `index.html` actually loads.

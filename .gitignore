@@ -2,3 +2,4 @@ node_modules/
 *.log
 c-*.png
 tools/rosters.generated.json
+worker/node_modules/

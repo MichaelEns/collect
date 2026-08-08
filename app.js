@@ -48,7 +48,14 @@
 
   const entry = (figureId) => state.progress[figureId] || { have: false, dupes: 0, codes: [] };
 
-  /** Writes an entry back, filling in anything an older saved shape lacked. */
+  /**
+   * Writes an entry back, filling in anything an older saved shape lacked.
+   *
+   * Every write is stamped. Sync merges per figure and newest wins, so without
+   * a timestamp an edit made here could lose to a stale one from another
+   * device. Entries saved before sync existed have no stamp, which reads as
+   * zero — so any real edit beats them, which is what we want.
+   */
   function setEntry(figureId, changes) {
     const current = entry(figureId);
     state.progress[figureId] = {
@@ -56,8 +63,10 @@
       dupes: current.dupes || 0,
       codes: current.codes || [],
       ...changes,
+      updatedAt: Date.now(),
     };
     saveProgress();
+    document.dispatchEvent(new CustomEvent('collect:changed'));
   }
 
   /* ---------------------------------------------------------------- photos */
@@ -101,6 +110,7 @@
   const getPhoto = (key) => photoOp('readonly', (s) => s.get(key));
   const putPhoto = (key, blob) => photoOp('readwrite', (s) => s.put(blob, key));
   const delPhoto = (key) => photoOp('readwrite', (s) => s.delete(key));
+  const photoKeys = () => photoOp('readonly', (s) => s.getAllKeys());
 
   /**
    * Shrinks a camera photo before storing it. A modern phone photo is several
@@ -720,12 +730,14 @@
     await putPhoto(photoKey(state.figure.id), blob);
     await showSheetPhoto();
     renderCollection();
+    document.dispatchEvent(new CustomEvent('collect:changed'));
   });
 
   $('photo-remove').addEventListener('click', async () => {
     await delPhoto(photoKey(state.figure.id));
     await showSheetPhoto();
     renderCollection();
+    document.dispatchEvent(new CustomEvent('collect:changed'));
   });
 
   $('sheet-close').addEventListener('click', closeSheet);
@@ -839,7 +851,8 @@
     });
   }
 
-  // Exposed for the tests, which drive the real page rather than a mock.
+  // Exposed for the tests, which drive the real page rather than a mock, and
+  // for sync.js, which needs to read and write photos without owning the store.
   window.__collect = {
     state,
     setHave,
@@ -847,5 +860,32 @@
     closeSheet,
     route,
     countFound: () => (state.set ? state.set.figures.filter((f) => entry(f.id).have).length : 0),
+    photos: {
+      get: getPhoto,
+      put: putPhoto,
+      delete: delPhoto,
+      keys: async () => (await photoKeys()) || [],
+    },
   };
+
+  /*
+   * Another device's work has arrived. Re-read what was saved underneath us
+   * and redraw.
+   *
+   * The open figure card is deliberately left open. He may be standing in a
+   * shop looking at it, and having it vanish because a parent ticked something
+   * at home would be worse than the card being a moment out of date — it is
+   * refreshed in place instead.
+   */
+  document.addEventListener('collect:synced', async () => {
+    if (!state.set) { renderPicker(); return; }
+    state.progress = loadProgress(state.set.id);
+    renderCollection();
+    renderCodeResult($('code-input').value);
+    if (!$('sheet').hidden && state.figure) {
+      renderSheetState();
+      renderCodes();
+      await showSheetPhoto();
+    }
+  });
 }());

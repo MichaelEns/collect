@@ -837,3 +837,89 @@ body {
   flex-wrap: wrap;
   gap: 5px;
 }
+
+/* ----------------------------------------------------------------- sharing */
+
+.sync {
+  margin: 22px 0 0;
+  padding: 16px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+.sync h2 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  color: var(--ink);
+}
+
+.sync-hint {
+  margin: 0 0 12px;
+  font-size: .8rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.sync button { margin: 0 0 6px; }
+.sync .primary { width: 100%; }
+
+#sync-code-input {
+  width: 100%;
+  margin: 0 0 10px;
+  padding: 11px 12px;
+  font: 600 1rem/1.2 inherit;
+  text-align: center;
+  color: var(--ink);
+  background: var(--bg-1);
+  border: 2px solid var(--line);
+  border-radius: 12px;
+}
+
+#sync-code-input:focus { outline: none; border-color: var(--accent); }
+
+/*
+ * The code is read aloud across a room and typed with a thumb, so it is set
+ * in a monospace face where the word breaks stay obvious, and given room to
+ * wrap rather than being squeezed onto one line.
+ */
+.sync-code {
+  margin: 0 0 10px;
+  padding: 12px 10px;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  letter-spacing: .02em;
+  text-align: center;
+  word-break: break-word;
+  color: var(--accent);
+  background: var(--bg-1);
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+}
+
+.sync-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  align-items: center;
+}
+
+.sync-row .link-button { margin: 0; }
+.link-button.danger { color: #ff9a9a; }
+
+.sync-warn {
+  margin: 10px 0 0;
+  font-size: .72rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.sync-status {
+  margin: 10px 0 0;
+  font-size: .76rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.sync-status.bad { color: var(--gold); }

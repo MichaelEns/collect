@@ -96,6 +96,13 @@ function rpc(ws, id, m, p) {
   await new Promise((r) => setTimeout(r, 2500));
   await shoot('c-picker.png');
 
+  // The sharing panel, which is the only part a grown-up ever touches.
+  await run("document.getElementById('sync').scrollIntoView({ block: 'center' });");
+  await new Promise((r) => setTimeout(r, 500));
+  await shoot('c-sharing.png');
+  await run('window.scrollTo(0, 0);');
+  await new Promise((r) => setTimeout(r, 300));
+
   await rpc(ws, id++, 'Page.navigate', { url: base + '#set=sw-galaxy-peek-s2' });
   await new Promise((r) => setTimeout(r, 2500));
 

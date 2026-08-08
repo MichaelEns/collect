@@ -122,16 +122,60 @@ test('a navigation maps to the one page, fragment and all', () => {
 
 /* ------------------------------------------------------------ boundaries */
 
-test('the app fetches nothing but its own set files', () => {
-  // No analytics, no CDN, no image host. Everything about a child's collection
-  // stays on the child's device.
-  const js = read('app.js');
-  for (const m of js.matchAll(/fetch\(\s*[`'"]([^`'"]*)/g)) {
-    assert.ok(m[1].startsWith('/collect/'), `app.js fetches "${m[1]}"`);
+/** Every script the page actually ships. Miss one and the checks below lie. */
+const SCRIPTS = ['app.js', 'sync.js', 'sync-ui.js', 'sw.js'];
+
+test('the boundary checks cover every script the page loads', () => {
+  /*
+   * This guard exists because the privacy test below used to read app.js only.
+   * Sync then arrived in a new file and sent data off the device without the
+   * test noticing a thing. A list of filenames is worth nothing unless
+   * something checks it against the page.
+   */
+  const html = read('index.html');
+  const loaded = [...html.matchAll(/<script src="\/collect\/([^"]+)"/g)].map((m) => m[1]);
+  const missing = loaded.filter((f) => !SCRIPTS.includes(f));
+  assert.deepStrictEqual(missing, [],
+    `index.html loads ${missing.join(', ')}, which no boundary test inspects`);
+  assert.ok(SCRIPTS.includes('sw.js'), 'the service worker fetches too');
+});
+
+test('nothing leaves the device except to the one sync endpoint', () => {
+  /*
+   * No analytics, no CDN, no image host, no third party of any kind. The only
+   * outbound address in the whole app is the family's own sync worker, and
+   * only once sharing has been deliberately turned on.
+   */
+  const allowedHost = 'https://collect-sync.michaelens.workers.dev';
+  for (const file of SCRIPTS) {
+    const js = read(file);
+    for (const m of js.matchAll(/https?:\/\/[^\s"'`)]+/g)) {
+      assert.strictEqual(m[0], allowedHost,
+        `${file} reaches out to ${m[0]}, which is not the sync endpoint`);
+    }
+    for (const m of js.matchAll(/fetch\(\s*[`'"]([^`'"]*)/g)) {
+      const target = m[1];
+      const ok = target.startsWith('/collect/') || target === allowedHost;
+      assert.ok(ok, `${file} fetches "${target}"`);
+    }
   }
-  for (const m of js.matchAll(/https?:\/\/[^\s"'`)]+/g)) {
-    assert.fail(`app.js reaches out to ${m[0]}`);
-  }
+});
+
+test('sharing is off until it is switched on', () => {
+  // An app for a six-year-old must not start shipping his collection anywhere
+  // because he tapped something. Every request carries the family code, and
+  // without a stored code there is nothing to carry and nothing is sent.
+  const js = read('sync.js');
+  assert.match(js, /if \(!getCode\(\)\)/,
+    'sync must return early when no family code is stored');
+  assert.match(js, /X-Family-Code/, 'requests are identified by the family code');
+});
+
+test('the sync endpoint is reached over https only', () => {
+  const js = read('sync.js');
+  const endpoint = /const ENDPOINT = '([^']+)'/.exec(js);
+  assert.ok(endpoint, 'sync.js must name its endpoint in one place');
+  assert.match(endpoint[1], /^https:\/\//, 'a family collection must not travel in the clear');
 });
 
 test('progress and photos are stored only on the device', () => {
