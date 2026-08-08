@@ -224,6 +224,73 @@ test('a sheet whose shape has shifted is reported, not silently misread', () => 
   assert.strictEqual(code, 20);
 });
 
+test('a corrected code is reported as safe to apply, not as a reason to stop', () => {
+  /*
+   * A code whose contents were corrected is the opposite of dangerous: until
+   * it is applied, the app is confidently telling a child the wrong four
+   * figures. Codes carry no progress, so nothing can be lost by taking it.
+   * An earlier version graded this "breaking", which printed "do not rebuild"
+   * over the one finding where rebuilding is the whole point.
+   */
+  const rows = sheetFromShipped();
+  const set = readJson('sw-galaxy-peek-s2.json');
+  const codes = JSON.parse(fs.readFileSync(path.join(SETS, 'codes-sw-galaxy-peek-s2.json'), 'utf8'));
+  const [code, ids] = Object.entries(codes.codes)[0];
+  const swapIn = set.figures.find((f) => !ids.includes(f.id));
+  const replacement = [swapIn.id, ...ids.slice(1)]
+    .map((id) => toSheetName(set.figures.find((f) => f.id === id).name)).join(', ');
+
+  let touched = 0;
+  for (const row of rows) {
+    // The same code string exists in several series, so the series column has
+    // to match too — rewriting all of them would name Series 2 figures inside
+    // a Series 4 capsule, and the parser would rightly refuse it.
+    if (row[5] === code && row[8] === '2') { row[10] = replacement; touched += 1; }
+  }
+  assert.strictEqual(touched, 1, `expected to rewrite exactly one row for ${code}`);
+
+  const { code: exit, report, stdout } = runScan(toCsv(rows));
+  const finding = report.findings.find((f) => f.kind === 'codes-changed');
+  assert.ok(finding, `expected codes-changed, got ${JSON.stringify(kinds(report))}`);
+  assert.match(finding.detail, new RegExp(code));
+  assert.strictEqual(finding.level, 'additive',
+    'a corrected code costs nothing to take; grading it breaking tells you to sit on a known-wrong answer');
+  assert.doesNotMatch(stdout, /Do not rebuild/,
+    'the advice must not tell you to withhold a correction');
+  assert.strictEqual(exit, 10);
+});
+
+test('a code that collectors now disagree about is not passed over in silence', () => {
+  /*
+   * If somebody reports different contents for a code that already exists,
+   * the builder stops calling it agreed and files it under `disputed` — the
+   * app changes from naming four figures to saying it is not agreed on. That
+   * is a visible change to what a child is told, so the scan has to mention
+   * it. It was invisible at first: the diff skipped anything with more than
+   * one variant, and a disputed code is still present, so it did not read as
+   * withdrawn either.
+   */
+  const rows = sheetFromShipped();
+  const set = readJson('sw-galaxy-peek-s2.json');
+  const codes = JSON.parse(fs.readFileSync(path.join(SETS, 'codes-sw-galaxy-peek-s2.json'), 'utf8'));
+  const [code, ids] = Object.entries(codes.codes)[0];
+  const other = set.figures.find((f) => !ids.includes(f.id));
+  const rival = [other.id, ...ids.slice(1)]
+    .map((id) => toSheetName(set.figures.find((f) => f.id === id).name)).join(', ');
+
+  const y = rows.length;
+  put(rows, y, 3, 'bag');
+  put(rows, y, 5, code);
+  put(rows, y, 6, 'Galaxy');
+  put(rows, y, 8, '2');
+  put(rows, y, 10, rival);
+
+  const { report } = runScan(toCsv(rows));
+  const finding = report.findings.find((f) => f.kind === 'codes-disputed');
+  assert.ok(finding, `expected codes-disputed, got ${JSON.stringify(kinds(report))}`);
+  assert.match(finding.detail, new RegExp(code));
+});
+
 test('the scan never writes to sets/', () => {
   /*
    * The app's whole posture is that a confidently wrong checklist is worse

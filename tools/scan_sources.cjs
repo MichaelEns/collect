@@ -224,35 +224,90 @@ function diffAgainstShipped(rosters, codes) {
       }
     }
 
-    const agreed = (shipped[setId] || {}).codes || {};
+    const shippedFile = shipped[setId] || {};
+    const agreed = shippedFile.codes || {};
+    const wasDisputed = shippedFile.disputed || {};
     const live = codes[s] ? codes[s].codes : new Map();
     const added = [];
     const changed = [];
+    const nowDisputed = [];
+    const newlyContested = [];
+    const settled = [];
     for (const [code, variants] of live) {
-      if (variants.size !== 1) continue;
+      /*
+       * More than one variant means contributors reported different contents
+       * for the same capsule, and the builder files it under `disputed` rather
+       * than picking a side. Skipping those outright — which this did at first
+       * — hid the whole transition: a disputed code is still present in the
+       * sheet, so it did not read as withdrawn either, and a code quietly
+       * going from a confident answer to "not agreed on" was reported nowhere.
+       */
+      if (variants.size > 1) {
+        if (code in agreed) nowDisputed.push(code);
+        else if (!(code in wasDisputed)) newlyContested.push(code);
+        continue;
+      }
       const ids = [...variants.values()][0];
+      if (code in wasDisputed) { settled.push(code); continue; }
       if (!(code in agreed)) { added.push(code); continue; }
       if (agreed[code].join('|') !== ids.join('|')) changed.push(code);
     }
     const gone = Object.keys(agreed).filter((c) => !live.has(c));
+
+    const sample = (list) => list.slice(0, 12).join(', ')
+      + (list.length > 12 ? ` and ${list.length - 12} more` : '');
 
     if (added.length) {
       findings.push({
         level: 'additive',
         kind: 'codes-added',
         setId,
-        detail: `${added.length} new capsule code(s): ${added.slice(0, 12).join(', ')}`
-          + `${added.length > 12 ? ` and ${added.length - 12} more` : ''}`,
+        detail: `${added.length} new capsule code(s): ${sample(added)}`,
       });
     }
     if (changed.length) {
-      // Not breaking (codes carry no progress) but it means somebody corrected
-      // a capsule, and the app is currently telling a child the old answer.
+      /*
+       * Codes carry no progress, so a correction costs nothing to take — and
+       * until it is taken the app is confidently naming the wrong four figures
+       * to a child standing in a shop. Grading this "breaking" printed "do not
+       * rebuild" over the one finding where rebuilding is the entire point.
+       */
       findings.push({
-        level: 'breaking',
+        level: 'additive',
         kind: 'codes-changed',
         setId,
-        detail: `${changed.length} code(s) now list different figures: ${changed.slice(0, 12).join(', ')}`,
+        detail: `${changed.length} code(s) now list different figures: ${sample(changed)}.`
+          + ' Somebody corrected a capsule, so the app is currently giving the old'
+          + ' answer — worth applying promptly. No progress is affected.',
+      });
+    }
+    if (nowDisputed.length) {
+      findings.push({
+        level: 'additive',
+        kind: 'codes-disputed',
+        setId,
+        detail: `${nowDisputed.length} code(s) the app answers confidently are now`
+          + ` contested by collectors: ${sample(nowDisputed)}.`
+          + ' Rebuilding moves them to "not agreed on", which shows every reported'
+          + ' version rather than picking one.',
+      });
+    }
+    if (settled.length) {
+      findings.push({
+        level: 'additive',
+        kind: 'codes-settled',
+        setId,
+        detail: `${settled.length} previously contested code(s) are now agreed:`
+          + ` ${sample(settled)}`,
+      });
+    }
+    if (newlyContested.length) {
+      findings.push({
+        level: 'additive',
+        kind: 'codes-added-contested',
+        setId,
+        detail: `${newlyContested.length} new code(s) arrived already contested:`
+          + ` ${sample(newlyContested)}`,
       });
     }
     if (gone.length) {
@@ -260,7 +315,7 @@ function diffAgainstShipped(rosters, codes) {
         level: 'additive',
         kind: 'codes-withdrawn',
         setId,
-        detail: `${gone.length} code(s) the app knows are no longer in the sheet: ${gone.slice(0, 12).join(', ')}`,
+        detail: `${gone.length} code(s) the app knows are no longer in the sheet: ${sample(gone)}`,
       });
     }
   }
