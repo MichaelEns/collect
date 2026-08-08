@@ -123,6 +123,66 @@ list Greedo, BB-8, Hera Syndulla and Chopper as the Series 2 ultra-rares. They
 are the **Series 1** ultra-rares. There is a test that fails if they ever
 appear in the Series 2 file.
 
+## Keeping up with new codes and new series
+
+The data comes from a fan-maintained spreadsheet and a wiki. Both move.
+
+**The spreadsheet this app was built from was withdrawn and began returning
+404, and nothing noticed** — the pipeline could not be re-run, and the app was
+still offering that dead URL to people as its source. That is what
+`tools/scan_sources.cjs` is for. A GitHub Action
+(`.github/workflows/watch-sources.yml`) runs it weekly and opens a single issue
+when there is something to know, updating that same issue rather than opening a
+new one each week. You can also run it by hand:
+
+```powershell
+node tools/scan_sources.cjs              # check the live sources
+node tools/scan_sources.cjs --offline    # skip the network
+node tools/scan_sources.cjs --csv f.csv  # check a sheet you already have
+```
+
+It grades what it finds by what it would cost you:
+
+| Grade | Meaning |
+|---|---|
+| `SAFE TO ADD` | new codes, figures or a new series — nothing already ticked is affected |
+| `NEEDS A DECISION` | applying it would change an id progress is stored against |
+| `SOURCE UNREACHABLE` | a link the app ships is dead, so the data cannot be confirmed |
+| `FOR INFORMATION` | a source refused an automated request; probably bot protection |
+
+**It never writes to `sets/`.** Rosters are community guesswork, and a job that
+quietly rewrote a child's checklist from a page that changed overnight is the
+worst thing this repository could contain. It reports; you decide. There is a
+test that fails if it ever gains the ability to write.
+
+### Applying an update without losing progress
+
+Progress is stored as `collect.progress.<setId>` → `{ <figureId>: entry }`, in
+the browser and in the shared store. **An id is not an implementation detail —
+it is the thing remembering that a figure was found.** Adding ids is free: an
+unknown id simply reads as not-yet-found, and the sync merge takes the union of
+both sides so nothing is dropped. Renaming or removing one orphans a tick.
+
+`tools/build_codes.cjs` carries existing ids across **by name**, so a figure
+respelled in the sheet mints a fresh id and abandons the old one silently.
+`sets/ids.lock.json` is the seatbelt:
+
+```powershell
+curl -L -o codes.csv "<the csv url in tools/build_codes.cjs>"
+node tools/build_codes.cjs codes.csv
+node tools/build_sets.cjs
+node tools/lock_ids.cjs          # refuses if a tick would be orphaned
+node --test "tests/*.test.mjs"
+```
+
+If `lock_ids` complains, **stop**. Keep the old id on the renamed figure rather
+than reslugging it, then run `node tools/lock_ids.cjs --write` to record
+genuinely new ids.
+
+A new *series* is always a code change, not just data: raise `SERIES_COUNT` in
+`tools/build_codes.cjs` and add a `META` entry — capsule description, item
+number, release date — in `tools/build_sets.cjs`.
+
 ## Adding another collection
 
 Drop a JSON file into `sets/` and name it in `sets/index.json`. No code
@@ -219,11 +279,12 @@ turn sharing off and on again for a new code.
 ## Tests
 
 ```powershell
-node --test "tests/*.test.mjs"                    # data, honesty, install, merge
+node --test "tests/*.test.mjs"                    # data, honesty, install, merge, scan
 node tests/collect.cjs "<path to msedge.exe>"     # drives the real page
 node tests/sync.cjs "<path to msedge.exe>"        # two real browsers, one collection
 node tests/sync.cjs "<path to msedge.exe>" --live # ...against the PUBLISHED site and worker
 node tools/check_live.cjs                         # the deployed worker, over the internet
+node tools/scan_sources.cjs                       # the community sources, over the internet
 node tools/screenshots.cjs                        # one shot per screen
 ```
 

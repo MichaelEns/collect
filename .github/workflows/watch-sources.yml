@@ -1,0 +1,152 @@
+# Watches the community sources this app's data comes from.
+#
+# The rosters and capsule codes come from a fan-maintained spreadsheet and a
+# wiki. Both move and disappear without warning — the original spreadsheet was
+# withdrawn and started returning 404, and nobody noticed, because nothing was
+# looking. That is the whole reason this exists.
+#
+# It opens an issue. It never touches sets/, and it must never be given
+# permission to: rosters are community guesswork, and a job that quietly
+# rewrote a child's checklist from a page that changed overnight is the worst
+# thing this repository could contain.
+name: Watch sources
+
+on:
+  schedule:
+    # 08:00 UTC each Monday. Nothing here is urgent; weekly is often enough to
+    # catch a new series long before a shop shelf does.
+    - cron: '0 8 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: watch-sources
+  cancel-in-progress: false
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Check the data still matches the sources
+        id: scan
+        run: |
+          set +e
+          node tools/scan_sources.cjs --json report.json > report.txt 2>&1
+          echo "verdict=$?" >> "$GITHUB_OUTPUT"
+          cat report.txt
+
+      - name: Confirm the scan changed nothing
+        run: |
+          if ! git diff --quiet; then
+            echo "The scan modified tracked files. It is a reporter, not a builder."
+            git --no-pager diff --stat
+            exit 1
+          fi
+
+      - name: Tell somebody
+        if: steps.scan.outputs.verdict != '0'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const body = fs.readFileSync('report.txt', 'utf8').trim();
+            const needsPerson = '${{ steps.scan.outputs.verdict }}' === '20';
+            const title = needsPerson
+              ? 'Doorables sources need a look'
+              : 'New Doorables data is available';
+
+            const intro = needsPerson
+              ? 'Something changed that cannot be applied blindly. Details below.'
+              : [
+                  'New data is available and it is safe to take: progress is stored',
+                  'against figure ids, so anything new simply reads as not-yet-found',
+                  'and nothing already ticked is affected.',
+                ].join(' ');
+
+            const how = [
+              '',
+              '<details><summary>How to apply it</summary>',
+              '',
+              '```',
+              'curl -L -o codes.csv "<the csv url in tools/build_codes.cjs>"',
+              'node tools/build_codes.cjs codes.csv',
+              'node tools/build_sets.cjs',
+              'node tools/lock_ids.cjs        # refuses if a tick would be orphaned',
+              'node --test "tests/*.test.mjs"',
+              '```',
+              '',
+              'If `lock_ids` complains, stop: a figure id changed, and rebuilding',
+              'would lose progress stored against the old one. Keep the old id on',
+              'the renamed figure instead.',
+              '</details>',
+            ].join('\n');
+
+            const marker = '<!-- watch-sources -->';
+            const full = `${marker}\n${intro}\n\n\`\`\`\n${body}\n\`\`\`\n${how}\n\n_Last checked: ${new Date().toISOString()}_`;
+
+            // One issue, reused. A weekly job that opens a fresh issue every
+            // week trains you to close them without reading. Matching is on the
+            // marker rather than a label, so this does not depend on a label
+            // existing in the repository first.
+            const existing = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              per_page: 100,
+            });
+            const mine = existing.data.find((i) => i.body && i.body.includes(marker));
+
+            if (mine) {
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: mine.number,
+                title,
+                body: full,
+              });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title,
+                body: full,
+                labels: ['sources'],
+              });
+            }
+
+      - name: Close the issue when everything is clean again
+        if: steps.scan.outputs.verdict == '0'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const marker = '<!-- watch-sources -->';
+            const open = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              per_page: 100,
+            });
+            for (const issue of open.data) {
+              if (!issue.body || !issue.body.includes(marker)) continue;
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                body: 'Sources match the shipped data again. Closing.',
+              });
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                state: 'closed',
+              });
+            }

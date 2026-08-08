@@ -16,8 +16,13 @@ const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const SETS = path.join(ROOT, 'sets');
 
 const read = (f) => JSON.parse(fs.readFileSync(path.join(SETS, f), 'utf8'));
+
+// sets/ holds more than rosters: an index, a format note, and the id lock.
+// Naming them keeps a new companion file from being mistaken for a set, which
+// is how ids.lock.json first broke this suite.
+const NOT_A_SET = new Set(['index.json', 'FORMAT.json', 'ids.lock.json']);
 const allJson = () => fs.readdirSync(SETS)
-  .filter((f) => f.endsWith('.json') && f !== 'index.json' && f !== 'FORMAT.json');
+  .filter((f) => f.endsWith('.json') && !NOT_A_SET.has(f));
 const setFiles = () => allJson().filter((f) => !f.startsWith('codes-'));
 const codeFiles = () => allJson().filter((f) => f.startsWith('codes-'));
 
@@ -379,5 +384,53 @@ test('two figures sharing a name are separated by more than the tile alone', () 
       assert.strictEqual(new Set(labels).size, labels.length,
         `${file}: two figures called "${base}" carry the same label "${labels[0]}"`);
     }
+  }
+});
+
+/*
+ * The id lock.
+ *
+ * An id is not an implementation detail: progress is stored as
+ * `collect.progress.<setId>` -> `{ <figureId>: entry }`, in the browser and in
+ * the shared store, so the id IS the thing remembering that a figure was
+ * found. Rosters are rebuilt from a community spreadsheet whose spelling we do
+ * not control, and build_codes.cjs carries ids across BY NAME — so a sheet
+ * that respells a figure mints a new id and abandons the old one silently.
+ *
+ * Adding ids is always fine. These tests only care about ids going missing.
+ */
+const LOCK = 'ids.lock.json';
+
+test('the id lock covers every set that exists', () => {
+  const lock = read(LOCK);
+  assert.ok(lock && lock.sets, 'sets/ids.lock.json is missing or malformed');
+  for (const meta of read('index.json')) {
+    assert.ok(lock.sets[meta.id],
+      `${meta.id} is not in the id lock; run \`node tools/lock_ids.cjs --write\``);
+  }
+});
+
+test('no id progress is stored against has disappeared', () => {
+  const lock = read(LOCK);
+  const byId = new Map(read('index.json').map((m) => [m.id, m.file]));
+  for (const [setId, ids] of Object.entries(lock.sets)) {
+    const file = byId.get(setId);
+    assert.ok(file,
+      `set "${setId}" is in the lock but gone from the index; every tick in it is orphaned`);
+    const have = new Set(read(file).figures.map((f) => f.id));
+    for (const id of ids) {
+      assert.ok(have.has(id),
+        `"${id}" is in the lock but no longer in ${file}. Anyone who found it loses that tick — `
+        + 'keep the old id on the renamed figure rather than reslugging it.');
+    }
+  }
+});
+
+test('a locked id is never quietly reused for a different figure', () => {
+  // Two figures sharing an id would merge two children's ticks into one.
+  const lock = read(LOCK);
+  for (const [setId, ids] of Object.entries(lock.sets)) {
+    assert.strictEqual(new Set(ids).size, ids.length,
+      `${setId} lists the same id twice in the lock`);
   }
 });

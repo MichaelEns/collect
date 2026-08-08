@@ -26,13 +26,32 @@
 const fs = require('fs');
 const path = require('path');
 
+/*
+ * Where the codes come from.
+ *
+ * The first sheet this app was built on was withdrawn and now 404s — which is
+ * why tools/scan_sources.cjs exists, and why `csv` is recorded separately from
+ * the human-facing `url`: a machine needs the export, a person needs the page.
+ * The replacement was found linked from the wiki's Series 1, 2 and 5 pages and
+ * confirmed by parsing it: it reproduces the shipped rosters and every shipped
+ * code exactly, which is what makes it the same sheet rather than a lookalike.
+ */
 const SOURCE = {
   title: 'Doorables Codes 5 : StarWars',
   credit: '@FuzzyLuzzi and the Disney Doorables collecting community',
-  url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-cMlB9x1cjW3EGZUMDsx-7lryPflBjSGkZTVaOFvNlfPzHnEmWLGDeJXPHVdmKQyD3DFxo1S9U/pubhtml',
+  url: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42/pubhtml?gid=1710958071&single=true',
+  csv: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42/pub?output=csv&gid=1710958071&single=true',
   via: 'https://disney-doorables.fandom.com/wiki/Star_Wars_Galaxy_Peek_Series_2',
 };
 
+/**
+ * How many series the sheet is expected to hold, and where its blocks sit.
+ *
+ * These are the numbers that would go wrong first if the sheet gained a
+ * Series 6 or changed shape, so tools/scan_sources.cjs reads them from here
+ * rather than keeping its own copy that could drift.
+ */
+const SERIES_COUNT = 5;
 const FIRST_BLOCK_ROW = 3;
 const BLOCK_SIZE = 25;
 const NAME_COL = 21;
@@ -110,7 +129,7 @@ function existingIds(setId) {
 
 function readRosters(rows) {
   const rosters = {};
-  for (let s = 1; s <= 5; s += 1) {
+  for (let s = 1; s <= SERIES_COUNT; s += 1) {
     const keep = existingIds(`sw-galaxy-peek-s${s}`);
     const start = FIRST_BLOCK_ROW + (s - 1) * BLOCK_SIZE;
     const figures = [];
@@ -136,7 +155,7 @@ function readRosters(rows) {
 
 function readCodes(rows, rosters) {
   const out = {};
-  for (let s = 1; s <= 5; s += 1) out[s] = { codes: new Map(), skipped: 0 };
+  for (let s = 1; s <= SERIES_COUNT; s += 1) out[s] = { codes: new Map(), skipped: 0 };
 
   for (const r of rows) {
     const g = r.findIndex((c) => c.trim() === 'Galaxy');
@@ -176,7 +195,7 @@ function main() {
   const outDir = path.join(__dirname, '..', 'sets');
   const retrieved = new Date().toISOString().slice(0, 10);
 
-  for (let s = 1; s <= 5; s += 1) {
+  for (let s = 1; s <= SERIES_COUNT; s += 1) {
     const setId = `sw-galaxy-peek-s${s}`;
     const agreed = {};
     const disputed = {};
@@ -213,4 +232,27 @@ function main() {
   console.log('\nrosters written to tools/rosters.generated.json for review');
 }
 
-main();
+/*
+ * Run as a tool, or be read as one. tools/scan_sources.cjs imports the parser
+ * and the layout constants so that a scan and a build can never disagree about
+ * what the sheet says — a scan that reported on its own private copy of these
+ * rules would be checking something the app does not use.
+ */
+if (require.main === module) main();
+
+module.exports = {
+  SOURCE,
+  SERIES_COUNT,
+  FIRST_BLOCK_ROW,
+  BLOCK_SIZE,
+  NAME_COL,
+  RARITY_COL,
+  BAG_COL,
+  RARITIES,
+  RENAME,
+  parseCsv,
+  cell,
+  slug,
+  readRosters,
+  readCodes,
+};

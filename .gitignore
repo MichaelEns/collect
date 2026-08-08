@@ -3,3 +3,5 @@ node_modules/
 c-*.png
 tools/rosters.generated.json
 worker/node_modules/
+report.json
+report.txt
