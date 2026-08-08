@@ -1,0 +1,8 @@
+{
+  "name": "collect-sync-worker",
+  "private": true,
+  "description": "Sync worker for the collection tracker. Deploy with: npm install && npx wrangler deploy",
+  "devDependencies": {
+    "wrangler": "^4"
+  }
+}
