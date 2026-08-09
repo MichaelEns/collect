@@ -1,0 +1,159 @@
+{
+ "id": "sw-squish-s2",
+ "brand": "Star Wars Doorables",
+ "name": "Squish Squadron Series 2",
+ "packaging": "Blind bag, five squishy figures inside",
+ "packagingNote": "These are soft squishy figures rather than hard ones, and a bag holds FIVE of them — more than any other line we track.",
+ "emoji": "🧽",
+ "official": "https://justplayproducts.com/collections/disney-doorables/",
+ "figuresPerCapsule": 5,
+ "verified": false,
+ "sourced": "35 figures, from the community code sheet collectors submit to.",
+ "rarityNote": "Nobody has recorded which of these are rare, so this set shows no rarity colours rather than guessing at them.",
+ "figures": [
+  {
+   "id": "aayla-secura",
+   "name": "Aayla Secura"
+  },
+  {
+   "id": "admiral-ackbar",
+   "name": "Admiral Ackbar"
+  },
+  {
+   "id": "ahsoka-tano",
+   "name": "Ahsoka Tano"
+  },
+  {
+   "id": "anakin-skywalker",
+   "name": "Anakin Skywalker"
+  },
+  {
+   "id": "asajj-ventress",
+   "name": "Asajj Ventress"
+  },
+  {
+   "id": "battle-droid",
+   "name": "Battle Droid"
+  },
+  {
+   "id": "boba-fett",
+   "name": "Boba Fett"
+  },
+  {
+   "id": "cad-bane",
+   "name": "Cad Bane"
+  },
+  {
+   "id": "chewbacca",
+   "name": "Chewbacca"
+  },
+  {
+   "id": "d-0",
+   "name": "D-0"
+  },
+  {
+   "id": "darth-maul",
+   "name": "Darth Maul"
+  },
+  {
+   "id": "darth-vader",
+   "name": "Darth Vader"
+  },
+  {
+   "id": "emperor-palpatine",
+   "name": "Emperor Palpatine"
+  },
+  {
+   "id": "general-grievous",
+   "name": "General Grievous"
+  },
+  {
+   "id": "grand-admiral-thrawn",
+   "name": "Grand Admiral Thrawn"
+  },
+  {
+   "id": "greedo",
+   "name": "Greedo"
+  },
+  {
+   "id": "grogu",
+   "name": "Grogu"
+  },
+  {
+   "id": "grogu-se",
+   "name": "Grogu (SE)"
+  },
+  {
+   "id": "han-solo",
+   "name": "Han Solo"
+  },
+  {
+   "id": "ig-11",
+   "name": "IG-11"
+  },
+  {
+   "id": "jar-jar-binks",
+   "name": "Jar Jar Binks"
+  },
+  {
+   "id": "k-2so",
+   "name": "K-2SO"
+  },
+  {
+   "id": "kit-fisto",
+   "name": "Kit Fisto"
+  },
+  {
+   "id": "lando-calrissian",
+   "name": "Lando Calrissian"
+  },
+  {
+   "id": "logray",
+   "name": "Logray"
+  },
+  {
+   "id": "luke-skywalker",
+   "name": "Luke Skywalker"
+  },
+  {
+   "id": "obi-wan-kenobi",
+   "name": "Obi-Wan Kenobi"
+  },
+  {
+   "id": "padme-amidala",
+   "name": "Padme Amidala"
+  },
+  {
+   "id": "princess-leia",
+   "name": "Princess Leia"
+  },
+  {
+   "id": "professor-huyang",
+   "name": "Professor Huyang"
+  },
+  {
+   "id": "rey",
+   "name": "Rey"
+  },
+  {
+   "id": "salacious-b-crumb",
+   "name": "Salacious B. Crumb"
+  },
+  {
+   "id": "shadow-trooper",
+   "name": "Shadow Trooper"
+  },
+  {
+   "id": "stormtrooper",
+   "name": "Stormtrooper"
+  },
+  {
+   "id": "yoda",
+   "name": "Yoda"
+  }
+ ],
+ "codeFile": "codes-sw-squish-s2.json",
+ "codeNote": "Every bag has a short code printed on it — a letter and some numbers, like A011. On the Star Wars capsules it is on the BOTTOM; we have not confirmed where it sits on a Doorables bag, so check the bottom and the back. Type it into the box at the top and this app will tell you which figures are inside, before you open it. The letter at the front is the batch, and every batch has its own codes — so if a code comes back unknown it is most likely from a newer batch nobody has written down yet. These come from collectors rather than from Just Play, who have never published them, so they are very good but not official.",
+ "codeLink": "https://disney-doorables.fandom.com/wiki/Star_Wars_Squish_Squadron_Series_2",
+ "codeLinkLabel": "Squish Squadron Series 2 on the Doorables wiki"
+}

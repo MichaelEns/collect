@@ -108,6 +108,20 @@ function parseCsv(input) {
 
 const cell = (rows, y, x) => ((rows[y] || [])[x] || '').trim();
 
+/**
+ * The same capsule, however its code was written down.
+ *
+ * Collectors submit the same bag as "B13" and "B013". Keyed literally those
+ * become two codes, which inflates the count, makes one spelling come back
+ * "unknown", and — worse — lets two submissions that genuinely DISAGREE land
+ * in different buckets, so each is served up as a confident answer instead of
+ * as a dispute. Leading zeros in the number are dropped for comparison only;
+ * what gets stored and shown is still a spelling that appeared in the sheet.
+ */
+function codeKey(code) {
+  return String(code || '').toUpperCase().replace(/^([A-Z]+)0*(\d+)$/, '$1$2');
+}
+
 /** Stable, readable, and safe to put in a URL or a DOM id. */
 function slug(name) {
   return name.toLowerCase()
@@ -295,6 +309,7 @@ module.exports = {
   parseCsv,
   cell,
   slug,
+  codeKey,
   readRosters,
   readCodes,
 };

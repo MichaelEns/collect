@@ -319,6 +319,13 @@ async function main() {
     check('a messily typed code finds the same capsule',
       JSON.stringify(messy.chips) === JSON.stringify(a001.chips), JSON.stringify(messy.chips));
 
+    // Collectors write the same bag as B13 and B013, so the spelling we happen
+    // to hold is not the spelling on the bag in his hand.
+    const unpadded = await typeCode('A1');
+    check('a code typed without its leading zeros finds the same capsule',
+      JSON.stringify(unpadded.chips) === JSON.stringify(a001.chips),
+      JSON.stringify(unpadded.chips));
+
     const nonsense = await typeCode('ZZ999');
     check('an unrecorded code says so rather than guessing',
       /do not know/i.test(nonsense.verdict) && nonsense.chips.length === 0,

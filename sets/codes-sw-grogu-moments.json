@@ -1,0 +1,123 @@
+{
+ "setId": "sw-grogu-moments",
+ "source": {
+  "title": "Doorables Codes 5 : StarWars (form responses)",
+  "credit": "@FuzzyLuzzi and the Disney Doorables collecting community",
+  "url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42/pubhtml",
+  "csv": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42/pub?output=csv&single=true",
+  "retrieved": "2026-08-09"
+ },
+ "batches": {
+  "A": 8,
+  "AF": 1,
+  "B": 8,
+  "C": 1,
+  "E": 8,
+  "F": 8
+ },
+ "codes": {
+  "A10": [
+   "droids"
+  ],
+  "A11": [
+   "meditate"
+  ],
+  "A012": [
+   "classroom"
+  ],
+  "A013": [
+   "boar"
+  ],
+  "A014": [
+   "stormtroopers"
+  ],
+  "A015": [
+   "frogs"
+  ],
+  "A016": [
+   "spider-eggs"
+  ],
+  "A017": [
+   "meditate-glow"
+  ],
+  "AF036": [
+   "boar"
+  ],
+  "B10": [
+   "spider-eggs"
+  ],
+  "B011": [
+   "stormtroopers"
+  ],
+  "B012": [
+   "droids"
+  ],
+  "B013": [
+   "frogs"
+  ],
+  "B014": [
+   "meditate"
+  ],
+  "B015": [
+   "classroom"
+  ],
+  "B016": [
+   "meditate-glow"
+  ],
+  "B17": [
+   "boar"
+  ],
+  "C012": [
+   "meditate-glow"
+  ],
+  "E010": [
+   "frogs"
+  ],
+  "E011": [
+   "stormtroopers"
+  ],
+  "E012": [
+   "meditate"
+  ],
+  "E013": [
+   "meditate-glow"
+  ],
+  "E014": [
+   "classroom"
+  ],
+  "E015": [
+   "droids"
+  ],
+  "E016": [
+   "spider-eggs"
+  ],
+  "E017": [
+   "boar"
+  ],
+  "F010": [
+   "frogs"
+  ],
+  "F011": [
+   "meditate"
+  ],
+  "F012": [
+   "droids"
+  ],
+  "F013": [
+   "classroom"
+  ],
+  "F014": [
+   "spider-eggs"
+  ],
+  "F015": [
+   "boar"
+  ],
+  "F016": [
+   "stormtroopers"
+  ],
+  "F17": [
+   "meditate-glow"
+  ]
+ },
+ "disputed": {}
+}

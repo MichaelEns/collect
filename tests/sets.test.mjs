@@ -195,8 +195,27 @@ test('codes look like codes, and none is both agreed and disputed', () => {
   }
 });
 
-test('a disputed code keeps every version rather than picking one', () => {
-  // Silently choosing a side would tell a child something false with total
+test('one capsule is one code, however the zeros were typed', () => {
+  // Collectors submit the same bag as "B13" and "B013". Kept apart, the same
+  // capsule becomes two entries, one spelling answers "unknown", and — the
+  // reason this is a test and not a tidy-up — two submissions that genuinely
+  // DISAGREE land in different buckets, so each is served as a confident
+  // answer instead of as a dispute. B027/B27 in Squish Squadron 2 was exactly
+  // that: one said Salacious B. Crumb, the other said Logray.
+  const bare = (code) => code.replace(/^([A-Z]+)0*(\d+)$/, '$1$2');
+  for (const file of codeFiles()) {
+    const data = read(file);
+    const seen = new Map();
+    for (const code of [...Object.keys(data.codes), ...Object.keys(data.disputed || {})]) {
+      const key = bare(code);
+      assert.ok(!seen.has(key),
+        `${file}: ${seen.get(key)} and ${code} are the same capsule written two ways`);
+      seen.set(key, code);
+    }
+  }
+});
+
+test('a disputed code keeps every version rather than picking one', () => {  // Silently choosing a side would tell a child something false with total
   // confidence. Showing both is honest and still useful.
   for (const file of codeFiles()) {
     const data = read(file);

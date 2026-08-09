@@ -610,6 +610,33 @@
     return String(raw || '').trim().toUpperCase().replace(/[\s\-_.]+/g, '');
   }
 
+  /**
+   * The same capsule, however it was written down.
+   *
+   * Bags of the same line get recorded as both "B13" and "B013", and a child
+   * copying one off a bag has no idea which spelling we happen to hold. Leading
+   * zeros are ignored when matching; the stored spelling is still what shows.
+   */
+  function codeKey(code) {
+    return normaliseCode(code).replace(/^([A-Z]+)0*(\d+)$/, '$1$2');
+  }
+
+  /** Built once per set rather than per keystroke. */
+  function keyedCodes() {
+    if (!state.codes) return null;
+    if (!state.codes._byKey) {
+      const index = new Map();
+      for (const [code, ids] of Object.entries(state.codes.codes || {})) {
+        index.set(codeKey(code), { status: 'agreed', code, ids });
+      }
+      for (const [code, variants] of Object.entries(state.codes.disputed || {})) {
+        index.set(codeKey(code), { status: 'disputed', code, variants });
+      }
+      Object.defineProperty(state.codes, '_byKey', { value: index });
+    }
+    return state.codes._byKey;
+  }
+
   const figureById = (id) => (state.set ? state.set.figures.find((f) => f.id === id) : null);
 
   /**
@@ -623,19 +650,16 @@
   function lookupCode(raw) {
     const code = normaliseCode(raw);
     if (!code || !state.codes) return { status: 'unknown', code };
-    const agreed = state.codes.codes || {};
-    if (agreed[code]) {
-      return { status: 'agreed', code, figures: agreed[code].map(figureById).filter(Boolean) };
+    const hit = (keyedCodes() || new Map()).get(codeKey(code));
+    if (!hit) return { status: 'unknown', code };
+    if (hit.status === 'agreed') {
+      return { status: 'agreed', code: hit.code, figures: hit.ids.map(figureById).filter(Boolean) };
     }
-    const disputed = (state.codes.disputed || {})[code];
-    if (disputed) {
-      return {
-        status: 'disputed',
-        code,
-        variants: disputed.map((ids) => ids.map(figureById).filter(Boolean)),
-      };
-    }
-    return { status: 'unknown', code };
+    return {
+      status: 'disputed',
+      code: hit.code,
+      variants: hit.variants.map((ids) => ids.map(figureById).filter(Boolean)),
+    };
   }
 
   /** Every known code whose capsule contains this figure. */

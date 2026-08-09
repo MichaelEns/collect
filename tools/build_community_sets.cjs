@@ -23,8 +23,8 @@
  * finder built on a partial record answers confidently and wrongly, which is
  * the one failure this app exists to avoid.
  *
- *   node tools/build_community_sets.cjs            # fetch and build
- *   node tools/build_community_sets.cjs sheet.csv  # build from a local copy
+ *   node tools/build_community_sets.cjs                    # fetch and build
+ *   node tools/build_community_sets.cjs holiday=sheet.csv  # from a local copy
  */
 'use strict';
 
@@ -48,6 +48,14 @@ const SHEETS = {
     id: '2PACX-1vTKKIoEPPo4cpdp4uBOzwfMMKDFCspT3x5HJDchW9uC1qL1wI1oKRZfWsRvFif8WM2RVBThaRqsWrrH',
     title: 'Doorables Codes : Costume, Holiday and Re-releases',
     credit: 'the Disney Doorables collecting community',
+  },
+  // The same workbook build_codes.cjs reads, but its *other* tab. That file
+  // asks for gid=1710958071, the hand-maintained Galaxy Peek tab; the default
+  // tab is the form responses, with a column per Star Wars product line.
+  starwars: {
+    id: '2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42',
+    title: 'Doorables Codes 5 : StarWars (form responses)',
+    credit: '@FuzzyLuzzi and the Disney Doorables collecting community',
   },
 };
 
@@ -84,10 +92,51 @@ const SETS = [
     wiki: 'https://disney-doorables.fandom.com/wiki/Toy_Story',
     wikiLabel: 'Toy Story characters on the Doorables wiki',
   },
+  {
+    id: 'sw-squish-s2',
+    sheet: 'starwars',
+    column: 'Squish 2',
+    name: 'Squish Squadron Series 2',
+    brand: 'Star Wars Doorables',
+    emoji: '🧽',
+    perCapsule: 5,
+    packaging: 'Blind bag, five squishy figures inside',
+    packagingNote: 'These are soft squishy figures rather than hard ones, and a'
+      + ' bag holds FIVE of them — more than any other line we track.',
+    official: 'https://justplayproducts.com/collections/disney-doorables/',
+    sourced: '35 figures, from the community code sheet collectors submit to.',
+    rarityNote: 'Nobody has recorded which of these are rare, so this set shows'
+      + ' no rarity colours rather than guessing at them.',
+    wiki: 'https://disney-doorables.fandom.com/wiki/Star_Wars_Squish_Squadron_Series_2',
+    wikiLabel: 'Squish Squadron Series 2 on the Doorables wiki',
+  },
+  {
+    id: 'sw-grogu-moments',
+    sheet: 'starwars',
+    column: 'Grogu',
+    name: 'Grogu Moments',
+    brand: 'Star Wars Doorables',
+    emoji: '🎬',
+    perCapsule: 1,
+    packaging: 'Blind box, one scene inside',
+    packagingNote: 'A box holds ONE scene, not four figures — so a code names a'
+      + ' single thing and you know exactly what you are getting.',
+    official: 'https://justplayproducts.com/collections/disney-doorables/',
+    sourced: '8 scenes, from the community code sheet collectors submit to.',
+    rarityNote: 'Nobody has recorded which of these are rare, so this set shows'
+      + ' no rarity colours rather than guessing at them.',
+    wiki: 'https://disney-doorables.fandom.com/wiki/Grogu_Moments',
+    wikiLabel: 'Grogu Moments on the Doorables wiki',
+  },
 ];
 
-/** A code is one or more letters then digits. */
-const CODE_SHAPE = /^[A-Z]{1,3}\d{2,4}$/;
+/**
+ * A code is one or more letters then digits.
+ *
+ * One digit is allowed because a handful of submissions write B1 for B01, and
+ * codeKey() folds those together — dropping them lost real capsules.
+ */
+const CODE_SHAPE = /^[A-Z]{1,3}\d{1,4}$/;
 
 const CODE_NOTE = 'Every bag has a short code printed on it — a letter and some'
   + ' numbers, like A011. On the Star Wars capsules it is on the BOTTOM; we have'
@@ -127,6 +176,7 @@ function buildSet(spec, csv) {
 
   const keep = existingIds(spec.id);
   const byCode = new Map();
+  const spellings = new Map();
   const roster = new Map();
   const rejected = [];
 
@@ -153,8 +203,11 @@ function buildSet(spec, csv) {
       ids.push(roster.get(name));
     }
     ids.sort();
-    if (!byCode.has(code)) byCode.set(code, new Map());
-    byCode.get(code).set(ids.join('|'), ids);
+    const key = build.codeKey(code);
+    if (!byCode.has(key)) { byCode.set(key, new Map()); spellings.set(key, new Map()); }
+    byCode.get(key).set(ids.join('|'), ids);
+    const tally = spellings.get(key);
+    tally.set(code, (tally.get(code) || 0) + 1);
   }
 
   const figures = [...roster]
@@ -164,9 +217,22 @@ function buildSet(spec, csv) {
     throw new Error(`${spec.id}: duplicate figure id`);
   }
 
+  // The spelling to ship: the one submitted most often, and on a tie the
+  // longest, since a zero-padded code is what tends to be printed on the bag.
+  const shown = new Map();
+  for (const [key, tally] of spellings) {
+    shown.set(key, [...tally].sort((a, b) => b[1] - a[1] || b[0].length - a[0].length)[0][0]);
+  }
+
   const agreed = {};
   const disputed = {};
-  for (const [code, variants] of [...byCode].sort((a, b) => a[0].localeCompare(b[0]))) {
+  const merged = [];
+  for (const [key, variants] of [...byCode].sort((a, b) => a[0].localeCompare(b[0]))) {
+    const code = shown.get(key);
+    if (spellings.get(key).size > 1) {
+      merged.push(`${[...spellings.get(key).keys()].join(' = ')} -> ${code}`
+        + `${variants.size > 1 ? ' (and they disagree, so it is disputed)' : ''}`);
+    }
     if (variants.size === 1) agreed[code] = [...variants.values()][0];
     else disputed[code] = [...variants.values()];
   }
@@ -220,15 +286,34 @@ function buildSet(spec, csv) {
     console.log(`  ${rejected.length} row(s) ignored as malformed:`);
     for (const r of rejected) console.log(`     ${r}`);
   }
+  if (merged.length) {
+    console.log(`  ${merged.length} code(s) written more than one way, merged:`);
+    for (const m of merged) console.log(`     ${m}`);
+  }
 }
 
 function main() {
-  const local = process.argv[2];
+  // Local copies are given as `sheet=path`, because there is more than one
+  // sheet now and a bare path would silently feed the wrong CSV to both.
+  const local = new Map();
+  for (const arg of process.argv.slice(2)) {
+    const at = arg.indexOf('=');
+    if (at < 0) {
+      throw new Error(`expected sheet=path, got "${arg}"`
+        + ` (sheets: ${Object.keys(SHEETS).join(', ')})`);
+    }
+    const name = arg.slice(0, at);
+    if (!SHEETS[name]) throw new Error(`no sheet called "${name}"`);
+    local.set(name, arg.slice(at + 1));
+  }
+
   const cache = new Map();
   for (const spec of SETS) {
     const sheet = SHEETS[spec.sheet];
     if (!cache.has(spec.sheet)) {
-      cache.set(spec.sheet, local ? fs.readFileSync(local, 'utf8') : fetchSheet(sheet));
+      cache.set(spec.sheet, local.has(spec.sheet)
+        ? fs.readFileSync(local.get(spec.sheet), 'utf8')
+        : fetchSheet(sheet));
     }
     buildSet(spec, cache.get(spec.sheet));
   }

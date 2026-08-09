@@ -79,6 +79,44 @@
     "total": 10
   },
   {
+    "id": "sw-squish-s1",
+    "file": "sw-squish-s1.json",
+    "name": "Squish Squadron Series 1",
+    "brand": "Star Wars Doorables",
+    "packaging": "Blind bag, squishy figures inside",
+    "emoji": "🫧",
+    "total": 35
+  },
+  {
+    "id": "sw-squish-s2",
+    "file": "sw-squish-s2.json",
+    "name": "Squish Squadron Series 2",
+    "brand": "Star Wars Doorables",
+    "packaging": "Blind bag, five squishy figures inside",
+    "emoji": "🧽",
+    "total": 35,
+    "codeFile": "codes-sw-squish-s2.json"
+  },
+  {
+    "id": "sw-grogu-mini",
+    "file": "sw-grogu-mini.json",
+    "name": "Grogu Mini Capsule",
+    "brand": "Star Wars Doorables",
+    "packaging": "Mini capsule, one Grogu inside",
+    "emoji": "🥚",
+    "total": 12
+  },
+  {
+    "id": "sw-grogu-moments",
+    "file": "sw-grogu-moments.json",
+    "name": "Grogu Moments",
+    "brand": "Star Wars Doorables",
+    "packaging": "Blind box, one scene inside",
+    "emoji": "🎬",
+    "total": 8,
+    "codeFile": "codes-sw-grogu-moments.json"
+  },
+  {
     "id": "ts-rerelease",
     "file": "ts-rerelease.json",
     "name": "Toy Story",

@@ -1,0 +1,99 @@
+{
+ "id": "sw-grogu-mini",
+ "brand": "Star Wars Doorables",
+ "name": "Grogu Mini Capsule",
+ "packaging": "Mini capsule, one Grogu inside",
+ "packagingNote": "A mini capsule holds ONE Grogu, not four figures. Every one of these is Grogu doing something different.",
+ "emoji": "🥚",
+ "official": "https://justplayproducts.com/collections/star-wars-doorables/",
+ "figuresPerCapsule": 1,
+ "verified": false,
+ "sourced": "12 figures. The checklist published on the Doorables wiki. Just Play has not published a checklist for this line, so treat it as very good community data rather than gospel.",
+ "rarities": [
+  {
+   "id": "common",
+   "label": "Common",
+   "colour": "#8fa3d9"
+  },
+  {
+   "id": "rare",
+   "label": "Rare",
+   "colour": "#7ee8ff"
+  },
+  {
+   "id": "ultra",
+   "label": "Ultra Rare",
+   "colour": "#ffc93d"
+  },
+  {
+   "id": "special",
+   "label": "Special Edition",
+   "colour": "#ff7ad9"
+  }
+ ],
+ "figures": [
+  {
+   "id": "anzellan-hug",
+   "name": "Anzellan Hug",
+   "rarity": "rare"
+  },
+  {
+   "id": "bone-broth",
+   "name": "Bone Broth",
+   "rarity": "common"
+  },
+  {
+   "id": "butterfly",
+   "name": "Butterfly",
+   "rarity": "common"
+  },
+  {
+   "id": "camtono",
+   "name": "Camtono",
+   "rarity": "common"
+  },
+  {
+   "id": "droid-ride",
+   "name": "Droid Ride",
+   "rarity": "common"
+  },
+  {
+   "id": "hover-pram",
+   "name": "Hover Pram",
+   "rarity": "rare"
+  },
+  {
+   "id": "imperial-helmet",
+   "name": "Imperial Helmet",
+   "rarity": "common"
+  },
+  {
+   "id": "macaron-cookie",
+   "name": "Macaron Cookie",
+   "rarity": "ultra"
+  },
+  {
+   "id": "mudhorn-egg",
+   "name": "Mudhorn Egg",
+   "rarity": "rare"
+  },
+  {
+   "id": "mythosaur-necklace",
+   "name": "Mythosaur Necklace",
+   "rarity": "rare"
+  },
+  {
+   "id": "sorgan-frog",
+   "name": "Sorgan frog",
+   "rarity": "ultra"
+  },
+  {
+   "id": "translucent",
+   "name": "Translucent",
+   "rarity": "ultra"
+  }
+ ],
+ "codeLink": "https://disney-doorables.fandom.com/wiki/Grogu_Mini_Capsule",
+ "codeLinkLabel": "Grogu Mini Capsule on the Doorables wiki",
+ "countNote": "Nobody has written down any bag codes for this one yet, so there is nothing to look up — this is a checklist only. If codes start being collected, they will appear here."
+}

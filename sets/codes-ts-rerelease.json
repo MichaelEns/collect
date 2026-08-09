@@ -8,8 +8,8 @@
   "retrieved": "2026-08-09"
  },
  "batches": {
-  "A": 83,
-  "B": 78
+  "A": 80,
+  "B": 76
  },
  "codes": {
   "A010": [
@@ -282,6 +282,16 @@
    "lotso",
    "mr-pricklepants"
   ],
+  "A64": [
+   "bullseye",
+   "buzz-lightyear",
+   "woody"
+  ],
+  "A65": [
+   "buzz-lightyear",
+   "jessie",
+   "rc"
+  ],
   "A066": [
    "jessie",
    "lenny",
@@ -307,6 +317,16 @@
    "bullseye",
    "trixie"
   ],
+  "A71": [
+   "bonnie",
+   "buzz-lightyear",
+   "zurg"
+  ],
+  "A72": [
+   "jessie",
+   "rc",
+   "slinky-dog"
+  ],
   "A073": [
    "bonnie",
    "jessie",
@@ -321,6 +341,11 @@
    "andy",
    "lenny",
    "woody"
+  ],
+  "A77": [
+   "buzz-lightyear",
+   "jessie",
+   "mr-pricklepants"
   ],
   "A078": [
    "bullseye",
@@ -342,15 +367,30 @@
    "mr-pricklepants",
    "trixie"
   ],
+  "A82": [
+   "andy",
+   "rc",
+   "wheezy"
+  ],
   "A083": [
    "bullseye",
    "jessie",
    "lotso"
   ],
+  "A84": [
+   "alien",
+   "trixie",
+   "woody"
+  ],
   "A085": [
    "bonnie",
    "wheezy",
    "zurg"
+  ],
+  "A86": [
+   "bonnie",
+   "lotso",
+   "rc"
   ],
   "A087": [
    "alien",
@@ -362,70 +402,15 @@
    "bonnie",
    "woody"
   ],
-  "A090": [
-   "andy",
-   "slinky-dog",
-   "wheezy"
-  ],
-  "A64": [
-   "bullseye",
-   "buzz-lightyear",
-   "woody"
-  ],
-  "A65": [
-   "buzz-lightyear",
-   "jessie",
-   "rc"
-  ],
-  "A67": [
-   "andy",
-   "bonnie",
-   "zurg"
-  ],
-  "A71": [
-   "bonnie",
-   "buzz-lightyear",
-   "zurg"
-  ],
-  "A72": [
-   "jessie",
-   "rc",
-   "slinky-dog"
-  ],
-  "A77": [
-   "buzz-lightyear",
-   "jessie",
-   "mr-pricklepants"
-  ],
-  "A81": [
-   "lotso",
-   "mr-pricklepants",
-   "trixie"
-  ],
-  "A82": [
-   "andy",
-   "rc",
-   "wheezy"
-  ],
-  "A83": [
-   "bullseye",
-   "jessie",
-   "lotso"
-  ],
-  "A84": [
-   "alien",
-   "trixie",
-   "woody"
-  ],
-  "A86": [
-   "bonnie",
-   "lotso",
-   "rc"
-  ],
   "A89": [
    "lenny",
    "lotso",
    "mr-pricklepants"
+  ],
+  "A090": [
+   "andy",
+   "slinky-dog",
+   "wheezy"
   ],
   "B010": [
    "lenny",
@@ -805,16 +790,6 @@
   "B099": [
    "andy",
    "lenny",
-   "woody"
-  ],
-  "B85": [
-   "lenny",
-   "mr-pricklepants",
-   "rc"
-  ],
-  "B89": [
-   "bonnie",
-   "trixie",
    "woody"
   ]
  },

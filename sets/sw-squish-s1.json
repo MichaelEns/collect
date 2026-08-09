@@ -1,0 +1,214 @@
+{
+ "id": "sw-squish-s1",
+ "brand": "Star Wars Doorables",
+ "name": "Squish Squadron Series 1",
+ "packaging": "Blind bag, squishy figures inside",
+ "packagingNote": "These are soft squishy figures rather than hard ones. Series 2 bags hold five, and we have assumed the same here — but nobody has confirmed it for Series 1.",
+ "emoji": "🫧",
+ "official": "https://justplayproducts.com/collections/star-wars-doorables/",
+ "figuresPerCapsule": 5,
+ "verified": false,
+ "sourced": "35 figures. The checklist published on the Doorables wiki. Just Play has not published a checklist for this line, so treat it as very good community data rather than gospel.",
+ "rarities": [
+  {
+   "id": "common",
+   "label": "Common",
+   "colour": "#8fa3d9"
+  },
+  {
+   "id": "rare",
+   "label": "Rare",
+   "colour": "#7ee8ff"
+  },
+  {
+   "id": "ultra",
+   "label": "Ultra Rare",
+   "colour": "#ffc93d"
+  },
+  {
+   "id": "special",
+   "label": "Special Edition",
+   "colour": "#ff7ad9"
+  }
+ ],
+ "figures": [
+  {
+   "id": "ahsoka-tano",
+   "name": "Ahsoka Tano",
+   "rarity": "common"
+  },
+  {
+   "id": "ahsoka-tano-blue",
+   "name": "Ahsoka Tano (Blue)",
+   "rarity": "special"
+  },
+  {
+   "id": "bb-8",
+   "name": "BB-8",
+   "rarity": "rare"
+  },
+  {
+   "id": "boba-fett",
+   "name": "Boba Fett",
+   "rarity": "rare"
+  },
+  {
+   "id": "c-3po",
+   "name": "C-3PO",
+   "rarity": "ultra"
+  },
+  {
+   "id": "chewbacca",
+   "name": "Chewbacca",
+   "rarity": "common"
+  },
+  {
+   "id": "chopper-c1-10p",
+   "name": "Chopper (C1-10P)",
+   "rarity": "ultra"
+  },
+  {
+   "id": "darth-vader",
+   "name": "Darth Vader",
+   "rarity": "rare"
+  },
+  {
+   "id": "darth-vader-red",
+   "name": "Darth Vader (Red)",
+   "rarity": "special"
+  },
+  {
+   "id": "ewok",
+   "name": "Ewok",
+   "rarity": "ultra"
+  },
+  {
+   "id": "finn",
+   "name": "Finn",
+   "rarity": "rare"
+  },
+  {
+   "id": "grand-admiral-thrawn",
+   "name": "Grand Admiral Thrawn",
+   "rarity": "rare"
+  },
+  {
+   "id": "grand-admiral-thrawn-red",
+   "name": "Grand Admiral Thrawn (Red)",
+   "rarity": "special"
+  },
+  {
+   "id": "grogu",
+   "name": "Grogu",
+   "rarity": "rare"
+  },
+  {
+   "id": "jabba-the-hutt",
+   "name": "Jabba the Hutt",
+   "rarity": "ultra"
+  },
+  {
+   "id": "jabba-the-hutt-red",
+   "name": "Jabba the Hutt (Red)",
+   "rarity": "special"
+  },
+  {
+   "id": "jawa",
+   "name": "Jawa",
+   "rarity": "common"
+  },
+  {
+   "id": "kylo-ren",
+   "name": "Kylo Ren",
+   "rarity": "ultra"
+  },
+  {
+   "id": "kylo-ren-red",
+   "name": "Kylo Ren (Red)",
+   "rarity": "special"
+  },
+  {
+   "id": "loth-cat",
+   "name": "Loth-Cat",
+   "rarity": "common"
+  },
+  {
+   "id": "luke-skywalker",
+   "name": "Luke Skywalker",
+   "rarity": "ultra"
+  },
+  {
+   "id": "luke-skywalker-blue",
+   "name": "Luke Skywalker (Blue)",
+   "rarity": "special"
+  },
+  {
+   "id": "porg",
+   "name": "Porg",
+   "rarity": "common"
+  },
+  {
+   "id": "princess-leia",
+   "name": "Princess Leia",
+   "rarity": "common"
+  },
+  {
+   "id": "princess-leia-blue",
+   "name": "Princess Leia (Blue)",
+   "rarity": "special"
+  },
+  {
+   "id": "r2-d2",
+   "name": "R2-D2",
+   "rarity": "rare"
+  },
+  {
+   "id": "r2-d2-blue",
+   "name": "R2-D2 (Blue)",
+   "rarity": "special"
+  },
+  {
+   "id": "r5-d4",
+   "name": "R5-D4",
+   "rarity": "common"
+  },
+  {
+   "id": "rey",
+   "name": "Rey",
+   "rarity": "common"
+  },
+  {
+   "id": "rey-blue",
+   "name": "Rey (Blue)",
+   "rarity": "special"
+  },
+  {
+   "id": "sabine-wren",
+   "name": "Sabine Wren",
+   "rarity": "common"
+  },
+  {
+   "id": "stormtrooper",
+   "name": "Stormtrooper",
+   "rarity": "common"
+  },
+  {
+   "id": "stormtrooper-red",
+   "name": "Stormtrooper (Red)",
+   "rarity": "special"
+  },
+  {
+   "id": "the-mandalorian",
+   "name": "The Mandalorian",
+   "rarity": "rare"
+  },
+  {
+   "id": "wicket",
+   "name": "Wicket",
+   "rarity": "common"
+  }
+ ],
+ "codeLink": "https://disney-doorables.fandom.com/wiki/Star_Wars_Squish_Squadron",
+ "codeLinkLabel": "Squish Squadron Series 1 on the Doorables wiki",
+ "countNote": "Nobody has written down any bag codes for this one yet, so there is nothing to look up — this is a checklist only. If codes start being collected, they will appear here."
+}

@@ -1,0 +1,51 @@
+{
+ "id": "sw-grogu-moments",
+ "brand": "Star Wars Doorables",
+ "name": "Grogu Moments",
+ "packaging": "Blind box, one scene inside",
+ "packagingNote": "A box holds ONE scene, not four figures — so a code names a single thing and you know exactly what you are getting.",
+ "emoji": "🎬",
+ "official": "https://justplayproducts.com/collections/disney-doorables/",
+ "figuresPerCapsule": 1,
+ "verified": false,
+ "sourced": "8 scenes, from the community code sheet collectors submit to.",
+ "rarityNote": "Nobody has recorded which of these are rare, so this set shows no rarity colours rather than guessing at them.",
+ "figures": [
+  {
+   "id": "boar",
+   "name": "Boar"
+  },
+  {
+   "id": "classroom",
+   "name": "Classroom"
+  },
+  {
+   "id": "droids",
+   "name": "Droids"
+  },
+  {
+   "id": "frogs",
+   "name": "Frogs"
+  },
+  {
+   "id": "meditate",
+   "name": "Meditate"
+  },
+  {
+   "id": "meditate-glow",
+   "name": "Meditate GLOW"
+  },
+  {
+   "id": "spider-eggs",
+   "name": "Spider Eggs"
+  },
+  {
+   "id": "stormtroopers",
+   "name": "StormTroopers"
+  }
+ ],
+ "codeFile": "codes-sw-grogu-moments.json",
+ "codeNote": "Every bag has a short code printed on it — a letter and some numbers, like A011. On the Star Wars capsules it is on the BOTTOM; we have not confirmed where it sits on a Doorables bag, so check the bottom and the back. Type it into the box at the top and this app will tell you which figures are inside, before you open it. The letter at the front is the batch, and every batch has its own codes — so if a code comes back unknown it is most likely from a newer batch nobody has written down yet. These come from collectors rather than from Just Play, who have never published them, so they are very good but not official.",
+ "codeLink": "https://disney-doorables.fandom.com/wiki/Grogu_Moments",
+ "codeLinkLabel": "Grogu Moments on the Doorables wiki"
+}
