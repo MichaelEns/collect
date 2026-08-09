@@ -153,32 +153,68 @@ function readRosters(rows) {
   return rosters;
 }
 
+/*
+ * How the sheet marks a capsule row.
+ *
+ * The layout is the same in every case — code one cell left of the marker,
+ * series two right, the four figures four right — but the marker text is not.
+ * Matching only "Galaxy" made the builder blind to two thirds of the codes in
+ * the sheet: Series 1 shipped 12 codes when 292 were sitting there, so the
+ * finder was effectively broken for the set a child is most likely to own.
+ *
+ * "Galaxy" is authoritative: a row marked that way IS a Galaxy Peek capsule,
+ * so a name it lists that is not in the roster is an error worth stopping for.
+ * The other two are weaker signals — "Multi" and "Series 1" also appear in
+ * parts of the sheet describing other product lines — so rows under those are
+ * accepted only when every figure resolves in the series they claim, and
+ * counted rather than trusted when they do not.
+ */
+const AUTHORITATIVE_MARKER = 'Galaxy';
+const CODE_MARKERS = [AUTHORITATIVE_MARKER, 'Multi', 'Series 1'];
+
 function readCodes(rows, rosters) {
   const out = {};
-  for (let s = 1; s <= SERIES_COUNT; s += 1) out[s] = { codes: new Map(), skipped: 0 };
+  for (let s = 1; s <= SERIES_COUNT; s += 1) {
+    out[s] = { codes: new Map(), skipped: 0, otherLine: 0, markers: new Set() };
+  }
 
   for (const r of rows) {
-    const g = r.findIndex((c) => c.trim() === 'Galaxy');
-    if (g < 1) continue;
-    const series = (r[g + 2] || '').trim();
-    if (!out[series]) continue;
-    const code = (r[g - 1] || '').trim().toUpperCase().replace(/\s+/g, '');
-    const names = (r[g + 4] || '').split(',').map((t) => t.trim()).filter(Boolean);
-    // A capsule holds exactly four. Anything else is a summary row or an
-    // incomplete entry, and guessing at it would invent data.
-    if (!code || names.length !== 4) { out[series].skipped += 1; continue; }
+    for (let g = 1; g < r.length; g += 1) {
+      const marker = (r[g] || '').trim();
+      if (!CODE_MARKERS.includes(marker)) continue;
 
-    const byName = new Map(rosters[series].map((f) => [f.sheetName, f.id]));
-    const ids = [];
-    for (const n of names) {
-      const id = byName.get(n);
-      if (!id) throw new Error(`series ${s === undefined ? series : series}: code ${code} names "${n}", which is not in that roster`);
-      ids.push(id);
+      const series = (r[g + 2] || '').trim();
+      if (!out[series]) continue;
+      const code = (r[g - 1] || '').trim().toUpperCase().replace(/\s+/g, '');
+      const names = (r[g + 4] || '').split(',').map((t) => t.trim()).filter(Boolean);
+      // A capsule holds exactly four. Anything else is a summary row or an
+      // incomplete entry, and guessing at it would invent data.
+      if (!code || names.length !== 4) { out[series].skipped += 1; continue; }
+
+      const byName = new Map(rosters[series].map((f) => [f.sheetName, f.id]));
+      const ids = [];
+      let unknown = null;
+      for (const n of names) {
+        const id = byName.get(n);
+        if (!id) { unknown = n; break; }
+        ids.push(id);
+      }
+
+      if (unknown) {
+        if (marker === AUTHORITATIVE_MARKER) {
+          throw new Error(`series ${series}: code ${code} names "${unknown}", which is not in that roster`);
+        }
+        // Some other product line's row that happens to carry this marker.
+        out[series].otherLine += 1;
+        continue;
+      }
+
+      ids.sort();
+      const key = ids.join('|');
+      if (!out[series].codes.has(code)) out[series].codes.set(code, new Map());
+      out[series].codes.get(code).set(key, ids);
+      out[series].markers.add(marker);
     }
-    ids.sort();
-    const key = ids.join('|');
-    if (!out[series].codes.has(code)) out[series].codes.set(code, new Map());
-    out[series].codes.get(code).set(key, ids);
   }
   return out;
 }
@@ -221,6 +257,12 @@ function main() {
       + `${codes[s].skipped} skipped rows, ${covered.size}/25 figures covered, `
       + `batches ${Object.entries(batches).map(([l, n]) => `${l}=${n}`).join(' ')}`,
     );
+    // Which markers contributed, and how many rows were passed over because
+    // they belonged to another product line. Both are printed rather than
+    // swallowed: a marker quietly contributing nothing is how the Series 1
+    // codes went missing for so long.
+    console.log(`  from markers: ${[...codes[s].markers].sort().join(', ') || 'none'}`
+      + (codes[s].otherLine ? `; ${codes[s].otherLine} row(s) belonged to another line` : ''));
     const missingBags = rosters[s].filter((f) => !f.bag).map((f) => f.name);
     if (missingBags.length) console.log(`  no bag number: ${missingBags.join(', ')}`);
   }

@@ -6,23 +6,95 @@
   "url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42/pubhtml?gid=1710958071&single=true",
   "csv": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42/pub?output=csv&gid=1710958071&single=true",
   "via": "https://disney-doorables.fandom.com/wiki/Star_Wars_Galaxy_Peek_Series_2",
-  "retrieved": "2026-08-08"
+  "retrieved": "2026-08-09"
  },
  "batches": {
-  "#": 2,
-  "AF": 1,
-  "K": 1,
-  "M": 5,
-  "N": 1,
+  "#": 16,
+  "A": 15,
+  "B": 16,
+  "C": 12,
+  "D": 16,
+  "E": 17,
+  "F": 17,
+  "G": 18,
+  "H": 18,
+  "I": 16,
+  "J": 16,
+  "K": 17,
+  "L": 17,
+  "M": 16,
+  "N": 15,
+  "O": 15,
+  "P": 17,
   "Q": 1,
   "TL": 1
  },
  "codes": {
+  "1": [
+   "greedo",
+   "luke-skywalker",
+   "princess-leia",
+   "stormtrooper"
+  ],
+  "2": [
+   "c-3po",
+   "jawa",
+   "r2-d2",
+   "yoda"
+  ],
+  "3": [
+   "chewbacca",
+   "jawa",
+   "r2-d2",
+   "the-mandalorian"
+  ],
+  "4": [
+   "bb-8",
+   "bo-katan-kryze",
+   "rey",
+   "yoda"
+  ],
+  "5": [
+   "c-3po",
+   "hera-syndulla",
+   "lando-calrissian",
+   "luke-skywalker"
+  ],
+  "6": [
+   "jabba-the-hutt",
+   "princess-leia-hologram",
+   "sabine-wren",
+   "the-mandalorian"
+  ],
+  "7": [
+   "jabba-the-hutt",
+   "jawa",
+   "r2-d2",
+   "rey"
+  ],
+  "8": [
+   "grogu",
+   "luke-skywalker",
+   "rey",
+   "stormtrooper"
+  ],
   "9": [
    "ahsoka-tano",
    "professor-huyang",
    "stormtrooper",
    "yoda"
+  ],
+  "10": [
+   "chopper",
+   "han-solo",
+   "princess-leia",
+   "professor-huyang"
+  ],
+  "11": [
+   "darth-vader",
+   "lando-calrissian",
+   "rey",
+   "wicket"
   ],
   "12": [
    "darth-vader",
@@ -30,11 +102,995 @@
    "stormtrooper",
    "wicket"
   ],
-  "AF036": [
+  "13": [
+   "grogu",
+   "jawa",
+   "the-mandalorian",
+   "wicket"
+  ],
+  "14": [
+   "ahsoka-tano",
+   "lando-calrissian",
+   "the-mandalorian",
+   "yoda"
+  ],
+  "15": [
+   "han-solo",
+   "luke-skywalker",
+   "professor-huyang",
+   "r2-d2"
+  ],
+  "16": [
+   "bo-katan-kryze",
+   "lando-calrissian",
+   "princess-leia",
+   "sabine-wren"
+  ],
+  "A001": [
+   "greedo",
+   "luke-skywalker",
+   "princess-leia",
+   "stormtrooper"
+  ],
+  "A002": [
+   "c-3po",
+   "jawa",
+   "r2-d2",
+   "yoda"
+  ],
+  "A004": [
+   "jabba-the-hutt",
+   "princess-leia-hologram",
+   "sabine-wren",
+   "the-mandalorian"
+  ],
+  "A005": [
+   "han-solo",
+   "luke-skywalker",
+   "professor-huyang",
+   "r2-d2"
+  ],
+  "A006": [
+   "bo-katan-kryze",
+   "lando-calrissian",
+   "princess-leia",
+   "sabine-wren"
+  ],
+  "A007": [
    "bb-8",
    "bo-katan-kryze",
+   "rey",
+   "yoda"
+  ],
+  "A008": [
+   "grogu",
+   "jawa",
+   "the-mandalorian",
+   "wicket"
+  ],
+  "A009": [
+   "ahsoka-tano",
+   "professor-huyang",
+   "stormtrooper",
+   "yoda"
+  ],
+  "A011": [
+   "darth-vader",
+   "sabine-wren",
+   "stormtrooper",
+   "wicket"
+  ],
+  "A012": [
+   "jabba-the-hutt",
+   "jawa",
+   "r2-d2",
+   "rey"
+  ],
+  "A013": [
    "chopper",
-   "jabba-the-hutt"
+   "han-solo",
+   "princess-leia",
+   "professor-huyang"
+  ],
+  "A014": [
+   "chewbacca",
+   "princess-leia",
+   "sabine-wren",
+   "wicket"
+  ],
+  "A015": [
+   "chewbacca",
+   "jawa",
+   "r2-d2",
+   "the-mandalorian"
+  ],
+  "A016": [
+   "grogu",
+   "luke-skywalker",
+   "rey",
+   "stormtrooper"
+  ],
+  "A017": [
+   "ahsoka-tano",
+   "lando-calrissian",
+   "the-mandalorian",
+   "yoda"
+  ],
+  "B001": [
+   "han-solo",
+   "luke-skywalker",
+   "professor-huyang",
+   "r2-d2"
+  ],
+  "B002": [
+   "greedo",
+   "luke-skywalker",
+   "princess-leia",
+   "stormtrooper"
+  ],
+  "B003": [
+   "jabba-the-hutt",
+   "jawa",
+   "r2-d2",
+   "rey"
+  ],
+  "B004": [
+   "c-3po",
+   "hera-syndulla",
+   "lando-calrissian",
+   "luke-skywalker"
+  ],
+  "B005": [
+   "c-3po",
+   "jawa",
+   "r2-d2",
+   "yoda"
+  ],
+  "B007": [
+   "darth-vader",
+   "lando-calrissian",
+   "rey",
+   "wicket"
+  ],
+  "B008": [
+   "jabba-the-hutt",
+   "princess-leia-hologram",
+   "sabine-wren",
+   "the-mandalorian"
+  ],
+  "B009": [
+   "grogu",
+   "luke-skywalker",
+   "rey",
+   "stormtrooper"
+  ],
+  "B010": [
+   "chopper",
+   "han-solo",
+   "princess-leia",
+   "professor-huyang"
+  ],
+  "B011": [
+   "ahsoka-tano",
+   "professor-huyang",
+   "stormtrooper",
+   "yoda"
+  ],
+  "B012": [
+   "bb-8",
+   "bo-katan-kryze",
+   "rey",
+   "yoda"
+  ],
+  "B013": [
+   "bo-katan-kryze",
+   "lando-calrissian",
+   "princess-leia",
+   "sabine-wren"
+  ],
+  "B014": [
+   "ahsoka-tano",
+   "lando-calrissian",
+   "the-mandalorian",
+   "yoda"
+  ],
+  "B015": [
+   "chewbacca",
+   "princess-leia",
+   "sabine-wren",
+   "wicket"
+  ],
+  "B016": [
+   "darth-vader",
+   "sabine-wren",
+   "stormtrooper",
+   "wicket"
+  ],
+  "B017": [
+   "grogu",
+   "jawa",
+   "the-mandalorian",
+   "wicket"
+  ],
+  "C002": [
+   "ahsoka-tano",
+   "professor-huyang",
+   "stormtrooper",
+   "yoda"
+  ],
+  "C003": [
+   "han-solo",
+   "luke-skywalker",
+   "professor-huyang",
+   "r2-d2"
+  ],
+  "C004": [
+   "greedo",
+   "luke-skywalker",
+   "princess-leia",
+   "stormtrooper"
+  ],
+  "C005": [
+   "darth-vader",
+   "lando-calrissian",
+   "rey",
+   "wicket"
+  ],
+  "C006": [
+   "ahsoka-tano",
+   "lando-calrissian",
+   "the-mandalorian",
+   "yoda"
+  ],
+  "C007": [
+   "c-3po",
+   "jawa",
+   "r2-d2",
+   "yoda"
+  ],
+  "C008": [
+   "jabba-the-hutt",
+   "jawa",
+   "r2-d2",
+   "rey"
+  ],
+  "C009": [
+   "chewbacca",
+   "princess-leia",
+   "sabine-wren",
+   "wicket"
+  ],
+  "C010": [
+   "bb-8",
+   "bo-katan-kryze",
+   "rey",
+   "yoda"
+  ],
+  "C012": [
+   "grogu",
+   "luke-skywalker",
+   "rey",
+   "stormtrooper"
+  ],
+  "C013": [
+   "darth-vader",
+   "sabine-wren",
+   "stormtrooper",
+   "wicket"
+  ],
+  "C017": [
+   "c-3po",
+   "hera-syndulla",
+   "lando-calrissian",
+   "luke-skywalker"
+  ],
+  "D001": [
+   "ahsoka-tano",
+   "professor-huyang",
+   "stormtrooper",
+   "yoda"
+  ],
+  "D002": [
+   "chewbacca",
+   "jawa",
+   "r2-d2",
+   "the-mandalorian"
+  ],
+  "D003": [
+   "c-3po",
+   "jawa",
+   "r2-d2",
+   "yoda"
+  ],
+  "D004": [
+   "grogu",
+   "jawa",
+   "the-mandalorian",
+   "wicket"
+  ],
+  "D005": [
+   "darth-vader",
+   "sabine-wren",
+   "stormtrooper",
+   "wicket"
+  ],
+  "D006": [
+   "grogu",
+   "luke-skywalker",
+   "rey",
+   "stormtrooper"
+  ],
+  "D007": [
+   "bo-katan-kryze",
+   "lando-calrissian",
+   "princess-leia",
+   "sabine-wren"
+  ],
+  "D008": [
+   "greedo",
+   "luke-skywalker",
+   "princess-leia",
+   "stormtrooper"
+  ],
+  "D009": [
+   "chopper",
+   "han-solo",
+   "princess-leia",
+   "professor-huyang"
+  ],
+  "D010": [
+   "ahsoka-tano",
+   "lando-calrissian",
+   "the-mandalorian",
+   "yoda"
+  ],
+  "D011": [
+   "han-solo",
+   "luke-skywalker",
+   "professor-huyang",
+   "r2-d2"
+  ],
+  "D012": [
+   "chewbacca",
+   "princess-leia",
+   "sabine-wren",
+   "wicket"
+  ],
+  "D013": [
+   "c-3po",
+   "hera-syndulla",
+   "lando-calrissian",
+   "luke-skywalker"
+  ],
+  "D014": [
+   "darth-vader",
+   "lando-calrissian",
+   "rey",
+   "wicket"
+  ],
+  "D015": [
+   "jabba-the-hutt",
+   "princess-leia-hologram",
+   "sabine-wren",
+   "the-mandalorian"
+  ],
+  "D017": [
+   "jabba-the-hutt",
+   "jawa",
+   "r2-d2",
+   "rey"
+  ],
+  "E001": [
+   "chewbacca",
+   "princess-leia",
+   "sabine-wren",
+   "wicket"
+  ],
+  "E002": [
+   "jabba-the-hutt",
+   "princess-leia-hologram",
+   "sabine-wren",
+   "the-mandalorian"
+  ],
+  "E003": [
+   "ahsoka-tano",
+   "lando-calrissian",
+   "the-mandalorian",
+   "yoda"
+  ],
+  "E004": [
+   "grogu",
+   "jawa",
+   "the-mandalorian",
+   "wicket"
+  ],
+  "E005": [
+   "c-3po",
+   "jawa",
+   "r2-d2",
+   "yoda"
+  ],
+  "E006": [
+   "han-solo",
+   "luke-skywalker",
+   "professor-huyang",
+   "r2-d2"
+  ],
+  "E007": [
+   "grogu",
+   "luke-skywalker",
+   "rey",
+   "stormtrooper"
+  ],
+  "E008": [
+   "darth-vader",
+   "sabine-wren",
+   "stormtrooper",
+   "wicket"
+  ],
+  "E009": [
+   "bb-8",
+   "bo-katan-kryze",
+   "rey",
+   "yoda"
+  ],
+  "E010": [
+   "chopper",
+   "han-solo",
+   "princess-leia",
+   "professor-huyang"
+  ],
+  "E011": [
+   "chewbacca",
+   "jawa",
+   "r2-d2",
+   "the-mandalorian"
+  ],
+  "E012": [
+   "c-3po",
+   "hera-syndulla",
+   "lando-calrissian",
+   "luke-skywalker"
+  ],
+  "E013": [
+   "darth-vader",
+   "lando-calrissian",
+   "rey",
+   "wicket"
+  ],
+  "E014": [
+   "ahsoka-tano",
+   "professor-huyang",
+   "stormtrooper",
+   "yoda"
+  ],
+  "E015": [
+   "bo-katan-kryze",
+   "lando-calrissian",
+   "princess-leia",
+   "sabine-wren"
+  ],
+  "E016": [
+   "jabba-the-hutt",
+   "jawa",
+   "r2-d2",
+   "rey"
+  ],
+  "E017": [
+   "greedo",
+   "luke-skywalker",
+   "princess-leia",
+   "stormtrooper"
+  ],
+  "F001": [
+   "chewbacca",
+   "princess-leia",
+   "sabine-wren",
+   "wicket"
+  ],
+  "F002": [
+   "darth-vader",
+   "sabine-wren",
+   "stormtrooper",
+   "wicket"
+  ],
+  "F003": [
+   "bb-8",
+   "bo-katan-kryze",
+   "rey",
+   "yoda"
+  ],
+  "F004": [
+   "han-solo",
+   "luke-skywalker",
+   "professor-huyang",
+   "r2-d2"
+  ],
+  "F005": [
+   "chopper",
+   "han-solo",
+   "princess-leia",
+   "professor-huyang"
+  ],
+  "F006": [
+   "c-3po",
+   "hera-syndulla",
+   "lando-calrissian",
+   "luke-skywalker"
+  ],
+  "F007": [
+   "ahsoka-tano",
+   "lando-calrissian",
+   "the-mandalorian",
+   "yoda"
+  ],
+  "F008": [
+   "c-3po",
+   "jawa",
+   "r2-d2",
+   "yoda"
+  ],
+  "F009": [
+   "jabba-the-hutt",
+   "princess-leia-hologram",
+   "sabine-wren",
+   "the-mandalorian"
+  ],
+  "F010": [
+   "chewbacca",
+   "jawa",
+   "r2-d2",
+   "the-mandalorian"
+  ],
+  "F011": [
+   "bo-katan-kryze",
+   "lando-calrissian",
+   "princess-leia",
+   "sabine-wren"
+  ],
+  "F012": [
+   "darth-vader",
+   "lando-calrissian",
+   "rey",
+   "wicket"
+  ],
+  "F013": [
+   "ahsoka-tano",
+   "professor-huyang",
+   "stormtrooper",
+   "yoda"
+  ],
+  "F014": [
+   "grogu",
+   "luke-skywalker",
+   "rey",
+   "stormtrooper"
+  ],
+  "F015": [
+   "greedo",
+   "luke-skywalker",
+   "princess-leia",
+   "stormtrooper"
+  ],
+  "F016": [
+   "jabba-the-hutt",
+   "jawa",
+   "r2-d2",
+   "rey"
+  ],
+  "F017": [
+   "grogu",
+   "jawa",
+   "the-mandalorian",
+   "wicket"
+  ],
+  "G001": [
+   "darth-vader",
+   "lando-calrissian",
+   "rey",
+   "wicket"
+  ],
+  "G002": [
+   "chewbacca",
+   "jawa",
+   "r2-d2",
+   "the-mandalorian"
+  ],
+  "G003": [
+   "greedo",
+   "luke-skywalker",
+   "princess-leia",
+   "stormtrooper"
+  ],
+  "G004": [
+   "grogu",
+   "jawa",
+   "the-mandalorian",
+   "wicket"
+  ],
+  "G005": [
+   "c-3po",
+   "hera-syndulla",
+   "lando-calrissian",
+   "luke-skywalker"
+  ],
+  "G006": [
+   "ahsoka-tano",
+   "professor-huyang",
+   "stormtrooper",
+   "yoda"
+  ],
+  "G007": [
+   "han-solo",
+   "luke-skywalker",
+   "professor-huyang",
+   "r2-d2"
+  ],
+  "G008": [
+   "bo-katan-kryze",
+   "lando-calrissian",
+   "princess-leia",
+   "sabine-wren"
+  ],
+  "G009": [
+   "grogu",
+   "luke-skywalker",
+   "rey",
+   "stormtrooper"
+  ],
+  "G010": [
+   "c-3po",
+   "jawa",
+   "r2-d2",
+   "yoda"
+  ],
+  "G011": [
+   "chopper",
+   "han-solo",
+   "princess-leia",
+   "professor-huyang"
+  ],
+  "G012": [
+   "darth-vader",
+   "sabine-wren",
+   "stormtrooper",
+   "wicket"
+  ],
+  "G013": [
+   "ahsoka-tano",
+   "lando-calrissian",
+   "the-mandalorian",
+   "yoda"
+  ],
+  "G014": [
+   "jabba-the-hutt",
+   "princess-leia",
+   "sabine-wren",
+   "the-mandalorian"
+  ],
+  "G015": [
+   "jabba-the-hutt",
+   "jawa",
+   "r2-d2",
+   "rey"
+  ],
+  "G016": [
+   "bb-8",
+   "bo-katan-kryze",
+   "rey",
+   "yoda"
+  ],
+  "G017": [
+   "chewbacca",
+   "princess-leia",
+   "sabine-wren",
+   "wicket"
+  ],
+  "G084": [
+   "bo-katan-kryze",
+   "darth-vader",
+   "jabba-the-hutt",
+   "stormtrooper"
+  ],
+  "H000": [
+   "han-solo",
+   "luke-skywalker",
+   "professor-huyang",
+   "r2-d2"
+  ],
+  "H001": [
+   "ahsoka-tano",
+   "lando-calrissian",
+   "the-mandalorian",
+   "yoda"
+  ],
+  "H002": [
+   "ahsoka-tano",
+   "professor-huyang",
+   "stormtrooper",
+   "yoda"
+  ],
+  "H003": [
+   "bo-katan-kryze",
+   "lando-calrissian",
+   "princess-leia",
+   "sabine-wren"
+  ],
+  "H004": [
+   "chewbacca",
+   "princess-leia",
+   "sabine-wren",
+   "wicket"
+  ],
+  "H005": [
+   "greedo",
+   "luke-skywalker",
+   "princess-leia",
+   "stormtrooper"
+  ],
+  "H006": [
+   "darth-vader",
+   "sabine-wren",
+   "stormtrooper",
+   "wicket"
+  ],
+  "H007": [
+   "darth-vader",
+   "lando-calrissian",
+   "rey",
+   "wicket"
+  ],
+  "H008": [
+   "bb-8",
+   "bo-katan-kryze",
+   "rey",
+   "yoda"
+  ],
+  "H009": [
+   "grogu",
+   "luke-skywalker",
+   "rey",
+   "stormtrooper"
+  ],
+  "H010": [
+   "jabba-the-hutt",
+   "princess-leia-hologram",
+   "sabine-wren",
+   "the-mandalorian"
+  ],
+  "H011": [
+   "c-3po",
+   "hera-syndulla",
+   "lando-calrissian",
+   "luke-skywalker"
+  ],
+  "H012": [
+   "c-3po",
+   "jawa",
+   "r2-d2",
+   "yoda"
+  ],
+  "H013": [
+   "chewbacca",
+   "jawa",
+   "r2-d2",
+   "the-mandalorian"
+  ],
+  "H014": [
+   "grogu",
+   "jawa",
+   "the-mandalorian",
+   "wicket"
+  ],
+  "H015": [
+   "jabba-the-hutt",
+   "jawa",
+   "r2-d2",
+   "rey"
+  ],
+  "H016": [
+   "chopper",
+   "han-solo",
+   "princess-leia",
+   "professor-huyang"
+  ],
+  "H017": [
+   "han-solo",
+   "luke-skywalker",
+   "professor-huyang",
+   "r2-d2"
+  ],
+  "I001": [
+   "chewbacca",
+   "princess-leia",
+   "sabine-wren",
+   "wicket"
+  ],
+  "I002": [
+   "c-3po",
+   "hera-syndulla",
+   "lando-calrissian",
+   "luke-skywalker"
+  ],
+  "I003": [
+   "han-solo",
+   "luke-skywalker",
+   "professor-huyang",
+   "r2-d2"
+  ],
+  "I004": [
+   "darth-vader",
+   "lando-calrissian",
+   "rey",
+   "wicket"
+  ],
+  "I005": [
+   "darth-vader",
+   "sabine-wren",
+   "stormtrooper",
+   "wicket"
+  ],
+  "I006": [
+   "grogu",
+   "jawa",
+   "the-mandalorian",
+   "wicket"
+  ],
+  "I007": [
+   "jabba-the-hutt",
+   "jawa",
+   "r2-d2",
+   "rey"
+  ],
+  "I008": [
+   "chopper",
+   "han-solo",
+   "princess-leia",
+   "professor-huyang"
+  ],
+  "I009": [
+   "ahsoka-tano",
+   "professor-huyang",
+   "stormtrooper",
+   "yoda"
+  ],
+  "I010": [
+   "bo-katan-kryze",
+   "lando-calrissian",
+   "princess-leia",
+   "sabine-wren"
+  ],
+  "I011": [
+   "c-3po",
+   "jawa",
+   "r2-d2",
+   "yoda"
+  ],
+  "I012": [
+   "grogu",
+   "luke-skywalker",
+   "rey",
+   "stormtrooper"
+  ],
+  "I013": [
+   "chewbacca",
+   "jawa",
+   "r2-d2",
+   "the-mandalorian"
+  ],
+  "I015": [
+   "bb-8",
+   "bo-katan-kryze",
+   "rey",
+   "yoda"
+  ],
+  "I016": [
+   "jabba-the-hutt",
+   "princess-leia-hologram",
+   "sabine-wren",
+   "the-mandalorian"
+  ],
+  "I017": [
+   "ahsoka-tano",
+   "lando-calrissian",
+   "the-mandalorian",
+   "yoda"
+  ],
+  "J001": [
+   "bo-katan-kryze",
+   "lando-calrissian",
+   "princess-leia",
+   "sabine-wren"
+  ],
+  "J002": [
+   "c-3po",
+   "jawa",
+   "r2-d2",
+   "yoda"
+  ],
+  "J003": [
+   "chewbacca",
+   "princess-leia",
+   "sabine-wren",
+   "wicket"
+  ],
+  "J004": [
+   "c-3po",
+   "hera-syndulla",
+   "lando-calrissian",
+   "luke-skywalker"
+  ],
+  "J005": [
+   "jabba-the-hutt",
+   "jawa",
+   "r2-d2",
+   "rey"
+  ],
+  "J006": [
+   "greedo",
+   "luke-skywalker",
+   "princess-leia",
+   "stormtrooper"
+  ],
+  "J007": [
+   "darth-vader",
+   "sabine-wren",
+   "stormtrooper",
+   "wicket"
+  ],
+  "J008": [
+   "han-solo",
+   "luke-skywalker",
+   "professor-huyang",
+   "r2-d2"
+  ],
+  "J010": [
+   "grogu",
+   "luke-skywalker",
+   "rey",
+   "stormtrooper"
+  ],
+  "J011": [
+   "grogu",
+   "jawa",
+   "the-mandalorian",
+   "wicket"
+  ],
+  "J012": [
+   "ahsoka-tano",
+   "professor-huyang",
+   "stormtrooper",
+   "yoda"
+  ],
+  "J013": [
+   "jabba-the-hutt",
+   "princess-leia-hologram",
+   "sabine-wren",
+   "the-mandalorian"
+  ],
+  "J014": [
+   "ahsoka-tano",
+   "lando-calrissian",
+   "the-mandalorian",
+   "yoda"
+  ],
+  "J015": [
+   "chopper",
+   "han-solo",
+   "princess-leia",
+   "professor-huyang"
+  ],
+  "J016": [
+   "chewbacca",
+   "jawa",
+   "r2-d2",
+   "the-mandalorian"
+  ],
+  "J017": [
+   "darth-vader",
+   "lando-calrissian",
+   "rey",
+   "wicket"
   ],
   "K001": [
    "c-3po",
@@ -42,17 +1098,269 @@
    "r2-d2",
    "yoda"
   ],
+  "K002": [
+   "grogu",
+   "jawa",
+   "the-mandalorian",
+   "wicket"
+  ],
+  "K003": [
+   "darth-vader",
+   "sabine-wren",
+   "stormtrooper",
+   "wicket"
+  ],
+  "K004": [
+   "ahsoka-tano",
+   "lando-calrissian",
+   "the-mandalorian",
+   "yoda"
+  ],
+  "K005": [
+   "jabba-the-hutt",
+   "princess-leia-hologram",
+   "sabine-wren",
+   "the-mandalorian"
+  ],
+  "K006": [
+   "ahsoka-tano",
+   "professor-huyang",
+   "stormtrooper",
+   "yoda"
+  ],
+  "K007": [
+   "chewbacca",
+   "jawa",
+   "r2-d2",
+   "the-mandalorian"
+  ],
+  "K008": [
+   "c-3po",
+   "hera-syndulla",
+   "lando-calrissian",
+   "luke-skywalker"
+  ],
+  "K009": [
+   "bo-katan-kryze",
+   "lando-calrissian",
+   "princess-leia",
+   "sabine-wren"
+  ],
+  "K010": [
+   "greedo",
+   "luke-skywalker",
+   "princess-leia",
+   "stormtrooper"
+  ],
+  "K011": [
+   "chewbacca",
+   "princess-leia",
+   "sabine-wren",
+   "wicket"
+  ],
+  "K012": [
+   "bb-8",
+   "bo-katan-kryze",
+   "rey",
+   "yoda"
+  ],
+  "K013": [
+   "darth-vader",
+   "lando-calrissian",
+   "rey",
+   "wicket"
+  ],
+  "K014": [
+   "jabba-the-hutt",
+   "jawa",
+   "r2-d2",
+   "rey"
+  ],
+  "K015": [
+   "chopper",
+   "han-solo",
+   "princess-leia",
+   "professor-huyang"
+  ],
+  "K016": [
+   "grogu",
+   "luke-skywalker",
+   "rey",
+   "stormtrooper"
+  ],
+  "K017": [
+   "han-solo",
+   "luke-skywalker",
+   "professor-huyang",
+   "r2-d2"
+  ],
+  "L001": [
+   "bb-8",
+   "bo-katan-kryze",
+   "rey",
+   "yoda"
+  ],
+  "L002": [
+   "chopper",
+   "han-solo",
+   "princess-leia",
+   "professor-huyang"
+  ],
+  "L003": [
+   "greedo",
+   "luke-skywalker",
+   "princess-leia",
+   "stormtrooper"
+  ],
+  "L004": [
+   "ahsoka-tano",
+   "lando-calrissian",
+   "the-mandalorian",
+   "yoda"
+  ],
+  "L005": [
+   "darth-vader",
+   "sabine-wren",
+   "stormtrooper",
+   "wicket"
+  ],
+  "L006": [
+   "chewbacca",
+   "princess-leia",
+   "sabine-wren",
+   "wicket"
+  ],
+  "L007": [
+   "ahsoka-tano",
+   "professor-huyang",
+   "stormtrooper",
+   "yoda"
+  ],
+  "L008": [
+   "jabba-the-hutt",
+   "princess-leia-hologram",
+   "sabine-wren",
+   "the-mandalorian"
+  ],
+  "L009": [
+   "grogu",
+   "luke-skywalker",
+   "rey",
+   "stormtrooper"
+  ],
+  "L010": [
+   "bo-katan-kryze",
+   "lando-calrissian",
+   "princess-leia",
+   "sabine-wren"
+  ],
+  "L011": [
+   "grogu",
+   "jawa",
+   "the-mandalorian",
+   "wicket"
+  ],
+  "L012": [
+   "darth-vader",
+   "lando-calrissian",
+   "rey",
+   "wicket"
+  ],
+  "L013": [
+   "jabba-the-hutt",
+   "jawa",
+   "r2-d2",
+   "rey"
+  ],
+  "L014": [
+   "c-3po",
+   "jawa",
+   "r2-d2",
+   "yoda"
+  ],
+  "L015": [
+   "chewbacca",
+   "jawa",
+   "r2-d2",
+   "the-mandalorian"
+  ],
+  "L016": [
+   "han-solo",
+   "luke-skywalker",
+   "professor-huyang",
+   "r2-d2"
+  ],
+  "L017": [
+   "c-3po",
+   "hera-syndulla",
+   "lando-calrissian",
+   "luke-skywalker"
+  ],
+  "M001": [
+   "bb-8",
+   "bo-katan-kryze",
+   "rey",
+   "yoda"
+  ],
+  "M002": [
+   "jabba-the-hutt",
+   "princess-leia-hologram",
+   "sabine-wren",
+   "the-mandalorian"
+  ],
   "M003": [
    "grogu",
    "luke-skywalker",
    "rey",
    "stormtrooper"
   ],
+  "M004": [
+   "chewbacca",
+   "princess-leia",
+   "sabine-wren",
+   "wicket"
+  ],
+  "M005": [
+   "bo-katan-kryze",
+   "lando-calrissian",
+   "princess-leia",
+   "sabine-wren"
+  ],
+  "M006": [
+   "darth-vader",
+   "lando-calrissian",
+   "rey",
+   "wicket"
+  ],
+  "M007": [
+   "greedo",
+   "luke-skywalker",
+   "princess-leia",
+   "stormtrooper"
+  ],
+  "M008": [
+   "darth-vader",
+   "sabine-wren",
+   "stormtrooper",
+   "wicket"
+  ],
+  "M009": [
+   "chopper",
+   "han-solo",
+   "princess-leia",
+   "professor-huyang"
+  ],
   "M010": [
    "grogu",
    "jawa",
    "the-mandalorian",
    "wicket"
+  ],
+  "M011": [
+   "chewbacca",
+   "jawa",
+   "r2-d2",
+   "the-mandalorian"
   ],
   "M012": [
    "jabba-the-hutt",
@@ -66,16 +1374,304 @@
    "stormtrooper",
    "yoda"
   ],
+  "M015": [
+   "c-3po",
+   "hera-syndulla",
+   "lando-calrissian",
+   "luke-skywalker"
+  ],
+  "M016": [
+   "han-solo",
+   "luke-skywalker",
+   "professor-huyang",
+   "r2-d2"
+  ],
   "M017": [
    "ahsoka-tano",
    "lando-calrissian",
    "the-mandalorian",
    "yoda"
   ],
+  "N001": [
+   "jabba-the-hutt",
+   "jawa",
+   "r2-d2",
+   "rey"
+  ],
   "N002": [
    "grogu",
    "jawa",
    "the-mandalorian",
+   "wicket"
+  ],
+  "N003": [
+   "c-3po",
+   "hera-syndulla",
+   "lando-calrissian",
+   "luke-skywalker"
+  ],
+  "N005": [
+   "darth-vader",
+   "lando-calrissian",
+   "rey",
+   "wicket"
+  ],
+  "N006": [
+   "c-3po",
+   "jawa",
+   "r2-d2",
+   "yoda"
+  ],
+  "N007": [
+   "chewbacca",
+   "princess-leia",
+   "sabine-wren",
+   "wicket"
+  ],
+  "N008": [
+   "chewbacca",
+   "jawa",
+   "r2-d2",
+   "the-mandalorian"
+  ],
+  "N010": [
+   "darth-vader",
+   "sabine-wren",
+   "stormtrooper",
+   "wicket"
+  ],
+  "N011": [
+   "bo-katan-kryze",
+   "lando-calrissian",
+   "princess-leia",
+   "sabine-wren"
+  ],
+  "N012": [
+   "jabba-the-hutt",
+   "princess-leia-hologram",
+   "sabine-wren",
+   "the-mandalorian"
+  ],
+  "N013": [
+   "greedo",
+   "luke-skywalker",
+   "princess-leia",
+   "stormtrooper"
+  ],
+  "N014": [
+   "chopper",
+   "han-solo",
+   "princess-leia",
+   "professor-huyang"
+  ],
+  "N015": [
+   "han-solo",
+   "luke-skywalker",
+   "professor-huyang",
+   "r2-d2"
+  ],
+  "N016": [
+   "grogu",
+   "luke-skywalker",
+   "rey",
+   "stormtrooper"
+  ],
+  "N017": [
+   "bb-8",
+   "bo-katan-kryze",
+   "rey",
+   "yoda"
+  ],
+  "O001": [
+   "greedo",
+   "luke-skywalker",
+   "princess-leia",
+   "stormtrooper"
+  ],
+  "O002": [
+   "c-3po",
+   "jawa",
+   "r2-d2",
+   "yoda"
+  ],
+  "O003": [
+   "chewbacca",
+   "jawa",
+   "r2-d2",
+   "the-mandalorian"
+  ],
+  "O005": [
+   "c-3po",
+   "hera-syndulla",
+   "lando-calrissian",
+   "luke-skywalker"
+  ],
+  "O006": [
+   "jabba-the-hutt",
+   "princess-leia-hologram",
+   "sabine-wren",
+   "the-mandalorian"
+  ],
+  "O007": [
+   "jabba-the-hutt",
+   "jawa",
+   "r2-d2",
+   "rey"
+  ],
+  "O008": [
+   "grogu",
+   "luke-skywalker",
+   "rey",
+   "stormtrooper"
+  ],
+  "O009": [
+   "ahsoka-tano",
+   "professor-huyang",
+   "stormtrooper",
+   "yoda"
+  ],
+  "O010": [
+   "chopper",
+   "han-solo",
+   "princess-leia",
+   "professor-huyang"
+  ],
+  "O011": [
+   "darth-vader",
+   "lando-calrissian",
+   "rey",
+   "wicket"
+  ],
+  "O012": [
+   "darth-vader",
+   "sabine-wren",
+   "stormtrooper",
+   "wicket"
+  ],
+  "O013": [
+   "grogu",
+   "jawa",
+   "the-mandalorian",
+   "wicket"
+  ],
+  "O015": [
+   "han-solo",
+   "luke-skywalker",
+   "professor-huyang",
+   "r2-d2"
+  ],
+  "O016": [
+   "bo-katan-kryze",
+   "lando-calrissian",
+   "princess-leia",
+   "sabine-wren"
+  ],
+  "O017": [
+   "chewbacca",
+   "princess-leia",
+   "sabine-wren",
+   "wicket"
+  ],
+  "P001": [
+   "darth-vader",
+   "sabine-wren",
+   "stormtrooper",
+   "wicket"
+  ],
+  "P002": [
+   "bb-8",
+   "bo-katan-kryze",
+   "rey",
+   "yoda"
+  ],
+  "P003": [
+   "greedo",
+   "luke-skywalker",
+   "princess-leia",
+   "stormtrooper"
+  ],
+  "P004": [
+   "grogu",
+   "luke-skywalker",
+   "rey",
+   "stormtrooper"
+  ],
+  "P005": [
+   "grogu",
+   "jawa",
+   "the-mandalorian",
+   "wicket"
+  ],
+  "P006": [
+   "jabba-the-hutt",
+   "princess-leia-hologram",
+   "sabine-wren",
+   "the-mandalorian"
+  ],
+  "P007": [
+   "ahsoka-tano",
+   "professor-huyang",
+   "stormtrooper",
+   "yoda"
+  ],
+  "P008": [
+   "c-3po",
+   "hera-syndulla",
+   "lando-calrissian",
+   "luke-skywalker"
+  ],
+  "P009": [
+   "han-solo",
+   "luke-skywalker",
+   "professor-huyang",
+   "r2-d2"
+  ],
+  "P010": [
+   "c-3po",
+   "jawa",
+   "r2-d2",
+   "yoda"
+  ],
+  "P011": [
+   "chewbacca",
+   "jawa",
+   "r2-d2",
+   "the-mandalorian"
+  ],
+  "P012": [
+   "chopper",
+   "han-solo",
+   "princess-leia",
+   "professor-huyang"
+  ],
+  "P013": [
+   "jabba-the-hutt",
+   "jawa",
+   "r2-d2",
+   "rey"
+  ],
+  "P014": [
+   "bo-katan-kryze",
+   "lando-calrissian",
+   "princess-leia",
+   "sabine-wren"
+  ],
+  "P015": [
+   "darth-vader",
+   "lando-calrissian",
+   "rey",
+   "wicket"
+  ],
+  "P016": [
+   "ahsoka-tano",
+   "lando-calrissian",
+   "the-mandalorian",
+   "yoda"
+  ],
+  "P017": [
+   "chewbacca",
+   "princess-leia",
+   "sabine-wren",
    "wicket"
   ],
   "Q016": [
@@ -91,5 +1687,230 @@
    "c-3po"
   ]
  },
- "disputed": {}
+ "disputed": {
+  "A003": [
+   [
+    "c-3po",
+    "hera-syndulla",
+    "lando-calrissian",
+    "luke-skywalker"
+   ],
+   [
+    "darth-vader",
+    "lando-calrissian",
+    "rey",
+    "wicket"
+   ]
+  ],
+  "A010": [
+   [
+    "darth-vader",
+    "lando-calrissian",
+    "rey",
+    "wicket"
+   ],
+   [
+    "c-3po",
+    "hera-syndulla",
+    "lando-calrissian",
+    "luke-skywalker"
+   ]
+  ],
+  "AF036": [
+   [
+    "bb-8",
+    "bo-katan-kryze",
+    "chopper",
+    "jabba-the-hutt"
+   ],
+   [
+    "greedo",
+    "luke-skywalker",
+    "princess-leia",
+    "stormtrooper"
+   ]
+  ],
+  "B006": [
+   [
+    "c-3po",
+    "chewbacca",
+    "jawa",
+    "r2-d2"
+   ],
+   [
+    "chewbacca",
+    "jawa",
+    "r2-d2",
+    "the-mandalorian"
+   ]
+  ],
+  "C001": [
+   [
+    "chopper",
+    "han-solo",
+    "princess-leia",
+    "professor-huyang"
+   ],
+   [
+    "c-3po",
+    "han-solo",
+    "princess-leia",
+    "professor-huyang"
+   ]
+  ],
+  "C011": [
+   [
+    "chewbacca",
+    "jawa",
+    "r2-d2",
+    "the-mandalorian"
+   ],
+   [
+    "chewbacca",
+    "r2-d2",
+    "the-mandalorian",
+    "yoda"
+   ]
+  ],
+  "C014": [
+   [
+    "grogu",
+    "jawa",
+    "the-mandalorian",
+    "wicket"
+   ],
+   [
+    "jabba-the-hutt",
+    "jawa",
+    "r2-d2",
+    "rey"
+   ]
+  ],
+  "C015": [
+   [
+    "jabba-the-hutt",
+    "princess-leia-hologram",
+    "sabine-wren",
+    "the-mandalorian"
+   ],
+   [
+    "jabba-the-hutt",
+    "princess-leia",
+    "sabine-wren",
+    "the-mandalorian"
+   ]
+  ],
+  "C016": [
+   [
+    "bo-katan-kryze",
+    "lando-calrissian",
+    "princess-leia",
+    "sabine-wren"
+   ],
+   [
+    "jabba-the-hutt",
+    "princess-leia-hologram",
+    "sabine-wren",
+    "the-mandalorian"
+   ]
+  ],
+  "D016": [
+   [
+    "bb-8",
+    "bo-katan-kryze",
+    "rey",
+    "yoda"
+   ],
+   [
+    "bb-8",
+    "bo-katan-kryze",
+    "princess-leia",
+    "yoda"
+   ]
+  ],
+  "I014": [
+   [
+    "darth-vader",
+    "lando-calrissian",
+    "rey",
+    "wicket"
+   ],
+   [
+    "greedo",
+    "luke-skywalker",
+    "princess-leia",
+    "stormtrooper"
+   ]
+  ],
+  "J009": [
+   [
+    "bb-8",
+    "bo-katan-kryze",
+    "princess-leia",
+    "yoda"
+   ],
+   [
+    "bb-8",
+    "bo-katan-kryze",
+    "rey",
+    "yoda"
+   ]
+  ],
+  "N004": [
+   [
+    "ahsoka-tano",
+    "chopper",
+    "lando-calrissian",
+    "yoda"
+   ],
+   [
+    "ahsoka-tano",
+    "lando-calrissian",
+    "the-mandalorian",
+    "yoda"
+   ]
+  ],
+  "N009": [
+   [
+    "ahsoka-tano",
+    "professor-huyang",
+    "stormtrooper",
+    "yoda"
+   ],
+   [
+    "ahsoka-tano",
+    "professor-huyang",
+    "the-mandalorian",
+    "yoda"
+   ]
+  ],
+  "O004": [
+   [
+    "ahsoka-tano",
+    "lando-calrissian",
+    "the-mandalorian",
+    "yoda"
+   ],
+   [
+    "bb-8",
+    "bo-katan-kryze",
+    "rey",
+    "yoda"
+   ]
+  ],
+  "SK001": [
+   [
+    "ahsoka-tano",
+    "lando-calrissian",
+    "the-mandalorian",
+    "yoda"
+   ],
+   [
+    "chewbacca",
+    "princess-leia",
+    "sabine-wren",
+    "wicket"
+   ]
+  ]
+ }
 }

@@ -423,6 +423,31 @@ test('every set points at its own wiki page, not somebody else\'s', () => {
   }
 });
 
+test('every figure appears in at least one known capsule code', () => {
+  /*
+   * A figure no code names is one the finder can never help with: type any
+   * code you like and it will never say "this one has Yoda in it".
+   *
+   * This is the shape the Series 1 outage took. The builder matched only rows
+   * marked "Galaxy" while the sheet also marks them "Multi" and "Series 1", so
+   * Series 1 shipped 12 codes out of 292 and left five figures uncoverable —
+   * silently, because 12 codes still looks like a working feature.
+   */
+  for (const file of setFiles()) {
+    const set = read(file);
+    if (!set.codeFile) continue;
+    const codes = read(set.codeFile);
+    const covered = new Set();
+    for (const ids of Object.values(codes.codes || {})) for (const id of ids) covered.add(id);
+    for (const variants of Object.values(codes.disputed || {})) {
+      for (const ids of variants) for (const id of ids) covered.add(id);
+    }
+    const orphans = set.figures.filter((f) => !covered.has(f.id)).map((f) => f.name);
+    assert.deepStrictEqual(orphans, [],
+      `${file}: no capsule code names ${orphans.join(', ')}, so the finder can never find them`);
+  }
+});
+
 test('the id lock covers every set that exists', () => {
   const lock = read(LOCK);
   assert.ok(lock && lock.sets, 'sets/ids.lock.json is missing or malformed');
