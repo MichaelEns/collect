@@ -106,8 +106,18 @@ for (const file of setFiles) {
 }
 if (!wanted.size) die('no figures found in sets/ — is this the right checkout?');
 
-/* What is actually in the folder. */
-const files = fs.readdirSync(dir).filter((f) => EXTS.includes(path.extname(f).toLowerCase()));
+/*
+ * What is actually in the folder.
+ *
+ * The picture fetcher also saves photographs of the capsule, bag, box and
+ * paper checklist, prefixed "ref-". Those are worth keeping locally but they
+ * are not figures, and before they were skipped here their presence stopped
+ * the whole run: every one of them was reported as a name matching no figure.
+ */
+const isReference = (f) => /(^|__)ref-/.test(path.basename(f).toLowerCase());
+const files = fs.readdirSync(dir)
+  .filter((f) => EXTS.includes(path.extname(f).toLowerCase()))
+  .filter((f) => !isReference(f));
 if (!files.length) die(`no ${EXTS.join('/')} files in ${dir}`);
 
 const uploads = [];
@@ -178,6 +188,30 @@ if (tooBig.length) {
     + 'Shrink them first — 480px on the long edge is all a card ever shows.');
 }
 
+/*
+ * Two files naming the same card is not a duplicate to deduplicate — it is two
+ * different pictures, and whichever happened to be sent last would win. That
+ * really happened: a ".jpg" and a ".png" existed for five figures, and among
+ * them "imperial-royal-guard.jpg" was a photograph of the checklist sheet
+ * while the ".png" was the figure, and "shaak-ti.png" was a different figure
+ * altogether. Both were left over from bugs fixed long before, because the
+ * picture fetcher only ever adds files and never takes one away.
+ */
+const perCard = new Map();
+for (const up of uploads) {
+  const wire = `${up.setId}:${up.figureId}`;
+  if (!perCard.has(wire)) perCard.set(wire, new Set());
+  perCard.get(wire).add(up.file);
+}
+const collisions = [...perCard].filter(([, f]) => f.size > 1);
+if (collisions.length) {
+  die('more than one picture claims the same card, so which one shows would\n'
+    + 'depend on upload order:\n  '
+    + collisions.map(([wire, f]) => `${wire} <- ${[...f].join(', ')}`).join('\n  ')
+    + '\n\nDelete the wrong one. If you cannot tell which is wrong, look at them:\n'
+    + 'one of them is not the figure on the card.');
+}
+
 const missing = [...wanted.keys()].filter((id) => !files.some(
   (f) => parseName(f).figureId === id
 ));
@@ -198,6 +232,36 @@ async function main() {
   let sent = 0;
   let skipped = 0;
   let failed = 0;
+  let removed = 0;
+
+  /*
+   * A picture that used to be here and no longer is has to be taken down, not
+   * merely left alone. This tool only ever wrote, so when the Series 5 Leia
+   * image turned out to be the Aurra Sing picture under the wrong name and was
+   * withdrawn, the wrong picture stayed on the card — a rebuild "fixed" nothing
+   * a device could see. A figure with no picture shows its letters, which is
+   * honest; a figure showing somebody else is not.
+   */
+  const wire = (u) => `${u.setId}:${u.figureId}`;
+  const shouldExist = new Set(uploads.map(wire));
+  let stale = [];
+  try {
+    const response = await fetch(`${ENDPOINT}/v1/collection?t=${Date.now()}`, {
+      headers: { 'X-Family-Code': code },
+    });
+    if (response.status === 401) die('\nthat family code was not recognised.', 3);
+    if (response.ok) {
+      const body = await response.json().catch(() => ({}));
+      stale = Object.keys(body.catalogue || {}).filter((k) => !shouldExist.has(k));
+    }
+  } catch (err) {
+    console.error(`could not check what is already there (${err.message})`);
+  }
+
+  if (stale.length) {
+    console.log(`${stale.length} picture(s) no longer have a source and will be taken down:`);
+    for (const key of stale) console.log(`  ${key}`);
+  }
 
   /*
    * The worker rate-limits on IP at 60 requests a minute, and this sends one
@@ -255,8 +319,25 @@ async function main() {
     await sleep(SPACING_MS);
   }
 
-  console.log(`\n\ndone: ${sent} sent, ${skipped} already there, ${failed} failed.`);
-  if (sent) console.log('Devices pick these up on their next sync.');
+  for (const key of stale) {
+    const [setId, figureId] = key.split(':');
+    const url = `${ENDPOINT}/v1/catalogue/${encodeURIComponent(setId)}/${encodeURIComponent(figureId)}`;
+    try {
+      const response = await fetch(url, { method: 'DELETE', headers: { 'X-Family-Code': code } });
+      if (response.ok) { removed += 1; } else {
+        failed += 1;
+        console.error(`  FAILED to remove ${key}: ${response.status}`);
+      }
+    } catch (err) {
+      failed += 1;
+      console.error(`  FAILED to remove ${key}: ${err.message}`);
+    }
+    await sleep(SPACING_MS);
+  }
+
+  console.log(`\n\ndone: ${sent} sent, ${skipped} already there, `
+    + `${removed} taken down, ${failed} failed.`);
+  if (sent || removed) console.log('Devices pick these up on their next sync.');
   process.exit(failed ? 1 : 0);
 }
 
