@@ -1,0 +1,366 @@
+{
+ "setId": "sw-squish-s1",
+ "source": {
+  "title": "Doorables Codes 5 : StarWars",
+  "credit": "@FuzzyLuzzi and the Disney Doorables collecting community",
+  "url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42/pubhtml?gid=1710958071&single=true",
+  "csv": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42/pub?output=csv&gid=1710958071&single=true",
+  "retrieved": "2026-08-09"
+ },
+ "alsoFrom": "Doorables Codes 5 : StarWars (form responses)",
+ "batches": {
+  "A": 12,
+  "B": 12,
+  "C": 11,
+  "D": 12
+ },
+ "codes": {
+  "A001": [
+   "chewbacca",
+   "darth-vader",
+   "luke-skywalker-blue",
+   "princess-leia",
+   "r2-d2"
+  ],
+  "A010": [
+   "chewbacca",
+   "ewok",
+   "jabba-the-hutt-red",
+   "porg",
+   "wicket"
+  ],
+  "A011": [
+   "finn",
+   "grand-admiral-thrawn-red",
+   "jawa",
+   "loth-cat",
+   "r2-d2"
+  ],
+  "A012": [
+   "bb-8",
+   "darth-vader",
+   "kylo-ren-red",
+   "r5-d4",
+   "stormtrooper"
+  ],
+  "A002": [
+   "boba-fett",
+   "chopper-c1-10p",
+   "luke-skywalker",
+   "r5-d4",
+   "stormtrooper"
+  ],
+  "A003": [
+   "boba-fett",
+   "princess-leia",
+   "princess-leia-blue",
+   "the-mandalorian",
+   "wicket"
+  ],
+  "A004": [
+   "chewbacca",
+   "grogu",
+   "jawa",
+   "r2-d2-blue",
+   "rey"
+  ],
+  "A005": [
+   "ahsoka-tano",
+   "ahsoka-tano-blue",
+   "bb-8",
+   "c-3po",
+   "sabine-wren"
+  ],
+  "A006": [
+   "ahsoka-tano",
+   "grand-admiral-thrawn",
+   "porg",
+   "rey-blue",
+   "the-mandalorian"
+  ],
+  "A007": [
+   "grogu",
+   "jabba-the-hutt",
+   "kylo-ren",
+   "loth-cat",
+   "rey"
+  ],
+  "A008": [
+   "darth-vader-red",
+   "finn",
+   "jawa",
+   "r5-d4",
+   "sabine-wren"
+  ],
+  "A009": [
+   "bb-8",
+   "grand-admiral-thrawn",
+   "princess-leia",
+   "stormtrooper",
+   "stormtrooper-red"
+  ],
+  "B001": [
+   "ahsoka-tano",
+   "ahsoka-tano-blue",
+   "bb-8",
+   "c-3po",
+   "sabine-wren"
+  ],
+  "B010": [
+   "ahsoka-tano",
+   "grand-admiral-thrawn",
+   "porg",
+   "rey-blue",
+   "the-mandalorian"
+  ],
+  "B011": [
+   "finn",
+   "grand-admiral-thrawn-red",
+   "jawa",
+   "loth-cat",
+   "r2-d2"
+  ],
+  "B012": [
+   "grogu",
+   "jabba-the-hutt",
+   "kylo-ren",
+   "loth-cat",
+   "rey"
+  ],
+  "B002": [
+   "chewbacca",
+   "darth-vader",
+   "luke-skywalker-blue",
+   "princess-leia",
+   "r2-d2"
+  ],
+  "B003": [
+   "darth-vader-red",
+   "finn",
+   "jawa",
+   "r5-d4",
+   "sabine-wren"
+  ],
+  "B004": [
+   "chewbacca",
+   "ewok",
+   "jabba-the-hutt-red",
+   "porg",
+   "wicket"
+  ],
+  "B005": [
+   "bb-8",
+   "darth-vader",
+   "kylo-ren-red",
+   "r5-d4",
+   "stormtrooper"
+  ],
+  "B006": [
+   "boba-fett",
+   "chopper-c1-10p",
+   "luke-skywalker",
+   "r5-d4",
+   "stormtrooper"
+  ],
+  "B007": [
+   "boba-fett",
+   "princess-leia",
+   "princess-leia-blue",
+   "the-mandalorian",
+   "wicket"
+  ],
+  "B008": [
+   "chewbacca",
+   "grogu",
+   "jawa",
+   "r2-d2-blue",
+   "rey"
+  ],
+  "B009": [
+   "bb-8",
+   "grand-admiral-thrawn",
+   "princess-leia",
+   "stormtrooper",
+   "stormtrooper-red"
+  ],
+  "C001": [
+   "ahsoka-tano",
+   "grand-admiral-thrawn",
+   "porg",
+   "rey-blue",
+   "the-mandalorian"
+  ],
+  "C010": [
+   "grogu",
+   "jabba-the-hutt",
+   "kylo-ren",
+   "loth-cat",
+   "rey"
+  ],
+  "C011": [
+   "chewbacca",
+   "grogu",
+   "jawa",
+   "r2-d2-blue",
+   "rey"
+  ],
+  "C012": [
+   "finn",
+   "grand-admiral-thrawn-red",
+   "jawa",
+   "loth-cat",
+   "r2-d2"
+  ],
+  "C002": [
+   "bb-8",
+   "grand-admiral-thrawn",
+   "princess-leia",
+   "stormtrooper",
+   "stormtrooper-red"
+  ],
+  "C003": [
+   "ahsoka-tano",
+   "ahsoka-tano-blue",
+   "bb-8",
+   "c-3po",
+   "sabine-wren"
+  ],
+  "C005": [
+   "boba-fett",
+   "princess-leia",
+   "princess-leia-blue",
+   "the-mandalorian",
+   "wicket"
+  ],
+  "C006": [
+   "darth-vader-red",
+   "finn",
+   "jawa",
+   "r5-d4",
+   "sabine-wren"
+  ],
+  "C007": [
+   "boba-fett",
+   "chopper-c1-10p",
+   "luke-skywalker",
+   "r5-d4",
+   "stormtrooper"
+  ],
+  "C008": [
+   "bb-8",
+   "darth-vader",
+   "kylo-ren-red",
+   "r5-d4",
+   "stormtrooper"
+  ],
+  "C009": [
+   "chewbacca",
+   "ewok",
+   "jabba-the-hutt-red",
+   "porg",
+   "wicket"
+  ],
+  "D001": [
+   "grogu",
+   "jabba-the-hutt",
+   "kylo-ren",
+   "loth-cat",
+   "rey"
+  ],
+  "D010": [
+   "boba-fett",
+   "princess-leia",
+   "princess-leia-blue",
+   "the-mandalorian",
+   "wicket"
+  ],
+  "D011": [
+   "ahsoka-tano",
+   "ahsoka-tano-blue",
+   "bb-8",
+   "c-3po",
+   "sabine-wren"
+  ],
+  "D012": [
+   "bb-8",
+   "grand-admiral-thrawn",
+   "princess-leia",
+   "stormtrooper",
+   "stormtrooper-red"
+  ],
+  "D002": [
+   "bb-8",
+   "darth-vader",
+   "kylo-ren-red",
+   "r5-d4",
+   "stormtrooper"
+  ],
+  "D003": [
+   "boba-fett",
+   "chopper-c1-10p",
+   "luke-skywalker",
+   "r5-d4",
+   "stormtrooper"
+  ],
+  "D004": [
+   "darth-vader-red",
+   "finn",
+   "jawa",
+   "r5-d4",
+   "sabine-wren"
+  ],
+  "D005": [
+   "finn",
+   "grand-admiral-thrawn-red",
+   "jawa",
+   "loth-cat",
+   "r2-d2"
+  ],
+  "D006": [
+   "chewbacca",
+   "grogu",
+   "jawa",
+   "r2-d2-blue",
+   "rey"
+  ],
+  "D007": [
+   "ahsoka-tano",
+   "grand-admiral-thrawn",
+   "porg",
+   "rey-blue",
+   "the-mandalorian"
+  ],
+  "D008": [
+   "chewbacca",
+   "darth-vader",
+   "luke-skywalker-blue",
+   "princess-leia",
+   "r2-d2"
+  ],
+  "D009": [
+   "chewbacca",
+   "ewok",
+   "jabba-the-hutt-red",
+   "porg",
+   "wicket"
+  ]
+ },
+ "disputed": {
+  "C004": [
+   [
+    "boba-fett",
+    "chopper-c1-10p",
+    "luke-skywalker",
+    "r5-d4",
+    "stormtrooper"
+   ],
+   [
+    "chewbacca",
+    "darth-vader",
+    "luke-skywalker-blue",
+    "princess-leia",
+    "r2-d2"
+   ]
+  ]
+ }
+}

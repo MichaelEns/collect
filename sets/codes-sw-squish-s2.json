@@ -1,39 +1,40 @@
 {
  "setId": "sw-squish-s2",
  "source": {
-  "title": "Doorables Codes 5 : StarWars (form responses)",
+  "title": "Doorables Codes 5 : StarWars",
   "credit": "@FuzzyLuzzi and the Disney Doorables collecting community",
-  "url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42/pubhtml",
-  "csv": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42/pub?output=csv&single=true",
+  "url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42/pubhtml?gid=1710958071&single=true",
+  "csv": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42/pub?output=csv&gid=1710958071&single=true",
   "retrieved": "2026-08-09"
  },
+ "alsoFrom": "Doorables Codes 5 : StarWars (form responses)",
  "batches": {
   "A": 35,
-  "B": 35
+  "B": 36
  },
  "codes": {
-  "A01": [
+  "A001": [
    "anakin-skywalker",
    "darth-maul",
    "emperor-palpatine",
    "general-grievous",
    "padme-amidala"
   ],
-  "A10": [
+  "A010": [
    "aayla-secura",
    "d-0",
    "han-solo",
    "kit-fisto",
    "stormtrooper"
   ],
-  "A11": [
+  "A011": [
    "asajj-ventress",
    "cad-bane",
    "k-2so",
    "logray",
    "princess-leia"
   ],
-  "A13": [
+  "A013": [
    "cad-bane",
    "emperor-palpatine",
    "kit-fisto",
@@ -61,7 +62,7 @@
    "professor-huyang",
    "yoda"
   ],
-  "A17": [
+  "A017": [
    "admiral-ackbar",
    "asajj-ventress",
    "emperor-palpatine",
@@ -75,189 +76,196 @@
    "han-solo",
    "lando-calrissian"
   ],
-  "A19": [
+  "A019": [
    "cad-bane",
    "grogu",
    "han-solo",
    "k-2so",
    "logray"
   ],
-  "A02": [
+  "A002": [
    "aayla-secura",
    "cad-bane",
    "jar-jar-binks",
    "kit-fisto",
    "lando-calrissian"
   ],
-  "A20": [
+  "A020": [
    "d-0",
    "general-grievous",
    "jar-jar-binks",
    "professor-huyang",
    "shadow-trooper"
   ],
-  "A21": [
+  "A021": [
    "cad-bane",
    "darth-maul",
    "greedo",
    "ig-11",
    "logray"
   ],
-  "A22": [
+  "A022": [
    "admiral-ackbar",
    "asajj-ventress",
    "darth-vader",
    "kit-fisto",
    "shadow-trooper"
   ],
-  "A23": [
+  "A023": [
    "d-0",
    "grand-admiral-thrawn",
    "ig-11",
    "padme-amidala",
    "salacious-b-crumb"
   ],
-  "A24": [
+  "A024": [
    "aayla-secura",
    "admiral-ackbar",
    "han-solo",
    "k-2so",
    "luke-skywalker"
   ],
-  "A25": [
+  "A025": [
    "cad-bane",
    "emperor-palpatine",
    "padme-amidala",
    "professor-huyang",
    "shadow-trooper"
   ],
-  "A26": [
+  "A026": [
    "general-grievous",
    "kit-fisto",
    "lando-calrissian",
    "logray",
    "obi-wan-kenobi"
   ],
-  "A27": [
+  "A027": [
    "aayla-secura",
    "asajj-ventress",
    "darth-maul",
    "jar-jar-binks",
    "salacious-b-crumb"
   ],
-  "A28": [
+  "A028": [
    "admiral-ackbar",
    "battle-droid",
    "cad-bane",
    "han-solo",
    "k-2so"
   ],
-  "A29": [
+  "A029": [
    "anakin-skywalker",
    "emperor-palpatine",
    "general-grievous",
    "ig-11",
    "yoda"
   ],
-  "A03": [
+  "A003": [
    "asajj-ventress",
    "battle-droid",
    "han-solo",
    "k-2so",
    "salacious-b-crumb"
   ],
-  "A30": [
+  "A030": [
    "admiral-ackbar",
    "grogu",
    "lando-calrissian",
    "padme-amidala",
    "shadow-trooper"
   ],
-  "A31": [
+  "A031": [
    "aayla-secura",
    "asajj-ventress",
    "greedo",
    "han-solo",
    "ig-11"
   ],
-  "A32": [
+  "A032": [
    "aayla-secura",
    "battle-droid",
    "logray",
    "professor-huyang",
    "salacious-b-crumb"
   ],
-  "A33": [
+  "A033": [
    "admiral-ackbar",
    "d-0",
    "darth-maul",
    "general-grievous",
    "grogu"
   ],
-  "A34": [
+  "A034": [
    "boba-fett",
    "cad-bane",
    "ig-11",
    "kit-fisto",
    "logray"
   ],
-  "A35": [
+  "A035": [
    "asajj-ventress",
    "chewbacca",
    "d-0",
    "han-solo",
    "k-2so"
   ],
-  "A36": [
+  "A036": [
    "d-0",
    "grogu-se",
    "padme-amidala",
    "shadow-trooper",
    "yoda"
   ],
-  "A04": [
+  "A004": [
    "logray",
    "obi-wan-kenobi",
    "professor-huyang",
    "shadow-trooper",
    "yoda"
   ],
-  "A05": [
+  "A005": [
    "admiral-ackbar",
    "d-0",
    "emperor-palpatine",
    "greedo",
    "ig-11"
   ],
-  "A06": [
+  "A006": [
    "aayla-secura",
    "asajj-ventress",
    "grogu",
    "lando-calrissian",
    "padme-amidala"
   ],
-  "A07": [
+  "A007": [
    "anakin-skywalker",
    "cad-bane",
    "general-grievous",
    "han-solo",
    "salacious-b-crumb"
   ],
-  "A08": [
+  "A008": [
    "admiral-ackbar",
    "logray",
    "obi-wan-kenobi",
    "padme-amidala",
    "professor-huyang"
   ],
-  "A09": [
+  "A009": [
    "ahsoka-tano",
    "darth-maul",
    "general-grievous",
    "ig-11",
    "shadow-trooper"
   ],
-  "B1": [
+  "B000": [
+   "admiral-ackbar",
+   "asajj-ventress",
+   "darth-vader",
+   "kit-fisto",
+   "shadow-trooper"
+  ],
+  "B001": [
    "anakin-skywalker",
    "cad-bane",
    "general-grievous",
@@ -271,7 +279,7 @@
    "obi-wan-kenobi",
    "padme-amidala"
   ],
-  "B11": [
+  "B011": [
    "aayla-secura",
    "asajj-ventress",
    "greedo",
@@ -285,14 +293,14 @@
    "k-2so",
    "salacious-b-crumb"
   ],
-  "B13": [
+  "B013": [
    "boba-fett",
    "cad-bane",
    "ig-11",
    "kit-fisto",
    "logray"
   ],
-  "B14": [
+  "B014": [
    "d-0",
    "general-grievous",
    "jar-jar-binks",
@@ -320,14 +328,14 @@
    "shadow-trooper",
    "yoda"
   ],
-  "B18": [
+  "B018": [
    "asajj-ventress",
    "chewbacca",
    "d-0",
    "han-solo",
    "k-2so"
   ],
-  "B19": [
+  "B019": [
    "d-0",
    "grand-admiral-thrawn",
    "ig-11",
@@ -341,28 +349,28 @@
    "darth-maul",
    "lando-calrissian"
   ],
-  "B20": [
+  "B020": [
    "admiral-ackbar",
    "ig-11",
    "rey",
    "shadow-trooper",
    "yoda"
   ],
-  "B21": [
+  "B021": [
    "admiral-ackbar",
    "d-0",
    "emperor-palpatine",
    "greedo",
    "ig-11"
   ],
-  "B22": [
+  "B022": [
    "aayla-secura",
    "d-0",
    "han-solo",
    "kit-fisto",
    "stormtrooper"
   ],
-  "B23": [
+  "B023": [
    "admiral-ackbar",
    "grogu",
    "lando-calrissian",
@@ -376,21 +384,21 @@
    "professor-huyang",
    "yoda"
   ],
-  "B25": [
+  "B025": [
    "ahsoka-tano",
    "darth-maul",
    "general-grievous",
    "ig-11",
    "shadow-trooper"
   ],
-  "B26": [
+  "B026": [
    "aayla-secura",
    "asajj-ventress",
    "grogu",
    "lando-calrissian",
    "padme-amidala"
   ],
-  "B28": [
+  "B028": [
    "aayla-secura",
    "battle-droid",
    "logray",
@@ -404,21 +412,21 @@
    "han-solo",
    "lando-calrissian"
   ],
-  "B03": [
+  "B003": [
    "admiral-ackbar",
    "asajj-ventress",
    "darth-vader",
    "kit-fisto",
    "shadow-trooper"
   ],
-  "B30": [
+  "B030": [
    "anakin-skywalker",
    "darth-maul",
    "emperor-palpatine",
    "general-grievous",
    "padme-amidala"
   ],
-  "B31": [
+  "B031": [
    "cad-bane",
    "emperor-palpatine",
    "kit-fisto",
@@ -446,28 +454,28 @@
    "jar-jar-binks",
    "salacious-b-crumb"
   ],
-  "B35": [
+  "B035": [
    "general-grievous",
    "kit-fisto",
    "lando-calrissian",
    "logray",
    "obi-wan-kenobi"
   ],
-  "B36": [
+  "B036": [
    "battle-droid",
    "general-grievous",
    "salacious-b-crumb",
    "shadow-trooper",
    "yoda"
   ],
-  "B04": [
+  "B004": [
    "admiral-ackbar",
    "battle-droid",
    "cad-bane",
    "han-solo",
    "shadow-trooper"
   ],
-  "B05": [
+  "B005": [
    "admiral-ackbar",
    "d-0",
    "darth-maul",
@@ -481,21 +489,21 @@
    "professor-huyang",
    "shadow-trooper"
   ],
-  "B7": [
+  "B007": [
    "d-0",
    "grogu-se",
    "padme-amidala",
    "shadow-trooper",
    "yoda"
   ],
-  "B8": [
+  "B008": [
    "asajj-ventress",
    "cad-bane",
    "k-2so",
    "logray",
    "princess-leia"
   ],
-  "B09": [
+  "B009": [
    "aayla-secura",
    "cad-bane",
    "jar-jar-binks",

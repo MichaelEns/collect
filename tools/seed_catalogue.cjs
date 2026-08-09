@@ -212,15 +212,26 @@ if (collisions.length) {
     + 'one of them is not the figure on the card.');
 }
 
-const missing = [...wanted.keys()].filter((id) => !files.some(
-  (f) => parseName(f).figureId === id
-));
+/*
+ * Cards without a picture, not characters without one.
+ *
+ * Keyed by figure id alone, a character in two sets counted as covered the
+ * moment either set had a picture — so Series 1's C-3PO was reported as fine
+ * because Series 4's C-3PO had a photo. It is the CARD that shows letters.
+ */
+const covered = new Set(uploads.map((u) => `${u.setId}:${u.figureId}`));
+const missing = [];
+for (const [figureId, series] of wanted) {
+  for (const setId of series) {
+    if (!covered.has(`${setId}:${figureId}`)) missing.push(`${setId}/${figureId}`);
+  }
+}
 
 const cards = [...wanted.values()].reduce((n, series) => n + series.length, 0);
 console.log(`${uploads.length} upload(s) covering ${cards} card(s) across `
   + `${setFiles.length} series, from ${files.length} image(s).`);
 if (missing.length) {
-  console.log(`${missing.length} figure(s) have no picture yet and will keep their letter tag:`);
+  console.log(`${missing.length} card(s) have no picture yet and will keep their letter tag:`);
   console.log(`  ${missing.slice(0, 12).join(', ')}${missing.length > 12 ? ', ...' : ''}`);
 }
 if (dryRun) {

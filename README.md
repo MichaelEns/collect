@@ -38,18 +38,30 @@ The letter at the front is the **batch**. Each batch has its own numbering, so
 is genuinely why an unknown code shows up occasionally: it is from a batch
 nobody has written down yet, not a bug.
 
-**339 codes ship with the app**, covering all five series:
+**1,077 codes ship with the app**, across thirteen sets:
 
-| Series | Codes | Batches | Figures covered |
+| Set | Codes | Batches | Figures covered |
 | --- | --- | --- | --- |
-| 1 | 12 | 7 | 20 of 25 |
-| 2 | 177 | 12 (A–L) | 25 of 25 |
-| 3 | 44 | 5 | 25 of 25 |
-| 4 | 69 | 2 | 25 of 25 |
-| 5 | 37 | 2 | 25 of 25 |
+| Galaxy Peek Series 1 | 276 | 19 (#–TL) | 25 of 25 |
+| Galaxy Peek Series 2 | 177 | 12 (A–L) | 25 of 25 |
+| Galaxy Peek Series 3 | 44 | 5 (A–TL) | 25 of 25 |
+| Galaxy Peek Series 4 | 69 | 2 | 25 of 25 |
+| Galaxy Peek Series 5 | 37 | 2 | 25 of 25 |
+| Galactic Cruisers Series 1 | 126 | 17 (A–MO) | 10 of 10 |
+| Galactic Cruisers Series 2 | 40 | 5 (A–TL) | 10 of 10 |
+| Galactic Cruisers Series 3 | — | — | checklist only |
+| Squish Squadron Series 1 | 47 | 4 (A–D) | 35 of 35 |
+| Squish Squadron Series 2 | 71 | 2 | 35 of 35 |
+| Grogu Mini Capsule | — | — | checklist only |
+| Grogu Moments | 34 | 6 (A–F) | 8 of 8 |
+| Toy Story | 156 | 2 | 15 of 15 |
 
-Where collectors disagreed about a code — two of them, both in Series 2 — the
-app shows **every** version reported rather than quietly picking one.
+Not every set holds four figures. A Cruisers pack holds one, a Grogu Moments
+box holds one scene, a Toy Story bag holds three and a Squish Squadron bag
+holds five — so the app takes the number from the data rather than assuming.
+
+Where collectors disagreed about a code — 29 of them — the app shows **every**
+version reported rather than quietly picking one.
 
 Open a figure's card and it also works the other way round: it lists **every**
 capsule known to contain that figure, grouped by batch. No truncation. One

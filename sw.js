@@ -15,7 +15,7 @@
  * tests/install.test.mjs asserts this list covers every set in the index, so a
  * sixth series cannot be added without also being made available offline.
  */
-const CACHE = 'collect-v7';
+const CACHE = 'collect-v8';
 
 const SHELL = [
   '/collect/',
@@ -50,6 +50,7 @@ const SHELL = [
   '/collect/sets/ts-rerelease.json',
   '/collect/sets/codes-ts-rerelease.json',
   '/collect/sets/sw-squish-s1.json',
+  '/collect/sets/codes-sw-squish-s1.json',
   '/collect/sets/sw-squish-s2.json',
   '/collect/sets/codes-sw-squish-s2.json',
   '/collect/sets/sw-grogu-mini.json',

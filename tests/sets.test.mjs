@@ -467,6 +467,73 @@ test('every figure appears in at least one known capsule code', () => {
   }
 });
 
+test('a set only says "no codes yet" when there really are none', () => {
+  /*
+   * Squish Squadron Series 1 shipped as a checklist with no finder, on the
+   * grounds that nobody had recorded any codes. Forty-eight capsules were on
+   * record the whole time — on the SECOND tab of the same workbook the Galaxy
+   * Peek codes come from. The form-response tab has an empty "Squish 1" column,
+   * and that emptiness was taken as the answer.
+   *
+   * Nothing here can go and look. What it can do is refuse to let the two
+   * states be claimed at once, so a set that has gained codes cannot keep the
+   * apology, and a rebuild of the roster cannot quietly take the finder away.
+   */
+  for (const file of setFiles()) {
+    const set = read(file);
+    const hasCodes = Boolean(set.codeFile);
+    if (hasCodes) {
+      assert.ok(!set.countNote || !/no .*codes|nothing to look up/i.test(set.countNote),
+        `${file}: ships codes but still says there are none — "${set.countNote}"`);
+      assert.ok(set.codeNote, `${file}: ships codes with no note saying where to look`);
+    } else {
+      assert.ok(set.countNote && /code/i.test(set.countNote),
+        `${file}: has no codes and does not say so, so the missing finder looks like a bug`);
+    }
+  }
+});
+
+test('the README does not overstate what ships', () => {
+  /*
+   * These numbers have been wrong twice. The Series 1 row said 12 codes for a
+   * long while after the count reached 276, and the headline total stayed at
+   * 339 through four new sets. A README that misstates the data is the same
+   * failure the app itself is built to avoid, just aimed at a different reader.
+   */
+  const readme = fs.readFileSync(path.join(ROOT, 'README.md'), 'utf8');
+
+  let total = 0;
+  let disputed = 0;
+  const rows = new Map();
+  for (const file of setFiles()) {
+    const set = read(file);
+    if (!set.codeFile) continue;
+    const codes = read(set.codeFile);
+    const n = Object.keys(codes.codes).length;
+    total += n;
+    disputed += Object.keys(codes.disputed || {}).length;
+    rows.set(set.name, n);
+  }
+
+  const claimed = (readme.match(/\*\*([\d,]+) codes ship with the app\*\*/) || [])[1];
+  assert.ok(claimed, 'the README no longer states how many codes ship');
+  assert.strictEqual(Number(claimed.replace(/,/g, '')), total,
+    `README says ${claimed} codes ship, but ${total} do`);
+
+  const claimedDisputed = (readme.match(/disagreed about a code — ([\d]+) of them/) || [])[1];
+  assert.ok(claimedDisputed, 'the README no longer states how many codes are disputed');
+  assert.strictEqual(Number(claimedDisputed), disputed,
+    `README says ${claimedDisputed} codes are disputed, but ${disputed} are`);
+
+  for (const [name, n] of rows) {
+    const row = new RegExp(`^\\|\\s*${name.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&')}\\s*\\|\\s*([\\d]+)\\s*\\|`, 'm');
+    const found = readme.match(row);
+    assert.ok(found, `README has no code row for ${name}`);
+    assert.strictEqual(Number(found[1]), n,
+      `README says ${name} has ${found[1]} codes, but it has ${n}`);
+  }
+});
+
 test('the id lock covers every set that exists', () => {
   const lock = read(LOCK);
   assert.ok(lock && lock.sets, 'sets/ids.lock.json is missing or malformed');

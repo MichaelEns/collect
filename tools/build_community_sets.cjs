@@ -86,7 +86,10 @@ const SETS = [
     official: 'https://justplayproducts.com/collections/disney-doorables/',
     sourced: '15 figures, from the community code sheet that collectors submit'
       + ' to. Just Play has not published a checklist for this line, so treat it'
-      + ' as very good community data rather than gospel.',
+      + ' as very good community data rather than gospel. The pictures come from'
+      + ' the wiki\'s Toy Story page: they are the right character, but a'
+      + ' re-release re-issues a figure that already existed, and the wiki does'
+      + ' not say which printing each photo is of.',
     rarityNote: 'Nobody has recorded which of these are rare, so this set shows'
       + ' no rarity colours rather than guessing at them.',
     wiki: 'https://disney-doorables.fandom.com/wiki/Toy_Story',
@@ -100,6 +103,11 @@ const SETS = [
     brand: 'Star Wars Doorables',
     emoji: '🧽',
     perCapsule: 5,
+    // The roster comes from here, but the codes do not: they are merged with
+    // the hand-maintained tab's rows by build_squish_codes.cjs, which records
+    // more capsules than either source has on its own. Two builders writing
+    // one code file would mean the last one run decided what shipped.
+    rosterOnly: true,
     packaging: 'Blind bag, five squishy figures inside',
     packagingNote: 'These are soft squishy figures rather than hard ones, and a'
       + ' bag holds FIVE of them — more than any other line we track.',
@@ -266,6 +274,11 @@ function buildSet(spec, csv) {
   };
 
   fs.writeFileSync(path.join(setsDir, `${spec.id}.json`), `${JSON.stringify(set, null, 1)}\n`);
+  if (spec.rosterOnly) {
+    console.log(`${spec.id}: ${figures.length} figures (roster only — codes come from`
+      + ' build_squish_codes.cjs, which merges this sheet with the hand-maintained tab)');
+    return;
+  }
   fs.writeFileSync(
     path.join(setsDir, `codes-${spec.id}.json`),
     `${JSON.stringify({

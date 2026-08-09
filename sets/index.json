@@ -85,7 +85,8 @@
     "brand": "Star Wars Doorables",
     "packaging": "Blind bag, squishy figures inside",
     "emoji": "🫧",
-    "total": 35
+    "total": 35,
+    "codeFile": "codes-sw-squish-s1.json"
   },
   {
     "id": "sw-squish-s2",

@@ -212,6 +212,17 @@ function buildSet(spec) {
   }
 
   const wiki = `https://disney-doorables.fandom.com/wiki/${spec.page.replace(/ /g, '_')}`;
+  /*
+   * A set built here may since have gained codes from build_squish_codes.cjs.
+   * Rebuilding the roster must not quietly take the finder away again, so the
+   * code file decides which of the two closing notes this set carries.
+   */
+  const codeFile = `codes-${spec.id}.json`;
+  const hasCodes = fs.existsSync(path.join(setsDir, codeFile));
+  const previous = fs.existsSync(path.join(setsDir, `${spec.id}.json`))
+    ? JSON.parse(fs.readFileSync(path.join(setsDir, `${spec.id}.json`), 'utf8'))
+    : {};
+
   const set = {
     id: spec.id,
     brand: spec.brand,
@@ -229,10 +240,16 @@ function buildSet(spec) {
     figures,
     codeLink: wiki,
     codeLinkLabel: `${spec.name} on the Doorables wiki`,
-    countNote: 'Nobody has written down any bag codes for this one yet, so there'
-      + ' is nothing to look up — this is a checklist only. If codes start being'
-      + ' collected, they will appear here.',
   };
+
+  if (hasCodes) {
+    set.codeFile = codeFile;
+    set.codeNote = previous.codeNote;
+  } else {
+    set.countNote = 'Nobody has written down any bag codes for this one yet, so'
+      + ' there is nothing to look up — this is a checklist only. If codes start'
+      + ' being collected, they will appear here.';
+  }
 
   fs.writeFileSync(path.join(setsDir, `${spec.id}.json`), `${JSON.stringify(set, null, 1)}\n`);
   const byRarity = {};

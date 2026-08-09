@@ -210,5 +210,6 @@
  ],
  "codeLink": "https://disney-doorables.fandom.com/wiki/Star_Wars_Squish_Squadron",
  "codeLinkLabel": "Squish Squadron Series 1 on the Doorables wiki",
- "countNote": "Nobody has written down any bag codes for this one yet, so there is nothing to look up — this is a checklist only. If codes start being collected, they will appear here."
+ "codeFile": "codes-sw-squish-s1.json",
+ "codeNote": "Every bag has a short code printed on it — a letter and some numbers, like A001. On the Star Wars capsules it is on the BOTTOM; a squish bag is a different shape and we have not confirmed where it sits, so check the bottom and the back. Type it in and this app will tell you which five squishies are inside, before you open it. The letter at the front is the batch, and every batch has its own codes — so if a code comes back unknown it is most likely from a newer batch nobody has written down yet. These come from collectors rather than from Just Play, who have never published them, so they are very good but not official."
 }
