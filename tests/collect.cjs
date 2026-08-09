@@ -154,13 +154,18 @@ async function main() {
     })`));
     // Read the expected count off the index rather than pinning a number, so
     // adding a series does not fail a test that is not about counting.
-    const expectedSets = JSON.parse(
+    const index = JSON.parse(
       fs.readFileSync(path.join(__dirname, '..', 'sets', 'index.json'), 'utf8')
-    ).length;
-    check(`all ${expectedSets} sets are offered`,
-      picker.sets.length === expectedSets, JSON.stringify(picker.sets));
+    );
+    check(`all ${index.length} sets are offered`,
+      picker.sets.length === index.length, JSON.stringify(picker.sets));
+    // Each card's total comes from its own set, not from a shared assumption:
+    // Galaxy Peek has 25 figures a series and Galactic Cruisers has 10, and a
+    // hardcoded "0/25" quietly asserted every product line is the same shape.
+    const wantCounts = index.map((m) => `0/${m.total}`);
     check('and each shows how far along it is',
-      picker.counts.every((c) => /^0\/25$/.test(c)), JSON.stringify(picker.counts));
+      JSON.stringify(picker.counts) === JSON.stringify(wantCounts),
+      `${JSON.stringify(picker.counts)} want ${JSON.stringify(wantCounts)}`);
 
     /* --------------------------------------------------------- collection */
 
@@ -544,6 +549,69 @@ async function main() {
     check('and the collection is exactly as it was left',
       stillThere === appSide.found, `was ${appSide.found}, now ${stillThere}`);
 
+    /* -------------------------------------------------- a one-figure pack */
+
+    console.log('\n--- a pack that holds one figure, not four ---');
+    /*
+     * Every set was a four-figure capsule until Galactic Cruisers, and the
+     * finder said "all four of these" in so many words. A Cruisers pack holds
+     * one figure and one ship, so this pins the app following the data rather
+     * than the old assumption — and pins the set with no codes yet explaining
+     * itself instead of showing an empty finder that looks broken.
+     */
+    await evalJs("location.hash = '#set=sw-cruisers-s1'; 1");
+    await new Promise((r) => setTimeout(r, 1200));
+    const cruisers = JSON.parse(await evalJs(`JSON.stringify({
+      title: document.getElementById('title').textContent,
+      figures: document.querySelectorAll('.fig').length,
+      finder: !document.getElementById('finder').hidden,
+    })`));
+    check('a Cruisers set opens with its ten figures',
+      /Galactic Cruisers/.test(cruisers.title) && cruisers.figures === 10,
+      JSON.stringify(cruisers));
+    check('and offers the finder', cruisers.finder === true);
+
+    const cruiserCodes = JSON.parse(fs.readFileSync(
+      path.join(__dirname, '..', 'sets', 'codes-sw-cruisers-s1.json'), 'utf8'));
+    const cruiserSet = JSON.parse(fs.readFileSync(
+      path.join(__dirname, '..', 'sets', 'sw-cruisers-s1.json'), 'utf8'));
+    const cruiserById = new Map(cruiserSet.figures.map((f) => [f.id, f.name]));
+    const [oneCode, oneIds] = Object.entries(cruiserCodes.codes)[0];
+
+    await evalJs(`(() => { const el = document.getElementById('code-input');
+      el.value = '${oneCode}'; el.dispatchEvent(new Event('input', { bubbles: true })); return 1; })()`);
+    await new Promise((r) => setTimeout(r, 400));
+    const oneAnswer = JSON.parse(await evalJs(`JSON.stringify({
+      chips: [...document.querySelectorAll('.chip-name')].map(c => c.textContent),
+      verdict: (document.querySelector('.finder-verdict') || {}).textContent || '',
+    })`));
+    check(`code ${oneCode} names exactly one figure, and the right one`,
+      JSON.stringify(oneAnswer.chips) === JSON.stringify(oneIds.map((i) => cruiserById.get(i))),
+      JSON.stringify(oneAnswer.chips));
+    check('and the verdict does not claim there are four',
+      !/four/i.test(oneAnswer.verdict), oneAnswer.verdict);
+
+    await evalJs(`window.__collect.setHave('${oneIds[0]}', true); 1`);
+    await new Promise((r) => setTimeout(r, 250));
+    await evalJs(`(() => { document.getElementById('code-input')
+      .dispatchEvent(new Event('input', { bubbles: true })); return 1; })()`);
+    await new Promise((r) => setTimeout(r, 400));
+    const owned = await evalJs("(document.querySelector('.finder-verdict')||{}).textContent||''");
+    check('once found it says "this one", not "all four of these"',
+      /already have this one/i.test(owned), owned);
+
+    await evalJs("location.hash = '#set=sw-cruisers-s3'; 1");
+    await new Promise((r) => setTimeout(r, 1200));
+    const noCodes = JSON.parse(await evalJs(`JSON.stringify({
+      figures: document.querySelectorAll('.fig').length,
+      finderShown: !document.getElementById('finder').hidden,
+      sourced: document.getElementById('sourced').textContent,
+    })`));
+    check('a set with no codes yet hides the finder rather than showing an empty one',
+      noCodes.figures === 10 && noCodes.finderShown === false, JSON.stringify(noCodes));
+    check('and says why on the page', /no pack codes/i.test(noCodes.sourced),
+      noCodes.sourced.slice(0, 100));
+
     /* ------------------------------------------------------------ offline */
 
     console.log('\n--- offline, halfway down a shop aisle ---');
@@ -728,9 +796,13 @@ async function main() {
      * absolute number below is generous on purpose — the spread is the part
      * that says something about this code.)
      */
+    // The number of data files follows the index — one set file per set plus a
+    // code file for each set that has one — rather than being pinned, so
+    // adding a product line does not fail a test that is not about counting.
+    const wantFiles = index.length + index.filter((m) => m.codeFile).length;
     check('and every set and code file is asked for at once, not in a chain',
-      timing.count === 10 && timing.spread >= 0 && timing.spread < 500,
-      `${timing.count} data files, ${timing.spread}ms between first and last start`);
+      timing.count === wantFiles && timing.spread >= 0 && timing.spread < 500,
+      `${timing.count} of ${wantFiles} data files, ${timing.spread}ms between first and last start`);
     check('so the page is ready in a couple of timeout windows, not eleven',
       pageLoadMs >= 0 && pageLoadMs < 8000, `the page itself took ${pageLoadMs}ms`);
 

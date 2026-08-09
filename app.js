@@ -695,7 +695,12 @@
         return;
       }
       if (missing.length === 0) {
-        say('finder-verdict got', 'You already have all four of these.');
+        // "all four" was fine while every set was a four-figure capsule.
+        // A Galactic Cruisers pack holds one figure and one vehicle, so the
+        // wording follows the data rather than assuming a size.
+        say('finder-verdict got', found.figures.length === 1
+          ? 'You already have this one.'
+          : `You already have all ${found.figures.length} of these.`);
       } else {
         say('finder-verdict want', missing.length === 1
           ? 'This one has 1 you still need!'
@@ -712,8 +717,8 @@
       if (lists.length > 1) {
         const h = document.createElement('p');
         h.className = 'finder-sub';
-        h.textContent = `Someone found these four:`;
-        if (i > 0) h.textContent = 'Someone else found these four:';
+        const what = figures.length === 1 ? 'this' : `these ${figures.length}`;
+        h.textContent = i === 0 ? `Someone found ${what}:` : `Someone else found ${what}:`;
         box.appendChild(h);
       }
       const row = document.createElement('div');

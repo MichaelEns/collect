@@ -1,0 +1,150 @@
+{
+ "setId": "sw-cruisers-s2",
+ "source": {
+  "title": "Doorables Codes 5 : StarWars",
+  "credit": "@FuzzyLuzzi and the Disney Doorables collecting community",
+  "url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42/pubhtml?gid=1710958071&single=true",
+  "csv": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42/pub?output=csv&gid=1710958071&single=true",
+  "via": "https://disney-doorables.fandom.com/wiki/Star_Wars_Galaxy_Peek_Series_2",
+  "retrieved": "2026-08-09"
+ },
+ "batches": {
+  "A": 10,
+  "B": 10,
+  "C": 10,
+  "D": 9,
+  "TL": 1
+ },
+ "codes": {
+  "A010": [
+   "boba-fett"
+  ],
+  "A011": [
+   "sabine-wren"
+  ],
+  "A012": [
+   "finn"
+  ],
+  "A013": [
+   "rey"
+  ],
+  "A014": [
+   "jawa"
+  ],
+  "A015": [
+   "han-solo"
+  ],
+  "A016": [
+   "bb-8"
+  ],
+  "A017": [
+   "lando-calrissian"
+  ],
+  "A018": [
+   "kylo-ren"
+  ],
+  "A019": [
+   "captain-phasma"
+  ],
+  "B010": [
+   "han-solo"
+  ],
+  "B011": [
+   "captain-phasma"
+  ],
+  "B012": [
+   "lando-calrissian"
+  ],
+  "B013": [
+   "sabine-wren"
+  ],
+  "B014": [
+   "finn"
+  ],
+  "B015": [
+   "kylo-ren"
+  ],
+  "B016": [
+   "bb-8"
+  ],
+  "B017": [
+   "jawa"
+  ],
+  "B018": [
+   "rey"
+  ],
+  "B019": [
+   "boba-fett"
+  ],
+  "C010": [
+   "kylo-ren"
+  ],
+  "C011": [
+   "boba-fett"
+  ],
+  "C012": [
+   "jawa"
+  ],
+  "C013": [
+   "lando-calrissian"
+  ],
+  "C014": [
+   "bb-8"
+  ],
+  "C015": [
+   "rey"
+  ],
+  "C016": [
+   "han-solo"
+  ],
+  "C017": [
+   "sabine-wren"
+  ],
+  "C018": [
+   "captain-phasma"
+  ],
+  "C019": [
+   "finn"
+  ],
+  "D010": [
+   "finn"
+  ],
+  "D011": [
+   "jawa"
+  ],
+  "D012": [
+   "captain-phasma"
+  ],
+  "D013": [
+   "sabine-wren"
+  ],
+  "D014": [
+   "lando-calrissian"
+  ],
+  "D015": [
+   "boba-fett"
+  ],
+  "D016": [
+   "rey"
+  ],
+  "D017": [
+   "bb-8"
+  ],
+  "D018": [
+   "kylo-ren"
+  ],
+  "TL001": [
+   "captain-phasma"
+  ]
+ },
+ "disputed": {
+  "D019": [
+   [
+    "captain-phasma"
+   ],
+   [
+    "han-solo"
+   ]
+  ]
+ }
+}

@@ -1,0 +1,460 @@
+{
+ "setId": "sw-cruisers-s1",
+ "source": {
+  "title": "Doorables Codes 5 : StarWars",
+  "credit": "@FuzzyLuzzi and the Disney Doorables collecting community",
+  "url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42/pubhtml?gid=1710958071&single=true",
+  "csv": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42/pub?output=csv&gid=1710958071&single=true",
+  "via": "https://disney-doorables.fandom.com/wiki/Star_Wars_Galaxy_Peek_Series_2",
+  "retrieved": "2026-08-09"
+ },
+ "batches": {
+  "A": 10,
+  "B": 9,
+  "C": 10,
+  "D": 10,
+  "E": 10,
+  "F": 9,
+  "G": 10,
+  "H": 9,
+  "HO": 1,
+  "I": 6,
+  "IO": 2,
+  "J": 10,
+  "K": 9,
+  "KO": 1,
+  "L": 10,
+  "M": 3,
+  "MO": 7
+ },
+ "codes": {
+  "A010": [
+   "ahsoka-tano"
+  ],
+  "A011": [
+   "stormtrooper"
+  ],
+  "A012": [
+   "wicket"
+  ],
+  "A013": [
+   "princess-leia"
+  ],
+  "A014": [
+   "darth-vader"
+  ],
+  "A015": [
+   "r2-d2"
+  ],
+  "A016": [
+   "grogu"
+  ],
+  "A017": [
+   "luke-skywalker"
+  ],
+  "A018": [
+   "c-3po"
+  ],
+  "A019": [
+   "chewbacca"
+  ],
+  "B010": [
+   "r2-d2"
+  ],
+  "B011": [
+   "chewbacca"
+  ],
+  "B012": [
+   "luke-skywalker"
+  ],
+  "B013": [
+   "stormtrooper"
+  ],
+  "B015": [
+   "c-3po"
+  ],
+  "B016": [
+   "grogu"
+  ],
+  "B017": [
+   "darth-vader"
+  ],
+  "B018": [
+   "princess-leia"
+  ],
+  "B019": [
+   "ahsoka-tano"
+  ],
+  "C010": [
+   "c-3po"
+  ],
+  "C011": [
+   "ahsoka-tano"
+  ],
+  "C012": [
+   "darth-vader"
+  ],
+  "C013": [
+   "luke-skywalker"
+  ],
+  "C014": [
+   "grogu"
+  ],
+  "C015": [
+   "princess-leia"
+  ],
+  "C016": [
+   "r2-d2"
+  ],
+  "C017": [
+   "stormtrooper"
+  ],
+  "C018": [
+   "chewbacca"
+  ],
+  "C019": [
+   "wicket"
+  ],
+  "D010": [
+   "wicket"
+  ],
+  "D011": [
+   "darth-vader"
+  ],
+  "D012": [
+   "chewbacca"
+  ],
+  "D013": [
+   "stormtrooper"
+  ],
+  "D014": [
+   "luke-skywalker"
+  ],
+  "D015": [
+   "ahsoka-tano"
+  ],
+  "D016": [
+   "princess-leia"
+  ],
+  "D017": [
+   "grogu"
+  ],
+  "D018": [
+   "c-3po"
+  ],
+  "D019": [
+   "r2-d2"
+  ],
+  "E010": [
+   "darth-vader"
+  ],
+  "E011": [
+   "chewbacca"
+  ],
+  "E012": [
+   "luke-skywalker"
+  ],
+  "E013": [
+   "r2-d2"
+  ],
+  "E014": [
+   "wicket"
+  ],
+  "E015": [
+   "ahsoka-tano"
+  ],
+  "E016": [
+   "princess-leia"
+  ],
+  "E017": [
+   "c-3po"
+  ],
+  "E018": [
+   "stormtrooper"
+  ],
+  "E019": [
+   "grogu"
+  ],
+  "F010": [
+   "wicket"
+  ],
+  "F011": [
+   "stormtrooper"
+  ],
+  "F012": [
+   "ahsoka-tano"
+  ],
+  "F013": [
+   "grogu"
+  ],
+  "F014": [
+   "princess-leia"
+  ],
+  "F015": [
+   "darth-vader"
+  ],
+  "F016": [
+   "chewbacca"
+  ],
+  "F017": [
+   "luke-skywalker"
+  ],
+  "F018": [
+   "c-3po"
+  ],
+  "G010": [
+   "grogu"
+  ],
+  "G011": [
+   "chewbacca"
+  ],
+  "G012": [
+   "stormtrooper"
+  ],
+  "G013": [
+   "c-3po"
+  ],
+  "G014": [
+   "r2-d2"
+  ],
+  "G015": [
+   "princess-leia"
+  ],
+  "G016": [
+   "darth-vader"
+  ],
+  "G017": [
+   "luke-skywalker"
+  ],
+  "G018": [
+   "wicket"
+  ],
+  "G019": [
+   "ahsoka-tano"
+  ],
+  "H010": [
+   "r2-d2"
+  ],
+  "H012": [
+   "stormtrooper"
+  ],
+  "H013": [
+   "princess-leia"
+  ],
+  "H014": [
+   "ahsoka-tano"
+  ],
+  "H015": [
+   "c-3po"
+  ],
+  "H016": [
+   "luke-skywalker"
+  ],
+  "H017": [
+   "darth-vader"
+  ],
+  "H018": [
+   "wicket"
+  ],
+  "H019": [
+   "grogu"
+  ],
+  "HO011": [
+   "stormtrooper"
+  ],
+  "I011": [
+   "darth-vader"
+  ],
+  "I012": [
+   "wicket"
+  ],
+  "I013": [
+   "grogu"
+  ],
+  "I015": [
+   "princess-leia"
+  ],
+  "I017": [
+   "chewbacca"
+  ],
+  "I019": [
+   "r2-d2"
+  ],
+  "IO016": [
+   "stormtrooper"
+  ],
+  "IO018": [
+   "c-3po"
+  ],
+  "J010": [
+   "princess-leia"
+  ],
+  "J011": [
+   "r2-d2"
+  ],
+  "J012": [
+   "chewbacca"
+  ],
+  "J013": [
+   "wicket"
+  ],
+  "J014": [
+   "stormtrooper"
+  ],
+  "J015": [
+   "c-3po"
+  ],
+  "J016": [
+   "ahsoka-tano"
+  ],
+  "J017": [
+   "grogu"
+  ],
+  "J018": [
+   "darth-vader"
+  ],
+  "J019": [
+   "luke-skywalker"
+  ],
+  "K010": [
+   "luke-skywalker"
+  ],
+  "K011": [
+   "chewbacca"
+  ],
+  "K012": [
+   "darth-vader"
+  ],
+  "K013": [
+   "grogu"
+  ],
+  "K014": [
+   "wicket"
+  ],
+  "K015": [
+   "r2-d2"
+  ],
+  "K016": [
+   "c-3po"
+  ],
+  "K017": [
+   "stormtrooper"
+  ],
+  "K019": [
+   "ahsoka-tano"
+  ],
+  "KO010": [
+   "luke-skywalker"
+  ],
+  "L010": [
+   "chewbacca"
+  ],
+  "L011": [
+   "darth-vader"
+  ],
+  "L012": [
+   "wicket"
+  ],
+  "L013": [
+   "ahsoka-tano"
+  ],
+  "L014": [
+   "luke-skywalker"
+  ],
+  "L015": [
+   "r2-d2"
+  ],
+  "L016": [
+   "c-3po"
+  ],
+  "L017": [
+   "princess-leia"
+  ],
+  "L018": [
+   "grogu"
+  ],
+  "L019": [
+   "stormtrooper"
+  ],
+  "M010": [
+   "luke-skywalker"
+  ],
+  "M011": [
+   "grogu"
+  ],
+  "M016": [
+   "darth-vader"
+  ],
+  "MO012": [
+   "r2-d2"
+  ],
+  "MO013": [
+   "stormtrooper"
+  ],
+  "MO014": [
+   "c-3po"
+  ],
+  "MO015": [
+   "chewbacca"
+  ],
+  "MO017": [
+   "wicket"
+  ],
+  "MO018": [
+   "princess-leia"
+  ],
+  "MO019": [
+   "ahsoka-tano"
+  ]
+ },
+ "disputed": {
+  "AF036": [
+   [
+    "ahsoka-tano"
+   ],
+   [
+    "chewbacca"
+   ]
+  ],
+  "B014": [
+   [
+    "c-3po"
+   ],
+   [
+    "wicket"
+   ]
+  ],
+  "F019": [
+   [
+    "chewbacca"
+   ],
+   [
+    "r2-d2"
+   ]
+  ],
+  "H011": [
+   [
+    "chewbacca"
+   ],
+   [
+    "stormtrooper"
+   ]
+  ],
+  "I014": [
+   [
+    "grogu"
+   ],
+   [
+    "luke-skywalker"
+   ]
+  ],
+  "K018": [
+   [
+    "princess-leia"
+   ],
+   [
+    "r2-d2"
+   ]
+  ]
+ }
+}

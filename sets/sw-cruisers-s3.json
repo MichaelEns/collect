@@ -1,0 +1,88 @@
+{
+ "id": "sw-cruisers-s3",
+ "brand": "Star Wars Doorables",
+ "name": "Galactic Cruisers Series 3",
+ "packaging": "Cruiser pack — one figure and one ship",
+ "packagingNote": "This is not a Galaxy Peek capsule. A Cruisers pack holds ONE figure and the ship that goes with it, so a code tells you about one figure rather than four.",
+ "emoji": "🚀",
+ "official": "https://justplayproducts.com/collections/star-wars-doorables/",
+ "released": "2026",
+ "figuresPerCapsule": 1,
+ "verified": false,
+ "sourced": "Ten figures, from the same community spreadsheet as the Galaxy Peek codes. Just Play has not published a checklist for this line, so treat it as very good community data rather than gospel.",
+ "rarities": [
+  {
+   "id": "common",
+   "label": "Common",
+   "colour": "#8fa3d9"
+  },
+  {
+   "id": "rare",
+   "label": "Rare",
+   "colour": "#7ee8ff"
+  },
+  {
+   "id": "ultra",
+   "label": "Ultra Rare",
+   "colour": "#ffc93d"
+  },
+  {
+   "id": "special",
+   "label": "Special Edition",
+   "colour": "#ff7ad9"
+  }
+ ],
+ "figures": [
+  {
+   "id": "captain-enoch",
+   "name": "Captain Enoch",
+   "rarity": "rare"
+  },
+  {
+   "id": "chopper-c1-10p",
+   "name": "Chopper (C1-10P)",
+   "rarity": "common"
+  },
+  {
+   "id": "darth-maul",
+   "name": "Darth Maul",
+   "rarity": "ultra"
+  },
+  {
+   "id": "hera-syndulla",
+   "name": "Hera Syndulla",
+   "rarity": "rare"
+  },
+  {
+   "id": "jar-jar-binks",
+   "name": "Jar Jar Binks",
+   "rarity": "common"
+  },
+  {
+   "id": "obi-wan-kenobi",
+   "name": "Obi-Wan Kenobi",
+   "rarity": "special"
+  },
+  {
+   "id": "padme-amidala",
+   "name": "Padme Amidala",
+   "rarity": "common"
+  },
+  {
+   "id": "poe-dameron",
+   "name": "Poe Dameron",
+   "rarity": "common"
+  },
+  {
+   "id": "the-armorer",
+   "name": "The Armorer",
+   "rarity": "rare"
+  },
+  {
+   "id": "the-mandalorian",
+   "name": "The Mandalorian",
+   "rarity": "ultra"
+  }
+ ],
+ "countNote": "No pack codes have been recorded for this series yet, so there is nothing to look up — only the checklist."
+}

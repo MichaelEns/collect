@@ -15,7 +15,7 @@
  * tests/install.test.mjs asserts this list covers every set in the index, so a
  * sixth series cannot be added without also being made available offline.
  */
-const CACHE = 'collect-v4';
+const CACHE = 'collect-v5';
 
 const SHELL = [
   '/collect/',
@@ -42,6 +42,11 @@ const SHELL = [
   '/collect/sets/codes-sw-galaxy-peek-s3.json',
   '/collect/sets/codes-sw-galaxy-peek-s4.json',
   '/collect/sets/codes-sw-galaxy-peek-s5.json',
+  '/collect/sets/sw-cruisers-s1.json',
+  '/collect/sets/sw-cruisers-s2.json',
+  '/collect/sets/sw-cruisers-s3.json',
+  '/collect/sets/codes-sw-cruisers-s1.json',
+  '/collect/sets/codes-sw-cruisers-s2.json',
 ];
 
 const NETWORK_TIMEOUT_MS = 2500;

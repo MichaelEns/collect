@@ -1,7 +1,43 @@
 {
  "note": "Ids that progress is stored against. Additions are fine; a removal or rename orphans a tick. Run tools/lock_ids.cjs --write only when the change is understood and intended.",
- "updated": "2026-08-08",
+ "updated": "2026-08-09",
  "sets": {
+  "sw-cruisers-s1": [
+   "ahsoka-tano",
+   "c-3po",
+   "chewbacca",
+   "darth-vader",
+   "grogu",
+   "luke-skywalker",
+   "princess-leia",
+   "r2-d2",
+   "stormtrooper",
+   "wicket"
+  ],
+  "sw-cruisers-s2": [
+   "bb-8",
+   "boba-fett",
+   "captain-phasma",
+   "finn",
+   "han-solo",
+   "jawa",
+   "kylo-ren",
+   "lando-calrissian",
+   "rey",
+   "sabine-wren"
+  ],
+  "sw-cruisers-s3": [
+   "captain-enoch",
+   "chopper-c1-10p",
+   "darth-maul",
+   "hera-syndulla",
+   "jar-jar-binks",
+   "obi-wan-kenobi",
+   "padme-amidala",
+   "poe-dameron",
+   "the-armorer",
+   "the-mandalorian"
+  ],
   "sw-galaxy-peek-s1": [
    "ahsoka-tano",
    "bb-8",

@@ -204,26 +204,49 @@ function build(series) {
 
 for (let s = 1; s <= 5; s += 1) build(s);
 
-// The index the app reads to offer the sets, in series order.
-//
-// It lists the code file as well as the set file, so a reader that needs both
-// can ask for them together. Without it the only way to learn a set's code
-// file is to fetch the set first, which forces a third round trip — offline,
-// where every one of those waits out the service worker, that was the
-// difference between the hunt page appearing at once and taking four seconds.
-const index = [1, 2, 3, 4, 5].map((s) => {
-  const set = JSON.parse(fs.readFileSync(path.join(setsDir, `sw-galaxy-peek-s${s}.json`), 'utf8'));
-  const entry = {
-    id: set.id,
-    file: `${set.id}.json`,
-    name: set.name,
-    brand: set.brand,
-    packaging: set.packaging,
-    emoji: set.emoji,
-    total: set.figures.length,
-  };
-  if (set.codeFile) entry.codeFile = set.codeFile;
-  return entry;
-});
+/*
+ * The index the app reads to offer the sets.
+ *
+ * Built by scanning sets/ rather than from a hardcoded list, because there is
+ * now more than one product line and they are built by different tools:
+ * Galactic Cruisers comes from tools/build_cruisers.cjs. A hardcoded list
+ * would mean whichever builder ran last quietly dropped the other's sets from
+ * the index — invisible in the data files, fatal in the app.
+ *
+ * Each entry lists the code file as well as the set file, so a reader that
+ * needs both can ask for them together. Without it the only way to learn a
+ * set's code file is to fetch the set first, which forces a third round trip —
+ * offline, where every one of those waits out the service worker, that was the
+ * difference between the hunt page appearing at once and taking four seconds.
+ */
+const NOT_A_SET = new Set(['index.json', 'FORMAT.json', 'ids.lock.json']);
+const setFiles = fs.readdirSync(setsDir)
+  .filter((f) => f.endsWith('.json') && !f.startsWith('codes-') && !NOT_A_SET.has(f));
+
+// Galaxy Peek first, then Cruisers, each in series order: the order a child
+// met them, and the order they sit on a shelf.
+const ORDER = ['sw-galaxy-peek-', 'sw-cruisers-'];
+const rank = (id) => {
+  const i = ORDER.findIndex((p) => id.startsWith(p));
+  const n = parseInt((id.match(/s(\d+)$/) || [])[1] || '99', 10);
+  return (i < 0 ? ORDER.length : i) * 100 + n;
+};
+
+const index = setFiles
+  .map((f) => JSON.parse(fs.readFileSync(path.join(setsDir, f), 'utf8')))
+  .sort((a, b) => rank(a.id) - rank(b.id))
+  .map((set) => {
+    const entry = {
+      id: set.id,
+      file: `${set.id}.json`,
+      name: set.name,
+      brand: set.brand,
+      packaging: set.packaging,
+      emoji: set.emoji,
+      total: set.figures.length,
+    };
+    if (set.codeFile) entry.codeFile = set.codeFile;
+    return entry;
+  });
 fs.writeFileSync(path.join(setsDir, 'index.json'), `${JSON.stringify(index, null, 2)}\n`);
 console.log(`index.json: ${index.length} sets`);

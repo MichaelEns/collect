@@ -1,0 +1,91 @@
+{
+ "id": "sw-cruisers-s2",
+ "brand": "Star Wars Doorables",
+ "name": "Galactic Cruisers Series 2",
+ "packaging": "Cruiser pack — one figure and one ship",
+ "packagingNote": "This is not a Galaxy Peek capsule. A Cruisers pack holds ONE figure and the ship that goes with it, so a code tells you about one figure rather than four.",
+ "emoji": "🚀",
+ "official": "https://justplayproducts.com/collections/star-wars-doorables/",
+ "released": "2025",
+ "figuresPerCapsule": 1,
+ "verified": false,
+ "sourced": "Ten figures, from the same community spreadsheet as the Galaxy Peek codes. Just Play has not published a checklist for this line, so treat it as very good community data rather than gospel.",
+ "rarities": [
+  {
+   "id": "common",
+   "label": "Common",
+   "colour": "#8fa3d9"
+  },
+  {
+   "id": "rare",
+   "label": "Rare",
+   "colour": "#7ee8ff"
+  },
+  {
+   "id": "ultra",
+   "label": "Ultra Rare",
+   "colour": "#ffc93d"
+  },
+  {
+   "id": "special",
+   "label": "Special Edition",
+   "colour": "#ff7ad9"
+  }
+ ],
+ "figures": [
+  {
+   "id": "bb-8",
+   "name": "BB-8",
+   "rarity": "rare"
+  },
+  {
+   "id": "boba-fett",
+   "name": "Boba Fett",
+   "rarity": "common"
+  },
+  {
+   "id": "captain-phasma",
+   "name": "Captain Phasma",
+   "rarity": "special"
+  },
+  {
+   "id": "finn",
+   "name": "Finn",
+   "rarity": "common"
+  },
+  {
+   "id": "han-solo",
+   "name": "Han Solo",
+   "rarity": "rare"
+  },
+  {
+   "id": "jawa",
+   "name": "Jawa",
+   "rarity": "rare"
+  },
+  {
+   "id": "kylo-ren",
+   "name": "Kylo Ren",
+   "rarity": "ultra"
+  },
+  {
+   "id": "lando-calrissian",
+   "name": "Lando Calrissian",
+   "rarity": "ultra"
+  },
+  {
+   "id": "rey",
+   "name": "Rey",
+   "rarity": "common"
+  },
+  {
+   "id": "sabine-wren",
+   "name": "Sabine Wren",
+   "rarity": "common"
+  }
+ ],
+ "codeFile": "codes-sw-cruisers-s2.json",
+ "codeNote": "Every pack has a short code — a letter and some numbers, like A010. On the Galaxy Peek capsules it is pressed into the plastic on the BOTTOM; we have not confirmed where it sits on a Cruisers pack, so check the bottom and the back. Type it into the box at the top and this app will tell you which figure is inside, before you open it. The letter at the front is the batch, and every batch has its own codes — so if a code comes back unknown it is most likely from a newer batch nobody has written down yet. These come from collectors rather than from Just Play, who have never published them, so they are very good but not official.",
+ "codeLink": "https://disney-doorables.fandom.com/wiki/Galactic_Cruisers_Series_2",
+ "codeLinkLabel": "Galactic Cruisers Series 2 on the Doorables wiki"
+}

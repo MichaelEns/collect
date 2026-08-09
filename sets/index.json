@@ -48,5 +48,34 @@
     "emoji": "🪐",
     "total": 25,
     "codeFile": "codes-sw-galaxy-peek-s5.json"
+  },
+  {
+    "id": "sw-cruisers-s1",
+    "file": "sw-cruisers-s1.json",
+    "name": "Galactic Cruisers Series 1",
+    "brand": "Star Wars Doorables",
+    "packaging": "Cruiser pack — one figure and one ship",
+    "emoji": "🚀",
+    "total": 10,
+    "codeFile": "codes-sw-cruisers-s1.json"
+  },
+  {
+    "id": "sw-cruisers-s2",
+    "file": "sw-cruisers-s2.json",
+    "name": "Galactic Cruisers Series 2",
+    "brand": "Star Wars Doorables",
+    "packaging": "Cruiser pack — one figure and one ship",
+    "emoji": "🚀",
+    "total": 10,
+    "codeFile": "codes-sw-cruisers-s2.json"
+  },
+  {
+    "id": "sw-cruisers-s3",
+    "file": "sw-cruisers-s3.json",
+    "name": "Galactic Cruisers Series 3",
+    "brand": "Star Wars Doorables",
+    "packaging": "Cruiser pack — one figure and one ship",
+    "emoji": "🚀",
+    "total": 10
   }
 ]
