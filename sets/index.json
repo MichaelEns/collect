@@ -77,5 +77,15 @@
     "packaging": "Cruiser pack — one figure and one ship",
     "emoji": "🚀",
     "total": 10
+  },
+  {
+    "id": "ts-rerelease",
+    "file": "ts-rerelease.json",
+    "name": "Toy Story",
+    "brand": "Disney Doorables",
+    "packaging": "Blind bag, three figures inside",
+    "emoji": "🤠",
+    "total": 15,
+    "codeFile": "codes-ts-rerelease.json"
   }
 ]

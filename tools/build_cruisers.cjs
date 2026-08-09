@@ -215,11 +215,19 @@ function main() {
         + ' rather than guessed at.';
     }
 
+    /*
+     * The wiki page is worth linking whether or not there are codes yet: it is
+     * the only route from the app to a picture of the figure being hunted. An
+     * earlier version set this only alongside a code file, so Series 3 — the
+     * one with no codes recorded — was the one series offering no way through
+     * to see what its figures look like.
+     */
+    set.codeLink = `https://disney-doorables.fandom.com/wiki/Galactic_Cruisers_Series_${series}`;
+    set.codeLinkLabel = `Galactic Cruisers Series ${series} on the Doorables wiki`;
+
     if (Object.keys(agreed).length) {
       set.codeFile = `codes-${setId}.json`;
       set.codeNote = CODE_NOTE;
-      set.codeLink = `https://disney-doorables.fandom.com/wiki/Galactic_Cruisers_Series_${series}`;
-      set.codeLinkLabel = `Galactic Cruisers Series ${series} on the Doorables wiki`;
       fs.writeFileSync(
         path.join(setsDir, `codes-${setId}.json`),
         `${JSON.stringify({

@@ -1,0 +1,835 @@
+{
+ "setId": "ts-rerelease",
+ "source": {
+  "title": "Doorables Codes : Costume, Holiday and Re-releases",
+  "credit": "the Disney Doorables collecting community",
+  "url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTKKIoEPPo4cpdp4uBOzwfMMKDFCspT3x5HJDchW9uC1qL1wI1oKRZfWsRvFif8WM2RVBThaRqsWrrH/pubhtml",
+  "csv": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTKKIoEPPo4cpdp4uBOzwfMMKDFCspT3x5HJDchW9uC1qL1wI1oKRZfWsRvFif8WM2RVBThaRqsWrrH/pub?output=csv&single=true",
+  "retrieved": "2026-08-09"
+ },
+ "batches": {
+  "A": 83,
+  "B": 78
+ },
+ "codes": {
+  "A010": [
+   "buzz-lightyear",
+   "rc",
+   "woody"
+  ],
+  "A011": [
+   "bullseye",
+   "buzz-lightyear",
+   "jessie"
+  ],
+  "A012": [
+   "bonnie",
+   "jessie",
+   "slinky-dog"
+  ],
+  "A013": [
+   "bonnie",
+   "lenny",
+   "zurg"
+  ],
+  "A014": [
+   "andy",
+   "lenny",
+   "mr-pricklepants"
+  ],
+  "A015": [
+   "andy",
+   "trixie",
+   "woody"
+  ],
+  "A016": [
+   "bullseye",
+   "rc",
+   "trixie"
+  ],
+  "A017": [
+   "bonnie",
+   "bullseye",
+   "slinky-dog"
+  ],
+  "A018": [
+   "jessie",
+   "rc",
+   "zurg"
+  ],
+  "A019": [
+   "bonnie",
+   "lenny",
+   "mr-pricklepants"
+  ],
+  "A020": [
+   "buzz-lightyear",
+   "lenny",
+   "woody"
+  ],
+  "A021": [
+   "andy",
+   "bullseye",
+   "jessie"
+  ],
+  "A022": [
+   "buzz-lightyear",
+   "slinky-dog",
+   "trixie"
+  ],
+  "A023": [
+   "buzz-lightyear",
+   "jessie",
+   "zurg"
+  ],
+  "A024": [
+   "andy",
+   "mr-pricklepants",
+   "rc"
+  ],
+  "A025": [
+   "jessie",
+   "trixie",
+   "woody"
+  ],
+  "A026": [
+   "andy",
+   "lotso",
+   "slinky-dog"
+  ],
+  "A027": [
+   "lenny",
+   "lotso",
+   "zurg"
+  ],
+  "A028": [
+   "alien",
+   "trixie",
+   "wheezy"
+  ],
+  "A029": [
+   "lenny",
+   "lotso",
+   "woody"
+  ],
+  "A030": [
+   "alien",
+   "rc",
+   "trixie"
+  ],
+  "A031": [
+   "bullseye",
+   "buzz-lightyear",
+   "wheezy"
+  ],
+  "A032": [
+   "bonnie",
+   "bullseye",
+   "lotso"
+  ],
+  "A033": [
+   "alien",
+   "andy",
+   "mr-pricklepants"
+  ],
+  "A034": [
+   "lenny",
+   "mr-pricklepants",
+   "wheezy"
+  ],
+  "A035": [
+   "alien",
+   "rc",
+   "zurg"
+  ],
+  "A036": [
+   "bonnie",
+   "slinky-dog",
+   "wheezy"
+  ],
+  "A037": [
+   "buzz-lightyear",
+   "jessie",
+   "woody"
+  ],
+  "A038": [
+   "bullseye",
+   "buzz-lightyear",
+   "rc"
+  ],
+  "A039": [
+   "bonnie",
+   "lenny",
+   "slinky-dog"
+  ],
+  "A040": [
+   "bonnie",
+   "jessie",
+   "zurg"
+  ],
+  "A041": [
+   "andy",
+   "bullseye",
+   "lenny"
+  ],
+  "A042": [
+   "andy",
+   "slinky-dog",
+   "trixie"
+  ],
+  "A043": [
+   "mr-pricklepants",
+   "rc",
+   "trixie"
+  ],
+  "A044": [
+   "bonnie",
+   "buzz-lightyear",
+   "woody"
+  ],
+  "A045": [
+   "jessie",
+   "rc",
+   "woody"
+  ],
+  "A046": [
+   "bonnie",
+   "bullseye",
+   "lenny"
+  ],
+  "A047": [
+   "buzz-lightyear",
+   "lenny",
+   "zurg"
+  ],
+  "A048": [
+   "jessie",
+   "lotso",
+   "mr-pricklepants"
+  ],
+  "A049": [
+   "buzz-lightyear",
+   "trixie",
+   "zurg"
+  ],
+  "A050": [
+   "alien",
+   "jessie",
+   "slinky-dog"
+  ],
+  "A051": [
+   "andy",
+   "rc",
+   "woody"
+  ],
+  "A052": [
+   "jessie",
+   "mr-pricklepants",
+   "wheezy"
+  ],
+  "A053": [
+   "alien",
+   "andy",
+   "bullseye"
+  ],
+  "A054": [
+   "alien",
+   "lenny",
+   "woody"
+  ],
+  "A055": [
+   "andy",
+   "mr-pricklepants",
+   "trixie"
+  ],
+  "A056": [
+   "andy",
+   "lotso",
+   "rc"
+  ],
+  "A057": [
+   "slinky-dog",
+   "trixie",
+   "zurg"
+  ],
+  "A058": [
+   "alien",
+   "buzz-lightyear",
+   "jessie"
+  ],
+  "A059": [
+   "andy",
+   "bonnie",
+   "wheezy"
+  ],
+  "A060": [
+   "bullseye",
+   "trixie",
+   "wheezy"
+  ],
+  "A061": [
+   "lenny",
+   "lotso",
+   "slinky-dog"
+  ],
+  "A062": [
+   "rc",
+   "wheezy",
+   "zurg"
+  ],
+  "A063": [
+   "bonnie",
+   "lotso",
+   "mr-pricklepants"
+  ],
+  "A066": [
+   "jessie",
+   "lenny",
+   "slinky-dog"
+  ],
+  "A067": [
+   "andy",
+   "bonnie",
+   "zurg"
+  ],
+  "A068": [
+   "lenny",
+   "mr-pricklepants",
+   "rc"
+  ],
+  "A069": [
+   "bonnie",
+   "trixie",
+   "woody"
+  ],
+  "A070": [
+   "andy",
+   "bullseye",
+   "trixie"
+  ],
+  "A073": [
+   "bonnie",
+   "jessie",
+   "mr-pricklepants"
+  ],
+  "A074": [
+   "bullseye",
+   "buzz-lightyear",
+   "lenny"
+  ],
+  "A075": [
+   "andy",
+   "lenny",
+   "woody"
+  ],
+  "A078": [
+   "bullseye",
+   "lenny",
+   "trixie"
+  ],
+  "A079": [
+   "trixie",
+   "wheezy",
+   "zurg"
+  ],
+  "A080": [
+   "alien",
+   "rc",
+   "slinky-dog"
+  ],
+  "A081": [
+   "lotso",
+   "mr-pricklepants",
+   "trixie"
+  ],
+  "A083": [
+   "bullseye",
+   "jessie",
+   "lotso"
+  ],
+  "A085": [
+   "bonnie",
+   "wheezy",
+   "zurg"
+  ],
+  "A087": [
+   "alien",
+   "trixie",
+   "zurg"
+  ],
+  "A088": [
+   "alien",
+   "bonnie",
+   "woody"
+  ],
+  "A090": [
+   "andy",
+   "slinky-dog",
+   "wheezy"
+  ],
+  "A64": [
+   "bullseye",
+   "buzz-lightyear",
+   "woody"
+  ],
+  "A65": [
+   "buzz-lightyear",
+   "jessie",
+   "rc"
+  ],
+  "A67": [
+   "andy",
+   "bonnie",
+   "zurg"
+  ],
+  "A71": [
+   "bonnie",
+   "buzz-lightyear",
+   "zurg"
+  ],
+  "A72": [
+   "jessie",
+   "rc",
+   "slinky-dog"
+  ],
+  "A77": [
+   "buzz-lightyear",
+   "jessie",
+   "mr-pricklepants"
+  ],
+  "A81": [
+   "lotso",
+   "mr-pricklepants",
+   "trixie"
+  ],
+  "A82": [
+   "andy",
+   "rc",
+   "wheezy"
+  ],
+  "A83": [
+   "bullseye",
+   "jessie",
+   "lotso"
+  ],
+  "A84": [
+   "alien",
+   "trixie",
+   "woody"
+  ],
+  "A86": [
+   "bonnie",
+   "lotso",
+   "rc"
+  ],
+  "A89": [
+   "lenny",
+   "lotso",
+   "mr-pricklepants"
+  ],
+  "B010": [
+   "lenny",
+   "lotso",
+   "zurg"
+  ],
+  "B011": [
+   "bonnie",
+   "bullseye",
+   "lenny"
+  ],
+  "B013": [
+   "buzz-lightyear",
+   "trixie",
+   "zurg"
+  ],
+  "B014": [
+   "andy",
+   "slinky-dog",
+   "trixie"
+  ],
+  "B015": [
+   "andy",
+   "bonnie",
+   "wheezy"
+  ],
+  "B016": [
+   "jessie",
+   "mr-pricklepants",
+   "wheezy"
+  ],
+  "B017": [
+   "bullseye",
+   "buzz-lightyear",
+   "woody"
+  ],
+  "B018": [
+   "bonnie",
+   "jessie",
+   "slinky-dog"
+  ],
+  "B019": [
+   "andy",
+   "mr-pricklepants",
+   "trixie"
+  ],
+  "B020": [
+   "bonnie",
+   "lenny",
+   "zurg"
+  ],
+  "B021": [
+   "jessie",
+   "rc",
+   "woody"
+  ],
+  "B024": [
+   "andy",
+   "trixie",
+   "woody"
+  ],
+  "B025": [
+   "buzz-lightyear",
+   "lenny",
+   "zurg"
+  ],
+  "B026": [
+   "bullseye",
+   "rc",
+   "trixie"
+  ],
+  "B027": [
+   "andy",
+   "lotso",
+   "rc"
+  ],
+  "B028": [
+   "bonnie",
+   "buzz-lightyear",
+   "slinky-dog"
+  ],
+  "B029": [
+   "lenny",
+   "lotso",
+   "slinky-dog"
+  ],
+  "B030": [
+   "jessie",
+   "rc",
+   "zurg"
+  ],
+  "B032": [
+   "bonnie",
+   "lenny",
+   "mr-pricklepants"
+  ],
+  "B033": [
+   "alien",
+   "jessie",
+   "slinky-dog"
+  ],
+  "B034": [
+   "buzz-lightyear",
+   "lenny",
+   "woody"
+  ],
+  "B035": [
+   "bonnie",
+   "lotso",
+   "mr-pricklepants"
+  ],
+  "B036": [
+   "andy",
+   "bullseye",
+   "jessie"
+  ],
+  "B037": [
+   "alien",
+   "trixie",
+   "zurg"
+  ],
+  "B038": [
+   "buzz-lightyear",
+   "slinky-dog",
+   "trixie"
+  ],
+  "B039": [
+   "andy",
+   "bonnie",
+   "zurg"
+  ],
+  "B040": [
+   "buzz-lightyear",
+   "jessie",
+   "zurg"
+  ],
+  "B041": [
+   "alien",
+   "buzz-lightyear",
+   "jessie"
+  ],
+  "B042": [
+   "andy",
+   "mr-pricklepants",
+   "rc"
+  ],
+  "B043": [
+   "bonnie",
+   "lotso",
+   "rc"
+  ],
+  "B044": [
+   "jessie",
+   "trixie",
+   "woody"
+  ],
+  "B045": [
+   "bullseye",
+   "buzz-lightyear",
+   "rc"
+  ],
+  "B046": [
+   "andy",
+   "lotso",
+   "slinky-dog"
+  ],
+  "B048": [
+   "slinky-dog",
+   "trixie",
+   "zurg"
+  ],
+  "B050": [
+   "alien",
+   "trixie",
+   "wheezy"
+  ],
+  "B051": [
+   "bullseye",
+   "jessie",
+   "lotso"
+  ],
+  "B052": [
+   "lenny",
+   "lotso",
+   "woody"
+  ],
+  "B053": [
+   "buzz-lightyear",
+   "jessie",
+   "woody"
+  ],
+  "B054": [
+   "bullseye",
+   "buzz-lightyear",
+   "jessie"
+  ],
+  "B055": [
+   "lotso",
+   "mr-pricklepants",
+   "trixie"
+  ],
+  "B056": [
+   "mr-pricklepants",
+   "rc",
+   "trixie"
+  ],
+  "B057": [
+   "alien",
+   "rc",
+   "trixie"
+  ],
+  "B058": [
+   "bonnie",
+   "buzz-lightyear",
+   "woody"
+  ],
+  "B059": [
+   "bonnie",
+   "jessie",
+   "zurg"
+  ],
+  "B060": [
+   "trixie",
+   "wheezy",
+   "zurg"
+  ],
+  "B061": [
+   "bonnie",
+   "wheezy",
+   "zurg"
+  ],
+  "B062": [
+   "bullseye",
+   "buzz-lightyear",
+   "wheezy"
+  ],
+  "B063": [
+   "alien",
+   "bonnie",
+   "woody"
+  ],
+  "B064": [
+   "jessie",
+   "lotso",
+   "mr-pricklepants"
+  ],
+  "B065": [
+   "andy",
+   "slinky-dog",
+   "wheezy"
+  ],
+  "B066": [
+   "alien",
+   "rc",
+   "slinky-dog"
+  ],
+  "B067": [
+   "bonnie",
+   "bullseye",
+   "lotso"
+  ],
+  "B068": [
+   "andy",
+   "bullseye",
+   "lenny"
+  ],
+  "B069": [
+   "bullseye",
+   "buzz-lightyear",
+   "lenny"
+  ],
+  "B070": [
+   "andy",
+   "rc",
+   "woody"
+  ],
+  "B071": [
+   "alien",
+   "andy",
+   "bullseye"
+  ],
+  "B072": [
+   "alien",
+   "andy",
+   "mr-pricklepants"
+  ],
+  "B073": [
+   "andy",
+   "buzz-lightyear",
+   "slinky-dog"
+  ],
+  "B074": [
+   "bullseye",
+   "trixie",
+   "wheezy"
+  ],
+  "B075": [
+   "rc",
+   "wheezy",
+   "zurg"
+  ],
+  "B076": [
+   "bonnie",
+   "jessie",
+   "mr-pricklepants"
+  ],
+  "B077": [
+   "lenny",
+   "mr-pricklepants",
+   "wheezy"
+  ],
+  "B078": [
+   "buzz-lightyear",
+   "jessie",
+   "rc"
+  ],
+  "B079": [
+   "alien",
+   "lenny",
+   "woody"
+  ],
+  "B080": [
+   "jessie",
+   "lenny",
+   "slinky-dog"
+  ],
+  "B081": [
+   "andy",
+   "bullseye",
+   "trixie"
+  ],
+  "B082": [
+   "alien",
+   "rc",
+   "zurg"
+  ],
+  "B083": [
+   "jessie",
+   "rc",
+   "slinky-dog"
+  ],
+  "B084": [
+   "buzz-lightyear",
+   "jessie",
+   "mr-pricklepants"
+  ],
+  "B085": [
+   "lenny",
+   "mr-pricklepants",
+   "rc"
+  ],
+  "B086": [
+   "bonnie",
+   "lenny",
+   "slinky-dog"
+  ],
+  "B087": [
+   "bonnie",
+   "slinky-dog",
+   "wheezy"
+  ],
+  "B088": [
+   "buzz-lightyear",
+   "rc",
+   "woody"
+  ],
+  "B089": [
+   "bonnie",
+   "trixie",
+   "woody"
+  ],
+  "B090": [
+   "bonnie",
+   "buzz-lightyear",
+   "zurg"
+  ],
+  "B099": [
+   "andy",
+   "lenny",
+   "woody"
+  ],
+  "B85": [
+   "lenny",
+   "mr-pricklepants",
+   "rc"
+  ],
+  "B89": [
+   "bonnie",
+   "trixie",
+   "woody"
+  ]
+ },
+ "disputed": {
+  "A076": [
+   [
+    "andy",
+    "buzz-lightyear",
+    "slinky-dog"
+   ],
+   [
+    "bonnie",
+    "buzz-lightyear",
+    "slinky-dog"
+   ]
+  ]
+ }
+}

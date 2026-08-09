@@ -612,6 +612,55 @@ async function main() {
     check('and says why on the page', /no pack codes/i.test(noCodes.sourced),
       noCodes.sourced.slice(0, 100));
 
+    /* ------------------------------------------- a set with no rarity data */
+
+    console.log('\n--- a set nobody has recorded rarities for ---');
+    /*
+     * Toy Story ships without rarities: no source has them. An empty rarity
+     * list is a different case from a missing one, and the legend used to
+     * render a stray leading separator for it — so this pins the set saying
+     * why rather than the app quietly looking broken.
+     */
+    await evalJs("location.hash = '#set=ts-rerelease'; 1");
+    await new Promise((r) => setTimeout(r, 1200));
+    const noRarity = JSON.parse(await evalJs(`JSON.stringify({
+      title: document.getElementById('title').textContent,
+      figures: document.querySelectorAll('.fig').length,
+      legend: document.getElementById('legend').textContent,
+      sourced: document.getElementById('sourced').textContent,
+      dots: [...document.querySelectorAll('.rarity-dot')]
+        .map(d => getComputedStyle(d).backgroundColor).slice(0, 3),
+    })`));
+    check('it opens with its figures', /Toy Story/.test(noRarity.title) && noRarity.figures === 15,
+      JSON.stringify({ title: noRarity.title, figures: noRarity.figures }));
+    check('the legend has no stray separator where the rarities would be',
+      !/^\s*—/.test(noRarity.legend), JSON.stringify(noRarity.legend));
+    check('and the page explains the missing rarities',
+      /no rarity colours/i.test(noRarity.sourced), noRarity.sourced.slice(0, 100));
+    check('rarity dots fall back to a neutral colour rather than disappearing',
+      noRarity.dots.length === 3 && new Set(noRarity.dots).size === 1,
+      JSON.stringify(noRarity.dots));
+
+    const tsCodes = JSON.parse(fs.readFileSync(
+      path.join(__dirname, '..', 'sets', 'codes-ts-rerelease.json'), 'utf8'));
+    const [threeCode, threeIds] = Object.entries(tsCodes.codes)[0];
+    await evalJs(`(() => { const el = document.getElementById('code-input');
+      el.value = '${threeCode}'; el.dispatchEvent(new Event('input', { bubbles: true })); return 1; })()`);
+    await new Promise((r) => setTimeout(r, 400));
+    const threeChips = JSON.parse(await evalJs(
+      "JSON.stringify([...document.querySelectorAll('.chip-name')].map(c => c.textContent))"));
+    check(`a bag holds three, and code ${threeCode} names three`,
+      threeChips.length === 3, JSON.stringify(threeChips));
+
+    for (const fid of threeIds) await evalJs(`window.__collect.setHave('${fid}', true); 1`);
+    await new Promise((r) => setTimeout(r, 250));
+    await evalJs(`(() => { document.getElementById('code-input')
+      .dispatchEvent(new Event('input', { bubbles: true })); return 1; })()`);
+    await new Promise((r) => setTimeout(r, 400));
+    const threeOwned = await evalJs("(document.querySelector('.finder-verdict')||{}).textContent||''");
+    check('and once found it says "all 3 of these", not "all four"',
+      /all 3 of these/i.test(threeOwned), threeOwned);
+
     /* ------------------------------------------------------------ offline */
 
     console.log('\n--- offline, halfway down a shop aisle ---');

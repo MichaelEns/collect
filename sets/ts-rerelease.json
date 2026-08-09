@@ -1,0 +1,79 @@
+{
+ "id": "ts-rerelease",
+ "brand": "Disney Doorables",
+ "name": "Toy Story",
+ "packaging": "Blind bag, three figures inside",
+ "packagingNote": "This is a Disney Doorables bag rather than a Star Wars capsule, and it holds THREE figures rather than four.",
+ "emoji": "🤠",
+ "official": "https://justplayproducts.com/collections/disney-doorables/",
+ "figuresPerCapsule": 3,
+ "verified": false,
+ "sourced": "15 figures, from the community code sheet that collectors submit to. Just Play has not published a checklist for this line, so treat it as very good community data rather than gospel.",
+ "rarityNote": "Nobody has recorded which of these are rare, so this set shows no rarity colours rather than guessing at them.",
+ "figures": [
+  {
+   "id": "alien",
+   "name": "Alien"
+  },
+  {
+   "id": "andy",
+   "name": "Andy"
+  },
+  {
+   "id": "bonnie",
+   "name": "Bonnie"
+  },
+  {
+   "id": "bullseye",
+   "name": "Bullseye"
+  },
+  {
+   "id": "buzz-lightyear",
+   "name": "Buzz Lightyear"
+  },
+  {
+   "id": "jessie",
+   "name": "Jessie"
+  },
+  {
+   "id": "lenny",
+   "name": "Lenny"
+  },
+  {
+   "id": "lotso",
+   "name": "Lotso"
+  },
+  {
+   "id": "mr-pricklepants",
+   "name": "Mr. Pricklepants"
+  },
+  {
+   "id": "rc",
+   "name": "RC"
+  },
+  {
+   "id": "slinky-dog",
+   "name": "Slinky Dog"
+  },
+  {
+   "id": "trixie",
+   "name": "Trixie"
+  },
+  {
+   "id": "wheezy",
+   "name": "Wheezy"
+  },
+  {
+   "id": "woody",
+   "name": "Woody"
+  },
+  {
+   "id": "zurg",
+   "name": "Zurg"
+  }
+ ],
+ "codeFile": "codes-ts-rerelease.json",
+ "codeNote": "Every bag has a short code printed on it — a letter and some numbers, like A011. On the Star Wars capsules it is on the BOTTOM; we have not confirmed where it sits on a Doorables bag, so check the bottom and the back. Type it into the box at the top and this app will tell you which figures are inside, before you open it. The letter at the front is the batch, and every batch has its own codes — so if a code comes back unknown it is most likely from a newer batch nobody has written down yet. These come from collectors rather than from Just Play, who have never published them, so they are very good but not official.",
+ "codeLink": "https://disney-doorables.fandom.com/wiki/Toy_Story",
+ "codeLinkLabel": "Toy Story characters on the Doorables wiki"
+}
