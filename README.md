@@ -273,6 +273,40 @@ can never disagree about what merging means. Two rules carry it:
 A device whose clock is set wrong is clamped to server time, or its timestamps
 would beat everything real forever and freeze the collection.
 
+### Putting a mistake right
+
+A six-year-old taps quickly and taps everywhere, so mistakes get made: a figure
+marked found that is still missing, a code deleted, a photograph thrown away.
+
+Every change made on a device is logged, and the last 40 can be put back from
+**"Did something by mistake?"** at the bottom of the collection screen. The
+entry says what happened in plain words — "Marked Clone Captain Rex as found" —
+so a parent can tell two similar taps apart.
+
+The undo is deliberately awkward to reach:
+
+- The panel is **closed by default** and sits below everything else, so a fast
+  tapping child never lands on it.
+- Every undo **asks first**, naming what it is about to reverse.
+
+That is two deliberate actions to change anything, which is the point — an undo
+button next to the grid would eventually be pressed by accident, and losing a
+real find to a stray tap is the thing this is meant to prevent.
+
+Three details worth knowing:
+
+- **It is per device, and not synced.** It records what happened here, and the
+  fix belongs where the mistake was made. Incoming sync data never appears in
+  the list, because sync writes storage directly rather than going through the
+  app's own edit path — so one device can never offer to undo another's work.
+- **An undo is a normal edit**, with a fresh timestamp, so the correction wins
+  on every other device rather than losing to the mistake it is reversing.
+- **A deleted photo is moved, not destroyed.** It goes to a `bin` store in
+  IndexedDB, which sync does not walk, so putting it back restores the real
+  picture and leaving it deleted does not re-upload it. Deleting his own
+  photograph is the only thing this app does that cannot be reconstructed from
+  anywhere else.
+
 ### When it syncs
 
 Shortly after the app opens, after an edit once things go quiet, when the app

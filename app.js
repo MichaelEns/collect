@@ -16,10 +16,20 @@
 
 (function () {
   const PROGRESS_KEY = (setId) => `collect.progress.${setId}`;
+  const HISTORY_KEY = (setId) => `collect.history.${setId}`;
   const DB_NAME = 'collect';
   const STORE = 'photos';
   const CAT_STORE = 'catalogue';
+  const BIN_STORE = 'bin';
   const PHOTO_MAX_PX = 480;
+  /*
+   * How many changes can still be taken back.
+   *
+   * Long enough to cover an afternoon of opening capsules, short enough that
+   * the list stays readable and localStorage stays small. Entries carry only
+   * the previous values, not the whole set.
+   */
+  const HISTORY_MAX = 40;
 
   const $ = (id) => document.getElementById(id);
 
@@ -50,6 +60,157 @@
 
   const entry = (figureId) => state.progress[figureId] || { have: false, dupes: 0, codes: [] };
 
+  /* ---------------------------------------------------------- taking it back */
+
+  /*
+   * A log of changes this device made, so a mis-tap can be put back.
+   *
+   * Kept per set and on this device only. It is deliberately NOT synced: it
+   * records what happened here, and the fix belongs where the mistake was
+   * made. Undoing writes through the normal path, so the correction syncs like
+   * any other edit and wins on its timestamp.
+   *
+   * Incoming sync data does not pass through setEntry — sync writes storage
+   * directly and re-reads it — so another device's work can never appear here
+   * as something to undo.
+   */
+  function history() {
+    if (!state.set) return [];
+    try {
+      const raw = JSON.parse(window.localStorage.getItem(HISTORY_KEY(state.set.id)) || '[]');
+      return Array.isArray(raw) ? raw : [];
+    } catch { return []; }
+  }
+
+  function saveHistory(list) {
+    if (!state.set) return;
+    try {
+      window.localStorage.setItem(HISTORY_KEY(state.set.id), JSON.stringify(list.slice(0, HISTORY_MAX)));
+    } catch { /* full or private: the change itself still stands */ }
+  }
+
+  function record(item) {
+    if (!state.set) return;
+    saveHistory([{ ...item, at: Date.now() }].concat(history()));
+    renderHistory();
+  }
+
+  /** Plain language for what changed, for a parent scanning the list. */
+  function describe(item) {
+    const figure = figureById(item.figureId);
+    const name = (figure && figure.name) || item.figureId;
+    if (item.kind === 'photo') return `Deleted the photo of ${name}`;
+    const before = item.before || { have: false, dupes: 0, codes: [] };
+    const after = item.after || {};
+    if (before.have !== after.have) {
+      return after.have ? `Marked ${name} as found` : `Marked ${name} as not found`;
+    }
+    if ((before.dupes || 0) !== (after.dupes || 0)) {
+      return (after.dupes || 0) > (before.dupes || 0)
+        ? `Added a spare of ${name}`
+        : `Removed a spare of ${name}`;
+    }
+    const wasCodes = (before.codes || []).length;
+    const nowCodes = (after.codes || []).length;
+    if (nowCodes > wasCodes) return `Wrote a code on ${name}`;
+    if (nowCodes < wasCodes) return `Deleted a code from ${name}`;
+    return `Changed ${name}`;
+  }
+
+  /** "just now", "5 minutes ago", "yesterday" — no clock a child must read. */
+  function ago(then) {
+    const seconds = Math.max(0, Math.round((Date.now() - then) / 1000));
+    if (seconds < 60) return 'just now';
+    const minutes = Math.round(seconds / 60);
+    if (minutes < 60) return `${minutes} minute${minutes === 1 ? '' : 's'} ago`;
+    const hours = Math.round(minutes / 60);
+    if (hours < 24) return `${hours} hour${hours === 1 ? '' : 's'} ago`;
+    const days = Math.round(hours / 24);
+    return days === 1 ? 'yesterday' : `${days} days ago`;
+  }
+
+  function renderHistory() {
+    const list = $('undo-list');
+    if (!list) return;
+    const items = history();
+    list.innerHTML = '';
+    $('undo-empty').hidden = items.length > 0;
+
+    for (const [i, item] of items.entries()) {
+      const row = document.createElement('li');
+      row.className = 'undo-row';
+
+      const text = document.createElement('span');
+      text.className = 'undo-what';
+      text.textContent = describe(item);
+      row.appendChild(text);
+
+      const when = document.createElement('span');
+      when.className = 'undo-when';
+      when.textContent = ago(item.at);
+      row.appendChild(when);
+
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'undo-go';
+      button.textContent = 'Put it back';
+      button.addEventListener('click', () => undoChange(i));
+      row.appendChild(button);
+
+      list.appendChild(row);
+    }
+  }
+
+  /**
+   * Puts one change back, after asking.
+   *
+   * The confirmation is the second deliberate act — the panel had to be opened
+   * first. It also names what is about to happen, because "undo" on its own
+   * does not tell a parent which of two similar taps they are reversing.
+   */
+  async function undoChange(index) {
+    const items = history();
+    const item = items[index];
+    if (!item) return;
+
+    const what = describe(item);
+    if (!window.confirm(`${what}.\n\nPut that back the way it was?`)) return;
+
+    if (item.kind === 'photo') {
+      const key = photoKey(item.figureId);
+      const blob = await getBinned(key);
+      if (!blob) {
+        window.alert('That photo is no longer on this device, so it cannot be put back.');
+        saveHistory(items.filter((_, i) => i !== index));
+        renderHistory();
+        return;
+      }
+      await putPhoto(key, blob);
+      await delBinned(key);
+      // Recorded so the restore is itself reversible, and so the list stays a
+      // true account of what happened rather than quietly editing the past.
+      saveHistory(items.filter((_, i) => i !== index));
+      renderCollection();
+      if (!$('sheet').hidden && state.figure && state.figure.id === item.figureId) {
+        await showSheetPhoto();
+      }
+      document.dispatchEvent(new CustomEvent('collect:changed'));
+      renderHistory();
+      return;
+    }
+
+    // Written through the normal path, so it carries a fresh timestamp and
+    // therefore beats the mistake on every other device rather than losing to
+    // it. setEntry records the reversal, which is why this entry goes first.
+    saveHistory(items.filter((_, i) => i !== index));
+    setEntry(item.figureId, item.before);
+    renderCollection();
+    if (!$('sheet').hidden && state.figure && state.figure.id === item.figureId) {
+      renderSheetState();
+      renderCodes();
+    }
+  }
+
   /**
    * Writes an entry back, filling in anything an older saved shape lacked.
    *
@@ -60,14 +221,18 @@
    */
   function setEntry(figureId, changes) {
     const current = entry(figureId);
-    state.progress[figureId] = {
+    const before = {
       have: current.have,
       dupes: current.dupes || 0,
-      codes: current.codes || [],
-      ...changes,
-      updatedAt: Date.now(),
+      codes: (current.codes || []).slice(),
     };
+    const after = { ...before, ...changes };
+    state.progress[figureId] = { ...after, updatedAt: Date.now() };
     saveProgress();
+    // A write that changes nothing is not a thing to offer to put back.
+    if (JSON.stringify(before) !== JSON.stringify(after)) {
+      record({ kind: 'entry', figureId, before, after });
+    }
     document.dispatchEvent(new CustomEvent('collect:changed'));
   }
 
@@ -83,18 +248,24 @@
    * therefore coexist for the same figure, and more importantly sync walks
    * every key in a store — sharing one would upload catalogue pictures as if a
    * child had taken them.
+   *
+   * A third, the bin, holds photos that were deleted. Deleting his own
+   * photograph is the only thing this app does that cannot be reconstructed
+   * from anywhere else, so it is moved rather than destroyed. Sync does not
+   * walk the bin, so a deleted photo is not re-uploaded.
    */
   let dbPromise = null;
 
   function db() {
     if (!dbPromise) {
       dbPromise = new Promise((resolve, reject) => {
-        // v2 added the catalogue store. Both are created conditionally so a
-        // fresh install and an upgrade from v1 take the same path.
-        const req = indexedDB.open(DB_NAME, 2);
+        // v2 added the catalogue store, v3 the bin. All are created
+        // conditionally so a fresh install and an upgrade take the same path.
+        const req = indexedDB.open(DB_NAME, 3);
         req.onupgradeneeded = () => {
           if (!req.result.objectStoreNames.contains(STORE)) req.result.createObjectStore(STORE);
           if (!req.result.objectStoreNames.contains(CAT_STORE)) req.result.createObjectStore(CAT_STORE);
+          if (!req.result.objectStoreNames.contains(BIN_STORE)) req.result.createObjectStore(BIN_STORE);
         };
         req.onsuccess = () => resolve(req.result);
         req.onerror = () => reject(req.error);
@@ -119,12 +290,25 @@
 
   const photoOp = (mode, run) => storeOp(STORE, mode, run);
   const catOp = (mode, run) => storeOp(CAT_STORE, mode, run);
+  const binOp = (mode, run) => storeOp(BIN_STORE, mode, run);
 
   const photoKey = (figureId) => `${state.set.id}/${figureId}`;
   const getPhoto = (key) => photoOp('readonly', (s) => s.get(key));
   const putPhoto = (key, blob) => photoOp('readwrite', (s) => s.put(blob, key));
   const delPhoto = (key) => photoOp('readwrite', (s) => s.delete(key));
   const photoKeys = () => photoOp('readonly', (s) => s.getAllKeys());
+
+  const getBinned = (key) => binOp('readonly', (s) => s.get(key));
+  const putBinned = (key, blob) => binOp('readwrite', (s) => s.put(blob, key));
+  const delBinned = (key) => binOp('readwrite', (s) => s.delete(key));
+
+  /** Deletes a photo but keeps the picture, so it can be put back. */
+  async function binPhoto(key) {
+    const blob = await getPhoto(key);
+    if (blob) await putBinned(key, blob);
+    await delPhoto(key);
+    return Boolean(blob);
+  }
 
   const getCatalogue = (key) => catOp('readonly', (s) => s.get(key));
   const putCatalogue = (key, blob) => catOp('readwrite', (s) => s.put(blob, key));
@@ -393,6 +577,7 @@
     const set = state.set;
     $('title').textContent = set.name;
     $('subtitle').textContent = set.brand + (set.packaging ? ' · ' + set.packaging : '');
+    renderHistory();
 
     const total = set.figures.length;
     const have = set.figures.filter((f) => entry(f.id).have).length;
@@ -919,7 +1104,9 @@
   });
 
   $('photo-remove').addEventListener('click', async () => {
-    await delPhoto(photoKey(state.figure.id));
+    const figureId = state.figure.id;
+    const kept = await binPhoto(photoKey(figureId));
+    if (kept) record({ kind: 'photo', figureId });
     await showSheetPhoto();
     renderCollection();
     document.dispatchEvent(new CustomEvent('collect:changed'));

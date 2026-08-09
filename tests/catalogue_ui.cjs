@@ -173,7 +173,19 @@ async function main() {
 
     const after = JSON.parse(await evalJs(READ_BACK));
     console.log('\n--- after the new code has opened it ---');
-    check('the database moved to v2', after.version === 2, `version=${after.version}`);
+    /*
+     * Read the expected version out of app.js rather than hardcoding it. The
+     * point of this check is that an OLD database is carried forward, not that
+     * the schema has stopped changing — and pinning the number here meant that
+     * adding the bin store failed a test whose real subject, his photo
+     * surviving, had passed.
+     */
+    const wantVersion = Number(
+      (fs.readFileSync(path.join(__dirname, '..', 'app.js'), 'utf8')
+        .match(/indexedDB\.open\(DB_NAME,\s*(\d+)\)/) || [])[1]
+    );
+    check(`the database moved to v${wantVersion}`,
+      wantVersion > 1 && after.version === wantVersion, `version=${after.version}`);
     check('the catalogue store now exists', after.stores.includes('catalogue'), JSON.stringify(after.stores));
     check('the photos store is still there', after.stores.includes('photos'));
     check('HIS PHOTO SURVIVED THE UPGRADE', after.photo === 'HIS-OWN-PHOTO', JSON.stringify(after.photo));

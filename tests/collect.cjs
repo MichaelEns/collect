@@ -342,6 +342,71 @@ async function main() {
     await new Promise((r) => setTimeout(r, 250));
     await typeCode('');
 
+    /* --------------------------------------------- putting a mistake right */
+
+    console.log('\n--- undoing a mistake ---');
+    // Auto-answer the confirmation, and count that it was actually asked.
+    await evalJs(`(() => {
+      window.__confirms = [];
+      window.__answer = true;
+      window.confirm = (message) => { window.__confirms.push(message); return window.__answer; };
+      return 1;
+    })()`);
+
+    const beforeMistake = await evalJs(
+      "String(!!(JSON.parse(localStorage.getItem('collect.progress.sw-galaxy-peek-s2')||'{}')['captain-rex']||{}).have)"
+    );
+    await evalJs("window.__collect.setHave('captain-rex', true); 1");
+    await new Promise((r) => setTimeout(r, 250));
+
+    const logged = JSON.parse(await evalJs(`JSON.stringify({
+      rows: [...document.querySelectorAll('#undo-list .undo-row .undo-what')].map(e => e.textContent),
+      closed: !document.getElementById('undo-panel').open,
+      have: !!(JSON.parse(localStorage.getItem('collect.progress.sw-galaxy-peek-s2')||'{}')['captain-rex']||{}).have,
+    })`));
+    check('a mis-tap is recorded so it can be taken back',
+      logged.rows.some((r) => /Marked Clone Captain Rex as found/.test(r)), JSON.stringify(logged.rows.slice(0, 3)));
+    check('and the panel stays shut until it is wanted', logged.closed === true);
+    check('the tick really happened', logged.have === true && beforeMistake === 'false');
+
+    // Refusing the confirmation must change nothing at all.
+    await evalJs('window.__answer = false; 1');
+    await evalJs("document.querySelector('#undo-list .undo-go').click(); 1");
+    await new Promise((r) => setTimeout(r, 300));
+    const refused = JSON.parse(await evalJs(`JSON.stringify({
+      have: !!(JSON.parse(localStorage.getItem('collect.progress.sw-galaxy-peek-s2')||'{}')['captain-rex']||{}).have,
+      rows: document.querySelectorAll('#undo-list .undo-row').length,
+      asked: window.__confirms.length,
+    })`));
+    check('saying no to the confirmation leaves the find alone',
+      refused.have === true && refused.rows > 0, JSON.stringify(refused));
+    check('and it did ask before touching anything', refused.asked === 1);
+
+    // Now accept it.
+    await evalJs('window.__answer = true; 1');
+    await evalJs("document.querySelector('#undo-list .undo-go').click(); 1");
+    await new Promise((r) => setTimeout(r, 350));
+    const undone = JSON.parse(await evalJs(`JSON.stringify({
+      have: !!(JSON.parse(localStorage.getItem('collect.progress.sw-galaxy-peek-s2')||'{}')['captain-rex']||{}).have,
+      stamped: (JSON.parse(localStorage.getItem('collect.progress.sw-galaxy-peek-s2')||'{}')['captain-rex']||{}).updatedAt || 0,
+      tile: [...document.querySelectorAll('.fig')].filter(f => /found/.test(f.className)).length,
+      rows: [...document.querySelectorAll('#undo-list .undo-row .undo-what')].map(e => e.textContent),
+    })`));
+    check('confirming puts the find back', undone.have === false, JSON.stringify(undone));
+    check('the reversal is stamped, so it wins over the mistake elsewhere',
+      undone.stamped > 0, String(undone.stamped));
+    check('and the reversal is itself listed, so it too can be taken back',
+      undone.rows.some((r) => /Marked Clone Captain Rex as not found/.test(r)),
+      JSON.stringify(undone.rows.slice(0, 3)));
+
+    await evalJs(`(() => {
+      localStorage.removeItem('collect.history.sw-galaxy-peek-s2');
+      window.confirm = window.__realConfirm || window.confirm;
+      return 1;
+    })()`);
+    await evalJs("window.__collect.setHave('captain-rex', false); 1");
+    await new Promise((r) => setTimeout(r, 200));
+
     /* ------------------------------------------------------------ finding */
 
     console.log('\n--- finding one ---');

@@ -127,6 +127,31 @@
       🔍 What should we hunt next?
       <span class="hunt-link-sub">Which capsule gives him the most he is missing</span>
     </a>
+
+    <!--
+      Putting a mistake right.
+
+      Deliberately a closed <details> at the very bottom, and every undo asks
+      first. A six-year-old taps quickly and taps everywhere; an undo button
+      sitting next to the grid would eventually be pressed by accident, and
+      losing a real find to a stray tap is exactly what this is meant to
+      prevent. Two deliberate actions are needed to change anything here.
+    -->
+    <details id="undo-panel" class="undo-panel">
+      <summary>Did something by mistake?</summary>
+      <p class="undo-intro">
+        The last few things done on this device. Nothing here changes until you
+        choose to put it back.
+      </p>
+      <ul id="undo-list" class="undo-list"></ul>
+      <p id="undo-empty" class="undo-empty" hidden>
+        Nothing has been changed on this device yet.
+      </p>
+      <p class="undo-note">
+        This list lives on this device only. If the mistake was made on the
+        tablet, put it right on the tablet.
+      </p>
+    </details>
   </section>
 
 </main>
