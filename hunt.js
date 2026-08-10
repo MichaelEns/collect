@@ -262,17 +262,52 @@
     select.value = state.filter;
   }
 
-  function renderBest() {
-    const rows = [];
-    for (const set of visibleSets()) {
+  /*
+   * One card per distinct capsule, not per code.
+   *
+   * The same contents are sold under many codes — Series 1 has 276 codes but
+   * only 21 distinct capsules, and one set of four figures carries 18 different
+   * codes. Worse, the codes do not sit together: sorting puts "1" and "A001"
+   * sixteen rows apart, so the same capsule reappears down the list looking
+   * like a new find each time, and the top-40 cut could fill with repeats of
+   * something he already decided against.
+   *
+   * Grouping is by exact contents within a series. Across series would be
+   * wrong: a Series 1 capsule and a Series 3 capsule are different products
+   * that happen to share figure ids.
+   */
+  function groupByContents(sets) {
+    const groups = new Map();
+    for (const set of sets) {
       const byId = new Map(set.figures.map((f) => [f.id, f]));
       for (const [code, ids] of Object.entries(set.codes)) {
         const figures = ids.map((id) => byId.get(id)).filter(Boolean);
-        const missing = figures.filter((f) => !has(set, f.id));
-        if (!missing.length) continue;
-        const wanted = missing.filter((f) => starred(set.id, f.id)).length;
-        rows.push({ set, code, figures, missing, wanted });
+        if (!figures.length) continue;
+        // Sorted, so contents listed in a different order still count as the
+        // same capsule. Not de-duplicated: a capsule holding two of the same
+        // figure is genuinely a different capsule from one holding one.
+        const key = `${set.id}\u0000${figures.map((f) => f.id).sort().join('|')}`;
+        const found = groups.get(key);
+        if (found) { found.codes.push(code); continue; }
+        groups.set(key, { set, codes: [code], figures });
       }
+    }
+    return [...groups.values()];
+  }
+
+  /** Natural order, so A2 comes before A10 and bare numbers read as numbers. */
+  const byCode = (a, b) => String(a).localeCompare(String(b), undefined, {
+    numeric: true, sensitivity: 'base',
+  });
+
+  function renderBest() {
+    const rows = [];
+    for (const group of groupByContents(visibleSets())) {
+      const missing = group.figures.filter((f) => !has(group.set, f.id));
+      if (!missing.length) continue;
+      const wanted = missing.filter((f) => starred(group.set.id, f.id)).length;
+      group.codes.sort(byCode);
+      rows.push({ ...group, missing, wanted });
     }
 
     /*
@@ -282,7 +317,7 @@
      */
     rows.sort((a, b) => b.wanted - a.wanted
       || b.missing.length - a.missing.length
-      || a.code.localeCompare(b.code));
+      || byCode(a.codes[0], b.codes[0]));
 
     const host = $('hunt-best');
     host.innerHTML = '';
@@ -307,10 +342,33 @@
       const head = document.createElement('div');
       head.className = 'hunt-row-head';
       head.innerHTML = `
-        <span class="hunt-code">${escapeHtml(row.code)}</span>
         <span class="hunt-adds">${row.missing.length} new${row.wanted ? ` · ${row.wanted}★` : ''}</span>
         <span class="hunt-series-name">${escapeHtml(row.set.name.replace('Galaxy Peek ', ''))}</span>`;
       card.appendChild(head);
+
+      /*
+       * Every code, never a "+3 more". The list IS the instruction — he is
+       * standing at a shelf checking whether the code in his hand is one of
+       * these, and a hidden one is a capsule he puts back for no reason.
+       */
+      const codes = document.createElement('div');
+      codes.className = 'hunt-codes';
+      codes.setAttribute('aria-label', row.codes.length > 1
+        ? `Any of these ${row.codes.length} codes`
+        : 'Capsule code');
+      if (row.codes.length > 1) {
+        const note = document.createElement('span');
+        note.className = 'hunt-codes-note';
+        note.textContent = `any of these ${row.codes.length}:`;
+        codes.appendChild(note);
+      }
+      for (const code of row.codes) {
+        const chip = document.createElement('span');
+        chip.className = 'hunt-code';
+        chip.textContent = code;
+        codes.appendChild(chip);
+      }
+      card.appendChild(codes);
 
       const inside = document.createElement('div');
       inside.className = 'hunt-inside';

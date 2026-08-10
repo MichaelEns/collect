@@ -23,6 +23,8 @@ have Boba Fett.
 - **Type a capsule's code and see what is inside it, before you open it.** The
   headline feature, and the one worth having in a shop.
 - **Write down the capsule codes you find**, for batches nobody has recorded yet.
+- **Work out which capsule to buy next**, ranked by how many figures it would
+  add. One card per capsule, listing every code it is sold under.
 - **Progress bar and a celebration** when a set is finished.
 - Everything is saved on the device, and stays there unless you deliberately
   switch sharing on.
@@ -221,6 +223,30 @@ A new *series* is always a code change, not just data: raise `SERIES_COUNT` in
 `tools/build_codes.cjs` and add a `META` entry — capsule description, item
 number, release date — in `tools/build_sets.cjs`.
 
+## Which capsule to buy next
+
+`hunt.html` answers the question that actually gets asked in a shop. You cannot
+buy a figure, only a sealed capsule, so it ranks *capsules* by how many figures
+he still needs — and it reads the same localStorage and IndexedDB the app
+writes, so there is nothing to export or keep in step. It never writes progress;
+ticking lives in the app.
+
+**One card per capsule, not per code.** The same contents are sold under many
+codes: Series 1 has **276 codes but only 21 distinct capsules**, and one set of
+four figures carries 18 different codes. They do not sort together either — `1`
+and `A001` hold the same four figures and sat sixteen rows apart — so the same
+capsule kept reappearing down the list looking like a new find, and the top-40
+cut could fill with repeats of something already rejected.
+
+Every code is listed on the card, never a "+3 more". The list is the
+instruction: he is at a shelf checking whether the code in his hand is one of
+these, and a hidden one is a capsule put back for no reason.
+
+Merging is by exact contents **within a series**. Across series would be wrong —
+a Series 1 capsule and a Series 3 capsule are different products that happen to
+share figure ids. A capsule holding two of the same figure stays distinct from
+one holding a single copy.
+
 ## Adding another collection
 
 Drop a JSON file into `sets/` and name it in `sets/index.json`. No code
@@ -353,8 +379,10 @@ turn sharing off and on again for a new code.
 ```powershell
 node --test "tests/*.test.mjs"                    # data, honesty, install, merge, scan
 node --test tests/catalogue.test.cjs              # catalogue namespace, against the real worker
+node --test tests/hunt.test.cjs                   # merging capsules by contents, on the real data
 node tests/collect.cjs "<path to msedge.exe>"     # drives the real page
 node tests/catalogue_ui.cjs "<path to msedge.exe>"# the v1->v2 upgrade, and which picture wins
+node tests/hunt_ui.cjs "<path to msedge.exe>"     # one card per capsule, every code on it
 node tests/sync.cjs "<path to msedge.exe>"        # two real browsers, one collection
 node tests/sync.cjs "<path to msedge.exe>" --live # ...against the PUBLISHED site and worker
 node tools/check_live.cjs                         # the deployed worker, over the internet

@@ -369,6 +369,23 @@ body {
 
 .hunt-series-name { font-size: .76rem; color: var(--muted); margin-left: auto; }
 
+/* Every code a capsule is sold under. One capsule often has a dozen or more,
+   so this wraps rather than truncating: the list is what he checks the code in
+   his hand against, and a hidden one is a capsule put back for no reason. */
+.hunt-codes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.hunt-codes-note {
+  font-size: .72rem;
+  color: var(--muted);
+  margin-right: 2px;
+}
+
 .hunt-inside {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
