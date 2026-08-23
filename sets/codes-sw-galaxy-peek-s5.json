@@ -6,11 +6,11 @@
   "url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42/pubhtml?gid=1710958071&single=true",
   "csv": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42/pub?output=csv&gid=1710958071&single=true",
   "via": "https://disney-doorables.fandom.com/wiki/Star_Wars_Galaxy_Peek_Series_2",
-  "retrieved": "2026-08-09"
+  "retrieved": "2026-08-23"
  },
  "batches": {
-  "A": 25,
-  "B": 12
+  "A": 36,
+  "B": 23
  },
  "codes": {
   "A001": [
@@ -19,17 +19,71 @@
    "lando-calrissian",
    "leia"
   ],
+  "A002": [
+   "darth-maul",
+   "dengar",
+   "emperor-palpatine",
+   "jango-fett"
+  ],
+  "A003": [
+   "han-solo",
+   "shaak-ti",
+   "tusken-raider",
+   "watto"
+  ],
+  "A004": [
+   "aurra-sing",
+   "boba-fett",
+   "embo",
+   "lando-calrissian"
+  ],
+  "A005": [
+   "jango-fett",
+   "leia",
+   "max-rebo",
+   "supreme-leader-snoke"
+  ],
+  "A006": [
+   "bossk",
+   "imperial-royal-guard",
+   "porg",
+   "watto"
+  ],
   "A007": [
    "4-lom",
    "aurra-sing",
    "dengar",
    "shaak-ti"
   ],
+  "A008": [
+   "boba-fett",
+   "darth-maul",
+   "luke-skywalker",
+   "wampa"
+  ],
+  "A009": [
+   "emperor-palpatine",
+   "han-solo",
+   "jango-fett",
+   "tusken-raider"
+  ],
+  "A010": [
+   "imperial-royal-guard",
+   "shaak-ti",
+   "tauntaun",
+   "tusken-raider"
+  ],
   "A011": [
    "boba-fett",
    "embo",
    "luke-skywalker",
    "porg"
+  ],
+  "A012": [
+   "blurrg",
+   "dengar",
+   "supreme-leader-snoke",
+   "watto"
   ],
   "A013": [
    "darth-maul",
@@ -133,11 +187,23 @@
    "leia",
    "max-rebo"
   ],
+  "A030": [
+   "4-lom",
+   "aurra-sing",
+   "jango-fett",
+   "supreme-leader-snoke"
+  ],
   "A031": [
    "darth-maul",
    "leia",
    "luke-skywalker",
    "porg"
+  ],
+  "A032": [
+   "bossk",
+   "imperial-royal-guard",
+   "lando-calrissian",
+   "watto"
   ],
   "A033": [
    "aurra-sing",
@@ -163,17 +229,35 @@
    "supreme-leader-snoke",
    "tauntaun"
   ],
+  "B001": [
+   "4-lom",
+   "aurra-sing",
+   "dengar",
+   "shaak-ti"
+  ],
   "B003": [
    "aurra-sing",
    "emperor-palpatine",
    "luke-skywalker",
    "wampa"
   ],
+  "B006": [
+   "boba-fett",
+   "dengar",
+   "emperor-palpatine",
+   "shaak-ti"
+  ],
   "B008": [
    "boba-fett",
    "embo",
    "luke-skywalker",
    "porg"
+  ],
+  "B009": [
+   "darth-maul",
+   "dengar",
+   "emperor-palpatine",
+   "jango-fett"
   ],
   "B010": [
    "aurra-sing",
@@ -199,11 +283,35 @@
    "supreme-leader-snoke",
    "watto"
   ],
+  "B016": [
+   "boba-fett",
+   "darth-maul",
+   "luke-skywalker",
+   "wampa"
+  ],
+  "B017": [
+   "aurra-sing",
+   "boba-fett",
+   "embo",
+   "lando-calrissian"
+  ],
   "B020": [
    "blurrg",
    "dengar",
    "supreme-leader-snoke",
    "watto"
+  ],
+  "B021": [
+   "jango-fett",
+   "leia",
+   "max-rebo",
+   "supreme-leader-snoke"
+  ],
+  "B022": [
+   "imperial-royal-guard",
+   "shaak-ti",
+   "tauntaun",
+   "tusken-raider"
   ],
   "B024": [
    "bossk",
@@ -217,17 +325,41 @@
    "porg",
    "watto"
   ],
+  "B028": [
+   "bossk",
+   "imperial-royal-guard",
+   "lando-calrissian",
+   "watto"
+  ],
   "B029": [
    "emperor-palpatine",
    "leia",
    "luke-skywalker",
    "porg"
   ],
+  "B030": [
+   "bossk",
+   "imperial-royal-guard",
+   "lando-calrissian",
+   "leia"
+  ],
   "B032": [
    "4-lom",
    "darth-maul",
    "jango-fett",
    "lando-calrissian"
+  ],
+  "B033": [
+   "emperor-palpatine",
+   "imperial-royal-guard",
+   "leia",
+   "max-rebo"
+  ],
+  "B035": [
+   "bossk",
+   "shaak-ti",
+   "tusken-raider",
+   "watto"
   ],
   "B036": [
    "boba-fett",

@@ -15,7 +15,7 @@
  * tests/install.test.mjs asserts this list covers every set in the index, so a
  * sixth series cannot be added without also being made available offline.
  */
-const CACHE = 'collect-v9';
+const CACHE = 'collect-v10';
 
 const SHELL = [
   '/collect/',

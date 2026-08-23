@@ -40,15 +40,15 @@ The letter at the front is the **batch**. Each batch has its own numbering, so
 is genuinely why an unknown code shows up occasionally: it is from a batch
 nobody has written down yet, not a bug.
 
-**1,077 codes ship with the app**, across thirteen sets:
+**1,128 codes ship with the app**, across thirteen sets:
 
 | Set | Codes | Batches | Figures covered |
 | --- | --- | --- | --- |
 | Galaxy Peek Series 1 | 276 | 19 (#–TL) | 25 of 25 |
-| Galaxy Peek Series 2 | 177 | 12 (A–L) | 25 of 25 |
-| Galaxy Peek Series 3 | 44 | 5 (A–TL) | 25 of 25 |
-| Galaxy Peek Series 4 | 69 | 2 | 25 of 25 |
-| Galaxy Peek Series 5 | 37 | 2 | 25 of 25 |
+| Galaxy Peek Series 2 | 198 | 13 (A–TL) | 25 of 25 |
+| Galaxy Peek Series 3 | 49 | 5 (A–TL) | 25 of 25 |
+| Galaxy Peek Series 4 | 72 | 2 | 25 of 25 |
+| Galaxy Peek Series 5 | 59 | 2 | 25 of 25 |
 | Galactic Cruisers Series 1 | 126 | 17 (A–MO) | 10 of 10 |
 | Galactic Cruisers Series 2 | 40 | 5 (A–TL) | 10 of 10 |
 | Galactic Cruisers Series 3 | — | — | checklist only |
@@ -62,12 +62,12 @@ Not every set holds four figures. A Cruisers pack holds one, a Grogu Moments
 box holds one scene, a Toy Story bag holds three and a Squish Squadron bag
 holds five — so the app takes the number from the data rather than assuming.
 
-Where collectors disagreed about a code — 29 of them — the app shows **every**
+Where collectors disagreed about a code — 32 of them — the app shows **every**
 version reported rather than quietly picking one.
 
 Open a figure's card and it also works the other way round: it lists **every**
 capsule known to contain that figure, grouped by batch. No truncation. One
-figure appears in 45 different capsules across all 12 batches, and all 45 are
+figure appears in 48 different capsules across 12 batches, and all 48 are
 shown — a capped list quietly answers "no" for the codes it hides, which is the
 opposite of useful when it is being checked against a capsule in hand.
 

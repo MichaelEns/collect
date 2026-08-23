@@ -6,12 +6,12 @@
   "url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42/pubhtml?gid=1710958071&single=true",
   "csv": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42/pub?output=csv&gid=1710958071&single=true",
   "via": "https://disney-doorables.fandom.com/wiki/Star_Wars_Galaxy_Peek_Series_2",
-  "retrieved": "2026-08-09"
+  "retrieved": "2026-08-23"
  },
  "batches": {
-  "A": 8,
+  "A": 12,
   "B": 12,
-  "C": 11,
+  "C": 12,
   "D": 12,
   "TL": 1
  },
@@ -22,11 +22,29 @@
    "mae-assassin",
    "yoda"
   ],
+  "A002": [
+   "cassian-andor",
+   "jedi-master-sol",
+   "kelnacca",
+   "yoda-rare-version"
+  ],
+  "A003": [
+   "admiral-ackbar",
+   "director-orson-krennic",
+   "k-2so",
+   "yaddle"
+  ],
   "A004": [
    "kit-fisto",
    "mon-mothma",
    "nien-nunb",
    "princess-leia"
+  ],
+  "A005": [
+   "k-2so",
+   "porg",
+   "rey",
+   "yoda"
   ],
   "A006": [
    "admiral-ackbar",
@@ -45,6 +63,12 @@
    "grogu",
    "kelnacca",
    "princess-leia"
+  ],
+  "A009": [
+   "aayla-secura",
+   "mace-windu",
+   "rey",
+   "yoda-rare-version"
   ],
   "A010": [
    "cassian-andor",
@@ -164,6 +188,12 @@
    "admiral-ackbar",
    "director-orson-krennic",
    "k-2so",
+   "yaddle"
+  ],
+  "C006": [
+   "mace-windu",
+   "nien-nunb",
+   "osha-aniseya",
    "yaddle"
   ],
   "C007": [

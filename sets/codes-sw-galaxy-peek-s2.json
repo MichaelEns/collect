@@ -6,7 +6,7 @@
   "url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42/pubhtml?gid=1710958071&single=true",
   "csv": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42/pub?output=csv&gid=1710958071&single=true",
   "via": "https://disney-doorables.fandom.com/wiki/Star_Wars_Galaxy_Peek_Series_2",
-  "retrieved": "2026-08-09"
+  "retrieved": "2026-08-23"
  },
  "batches": {
   "A": 17,
@@ -14,13 +14,14 @@
   "C": 17,
   "D": 17,
   "E": 16,
-  "F": 11,
+  "F": 17,
   "G": 16,
-  "H": 17,
-  "I": 12,
-  "J": 4,
-  "K": 17,
-  "L": 17
+  "H": 16,
+  "I": 16,
+  "J": 16,
+  "K": 16,
+  "L": 17,
+  "TL": 1
  },
  "codes": {
   "A001": [
@@ -551,11 +552,35 @@
    "r5-d4",
    "rey"
   ],
+  "F006": [
+   "anakin-young",
+   "boba-fett",
+   "fennec-shand",
+   "obi-wan-kenobi"
+  ],
   "F007": [
    "fennec-shand",
    "poe-dameron",
    "princess-leia",
    "rey"
+  ],
+  "F008": [
+   "darth-maul",
+   "jar-jar-binks",
+   "obi-wan-kenobi",
+   "omega"
+  ],
+  "F009": [
+   "ahsoka-tano",
+   "luke-skywalker",
+   "princess-leia",
+   "wrecker"
+  ],
+  "F010": [
+   "darth-maul",
+   "finn",
+   "omega",
+   "princess-leia"
   ],
   "F011": [
    "anakin-padawan",
@@ -575,6 +600,12 @@
    "poe-dameron",
    "rey"
   ],
+  "F014": [
+   "anakin-young",
+   "captain-rex",
+   "first-order-stormtrooper",
+   "kylo-ren"
+  ],
   "F015": [
    "anakin-padawan",
    "anakin-young",
@@ -586,6 +617,12 @@
    "darth-maul",
    "first-order-stormtrooper",
    "omega"
+  ],
+  "F017": [
+   "darth-maul",
+   "hunter",
+   "kylo-ren",
+   "princess-leia"
   ],
   "G001": [
    "fennec-shand",
@@ -767,12 +804,6 @@
    "kylo-ren",
    "princess-leia"
   ],
-  "H015": [
-   "ahsoka-tano",
-   "darth-maul",
-   "first-order-stormtrooper",
-   "omega"
-  ],
   "H016": [
    "anakin-padawan",
    "captain-phasma",
@@ -785,6 +816,18 @@
    "r5-d4",
    "rey"
   ],
+  "I002": [
+   "anakin-young",
+   "boba-fett",
+   "fennec-shand",
+   "obi-wan-kenobi"
+  ],
+  "I003": [
+   "darth-maul",
+   "jar-jar-binks",
+   "obi-wan-kenobi",
+   "omega"
+  ],
   "I004": [
    "anakin-young",
    "captain-rex",
@@ -796,6 +839,12 @@
    "first-order-stormtrooper",
    "grand-admiral-thrawn",
    "jar-jar-binks"
+  ],
+  "I006": [
+   "captain-rex",
+   "hunter",
+   "luke-skywalker",
+   "mace-windu"
   ],
   "I007": [
    "ahsoka-tano",
@@ -839,6 +888,12 @@
    "kylo-ren",
    "princess-leia"
   ],
+  "I015": [
+   "anakin-padawan",
+   "anakin-young",
+   "captain-rex",
+   "queen-amidala"
+  ],
   "I016": [
    "luke-skywalker",
    "omega",
@@ -857,11 +912,41 @@
    "omega",
    "princess-leia"
   ],
+  "J002": [
+   "cad-bane",
+   "first-order-stormtrooper",
+   "grand-admiral-thrawn",
+   "jar-jar-binks"
+  ],
+  "J003": [
+   "ahsoka-tano",
+   "luke-skywalker",
+   "princess-leia",
+   "wrecker"
+  ],
+  "J004": [
+   "fennec-shand",
+   "poe-dameron",
+   "princess-leia",
+   "rey"
+  ],
   "J005": [
    "darth-maul",
    "finn",
    "omega",
    "princess-leia"
+  ],
+  "J006": [
+   "anakin-padawan",
+   "fennec-shand",
+   "grand-admiral-thrawn",
+   "luke-skywalker"
+  ],
+  "J007": [
+   "fennec-shand",
+   "first-order-stormtrooper",
+   "hunter",
+   "mace-windu"
   ],
   "J008": [
    "anakin-young",
@@ -869,11 +954,53 @@
    "fennec-shand",
    "obi-wan-kenobi"
   ],
-  "J011": [
+  "J009": [
+   "ahsoka-tano",
+   "darth-maul",
+   "first-order-stormtrooper",
+   "omega"
+  ],
+  "J010": [
    "anakin-padawan",
-   "fennec-shand",
-   "grand-admiral-thrawn",
+   "finn",
+   "hunter",
    "luke-skywalker"
+  ],
+  "J012": [
+   "anakin-young",
+   "captain-rex",
+   "first-order-stormtrooper",
+   "kylo-ren"
+  ],
+  "J013": [
+   "anakin-padawan",
+   "captain-phasma",
+   "r5-d4",
+   "rey"
+  ],
+  "J014": [
+   "darth-maul",
+   "jar-jar-binks",
+   "obi-wan-kenobi",
+   "omega"
+  ],
+  "J015": [
+   "captain-rex",
+   "jar-jar-binks",
+   "poe-dameron",
+   "rey"
+  ],
+  "J016": [
+   "captain-rex",
+   "hunter",
+   "luke-skywalker",
+   "mace-windu"
+  ],
+  "J017": [
+   "anakin-young",
+   "omega",
+   "r5-d4",
+   "rey"
   ],
   "J018": [
    "anakin-padawan",
@@ -964,12 +1091,6 @@
    "boba-fett",
    "fennec-shand",
    "obi-wan-kenobi"
-  ],
-  "K016": [
-   "cad-bane",
-   "first-order-stormtrooper",
-   "grand-admiral-thrawn",
-   "jar-jar-binks"
   ],
   "K017": [
    "ahsoka-tano",
@@ -1084,6 +1205,12 @@
    "anakin-young",
    "captain-rex",
    "queen-amidala"
+  ],
+  "TL001": [
+   "boba-fett",
+   "cad-bane",
+   "captain-phasma",
+   "grand-admiral-thrawn"
   ]
  },
  "disputed": {
@@ -1119,6 +1246,48 @@
     "hunter",
     "luke-skywalker",
     "mace-windu"
+   ]
+  ],
+  "H015": [
+   [
+    "ahsoka-tano",
+    "darth-maul",
+    "first-order-stormtrooper",
+    "omega"
+   ],
+   [
+    "ahsoka-tano",
+    "darth-maul",
+    "first-order-stormtrooper",
+    "poe-dameron"
+   ]
+  ],
+  "J011": [
+   [
+    "anakin-padawan",
+    "fennec-shand",
+    "grand-admiral-thrawn",
+    "luke-skywalker"
+   ],
+   [
+    "darth-maul",
+    "hunter",
+    "kylo-ren",
+    "princess-leia"
+   ]
+  ],
+  "K016": [
+   [
+    "cad-bane",
+    "first-order-stormtrooper",
+    "grand-admiral-thrawn",
+    "jar-jar-binks"
+   ],
+   [
+    "anakin-padawan",
+    "captain-phasma",
+    "r5-d4",
+    "rey"
    ]
   ]
  }
