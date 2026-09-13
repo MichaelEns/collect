@@ -40,7 +40,7 @@ The letter at the front is the **batch**. Each batch has its own numbering, so
 is genuinely why an unknown code shows up occasionally: it is from a batch
 nobody has written down yet, not a bug.
 
-**1,128 codes ship with the app**, across thirteen sets:
+**1,142 codes ship with the app**, across thirteen sets:
 
 | Set | Codes | Batches | Figures covered |
 | --- | --- | --- | --- |
@@ -48,11 +48,11 @@ nobody has written down yet, not a bug.
 | Galaxy Peek Series 2 | 198 | 13 (A–TL) | 25 of 25 |
 | Galaxy Peek Series 3 | 49 | 5 (A–TL) | 25 of 25 |
 | Galaxy Peek Series 4 | 72 | 2 | 25 of 25 |
-| Galaxy Peek Series 5 | 59 | 2 | 25 of 25 |
+| Galaxy Peek Series 5 | 62 | 2 | 25 of 25 |
 | Galactic Cruisers Series 1 | 126 | 17 (A–MO) | 10 of 10 |
 | Galactic Cruisers Series 2 | 40 | 5 (A–TL) | 10 of 10 |
 | Galactic Cruisers Series 3 | — | — | checklist only |
-| Squish Squadron Series 1 | 47 | 4 (A–D) | 35 of 35 |
+| Squish Squadron Series 1 | 58 | 5 (A–E) | 35 of 35 |
 | Squish Squadron Series 2 | 71 | 2 | 35 of 35 |
 | Grogu Mini Capsule | — | — | checklist only |
 | Grogu Moments | 34 | 6 (A–F) | 8 of 8 |

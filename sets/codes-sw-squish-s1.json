@@ -5,14 +5,15 @@
   "credit": "@FuzzyLuzzi and the Disney Doorables collecting community",
   "url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42/pubhtml?gid=1710958071&single=true",
   "csv": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42/pub?output=csv&gid=1710958071&single=true",
-  "retrieved": "2026-08-09"
+  "retrieved": "2026-09-13"
  },
  "alsoFrom": "Doorables Codes 5 : StarWars (form responses)",
  "batches": {
   "A": 12,
   "B": 12,
   "C": 11,
-  "D": 12
+  "D": 12,
+  "E": 11
  },
  "codes": {
   "A001": [
@@ -343,6 +344,83 @@
    "jabba-the-hutt-red",
    "porg",
    "wicket"
+  ],
+  "E010": [
+   "chewbacca",
+   "darth-vader",
+   "luke-skywalker-blue",
+   "princess-leia",
+   "r2-d2"
+  ],
+  "E011": [
+   "ahsoka-tano",
+   "ahsoka-tano-blue",
+   "bb-8",
+   "c-3po",
+   "sabine-wren"
+  ],
+  "E012": [
+   "chewbacca",
+   "ewok",
+   "jabba-the-hutt-red",
+   "porg",
+   "wicket"
+  ],
+  "E002": [
+   "chewbacca",
+   "grogu",
+   "jawa",
+   "r2-d2-blue",
+   "rey"
+  ],
+  "E003": [
+   "bb-8",
+   "darth-vader",
+   "kylo-ren-red",
+   "r5-d4",
+   "stormtrooper"
+  ],
+  "E004": [
+   "ahsoka-tano",
+   "grand-admiral-thrawn",
+   "porg",
+   "rey-blue",
+   "the-mandalorian"
+  ],
+  "E005": [
+   "boba-fett",
+   "chopper-c1-10p",
+   "luke-skywalker",
+   "r5-d4",
+   "stormtrooper"
+  ],
+  "E006": [
+   "boba-fett",
+   "princess-leia",
+   "princess-leia-blue",
+   "the-mandalorian",
+   "wicket"
+  ],
+  "E007": [
+   "darth-vader-red",
+   "finn",
+   "jawa",
+   "r5-d4",
+   "sabine-wren"
+  ],
+  "E008": [
+   "finn",
+   "grand-admiral-thrawn-red",
+   "jawa",
+   "loth-cat",
+   "r2-d2"
+  ],
+  "E009": [
+   "grogu",
+   "jabba-the-hutt",
+   "kylo-ren",
+   "loth-cat",
+   "rey"
   ]
  },
  "disputed": {

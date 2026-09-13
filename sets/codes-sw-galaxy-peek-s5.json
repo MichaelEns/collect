@@ -6,11 +6,11 @@
   "url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42/pubhtml?gid=1710958071&single=true",
   "csv": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42/pub?output=csv&gid=1710958071&single=true",
   "via": "https://disney-doorables.fandom.com/wiki/Star_Wars_Galaxy_Peek_Series_2",
-  "retrieved": "2026-08-23"
+  "retrieved": "2026-09-13"
  },
  "batches": {
   "A": 36,
-  "B": 23
+  "B": 26
  },
  "codes": {
   "A001": [
@@ -247,6 +247,12 @@
    "emperor-palpatine",
    "shaak-ti"
   ],
+  "B007": [
+   "boba-fett",
+   "darth-maul",
+   "supreme-leader-snoke",
+   "tauntaun"
+  ],
   "B008": [
    "boba-fett",
    "embo",
@@ -270,6 +276,12 @@
    "shaak-ti",
    "tusken-raider",
    "watto"
+  ],
+  "B013": [
+   "blurrg",
+   "lando-calrissian",
+   "leia",
+   "luke-skywalker"
   ],
   "B014": [
    "aurra-sing",
@@ -354,6 +366,12 @@
    "imperial-royal-guard",
    "leia",
    "max-rebo"
+  ],
+  "B034": [
+   "aurra-sing",
+   "darth-maul",
+   "embo",
+   "lando-calrissian"
   ],
   "B035": [
    "bossk",
