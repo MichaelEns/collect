@@ -1219,7 +1219,9 @@
 
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/collect/sw.js').catch(() => { /* offline is a bonus */ });
+      navigator.serviceWorker.register('/collect/sw.js', { updateViaCache: 'none' })
+        .then((registration) => registration.update())
+        .catch(() => { /* offline is a bonus */ });
     });
   }
 

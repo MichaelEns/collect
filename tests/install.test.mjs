@@ -129,6 +129,21 @@ test('the cache is versioned, or an update never reaches an installed copy', () 
   assert.match(read('sw.js'), /const CACHE = '[\w-]+v\d+'/);
 });
 
+test('an activated update refreshes already-open installed pages', () => {
+  const sw = read('sw.js');
+  const start = sw.indexOf("self.addEventListener('activate'");
+  const end = sw.indexOf('\n});', start);
+  const activate = sw.slice(start, end);
+  assert.match(activate, /replacingOldCache/);
+  assert.match(activate, /self\.clients\.matchAll\(\{ type: 'window' \}\)/);
+  assert.match(activate, /client\.navigate\(client\.url\)/);
+
+  for (const script of ['app.js', 'hunt.js']) {
+    assert.match(read(script), /register\('\/collect\/sw\.js', \{ updateViaCache: 'none' \}\)/,
+      `${script} can reuse a stale cached service worker script`);
+  }
+});
+
 test('a navigation lands on the page that was actually asked for', () => {
   /*
    * With one page, mapping every navigation to index.html was right. With two
