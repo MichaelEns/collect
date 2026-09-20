@@ -943,8 +943,8 @@
     finder.hidden = count === 0;
     if (!count) return;
     const batches = Object.keys(state.codes.batches || {}).length;
-    $('finder-hint').textContent = `Type the code moulded into the bottom of the`
-      + ` capsule and we will tell you what is inside. We know ${count} codes`
+    $('finder-hint').textContent = `Type the code printed on the package and we`
+      + ` will tell you what is inside. We know ${count} codes`
       + `${batches ? ` across ${batches} batches` : ''}.`;
     $('code-input').value = '';
     renderCodeResult('');

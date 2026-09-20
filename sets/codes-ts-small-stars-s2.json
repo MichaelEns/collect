@@ -1,0 +1,37 @@
+{
+ "setId": "ts-small-stars-s2",
+ "source": {
+  "title": "Series 2 Codes: Woody 01 Bo Peep 04 Rex 05 Jessie 06 Bullseye 07 Buzz 09 Lily Pad 10 Forky 11",
+  "credit": "@jessicakaguirre",
+  "url": "https://www.tiktok.com/@jessicakaguirre/video/7646901645695094030",
+  "retrieved": "2026-09-20"
+ },
+ "batches": {},
+ "codes": {
+  "01": [
+   "woody"
+  ],
+  "04": [
+   "bo-peep"
+  ],
+  "05": [
+   "rex"
+  ],
+  "06": [
+   "jessie"
+  ],
+  "07": [
+   "bullseye"
+  ],
+  "09": [
+   "buzz-lightyear"
+  ],
+  "10": [
+   "lilypad"
+  ],
+  "11": [
+   "forky"
+  ]
+ },
+ "disputed": {}
+}

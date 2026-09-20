@@ -684,6 +684,62 @@ async function main() {
     check('and says why on the page', /no pack codes/i.test(noCodes.sourced),
       noCodes.sourced.slice(0, 100));
 
+    /* ----------------------------------------------- Small Stars collections */
+
+    console.log('\n--- Toy Story 5 Small Stars ---');
+    await evalJs("location.hash = '#set=ts-small-stars-s1'; 1");
+    await new Promise((r) => setTimeout(r, 1200));
+    const smallStarsOne = JSON.parse(await evalJs(`JSON.stringify({
+      title: document.getElementById('title').textContent,
+      subtitle: document.getElementById('subtitle').textContent,
+      figures: document.querySelectorAll('.fig').length,
+      finderShown: !document.getElementById('finder').hidden,
+      sourced: document.getElementById('sourced').textContent,
+    })`));
+    check('Series 1 opens as an eight-figure blue-backpack checklist',
+      /Small Stars Series 1/.test(smallStarsOne.title)
+        && /Blue backpack/.test(smallStarsOne.subtitle)
+        && smallStarsOne.figures === 8,
+      JSON.stringify(smallStarsOne));
+    check('Series 1 withholds the incomplete code guide and explains why',
+      smallStarsOne.finderShown === false && /code finder is withheld/i.test(smallStarsOne.sourced),
+      smallStarsOne.sourced.slice(0, 140));
+
+    await evalJs("location.hash = '#set=ts-small-stars-s2'; 1");
+    await new Promise((r) => setTimeout(r, 1200));
+    await evalJs(`(() => { const el = document.getElementById('code-input');
+      el.value = '10'; el.dispatchEvent(new Event('input', { bubbles: true })); return 1; })()`);
+    await new Promise((r) => setTimeout(r, 400));
+    const smallStarsTwo = JSON.parse(await evalJs(`JSON.stringify({
+      title: document.getElementById('title').textContent,
+      figures: document.querySelectorAll('.fig').length,
+      chips: [...document.querySelectorAll('.chip-name')].map(c => c.textContent),
+      hint: document.getElementById('finder-hint').textContent,
+    })`));
+    check('Series 2 opens with eight figures and its single-figure code guide',
+      /Small Stars Series 2/.test(smallStarsTwo.title)
+        && smallStarsTwo.figures === 8
+        && JSON.stringify(smallStarsTwo.chips) === JSON.stringify(['Lilypad']),
+      JSON.stringify(smallStarsTwo));
+    check('the shared finder wording fits printed Small Stars package codes',
+      /printed on the package/i.test(smallStarsTwo.hint), smallStarsTwo.hint);
+
+    await evalJs("location.hash = '#set=ts-small-stars-s3'; 1");
+    await new Promise((r) => setTimeout(r, 1200));
+    await evalJs(`(() => { const el = document.getElementById('code-input');
+      el.value = '015'; el.dispatchEvent(new Event('input', { bubbles: true })); return 1; })()`);
+    await new Promise((r) => setTimeout(r, 400));
+    const smallStarsThree = JSON.parse(await evalJs(`JSON.stringify({
+      title: document.getElementById('title').textContent,
+      figures: document.querySelectorAll('.fig').length,
+      chips: [...document.querySelectorAll('.chip-name')].map(c => c.textContent),
+    })`));
+    check('Series 3 opens with eight figures and finds Karen Beverly by code',
+      /Small Stars Series 3/.test(smallStarsThree.title)
+        && smallStarsThree.figures === 8
+        && JSON.stringify(smallStarsThree.chips) === JSON.stringify(['Karen Beverly']),
+      JSON.stringify(smallStarsThree));
+
     /* ------------------------------------------- a set with no rarity data */
 
     console.log('\n--- a set nobody has recorded rarities for ---');

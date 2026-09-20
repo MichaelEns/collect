@@ -1,0 +1,53 @@
+{
+ "id": "ts-small-stars-s2",
+ "brand": "Disney and Pixar Toy Story 5",
+ "name": "Small Stars Series 2",
+ "packaging": "Green backpack capsule, one figure inside",
+ "packagingNote": "This is a Mattel Small Stars backpack rather than a Disney Doorables pack, and it holds ONE figure.",
+ "emoji": "🎒",
+ "official": "https://shop.mattel.com/products/disney-and-pixar-toy-story-5-small-stars-mini-figures-jkv59",
+ "itemNumber": "JKV59",
+ "released": "2026",
+ "figuresPerCapsule": 1,
+ "verified": false,
+ "sourced": "Eight figures, transcribed from Mattel's printed Series 2 display checklist and checked against collector code guides and a photographed complete set. Mattel confirms the product but does not publish each wave's roster, so this remains community-sourced and is not marked verified.",
+ "rarityNote": "Mattel says each wave has one hard-to-find figure, but the material reviewed does not identify which one, so no rarity is shown.",
+ "figures": [
+  {
+   "id": "woody",
+   "name": "Woody"
+  },
+  {
+   "id": "bo-peep",
+   "name": "Bo Peep"
+  },
+  {
+   "id": "rex",
+   "name": "Rex"
+  },
+  {
+   "id": "jessie",
+   "name": "Jessie"
+  },
+  {
+   "id": "bullseye",
+   "name": "Bullseye"
+  },
+  {
+   "id": "buzz-lightyear",
+   "name": "Buzz Lightyear"
+  },
+  {
+   "id": "lilypad",
+   "name": "Lilypad"
+  },
+  {
+   "id": "forky",
+   "name": "Forky"
+  }
+ ],
+ "codeFile": "codes-ts-small-stars-s2.json",
+ "codeNote": "The figure number is printed on the bottom of the backing card after the production batch text. Enter the final number, such as 01. Collectors mapped these codes; Mattel has not published them, so they are unofficial and may differ in another production run.",
+ "codeLink": "https://www.tiktok.com/@jessicakaguirre/video/7646901645695094030",
+ "codeLinkLabel": "@jessicakaguirre's Series 2 code guide"
+}

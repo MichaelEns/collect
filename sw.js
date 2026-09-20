@@ -13,9 +13,9 @@
  * 60KB — less than one photo — so there is nothing to be gained by being clever.
  *
  * tests/install.test.mjs asserts this list covers every set in the index, so a
- * sixth series cannot be added without also being made available offline.
+ * new series cannot be added without also being made available offline.
  */
-const CACHE = 'collect-v11';
+const CACHE = 'collect-v12';
 
 const SHELL = [
   '/collect/',
@@ -49,6 +49,11 @@ const SHELL = [
   '/collect/sets/codes-sw-cruisers-s2.json',
   '/collect/sets/ts-rerelease.json',
   '/collect/sets/codes-ts-rerelease.json',
+  '/collect/sets/ts-small-stars-s1.json',
+  '/collect/sets/ts-small-stars-s2.json',
+  '/collect/sets/codes-ts-small-stars-s2.json',
+  '/collect/sets/ts-small-stars-s3.json',
+  '/collect/sets/codes-ts-small-stars-s3.json',
   '/collect/sets/sw-squish-s1.json',
   '/collect/sets/codes-sw-squish-s1.json',
   '/collect/sets/sw-squish-s2.json',
