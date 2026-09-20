@@ -165,10 +165,6 @@ product page describes the line but does not publish the wave rosters or codes.
 
 Where something is *not* confirmed, the app says that too, in the same place:
 
-- **Series 3 and 4 capsule colours are unknown.** The capsule is also no longer
-  a Death Star from Series 3 onward — 3 and 4 are cargo-drop capsules and 5 is
-  a grey AT-AT. Getting that wrong would send a child to the wrong box, so the
-  app names the shape and tells him to check the printed series number.
 - **Series 4 may have 50 figures in two waves.** Just Play's own description
   says 50 while shops list 25. The app ships the 25 that have recorded codes
   and says the rest may exist.

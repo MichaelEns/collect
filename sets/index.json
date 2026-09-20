@@ -24,7 +24,7 @@
     "file": "sw-galaxy-peek-s3.json",
     "name": "Galaxy Peek Series 3",
     "brand": "Star Wars Doorables",
-    "packaging": "Cargo-drop capsule",
+    "packaging": "Blue Cargo-Drop Capsule",
     "emoji": "⭐",
     "total": 25,
     "codeFile": "codes-sw-galaxy-peek-s3.json"
@@ -34,7 +34,7 @@
     "file": "sw-galaxy-peek-s4.json",
     "name": "Galaxy Peek Series 4",
     "brand": "Star Wars Doorables",
-    "packaging": "Cargo-drop capsule, opens into a two-level display",
+    "packaging": "Orange Cargo-Drop Capsule",
     "emoji": "🤖",
     "total": 25,
     "codeFile": "codes-sw-galaxy-peek-s4.json"
