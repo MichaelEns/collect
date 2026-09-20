@@ -134,7 +134,8 @@
     "brand": "Disney and Pixar Toy Story 5",
     "packaging": "Blue backpack capsule, one figure inside",
     "emoji": "🎒",
-    "total": 8
+    "total": 8,
+    "codeFile": "codes-ts-small-stars-s1.json"
   },
   {
     "id": "ts-small-stars-s2",

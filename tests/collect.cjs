@@ -699,11 +699,18 @@ async function main() {
     check('Series 1 opens as an eight-figure blue-backpack checklist',
       /Small Stars Series 1/.test(smallStarsOne.title)
         && /Blue backpack/.test(smallStarsOne.subtitle)
-        && smallStarsOne.figures === 8,
+        && smallStarsOne.figures === 8
+        && smallStarsOne.finderShown === true
+        && /BLUE backpack wave/.test(smallStarsOne.sourced),
       JSON.stringify(smallStarsOne));
-    check('Series 1 withholds the incomplete code guide and explains why',
-      smallStarsOne.finderShown === false && /code finder is withheld/i.test(smallStarsOne.sourced),
-      smallStarsOne.sourced.slice(0, 140));
+    await evalJs(`(() => { const el = document.getElementById('code-input');
+      el.value = '008'; el.dispatchEvent(new Event('input', { bubbles: true })); return 1; })()`);
+    await new Promise((r) => setTimeout(r, 400));
+    const smallStarsOneCode = JSON.parse(await evalJs(
+      "JSON.stringify([...document.querySelectorAll('.chip-name')].map(c => c.textContent))"));
+    check('Series 1 finds Slinky Dog by the complete blue-wave code guide',
+      JSON.stringify(smallStarsOneCode) === JSON.stringify(['Slinky Dog']),
+      JSON.stringify(smallStarsOneCode));
 
     await evalJs("location.hash = '#set=ts-small-stars-s2'; 1");
     await new Promise((r) => setTimeout(r, 1200));
@@ -715,11 +722,13 @@ async function main() {
       figures: document.querySelectorAll('.fig').length,
       chips: [...document.querySelectorAll('.chip-name')].map(c => c.textContent),
       hint: document.getElementById('finder-hint').textContent,
+      sourced: document.getElementById('sourced').textContent,
     })`));
     check('Series 2 opens with eight figures and its single-figure code guide',
       /Small Stars Series 2/.test(smallStarsTwo.title)
         && smallStarsTwo.figures === 8
-        && JSON.stringify(smallStarsTwo.chips) === JSON.stringify(['Lilypad']),
+        && JSON.stringify(smallStarsTwo.chips) === JSON.stringify(['Lilypad'])
+        && /GREEN backpack wave/.test(smallStarsTwo.sourced),
       JSON.stringify(smallStarsTwo));
     check('the shared finder wording fits printed Small Stars package codes',
       /printed on the package/i.test(smallStarsTwo.hint), smallStarsTwo.hint);
@@ -733,11 +742,13 @@ async function main() {
       title: document.getElementById('title').textContent,
       figures: document.querySelectorAll('.fig').length,
       chips: [...document.querySelectorAll('.chip-name')].map(c => c.textContent),
+      sourced: document.getElementById('sourced').textContent,
     })`));
     check('Series 3 opens with eight figures and finds Karen Beverly by code',
       /Small Stars Series 3/.test(smallStarsThree.title)
         && smallStarsThree.figures === 8
-        && JSON.stringify(smallStarsThree.chips) === JSON.stringify(['Karen Beverly']),
+        && JSON.stringify(smallStarsThree.chips) === JSON.stringify(['Karen Beverly'])
+        && /PURPLE backpack wave/.test(smallStarsThree.sourced),
       JSON.stringify(smallStarsThree));
 
     /* ------------------------------------------- a set with no rarity data */

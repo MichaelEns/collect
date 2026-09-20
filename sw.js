@@ -15,7 +15,7 @@
  * tests/install.test.mjs asserts this list covers every set in the index, so a
  * new series cannot be added without also being made available offline.
  */
-const CACHE = 'collect-v12';
+const CACHE = 'collect-v13';
 
 const SHELL = [
   '/collect/',
@@ -50,6 +50,7 @@ const SHELL = [
   '/collect/sets/ts-rerelease.json',
   '/collect/sets/codes-ts-rerelease.json',
   '/collect/sets/ts-small-stars-s1.json',
+  '/collect/sets/codes-ts-small-stars-s1.json',
   '/collect/sets/ts-small-stars-s2.json',
   '/collect/sets/codes-ts-small-stars-s2.json',
   '/collect/sets/ts-small-stars-s3.json',

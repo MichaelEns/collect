@@ -42,7 +42,7 @@ has its own numbering, so `A001` and `L002` are different capsules from
 different production runs. That is genuinely why an unknown code shows up
 occasionally: it is from a batch nobody has written down yet, not a bug.
 
-**1,158 codes ship with the app**, across sixteen sets:
+**1,166 codes ship with the app**, across sixteen sets:
 
 | Set | Codes | Batches | Figures covered |
 | --- | --- | --- | --- |
@@ -59,7 +59,7 @@ occasionally: it is from a batch nobody has written down yet, not a bug.
 | Grogu Mini Capsule | — | — | checklist only |
 | Grogu Moments | 34 | 6 (A–F) | 8 of 8 |
 | Toy Story | 156 | 2 | 15 of 15 |
-| Small Stars Series 1 | — | — | checklist only |
+| Small Stars Series 1 | 8 | — | 8 of 8 |
 | Small Stars Series 2 | 8 | — | 8 of 8 |
 | Small Stars Series 3 | 8 | — | 8 of 8 |
 
@@ -158,11 +158,10 @@ product pages down, so there is no official source left to check against. The
 app says so, on screen, under the progress bar.
 
 The Toy Story 5 Small Stars rosters were transcribed from Mattel's printed
-display checklists and complete-collection videos. Series 2 and 3 code guides
-cover every figure; only three Series 1 mappings were directly demonstrated, so
-Series 1 remains checklist-only rather than filling the gaps by inference. All
-three are marked unverified because Mattel's product page describes the line
-but does not publish the wave rosters or codes.
+display checklists and complete-collection videos. Series 1 uses blue
+backpacks, Series 2 green, and Series 3 purple. Collector code guides cover all
+eight figures in each wave. All three remain marked unverified because Mattel's
+product page describes the line but does not publish the wave rosters or codes.
 
 Where something is *not* confirmed, the app says that too, in the same place:
 
