@@ -57,6 +57,20 @@ test('the index agrees with the set files it points at', () => {
   }
 });
 
+test('confirmed Galaxy Peek cargo-drop colours are shown without uncertainty warnings', () => {
+  const expected = new Map([
+    ['sw-galaxy-peek-s3', 'Blue Cargo-Drop Capsule'],
+    ['sw-galaxy-peek-s4', 'Orange Cargo-Drop Capsule'],
+  ]);
+  const index = new Map(read('index.json').map((meta) => [meta.id, meta]));
+  for (const [id, packaging] of expected) {
+    const set = read(`${id}.json`);
+    assert.strictEqual(index.get(id).packaging, packaging);
+    assert.strictEqual(set.packaging, packaging);
+    assert.ok(!set.packagingNote, `${id} still shows an obsolete colour disclaimer`);
+  }
+});
+
 test('every set has the fields the app reads', () => {
   for (const file of setFiles()) {
     const set = read(file);

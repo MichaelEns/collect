@@ -899,6 +899,7 @@ async function main() {
     const offlineFinder = JSON.parse(await evalJs(`JSON.stringify({
       shown: !document.getElementById('finder').hidden,
       title: document.getElementById('title').textContent,
+      subtitle: document.getElementById('subtitle').textContent,
       names: [...document.querySelectorAll('.fig-name')].map(n => n.textContent),
       chips: [...document.querySelectorAll('.chip-name')].map(c => c.textContent),
       verdict: (document.querySelector('.finder-verdict') || {}).textContent || '',
@@ -911,8 +912,11 @@ async function main() {
     ));
     const wantNames = s4.codes.A001.map((id) => s4set.figures.find((f) => f.id === id).name).sort();
     check('showing the right set, not the one before it',
-      /Series 4/.test(offlineFinder.title) && offlineFinder.names.includes('Bail Organa'),
-      offlineFinder.title + ' :: ' + offlineFinder.names.slice(0, 3).join(', '));
+      /Series 4/.test(offlineFinder.title)
+        && /Orange Cargo-Drop Capsule/.test(offlineFinder.subtitle)
+        && offlineFinder.names.includes('Bail Organa'),
+      `${offlineFinder.title} · ${offlineFinder.subtitle} :: `
+        + offlineFinder.names.slice(0, 3).join(', '));
     check('and its capsule lookup answers with no network at all',
       JSON.stringify(offlineFinder.chips.slice().sort()) === JSON.stringify(wantNames),
       JSON.stringify(offlineFinder.chips) + ' want ' + JSON.stringify(wantNames));
