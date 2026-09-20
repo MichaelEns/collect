@@ -151,6 +151,13 @@ async function main() {
     const picker = JSON.parse(await evalJs(`JSON.stringify({
       sets: [...document.querySelectorAll('.set-card h2')].map(h => h.textContent),
       counts: [...document.querySelectorAll('.set-card-count')].map(c => c.textContent),
+      smallStarsIcons: [...document.querySelectorAll('.set-card')]
+        .filter(card => /Small Stars Series/.test(card.querySelector('h2').textContent))
+        .map(card => ({
+          name: card.querySelector('h2').textContent,
+          color: card.querySelector('.set-badge').style.getPropertyValue('--set-icon-color'),
+          backpack: Boolean(card.querySelector('.backpack-icon')),
+        })),
     })`));
     // Read the expected count off the index rather than pinning a number, so
     // adding a series does not fail a test that is not about counting.
@@ -166,6 +173,12 @@ async function main() {
     check('and each shows how far along it is',
       JSON.stringify(picker.counts) === JSON.stringify(wantCounts),
       `${JSON.stringify(picker.counts)} want ${JSON.stringify(wantCounts)}`);
+    check('the Small Stars cards use blue, green and purple backpack icons',
+      JSON.stringify(picker.smallStarsIcons) === JSON.stringify([
+        { name: 'Small Stars Series 1', color: '#2e9de6', backpack: true },
+        { name: 'Small Stars Series 2', color: '#63c947', backpack: true },
+        { name: 'Small Stars Series 3', color: '#8d58d6', backpack: true },
+      ]), JSON.stringify(picker.smallStarsIcons));
 
     /* --------------------------------------------------------- collection */
 

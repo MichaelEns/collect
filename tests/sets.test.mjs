@@ -40,6 +40,9 @@ test('every set in the index has what the picker needs to draw a card', () => {
       assert.ok(meta[key] !== undefined, `${meta.file || '?'} index entry has no ${key}`);
     }
     assert.ok(Number.isInteger(meta.total) && meta.total > 0, `${meta.id} has a silly total`);
+    if (meta.iconColor) {
+      assert.match(meta.iconColor, /^#[0-9a-f]{6}$/i, `${meta.id} has an invalid iconColor`);
+    }
   }
 });
 
