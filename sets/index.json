@@ -134,6 +134,7 @@
     "brand": "Disney and Pixar Toy Story 5",
     "packaging": "Blue backpack capsule, one figure inside",
     "emoji": "🎒",
+    "iconColor": "#2e9de6",
     "total": 8,
     "codeFile": "codes-ts-small-stars-s1.json"
   },
@@ -144,6 +145,7 @@
     "brand": "Disney and Pixar Toy Story 5",
     "packaging": "Green backpack capsule, one figure inside",
     "emoji": "🎒",
+    "iconColor": "#63c947",
     "total": 8,
     "codeFile": "codes-ts-small-stars-s2.json"
   },
@@ -154,6 +156,7 @@
     "brand": "Disney and Pixar Toy Story 5",
     "packaging": "Purple backpack capsule, one figure inside",
     "emoji": "🎒",
+    "iconColor": "#8d58d6",
     "total": 8,
     "codeFile": "codes-ts-small-stars-s3.json"
   }

@@ -557,10 +557,15 @@
       const have = Object.values(progress).filter((p) => p && p.have).length;
       const li = document.createElement('li');
       const button = document.createElement('button');
+      const iconColor = /^#[0-9a-f]{6}$/i.test(meta.iconColor || '') ? meta.iconColor : '';
+      const badge = iconColor
+        ? `<span class="set-badge set-badge-coloured" style="--set-icon-color:${iconColor}">`
+          + '<span class="backpack-icon" aria-hidden="true"></span></span>'
+        : `<span class="set-badge">${escapeHtml(meta.emoji || '📦')}</span>`;
       button.type = 'button';
       button.className = 'set-card';
       button.innerHTML = `
-        <span class="set-badge">${escapeHtml(meta.emoji || '📦')}</span>
+        ${badge}
         <span class="set-card-body">
           <h2>${escapeHtml(meta.name)}</h2>
           <p>${escapeHtml(meta.brand)}${meta.packaging ? ' · ' + escapeHtml(meta.packaging) : ''}</p>
