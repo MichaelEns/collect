@@ -15,7 +15,7 @@
  * tests/install.test.mjs asserts this list covers every set in the index, so a
  * new series cannot be added without also being made available offline.
  */
-const CACHE = 'collect-v13';
+const CACHE = 'collect-v14';
 
 const SHELL = [
   '/collect/',
@@ -77,8 +77,14 @@ self.addEventListener('install', (event) => {
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys()
-      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k))))
-      .then(() => self.clients.claim())
+      .then(async (keys) => {
+        const replacingOldCache = keys.some((key) => /^collect-v\d+$/.test(key) && key !== CACHE);
+        await Promise.all(keys.filter((key) => key !== CACHE).map((key) => caches.delete(key)));
+        await self.clients.claim();
+        if (!replacingOldCache) return;
+        const windows = await self.clients.matchAll({ type: 'window' });
+        await Promise.all(windows.map((client) => client.navigate(client.url).catch(() => null)));
+      })
   );
 });
 
