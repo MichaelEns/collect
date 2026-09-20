@@ -5,6 +5,7 @@
  * two letters. His own photo takes over the moment he finds one.
  *
  *   COLLECT_FAMILY_CODE="four words here" node tools/seed_catalogue.cjs ./pics
+ *   COLLECT_FAMILY_CODE="four words here" node tools/seed_catalogue.cjs ./new-pics --keep-existing
  *
  * Why this is a tool and not part of the app:
  *
@@ -51,6 +52,7 @@ const EXTS = ['.jpg', '.jpeg', '.png', '.webp'];
 
 const args = process.argv.slice(2);
 const dryRun = args.includes('--dry-run');
+const keepExisting = args.includes('--keep-existing');
 const dir = args.find((a) => !a.startsWith('--'));
 
 /*
@@ -67,7 +69,8 @@ function die(message, exitCode = 2) {
 const sleep = (ms) => new Promise((resolve) => { setTimeout(resolve, ms); });
 
 if (!dir) {
-  die('usage: COLLECT_FAMILY_CODE="..." node tools/seed_catalogue.cjs <folder> [--dry-run]');
+  die('usage: COLLECT_FAMILY_CODE="..." node tools/seed_catalogue.cjs <folder>'
+    + ' [--dry-run] [--keep-existing]');
 }
 if (!code) {
   die('COLLECT_FAMILY_CODE is not set.\n'
@@ -261,7 +264,7 @@ async function main() {
       headers: { 'X-Family-Code': code },
     });
     if (response.status === 401) die('\nthat family code was not recognised.', 3);
-    if (response.ok) {
+    if (response.ok && !keepExisting) {
       const body = await response.json().catch(() => ({}));
       stale = Object.keys(body.catalogue || {}).filter((k) => !shouldExist.has(k));
     }
