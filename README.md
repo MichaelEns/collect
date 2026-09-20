@@ -136,6 +136,15 @@ uploads a folder you assembled and are entitled to use. And `.gitignore` blocks
 the staging folders, because the failure that matters is not a bad decision but
 an absent-minded `git add`.
 
+By default, the folder is the complete catalogue: pictures previously uploaded
+but no longer present are removed. Use `--keep-existing` when adding a partial
+folder, such as a newly released series, so unrelated catalogue pictures remain:
+
+```powershell
+$env:COLLECT_FAMILY_CODE = "four words here"
+node tools/seed_catalogue.cjs .\catalogue-pics --keep-existing
+```
+
 ## How trustworthy is the data?
 
 Series 1 and 2 were built from the Disney Doorables community wiki, HobbyDB and
