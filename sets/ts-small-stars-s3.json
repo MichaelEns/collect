@@ -1,0 +1,53 @@
+{
+ "id": "ts-small-stars-s3",
+ "brand": "Disney and Pixar Toy Story 5",
+ "name": "Small Stars Series 3",
+ "packaging": "Purple backpack capsule, one figure inside",
+ "packagingNote": "This is a Mattel Small Stars backpack rather than a Disney Doorables pack, and it holds ONE figure.",
+ "emoji": "🎒",
+ "official": "https://shop.mattel.com/products/disney-and-pixar-toy-story-5-small-stars-mini-figures-jkv59",
+ "itemNumber": "JKV59",
+ "released": "2026",
+ "figuresPerCapsule": 1,
+ "verified": false,
+ "sourced": "Eight figures, transcribed from Mattel's printed Series 3 display checklist and checked against collector code guides and individual figure listings. Mattel confirms the product but does not publish each wave's roster, so this remains community-sourced and is not marked verified.",
+ "rarityNote": "Mattel says each wave has one hard-to-find figure, but the material reviewed does not identify which one, so no rarity is shown.",
+ "figures": [
+  {
+   "id": "hamm",
+   "name": "Hamm"
+  },
+  {
+   "id": "jessie",
+   "name": "Jessie"
+  },
+  {
+   "id": "slinky-dog",
+   "name": "Slinky Dog"
+  },
+  {
+   "id": "buzz-lightyear",
+   "name": "Buzz Lightyear"
+  },
+  {
+   "id": "woody",
+   "name": "Woody"
+  },
+  {
+   "id": "atlas",
+   "name": "Atlas"
+  },
+  {
+   "id": "snappy",
+   "name": "Snappy"
+  },
+  {
+   "id": "karen-beverly",
+   "name": "Karen Beverly"
+  }
+ ],
+ "codeFile": "codes-ts-small-stars-s3.json",
+ "codeNote": "The three-digit figure code is printed on the bottom of the backing card after the production batch text. Enter the final three digits, such as 012. Collectors mapped these codes; Mattel has not published them, so they are unofficial and may differ in another production run.",
+ "codeLink": "https://www.tiktok.com/@magicallysavannah/video/7655871608602529055",
+ "codeLinkLabel": "@magicallysavannah's Series 3 code guide"
+}

@@ -1,0 +1,52 @@
+{
+ "id": "ts-small-stars-s1",
+ "brand": "Disney and Pixar Toy Story 5",
+ "name": "Small Stars Series 1",
+ "packaging": "Blue backpack capsule, one figure inside",
+ "packagingNote": "This is a Mattel Small Stars backpack rather than a Disney Doorables pack, and it holds ONE figure.",
+ "emoji": "🎒",
+ "official": "https://shop.mattel.com/products/disney-and-pixar-toy-story-5-small-stars-mini-figures-jkv59",
+ "itemNumber": "JKV59",
+ "released": "2026",
+ "figuresPerCapsule": 1,
+ "verified": false,
+ "sourced": "Eight figures, transcribed from the complete Series 1 lineup shown by Plastic Soul and cross-checked against the figures opened in the same video. Mattel confirms the product but does not publish each wave's roster, so this remains community-sourced and is not marked verified.",
+ "rarityNote": "Mattel says each wave has one hard-to-find figure, but the material reviewed does not identify which one, so no rarity is shown.",
+ "countNote": "Only three Series 1 codes were directly demonstrated, so the code finder is withheld until every figure can be covered reliably.",
+ "figures": [
+  {
+   "id": "woody",
+   "name": "Woody"
+  },
+  {
+   "id": "lotso",
+   "name": "Lotso"
+  },
+  {
+   "id": "hamm",
+   "name": "Hamm"
+  },
+  {
+   "id": "bo-peep",
+   "name": "Bo Peep"
+  },
+  {
+   "id": "rex",
+   "name": "Rex"
+  },
+  {
+   "id": "jessie",
+   "name": "Jessie"
+  },
+  {
+   "id": "bullseye",
+   "name": "Bullseye"
+  },
+  {
+   "id": "slinky-dog",
+   "name": "Slinky Dog"
+  }
+ ],
+ "codeLink": "https://www.youtube.com/shorts/SkY-EI-IBoI",
+ "codeLinkLabel": "Plastic Soul's complete Series 1 video"
+}

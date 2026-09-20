@@ -31,16 +31,18 @@ have Boba Fett.
 
 ## Telling what is in a capsule before you buy it
 
-There is a short code moulded into the plastic on the **bottom** of every
-capsule — a letter and some numbers, like `A001`. Type it in and the app names
-the four figures inside, and says how many of them you still need.
+There is a short code on every package. Star Wars capsules mould it into the
+plastic on the **bottom** — a letter and some numbers, like `A001`. Small Stars
+prints the identifying number after the production text on the bottom of the
+backing card. Type it in and the app names the figures inside, and says how many
+of them you still need.
 
-The letter at the front is the **batch**. Each batch has its own numbering, so
-`A001` and `L002` are different capsules from different production runs. That
-is genuinely why an unknown code shows up occasionally: it is from a batch
-nobody has written down yet, not a bug.
+For codes with a letter at the front, that letter is the **batch**. Each batch
+has its own numbering, so `A001` and `L002` are different capsules from
+different production runs. That is genuinely why an unknown code shows up
+occasionally: it is from a batch nobody has written down yet, not a bug.
 
-**1,142 codes ship with the app**, across thirteen sets:
+**1,158 codes ship with the app**, across sixteen sets:
 
 | Set | Codes | Batches | Figures covered |
 | --- | --- | --- | --- |
@@ -57,10 +59,14 @@ nobody has written down yet, not a bug.
 | Grogu Mini Capsule | — | — | checklist only |
 | Grogu Moments | 34 | 6 (A–F) | 8 of 8 |
 | Toy Story | 156 | 2 | 15 of 15 |
+| Small Stars Series 1 | — | — | checklist only |
+| Small Stars Series 2 | 8 | — | 8 of 8 |
+| Small Stars Series 3 | 8 | — | 8 of 8 |
 
 Not every set holds four figures. A Cruisers pack holds one, a Grogu Moments
 box holds one scene, a Toy Story bag holds three and a Squish Squadron bag
-holds five — so the app takes the number from the data rather than assuming.
+holds five. A Small Stars backpack holds one figure. The app takes the number
+from the data rather than assuming.
 
 Where collectors disagreed about a code — 32 of them — the app shows **every**
 version reported rather than quietly picking one.
@@ -141,6 +147,13 @@ is why the later three are trusted from the sheet alone.
 Just Play never published a checklist online and has taken several of its own
 product pages down, so there is no official source left to check against. The
 app says so, on screen, under the progress bar.
+
+The Toy Story 5 Small Stars rosters were transcribed from Mattel's printed
+display checklists and complete-collection videos. Series 2 and 3 code guides
+cover every figure; only three Series 1 mappings were directly demonstrated, so
+Series 1 remains checklist-only rather than filling the gaps by inference. All
+three are marked unverified because Mattel's product page describes the line
+but does not publish the wave rosters or codes.
 
 Where something is *not* confirmed, the app says that too, in the same place:
 

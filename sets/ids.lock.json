@@ -1,6 +1,6 @@
 {
  "note": "Ids that progress is stored against. Additions are fine; a removal or rename orphans a tick. Run tools/lock_ids.cjs --write only when the change is understood and intended.",
- "updated": "2026-08-09",
+ "updated": "2026-09-20",
  "sets": {
   "sw-cruisers-s1": [
    "ahsoka-tano",
@@ -287,6 +287,36 @@
    "wheezy",
    "woody",
    "zurg"
+  ],
+  "ts-small-stars-s1": [
+   "bo-peep",
+   "bullseye",
+   "hamm",
+   "jessie",
+   "lotso",
+   "rex",
+   "slinky-dog",
+   "woody"
+  ],
+  "ts-small-stars-s2": [
+   "bo-peep",
+   "bullseye",
+   "buzz-lightyear",
+   "forky",
+   "jessie",
+   "lilypad",
+   "rex",
+   "woody"
+  ],
+  "ts-small-stars-s3": [
+   "atlas",
+   "buzz-lightyear",
+   "hamm",
+   "jessie",
+   "karen-beverly",
+   "slinky-dog",
+   "snappy",
+   "woody"
   ]
  }
 }

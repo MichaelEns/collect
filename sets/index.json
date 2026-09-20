@@ -126,5 +126,34 @@
     "emoji": "🤠",
     "total": 15,
     "codeFile": "codes-ts-rerelease.json"
+  },
+  {
+    "id": "ts-small-stars-s1",
+    "file": "ts-small-stars-s1.json",
+    "name": "Small Stars Series 1",
+    "brand": "Disney and Pixar Toy Story 5",
+    "packaging": "Blue backpack capsule, one figure inside",
+    "emoji": "🎒",
+    "total": 8
+  },
+  {
+    "id": "ts-small-stars-s2",
+    "file": "ts-small-stars-s2.json",
+    "name": "Small Stars Series 2",
+    "brand": "Disney and Pixar Toy Story 5",
+    "packaging": "Green backpack capsule, one figure inside",
+    "emoji": "🎒",
+    "total": 8,
+    "codeFile": "codes-ts-small-stars-s2.json"
+  },
+  {
+    "id": "ts-small-stars-s3",
+    "file": "ts-small-stars-s3.json",
+    "name": "Small Stars Series 3",
+    "brand": "Disney and Pixar Toy Story 5",
+    "packaging": "Purple backpack capsule, one figure inside",
+    "emoji": "🎒",
+    "total": 8,
+    "codeFile": "codes-ts-small-stars-s3.json"
   }
 ]
