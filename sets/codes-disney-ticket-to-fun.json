@@ -1,0 +1,5174 @@
+{
+  "setId": "disney-ticket-to-fun",
+  "source": {
+    "title": "Ticket to Fun code spreadsheet",
+    "credit": "Disney Doorables collecting community",
+    "url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTKKIoEPPo4cpdp4uBOzwfMMKDFCspT3x5HJDchW9uC1qL1wI1oKRZfWsRvFif8WM2RVBThaRqsWrrH/pubhtml?gid=186500807&single=true",
+    "retrieved": "2026-09-21"
+  },
+  "batches": {
+    "#": 1,
+    "A": 58,
+    "B": 63,
+    "C": 70,
+    "D": 77,
+    "E": 87,
+    "F": 68,
+    "G": 70,
+    "H": 69,
+    "J": 70,
+    "K": 69,
+    "L": 38,
+    "N": 69
+  },
+  "codes": {
+    "075": [
+      "emile",
+      "tinker-bell"
+    ],
+    "A013": [
+      "buzz-lightyear",
+      "luisa",
+      "minnie-mouse",
+      "timothy-mouse",
+      "tinker-bell"
+    ],
+    "A014": [
+      "alice",
+      "chip",
+      "ducky",
+      "tiana",
+      "tramp"
+    ],
+    "A015": [
+      "jack-skellington",
+      "lotso",
+      "olaf",
+      "oogie-boogie",
+      "pinocchio",
+      "remy"
+    ],
+    "A018": [
+      "alien",
+      "daisy-duck",
+      "remy",
+      "tramp",
+      "winnie-the-pooh"
+    ],
+    "A019": [
+      "angel",
+      "bunny",
+      "jasmine",
+      "minnie-mouse",
+      "olaf"
+    ],
+    "A020": [
+      "dale",
+      "heimlich",
+      "mad-hatter",
+      "prince-naveen",
+      "sulley"
+    ],
+    "A041": [
+      "dale",
+      "winnie-the-pooh"
+    ],
+    "A042": [
+      "cruella-de-vil",
+      "hamm"
+    ],
+    "A043": [
+      "ducky",
+      "goofy",
+      "heimlich"
+    ],
+    "A044": [
+      "alien",
+      "minnie-mouse"
+    ],
+    "A045": [
+      "ariel",
+      "pinocchio",
+      "timothy-mouse"
+    ],
+    "A046": [
+      "cheshire-cat",
+      "elsa"
+    ],
+    "A047": [
+      "angel",
+      "lucifer"
+    ],
+    "A048": [
+      "lady",
+      "rapunzel"
+    ],
+    "A049": [
+      "emile",
+      "tinker-bell"
+    ],
+    "A050": [
+      "mike-wazowski",
+      "piglet",
+      "rapunzel"
+    ],
+    "A051": [
+      "jessie",
+      "prince-naveen"
+    ],
+    "A052": [
+      "belle",
+      "daisy-duck"
+    ],
+    "A053": [
+      "marie",
+      "tiana"
+    ],
+    "A054": [
+      "luisa",
+      "remy"
+    ],
+    "A055": [
+      "alice",
+      "olaf"
+    ],
+    "A056": [
+      "leroy",
+      "sulley"
+    ],
+    "A057": [
+      "leroy",
+      "prince-naveen"
+    ],
+    "A058": [
+      "daisy-duck",
+      "dale",
+      "eeyore"
+    ],
+    "A059": [
+      "elsa",
+      "stitch"
+    ],
+    "A060": [
+      "emile",
+      "lotso"
+    ],
+    "A061": [
+      "bunny",
+      "piglet"
+    ],
+    "A062": [
+      "ariel",
+      "evil-queen"
+    ],
+    "A063": [
+      "oogie-boogie",
+      "sulley",
+      "tramp"
+    ],
+    "A064": [
+      "finnick",
+      "rapunzel"
+    ],
+    "A065": [
+      "goofy",
+      "jessie"
+    ],
+    "A066": [
+      "minnie-mouse",
+      "winnie-the-pooh"
+    ],
+    "A067": [
+      "angel",
+      "donald-duck"
+    ],
+    "A068": [
+      "olaf",
+      "pinocchio"
+    ],
+    "A069": [
+      "ducky",
+      "mad-hatter"
+    ],
+    "A070": [
+      "ariel",
+      "lucifer",
+      "tiana"
+    ],
+    "A071": [
+      "cheshire-cat",
+      "tinker-bell"
+    ],
+    "A072": [
+      "buzz-lightyear",
+      "timothy-mouse"
+    ],
+    "A073": [
+      "cruella-de-vil",
+      "tigger"
+    ],
+    "A074": [
+      "jack-skellington",
+      "remy"
+    ],
+    "A075": [
+      "goofy",
+      "pinocchio"
+    ],
+    "A076": [
+      "chip",
+      "rapunzel"
+    ],
+    "A077": [
+      "ariel",
+      "oogie-boogie"
+    ],
+    "A078": [
+      "ducky",
+      "eeyore"
+    ],
+    "A079": [
+      "evil-queen",
+      "piglet",
+      "stitch"
+    ],
+    "A080": [
+      "daisy-duck",
+      "winnie-the-pooh"
+    ],
+    "A081": [
+      "lotso",
+      "marie"
+    ],
+    "A082": [
+      "belle",
+      "minnie-mouse"
+    ],
+    "A083": [
+      "dale",
+      "emile"
+    ],
+    "A084": [
+      "hamm",
+      "tramp"
+    ],
+    "A085": [
+      "luisa",
+      "sulley"
+    ],
+    "A086": [
+      "jasmine",
+      "prince-naveen",
+      "timothy-mouse"
+    ],
+    "A087": [
+      "angel",
+      "finnick"
+    ],
+    "A088": [
+      "bunny",
+      "remy",
+      "tinker-bell"
+    ],
+    "A089": [
+      "alice",
+      "elsa"
+    ],
+    "A090": [
+      "cruella-de-vil",
+      "heimlich"
+    ],
+    "A091": [
+      "alien",
+      "tiana"
+    ],
+    "A092": [
+      "mad-hatter",
+      "olaf"
+    ],
+    "B001": [
+      "ducky",
+      "elsa",
+      "evil-queen",
+      "stitch",
+      "tinker-bell"
+    ],
+    "B007": [
+      "jack-skellington",
+      "lotso",
+      "olaf",
+      "oogie-boogie",
+      "pinocchio",
+      "remy"
+    ],
+    "B010": [
+      "alien",
+      "goofy",
+      "pinocchio",
+      "remy",
+      "tinker-bell"
+    ],
+    "B011": [
+      "belle",
+      "daisy-duck",
+      "elsa",
+      "mike-wazowski",
+      "timothy-mouse",
+      "winnie-the-pooh"
+    ],
+    "B015": [
+      "cruella-de-vil",
+      "donald-duck",
+      "minnie-mouse",
+      "olaf",
+      "stitch"
+    ],
+    "B018": [
+      "dale",
+      "heimlich",
+      "lady",
+      "piglet",
+      "rapunzel"
+    ],
+    "B030": [
+      "bunny",
+      "dale",
+      "evil-queen",
+      "goofy",
+      "piglet"
+    ],
+    "B032": [
+      "jack-skellington",
+      "minnie-mouse"
+    ],
+    "B035": [
+      "dale",
+      "lucifer"
+    ],
+    "B041": [
+      "alice",
+      "leroy",
+      "oogie-boogie",
+      "prince-naveen",
+      "sulley",
+      "timothy-mouse"
+    ],
+    "B045": [
+      "elsa",
+      "stitch"
+    ],
+    "B047": [
+      "finnick",
+      "rapunzel"
+    ],
+    "B052": [
+      "mike-wazowski",
+      "piglet",
+      "rapunzel"
+    ],
+    "B053": [
+      "jessie",
+      "prince-naveen"
+    ],
+    "B056": [
+      "luisa",
+      "remy"
+    ],
+    "B057": [
+      "alice",
+      "olaf"
+    ],
+    "B061": [
+      "ariel",
+      "cruella-de-vil",
+      "leroy",
+      "lucifer",
+      "pinocchio",
+      "rapunzel",
+      "tiana"
+    ],
+    "B062": [
+      "emile",
+      "tinker-bell"
+    ],
+    "B063": [
+      "angel",
+      "lucifer"
+    ],
+    "B064": [
+      "ariel",
+      "pinocchio",
+      "timothy-mouse"
+    ],
+    "B065": [
+      "ducky",
+      "goofy",
+      "heimlich"
+    ],
+    "B066": [
+      "dale",
+      "winnie-the-pooh"
+    ],
+    "B067": [
+      "buzz-lightyear",
+      "tramp"
+    ],
+    "B072": [
+      "heimlich",
+      "rapunzel"
+    ],
+    "B073": [
+      "chip",
+      "prince-naveen"
+    ],
+    "B074": [
+      "elsa",
+      "jessie",
+      "remy"
+    ],
+    "B075": [
+      "buzz-lightyear",
+      "cruella-de-vil"
+    ],
+    "B078": [
+      "cruella-de-vil",
+      "hamm"
+    ],
+    "B079": [
+      "cheshire-cat",
+      "elsa"
+    ],
+    "B080": [
+      "lady",
+      "rapunzel"
+    ],
+    "B083": [
+      "dale",
+      "rapunzel"
+    ],
+    "B084": [
+      "belle",
+      "minnie-mouse"
+    ],
+    "B085": [
+      "jasmine",
+      "prince-naveen",
+      "timothy-mouse"
+    ],
+    "B086": [
+      "cruella-de-vil",
+      "heimlich"
+    ],
+    "B090": [
+      "ducky",
+      "mad-hatter"
+    ],
+    "B092": [
+      "ariel",
+      "evil-queen"
+    ],
+    "B093": [
+      "minnie-mouse",
+      "winnie-the-pooh"
+    ],
+    "B094": [
+      "cheshire-cat",
+      "tinker-bell"
+    ],
+    "B096": [
+      "jack-skellington",
+      "remy"
+    ],
+    "B098": [
+      "buzz-lightyear",
+      "timothy-mouse"
+    ],
+    "B099": [
+      "angel",
+      "donald-duck"
+    ],
+    "B106": [
+      "ariel",
+      "lucifer",
+      "tiana"
+    ],
+    "B107": [
+      "goofy",
+      "jessie"
+    ],
+    "B108": [
+      "bunny",
+      "piglet"
+    ],
+    "B109": [
+      "leroy",
+      "prince-naveen"
+    ],
+    "B110": [
+      "dale",
+      "emile"
+    ],
+    "B112": [
+      "ariel",
+      "tigger"
+    ],
+    "B114": [
+      "daisy-duck",
+      "mike-wazowski"
+    ],
+    "B115": [
+      "alien",
+      "minnie-mouse"
+    ],
+    "B116": [
+      "jasmine",
+      "tramp"
+    ],
+    "B117": [
+      "lotso",
+      "oogie-boogie"
+    ],
+    "B118": [
+      "angel",
+      "eeyore",
+      "olaf"
+    ],
+    "B120": [
+      "stitch",
+      "tiana"
+    ],
+    "B121": [
+      "ariel",
+      "oogie-boogie"
+    ],
+    "B123": [
+      "ducky",
+      "eeyore"
+    ],
+    "B125": [
+      "daisy-duck",
+      "winnie-the-pooh"
+    ],
+    "B127": [
+      "hamm",
+      "tramp"
+    ],
+    "B129": [
+      "bunny",
+      "remy",
+      "tinker-bell"
+    ],
+    "B131": [
+      "mad-hatter",
+      "olaf"
+    ],
+    "B148": [
+      "luisa",
+      "sulley"
+    ],
+    "B149": [
+      "angel",
+      "finnick"
+    ],
+    "B166": [
+      "lotso",
+      "marie"
+    ],
+    "B179": [
+      "evil-queen",
+      "piglet",
+      "stitch"
+    ],
+    "C003": [
+      "ducky",
+      "elsa",
+      "evil-queen",
+      "stitch",
+      "tinker-bell"
+    ],
+    "C005": [
+      "jack-skellington",
+      "lotso",
+      "olaf",
+      "oogie-boogie",
+      "pinocchio",
+      "remy"
+    ],
+    "C008": [
+      "alien",
+      "goofy",
+      "pinocchio",
+      "remy",
+      "tinker-bell"
+    ],
+    "C012": [
+      "minnie-mouse",
+      "winnie-the-pooh"
+    ],
+    "C013": [
+      "olaf",
+      "pinocchio"
+    ],
+    "C014": [
+      "angel",
+      "donald-duck"
+    ],
+    "C018": [
+      "belle",
+      "daisy-duck",
+      "elsa",
+      "mike-wazowski",
+      "timothy-mouse",
+      "winnie-the-pooh"
+    ],
+    "C019": [
+      "ariel",
+      "lucifer",
+      "tiana"
+    ],
+    "C020": [
+      "elsa",
+      "stitch"
+    ],
+    "C023": [
+      "goofy",
+      "jessie"
+    ],
+    "C024": [
+      "cheshire-cat",
+      "tinker-bell"
+    ],
+    "C025": [
+      "cruella-de-vil",
+      "donald-duck",
+      "minnie-mouse",
+      "olaf",
+      "stitch"
+    ],
+    "C026": [
+      "ariel",
+      "cruella-de-vil",
+      "eeyore",
+      "remy",
+      "tigger"
+    ],
+    "C030": [
+      "angel",
+      "finnick",
+      "mad-hatter",
+      "piglet",
+      "rapunzel"
+    ],
+    "C032": [
+      "elsa",
+      "emile",
+      "lotso",
+      "marie",
+      "rapunzel"
+    ],
+    "C034": [
+      "alice",
+      "angel",
+      "chip",
+      "daisy-duck",
+      "lucifer",
+      "tiana"
+    ],
+    "C036": [
+      "jack-skellington",
+      "minnie-mouse"
+    ],
+    "C037": [
+      "buzz-lightyear",
+      "daisy-duck",
+      "jack-skellington",
+      "minnie-mouse",
+      "olaf"
+    ],
+    "C040": [
+      "bunny",
+      "minnie-mouse"
+    ],
+    "C041": [
+      "bunny",
+      "dale",
+      "evil-queen",
+      "goofy",
+      "piglet"
+    ],
+    "C042": [
+      "ariel",
+      "tigger"
+    ],
+    "C046": [
+      "daisy-duck",
+      "mike-wazowski"
+    ],
+    "C047": [
+      "goofy",
+      "pinocchio"
+    ],
+    "C049": [
+      "chip",
+      "rapunzel"
+    ],
+    "C050": [
+      "dale",
+      "prince-naveen"
+    ],
+    "C051": [
+      "ariel",
+      "oogie-boogie"
+    ],
+    "C053": [
+      "leroy",
+      "prince-naveen"
+    ],
+    "C054": [
+      "jasmine",
+      "tramp"
+    ],
+    "C057": [
+      "daisy-duck",
+      "winnie-the-pooh"
+    ],
+    "C058": [
+      "elsa",
+      "jessie",
+      "remy"
+    ],
+    "C060": [
+      "alice",
+      "lotso"
+    ],
+    "C061": [
+      "belle",
+      "minnie-mouse"
+    ],
+    "C062": [
+      "angel",
+      "eeyore",
+      "olaf"
+    ],
+    "C063": [
+      "dale",
+      "emile"
+    ],
+    "C064": [
+      "belle",
+      "sulley"
+    ],
+    "C065": [
+      "hamm",
+      "tramp"
+    ],
+    "C066": [
+      "buzz-lightyear",
+      "cruella-de-vil"
+    ],
+    "C067": [
+      "luisa",
+      "sulley"
+    ],
+    "C068": [
+      "donald-duck",
+      "timothy-mouse"
+    ],
+    "C069": [
+      "jasmine",
+      "prince-naveen",
+      "timothy-mouse"
+    ],
+    "C070": [
+      "stitch",
+      "tiana"
+    ],
+    "C073": [
+      "bunny",
+      "remy",
+      "tinker-bell"
+    ],
+    "C074": [
+      "alice",
+      "leroy",
+      "oogie-boogie",
+      "prince-naveen",
+      "sulley",
+      "timothy-mouse"
+    ],
+    "C075": [
+      "alice",
+      "elsa"
+    ],
+    "C077": [
+      "ariel",
+      "evil-queen"
+    ],
+    "C079": [
+      "alien",
+      "tiana"
+    ],
+    "C081": [
+      "bunny",
+      "piglet"
+    ],
+    "C083": [
+      "emile",
+      "lotso"
+    ],
+    "C088": [
+      "dale",
+      "emile",
+      "lady",
+      "rapunzel",
+      "sulley"
+    ],
+    "C099": [
+      "buzz-lightyear",
+      "tramp"
+    ],
+    "C104": [
+      "lotso",
+      "oogie-boogie"
+    ],
+    "C109": [
+      "dale",
+      "winnie-the-pooh"
+    ],
+    "C114": [
+      "cruella-de-vil",
+      "hamm"
+    ],
+    "C119": [
+      "ducky",
+      "goofy",
+      "heimlich"
+    ],
+    "C124": [
+      "alien",
+      "minnie-mouse"
+    ],
+    "C129": [
+      "ariel",
+      "pinocchio",
+      "timothy-mouse"
+    ],
+    "C142": [
+      "cheshire-cat",
+      "elsa"
+    ],
+    "C145": [
+      "angel",
+      "lucifer"
+    ],
+    "C148": [
+      "lady",
+      "rapunzel"
+    ],
+    "C151": [
+      "emile",
+      "tinker-bell"
+    ],
+    "C153": [
+      "ducky",
+      "eeyore"
+    ],
+    "C154": [
+      "mike-wazowski",
+      "piglet",
+      "rapunzel"
+    ],
+    "C155": [
+      "evil-queen",
+      "piglet",
+      "stitch"
+    ],
+    "C156": [
+      "jessie",
+      "prince-naveen"
+    ],
+    "C159": [
+      "belle",
+      "daisy-duck"
+    ],
+    "C162": [
+      "marie",
+      "tiana"
+    ],
+    "C165": [
+      "luisa",
+      "remy"
+    ],
+    "C168": [
+      "alice",
+      "olaf"
+    ],
+    "C177": [
+      "cruella-de-vil",
+      "heimlich"
+    ],
+    "C181": [
+      "mad-hatter",
+      "olaf"
+    ],
+    "D003": [
+      "alice",
+      "chip",
+      "ducky",
+      "tiana",
+      "tramp"
+    ],
+    "D006": [
+      "dale",
+      "heimlich",
+      "lady",
+      "piglet",
+      "rapunzel"
+    ],
+    "D007": [
+      "alien",
+      "daisy-duck",
+      "emile",
+      "tramp",
+      "winnie-the-pooh"
+    ],
+    "D008": [
+      "buzz-lightyear",
+      "luisa",
+      "minnie-mouse",
+      "timothy-mouse",
+      "tinker-bell"
+    ],
+    "D011": [
+      "ducky",
+      "elsa",
+      "evil-queen",
+      "stitch",
+      "tinker-bell"
+    ],
+    "D012": [
+      "ariel",
+      "cheshire-cat",
+      "cruella-de-vil",
+      "daisy-duck",
+      "eeyore"
+    ],
+    "D014": [
+      "jack-skellington",
+      "lotso",
+      "olaf",
+      "oogie-boogie",
+      "pinocchio",
+      "remy"
+    ],
+    "D016": [
+      "olaf",
+      "pinocchio"
+    ],
+    "D018": [
+      "angel",
+      "bunny",
+      "jasmine",
+      "minnie-mouse",
+      "olaf"
+    ],
+    "D019": [
+      "ducky",
+      "mad-hatter"
+    ],
+    "D021": [
+      "belle",
+      "dale",
+      "goofy",
+      "hamm",
+      "heimlich",
+      "prince-naveen",
+      "sulley"
+    ],
+    "D022": [
+      "ariel",
+      "lucifer",
+      "tiana"
+    ],
+    "D024": [
+      "belle",
+      "daisy-duck",
+      "elsa",
+      "mike-wazowski",
+      "timothy-mouse",
+      "winnie-the-pooh"
+    ],
+    "D025": [
+      "cruella-de-vil",
+      "donald-duck",
+      "minnie-mouse",
+      "olaf",
+      "stitch"
+    ],
+    "D026": [
+      "goofy",
+      "jessie"
+    ],
+    "D027": [
+      "cheshire-cat",
+      "tinker-bell"
+    ],
+    "D028": [
+      "bunny",
+      "dale",
+      "evil-queen",
+      "goofy",
+      "piglet"
+    ],
+    "D030": [
+      "donald-duck",
+      "hamm",
+      "jessie",
+      "minnie-mouse",
+      "olaf",
+      "stitch",
+      "timothy-mouse"
+    ],
+    "D033": [
+      "alice",
+      "leroy",
+      "oogie-boogie",
+      "prince-naveen",
+      "sulley",
+      "timothy-mouse"
+    ],
+    "D034": [
+      "leroy",
+      "sulley"
+    ],
+    "D038": [
+      "cruella-de-vil",
+      "tigger"
+    ],
+    "D039": [
+      "jack-skellington",
+      "minnie-mouse"
+    ],
+    "D042": [
+      "angel",
+      "finnick",
+      "mad-hatter",
+      "piglet",
+      "rapunzel"
+    ],
+    "D043": [
+      "bunny",
+      "goofy"
+    ],
+    "D044": [
+      "ariel",
+      "cruella-de-vil",
+      "eeyore",
+      "remy",
+      "tigger"
+    ],
+    "D049": [
+      "daisy-duck",
+      "mike-wazowski"
+    ],
+    "D051": [
+      "dale",
+      "lucifer"
+    ],
+    "D052": [
+      "chip",
+      "rapunzel"
+    ],
+    "D054": [
+      "ariel",
+      "oogie-boogie"
+    ],
+    "D057": [
+      "jasmine",
+      "tramp"
+    ],
+    "D059": [
+      "hamm",
+      "piglet"
+    ],
+    "D060": [
+      "daisy-duck",
+      "winnie-the-pooh"
+    ],
+    "D062": [
+      "elsa",
+      "stitch"
+    ],
+    "D063": [
+      "alice",
+      "lotso"
+    ],
+    "D064": [
+      "belle",
+      "minnie-mouse"
+    ],
+    "D065": [
+      "angel",
+      "eeyore",
+      "olaf"
+    ],
+    "D066": [
+      "emile",
+      "lotso"
+    ],
+    "D067": [
+      "belle",
+      "sulley"
+    ],
+    "D068": [
+      "hamm",
+      "tramp"
+    ],
+    "D069": [
+      "buzz-lightyear",
+      "cruella-de-vil"
+    ],
+    "D070": [
+      "luisa",
+      "sulley"
+    ],
+    "D071": [
+      "donald-duck",
+      "timothy-mouse"
+    ],
+    "D072": [
+      "bunny",
+      "piglet"
+    ],
+    "D073": [
+      "stitch",
+      "tiana"
+    ],
+    "D074": [
+      "leroy",
+      "prince-naveen"
+    ],
+    "D076": [
+      "bunny",
+      "remy",
+      "tinker-bell"
+    ],
+    "D078": [
+      "alice",
+      "elsa"
+    ],
+    "D079": [
+      "ariel",
+      "evil-queen"
+    ],
+    "D080": [
+      "cruella-de-vil",
+      "heimlich"
+    ],
+    "D082": [
+      "alien",
+      "tiana"
+    ],
+    "D084": [
+      "finnick",
+      "rapunzel"
+    ],
+    "D088": [
+      "jack-skellington",
+      "remy"
+    ],
+    "D102": [
+      "buzz-lightyear",
+      "tramp"
+    ],
+    "D107": [
+      "lotso",
+      "oogie-boogie"
+    ],
+    "D112": [
+      "dale",
+      "winnie-the-pooh"
+    ],
+    "D117": [
+      "cruella-de-vil",
+      "hamm"
+    ],
+    "D122": [
+      "ducky",
+      "goofy",
+      "heimlich"
+    ],
+    "D127": [
+      "alien",
+      "minnie-mouse"
+    ],
+    "D132": [
+      "ariel",
+      "pinocchio",
+      "timothy-mouse"
+    ],
+    "D134": [
+      "jack-skellington",
+      "remy"
+    ],
+    "D145": [
+      "cheshire-cat",
+      "elsa"
+    ],
+    "D148": [
+      "angel",
+      "lucifer"
+    ],
+    "D151": [
+      "lady",
+      "rapunzel"
+    ],
+    "D153": [
+      "hamm",
+      "jessie"
+    ],
+    "D154": [
+      "emile",
+      "tinker-bell"
+    ],
+    "D157": [
+      "mike-wazowski",
+      "piglet",
+      "rapunzel"
+    ],
+    "D158": [
+      "evil-queen",
+      "piglet",
+      "stitch"
+    ],
+    "D159": [
+      "jessie",
+      "prince-naveen"
+    ],
+    "D162": [
+      "belle",
+      "daisy-duck"
+    ],
+    "D165": [
+      "marie",
+      "tiana"
+    ],
+    "D166": [
+      "dale",
+      "emile"
+    ],
+    "D168": [
+      "luisa",
+      "remy"
+    ],
+    "D171": [
+      "alice",
+      "olaf"
+    ],
+    "D172": [
+      "jasmine",
+      "prince-naveen",
+      "timothy-mouse"
+    ],
+    "D174": [
+      "angel",
+      "finnick"
+    ],
+    "D184": [
+      "mad-hatter",
+      "olaf"
+    ],
+    "D188": [
+      "lotso",
+      "marie"
+    ],
+    "E002": [
+      "belle",
+      "dale",
+      "goofy",
+      "hamm",
+      "heimlich",
+      "prince-naveen",
+      "sulley"
+    ],
+    "E005": [
+      "alice",
+      "chip",
+      "ducky",
+      "tiana",
+      "tramp"
+    ],
+    "E008": [
+      "dale",
+      "heimlich",
+      "lady",
+      "piglet",
+      "rapunzel"
+    ],
+    "E010": [
+      "buzz-lightyear",
+      "luisa",
+      "minnie-mouse",
+      "timothy-mouse",
+      "tinker-bell"
+    ],
+    "E012": [
+      "oogie-boogie",
+      "sulley",
+      "tramp"
+    ],
+    "E014": [
+      "finnick",
+      "rapunzel"
+    ],
+    "E015": [
+      "alien",
+      "daisy-duck",
+      "emile",
+      "tramp",
+      "winnie-the-pooh"
+    ],
+    "E018": [
+      "minnie-mouse",
+      "winnie-the-pooh"
+    ],
+    "E019": [
+      "alice",
+      "leroy",
+      "oogie-boogie",
+      "prince-naveen",
+      "sulley",
+      "timothy-mouse"
+    ],
+    "E021": [
+      "buzz-lightyear",
+      "timothy-mouse"
+    ],
+    "E025": [
+      "ariel",
+      "lucifer",
+      "tiana"
+    ],
+    "E026": [
+      "angel",
+      "ariel",
+      "ducky",
+      "finnick",
+      "jessie",
+      "lucifer",
+      "marie"
+    ],
+    "E028": [
+      "angel",
+      "finnick",
+      "mad-hatter",
+      "piglet",
+      "rapunzel"
+    ],
+    "E029": [
+      "olaf",
+      "pinocchio"
+    ],
+    "E030": [
+      "cruella-de-vil",
+      "tigger"
+    ],
+    "E031": [
+      "jasmine",
+      "lotso",
+      "oogie-boogie",
+      "prince-naveen",
+      "tiana"
+    ],
+    "E033": [
+      "dale",
+      "heimlich",
+      "mad-hatter",
+      "prince-naveen",
+      "sulley"
+    ],
+    "E034": [
+      "belle",
+      "goofy",
+      "jessie",
+      "luisa",
+      "piglet",
+      "timothy-mouse"
+    ],
+    "E035": [
+      "ariel",
+      "goofy",
+      "remy",
+      "tigger",
+      "winnie-the-pooh"
+    ],
+    "E038": [
+      "angel",
+      "bunny",
+      "jasmine",
+      "minnie-mouse",
+      "olaf"
+    ],
+    "E041": [
+      "buzz-lightyear",
+      "cheshire-cat",
+      "ducky",
+      "sulley",
+      "tramp"
+    ],
+    "E044": [
+      "angel",
+      "bunny",
+      "elsa",
+      "mike-wazowski",
+      "tinker-bell"
+    ],
+    "E045": [
+      "belle",
+      "daisy-duck",
+      "elsa",
+      "mike-wazowski",
+      "timothy-mouse",
+      "winnie-the-pooh"
+    ],
+    "E046": [
+      "alice",
+      "angel",
+      "daisy-duck",
+      "dale",
+      "lucifer",
+      "tiana"
+    ],
+    "E048": [
+      "ariel",
+      "cruella-de-vil",
+      "eeyore",
+      "remy",
+      "tigger"
+    ],
+    "E051": [
+      "ariel",
+      "cruella-de-vil",
+      "leroy",
+      "lucifer",
+      "pinocchio",
+      "rapunzel",
+      "tiana"
+    ],
+    "E054": [
+      "bunny",
+      "chip",
+      "evil-queen",
+      "goofy",
+      "piglet"
+    ],
+    "E055": [
+      "eeyore",
+      "finnick",
+      "hamm",
+      "lotso",
+      "piglet",
+      "tiana",
+      "tramp"
+    ],
+    "E064": [
+      "luisa",
+      "remy"
+    ],
+    "E065": [
+      "leroy",
+      "sulley"
+    ],
+    "E066": [
+      "belle",
+      "daisy-duck"
+    ],
+    "E067": [
+      "mike-wazowski",
+      "piglet",
+      "rapunzel"
+    ],
+    "E068": [
+      "dale",
+      "winnie-the-pooh"
+    ],
+    "E069": [
+      "buzz-lightyear",
+      "tramp"
+    ],
+    "E084": [
+      "donald-duck",
+      "emile"
+    ],
+    "E085": [
+      "buzz-lightyear",
+      "cruella-de-vil"
+    ],
+    "E086": [
+      "belle",
+      "sulley"
+    ],
+    "E087": [
+      "alice",
+      "lotso"
+    ],
+    "E088": [
+      "elsa",
+      "jessie",
+      "remy"
+    ],
+    "E089": [
+      "hamm",
+      "piglet"
+    ],
+    "E091": [
+      "jessie",
+      "prince-naveen"
+    ],
+    "E092": [
+      "marie",
+      "tiana"
+    ],
+    "E093": [
+      "alice",
+      "olaf"
+    ],
+    "E095": [
+      "alien",
+      "tiana"
+    ],
+    "E096": [
+      "ariel",
+      "evil-queen"
+    ],
+    "E097": [
+      "elsa",
+      "stitch"
+    ],
+    "E098": [
+      "angel",
+      "finnick"
+    ],
+    "E099": [
+      "bunny",
+      "piglet"
+    ],
+    "E100": [
+      "luisa",
+      "sulley"
+    ],
+    "E111": [
+      "ducky",
+      "lady"
+    ],
+    "E112": [
+      "chip",
+      "prince-naveen"
+    ],
+    "E113": [
+      "dale",
+      "lucifer"
+    ],
+    "E114": [
+      "daisy-duck",
+      "mike-wazowski"
+    ],
+    "E115": [
+      "finnick",
+      "minnie-mouse",
+      "tinker-bell"
+    ],
+    "E116": [
+      "ariel",
+      "tigger"
+    ],
+    "E117": [
+      "bunny",
+      "goofy"
+    ],
+    "E118": [
+      "heimlich",
+      "rapunzel"
+    ],
+    "E119": [
+      "jack-skellington",
+      "minnie-mouse"
+    ],
+    "E121": [
+      "jasmine",
+      "tramp"
+    ],
+    "E122": [
+      "angel",
+      "eeyore",
+      "olaf"
+    ],
+    "E123": [
+      "belle",
+      "minnie-mouse"
+    ],
+    "E124": [
+      "lotso",
+      "marie"
+    ],
+    "E125": [
+      "daisy-duck",
+      "winnie-the-pooh"
+    ],
+    "E126": [
+      "evil-queen",
+      "piglet",
+      "stitch"
+    ],
+    "E127": [
+      "ducky",
+      "eeyore"
+    ],
+    "E128": [
+      "stitch",
+      "tiana"
+    ],
+    "E129": [
+      "chip",
+      "rapunzel"
+    ],
+    "E130": [
+      "goofy",
+      "pinocchio"
+    ],
+    "E131": [
+      "cruella-de-vil",
+      "hamm"
+    ],
+    "E132": [
+      "ducky",
+      "goofy",
+      "heimlich"
+    ],
+    "E133": [
+      "bunny",
+      "remy",
+      "tinker-bell"
+    ],
+    "E134": [
+      "alien",
+      "minnie-mouse"
+    ],
+    "E135": [
+      "ariel",
+      "pinocchio",
+      "timothy-mouse"
+    ],
+    "E136": [
+      "cheshire-cat",
+      "elsa"
+    ],
+    "E137": [
+      "angel",
+      "lucifer"
+    ],
+    "E138": [
+      "lady",
+      "rapunzel"
+    ],
+    "E139": [
+      "emile",
+      "tinker-bell"
+    ],
+    "E143": [
+      "leroy",
+      "prince-naveen"
+    ],
+    "E145": [
+      "emile",
+      "lotso"
+    ],
+    "E148": [
+      "daisy-duck",
+      "dale",
+      "eeyore"
+    ],
+    "E196": [
+      "cruella-de-vil",
+      "heimlich"
+    ],
+    "E197": [
+      "alice",
+      "elsa"
+    ],
+    "E199": [
+      "jasmine",
+      "prince-naveen",
+      "timothy-mouse"
+    ],
+    "E222": [
+      "dale",
+      "emile"
+    ],
+    "E228": [
+      "ariel",
+      "oogie-boogie"
+    ],
+    "E232": [
+      "hamm",
+      "tramp"
+    ],
+    "E239": [
+      "mad-hatter",
+      "olaf"
+    ],
+    "F004": [
+      "ducky",
+      "elsa",
+      "evil-queen",
+      "stitch",
+      "tinker-bell"
+    ],
+    "F008": [
+      "alice",
+      "chip",
+      "ducky",
+      "tiana",
+      "tramp"
+    ],
+    "F016": [
+      "angel",
+      "finnick",
+      "mad-hatter",
+      "piglet",
+      "rapunzel"
+    ],
+    "F018": [
+      "cruella-de-vil",
+      "donald-duck",
+      "minnie-mouse",
+      "olaf",
+      "stitch"
+    ],
+    "F019": [
+      "jasmine",
+      "lotso",
+      "oogie-boogie",
+      "prince-naveen",
+      "tiana"
+    ],
+    "F025": [
+      "dale",
+      "heimlich",
+      "lady",
+      "piglet",
+      "rapunzel"
+    ],
+    "F026": [
+      "chip",
+      "prince-naveen"
+    ],
+    "F028": [
+      "dale",
+      "lucifer"
+    ],
+    "F029": [
+      "donald-duck",
+      "timothy-mouse"
+    ],
+    "F031": [
+      "buzz-lightyear",
+      "cruella-de-vil"
+    ],
+    "F032": [
+      "hamm",
+      "piglet"
+    ],
+    "F033": [
+      "ariel",
+      "goofy",
+      "remy",
+      "tigger",
+      "winnie-the-pooh"
+    ],
+    "F034": [
+      "elsa",
+      "jessie",
+      "remy"
+    ],
+    "F037": [
+      "belle",
+      "minnie-mouse"
+    ],
+    "F038": [
+      "angel",
+      "eeyore",
+      "olaf"
+    ],
+    "F039": [
+      "lotso",
+      "marie"
+    ],
+    "F040": [
+      "belle",
+      "sulley"
+    ],
+    "F045": [
+      "jack-skellington",
+      "minnie-mouse"
+    ],
+    "F046": [
+      "angel",
+      "bunny",
+      "jasmine",
+      "minnie-mouse",
+      "olaf"
+    ],
+    "F047": [
+      "angel",
+      "finnick"
+    ],
+    "F048": [
+      "ariel",
+      "cheshire-cat",
+      "cruella-de-vil",
+      "daisy-duck",
+      "eeyore"
+    ],
+    "F049": [
+      "bunny",
+      "remy",
+      "tinker-bell"
+    ],
+    "F052": [
+      "hamm",
+      "tramp"
+    ],
+    "F054": [
+      "ducky",
+      "eeyore"
+    ],
+    "F055": [
+      "ariel",
+      "oogie-boogie"
+    ],
+    "F058": [
+      "ariel",
+      "evil-queen"
+    ],
+    "F060": [
+      "leroy",
+      "prince-naveen"
+    ],
+    "F072": [
+      "cruella-de-vil",
+      "hamm"
+    ],
+    "F073": [
+      "ducky",
+      "goofy",
+      "heimlich"
+    ],
+    "F074": [
+      "ariel",
+      "pinocchio",
+      "timothy-mouse"
+    ],
+    "F075": [
+      "emile",
+      "tinker-bell"
+    ],
+    "F076": [
+      "angel",
+      "lucifer"
+    ],
+    "F077": [
+      "jessie",
+      "prince-naveen"
+    ],
+    "F078": [
+      "marie",
+      "tiana"
+    ],
+    "F080": [
+      "daisy-duck",
+      "dale",
+      "eeyore"
+    ],
+    "F095": [
+      "minnie-mouse",
+      "winnie-the-pooh"
+    ],
+    "F096": [
+      "angel",
+      "donald-duck"
+    ],
+    "F097": [
+      "olaf",
+      "pinocchio"
+    ],
+    "F098": [
+      "ariel",
+      "lucifer",
+      "tiana"
+    ],
+    "F099": [
+      "cheshire-cat",
+      "tinker-bell"
+    ],
+    "F100": [
+      "buzz-lightyear",
+      "timothy-mouse"
+    ],
+    "F102": [
+      "belle",
+      "daisy-duck"
+    ],
+    "F103": [
+      "mike-wazowski",
+      "piglet",
+      "rapunzel"
+    ],
+    "F104": [
+      "lady",
+      "rapunzel"
+    ],
+    "F105": [
+      "cheshire-cat",
+      "elsa"
+    ],
+    "F106": [
+      "alien",
+      "minnie-mouse"
+    ],
+    "F109": [
+      "dale",
+      "winnie-the-pooh"
+    ],
+    "F112": [
+      "emile",
+      "lotso"
+    ],
+    "F113": [
+      "oogie-boogie",
+      "sulley",
+      "tramp"
+    ],
+    "F115": [
+      "finnick",
+      "rapunzel"
+    ],
+    "F118": [
+      "heimlich",
+      "rapunzel"
+    ],
+    "F122": [
+      "jack-skellington",
+      "remy"
+    ],
+    "F129": [
+      "chip",
+      "rapunzel"
+    ],
+    "F132": [
+      "cruella-de-vil",
+      "tigger"
+    ],
+    "F133": [
+      "ducky",
+      "mad-hatter"
+    ],
+    "F138": [
+      "alien",
+      "tiana"
+    ],
+    "F139": [
+      "goofy",
+      "jessie"
+    ],
+    "F140": [
+      "bunny",
+      "piglet"
+    ],
+    "F141": [
+      "daisy-duck",
+      "winnie-the-pooh"
+    ],
+    "F142": [
+      "cruella-de-vil",
+      "heimlich"
+    ],
+    "F143": [
+      "luisa",
+      "sulley"
+    ],
+    "F145": [
+      "jasmine",
+      "prince-naveen",
+      "timothy-mouse"
+    ],
+    "F148": [
+      "leroy",
+      "sulley"
+    ],
+    "F149": [
+      "alice",
+      "olaf"
+    ],
+    "F150": [
+      "luisa",
+      "remy"
+    ],
+    "F154": [
+      "lotso",
+      "oogie-boogie"
+    ],
+    "F158": [
+      "mad-hatter",
+      "olaf"
+    ],
+    "F159": [
+      "buzz-lightyear",
+      "tramp"
+    ],
+    "G017": [
+      "ducky",
+      "lady"
+    ],
+    "G019": [
+      "hamm",
+      "piglet"
+    ],
+    "G021": [
+      "alice",
+      "lotso"
+    ],
+    "G023": [
+      "belle",
+      "sulley"
+    ],
+    "G026": [
+      "dale",
+      "lucifer"
+    ],
+    "G028": [
+      "dale",
+      "emile"
+    ],
+    "G030": [
+      "luisa",
+      "sulley"
+    ],
+    "G032": [
+      "angel",
+      "finnick"
+    ],
+    "G034": [
+      "alice",
+      "elsa"
+    ],
+    "G035": [
+      "angel",
+      "eeyore",
+      "olaf"
+    ],
+    "G037": [
+      "elsa",
+      "jessie",
+      "remy"
+    ],
+    "G038": [
+      "jack-skellington",
+      "minnie-mouse"
+    ],
+    "G039": [
+      "jasmine",
+      "tramp"
+    ],
+    "G046": [
+      "bunny",
+      "remy",
+      "tinker-bell"
+    ],
+    "G048": [
+      "jasmine",
+      "prince-naveen",
+      "timothy-mouse"
+    ],
+    "G049": [
+      "goofy",
+      "pinocchio"
+    ],
+    "G050": [
+      "stitch",
+      "tiana"
+    ],
+    "G051": [
+      "ariel",
+      "tigger"
+    ],
+    "G052": [
+      "buzz-lightyear",
+      "cruella-de-vil"
+    ],
+    "G055": [
+      "lotso",
+      "oogie-boogie"
+    ],
+    "G057": [
+      "cruella-de-vil",
+      "hamm"
+    ],
+    "G059": [
+      "alien",
+      "minnie-mouse"
+    ],
+    "G061": [
+      "cheshire-cat",
+      "elsa"
+    ],
+    "G062": [
+      "ducky",
+      "eeyore"
+    ],
+    "G063": [
+      "cruella-de-vil",
+      "heimlich"
+    ],
+    "G064": [
+      "luisa",
+      "remy"
+    ],
+    "G066": [
+      "belle",
+      "daisy-duck"
+    ],
+    "G069": [
+      "mike-wazowski",
+      "piglet",
+      "rapunzel"
+    ],
+    "G070": [
+      "cruella-de-vil",
+      "tigger"
+    ],
+    "G071": [
+      "ariel",
+      "lucifer",
+      "tiana"
+    ],
+    "G072": [
+      "lady",
+      "rapunzel"
+    ],
+    "G075": [
+      "donald-duck",
+      "timothy-mouse"
+    ],
+    "G085": [
+      "leroy",
+      "sulley"
+    ],
+    "G086": [
+      "alien",
+      "tiana"
+    ],
+    "G094": [
+      "alice",
+      "olaf"
+    ],
+    "G096": [
+      "marie",
+      "tiana"
+    ],
+    "G098": [
+      "jessie",
+      "prince-naveen"
+    ],
+    "G100": [
+      "emile",
+      "tinker-bell"
+    ],
+    "G102": [
+      "angel",
+      "lucifer"
+    ],
+    "G104": [
+      "olaf",
+      "pinocchio"
+    ],
+    "G106": [
+      "minnie-mouse",
+      "winnie-the-pooh"
+    ],
+    "G108": [
+      "finnick",
+      "rapunzel"
+    ],
+    "G110": [
+      "ariel",
+      "evil-queen"
+    ],
+    "G112": [
+      "emile",
+      "lotso"
+    ],
+    "G113": [
+      "angel",
+      "donald-duck"
+    ],
+    "G114": [
+      "buzz-lightyear",
+      "tramp"
+    ],
+    "G115": [
+      "ducky",
+      "mad-hatter"
+    ],
+    "G116": [
+      "dale",
+      "winnie-the-pooh"
+    ],
+    "G117": [
+      "buzz-lightyear",
+      "timothy-mouse"
+    ],
+    "G119": [
+      "ducky",
+      "goofy",
+      "heimlich"
+    ],
+    "G122": [
+      "ariel",
+      "pinocchio",
+      "timothy-mouse"
+    ],
+    "G128": [
+      "leroy",
+      "prince-naveen"
+    ],
+    "G129": [
+      "elsa",
+      "stitch"
+    ],
+    "G130": [
+      "bunny",
+      "piglet"
+    ],
+    "G131": [
+      "oogie-boogie",
+      "sulley",
+      "tramp"
+    ],
+    "G132": [
+      "goofy",
+      "jessie"
+    ],
+    "G133": [
+      "cheshire-cat",
+      "tinker-bell"
+    ],
+    "G134": [
+      "jack-skellington",
+      "remy"
+    ],
+    "G137": [
+      "lotso",
+      "marie"
+    ],
+    "G142": [
+      "finnick",
+      "minnie-mouse",
+      "tinker-bell"
+    ],
+    "G148": [
+      "bunny",
+      "goofy"
+    ],
+    "G150": [
+      "hamm",
+      "tramp"
+    ],
+    "G152": [
+      "belle",
+      "minnie-mouse"
+    ],
+    "G153": [
+      "evil-queen",
+      "piglet",
+      "stitch"
+    ],
+    "G159": [
+      "ariel",
+      "oogie-boogie"
+    ],
+    "G161": [
+      "mad-hatter",
+      "olaf"
+    ],
+    "G165": [
+      "heimlich",
+      "rapunzel"
+    ],
+    "G166": [
+      "daisy-duck",
+      "mike-wazowski"
+    ],
+    "G176": [
+      "chip",
+      "rapunzel"
+    ],
+    "G177": [
+      "daisy-duck",
+      "winnie-the-pooh"
+    ],
+    "H015": [
+      "bunny",
+      "goofy"
+    ],
+    "H016": [
+      "dale",
+      "lucifer"
+    ],
+    "H017": [
+      "ariel",
+      "tigger"
+    ],
+    "H018": [
+      "chip",
+      "prince-naveen"
+    ],
+    "H019": [
+      "finnick",
+      "minnie-mouse",
+      "tinker-bell"
+    ],
+    "H020": [
+      "ducky",
+      "lady"
+    ],
+    "H021": [
+      "daisy-duck",
+      "mike-wazowski"
+    ],
+    "H022": [
+      "jasmine",
+      "tramp"
+    ],
+    "H023": [
+      "marie",
+      "tiana"
+    ],
+    "H024": [
+      "hamm",
+      "piglet"
+    ],
+    "H025": [
+      "heimlich",
+      "rapunzel"
+    ],
+    "H026": [
+      "leroy",
+      "prince-naveen"
+    ],
+    "H027": [
+      "jack-skellington",
+      "minnie-mouse"
+    ],
+    "H028": [
+      "daisy-duck",
+      "dale",
+      "eeyore"
+    ],
+    "H029": [
+      "angel",
+      "eeyore",
+      "olaf"
+    ],
+    "H030": [
+      "elsa",
+      "stitch"
+    ],
+    "H031": [
+      "alice",
+      "lotso"
+    ],
+    "H032": [
+      "emile",
+      "lotso"
+    ],
+    "H033": [
+      "elsa",
+      "jessie",
+      "remy"
+    ],
+    "H035": [
+      "luisa",
+      "remy"
+    ],
+    "H036": [
+      "alice",
+      "olaf"
+    ],
+    "H037": [
+      "leroy",
+      "sulley"
+    ],
+    "H042": [
+      "angel",
+      "finnick"
+    ],
+    "H044": [
+      "jasmine",
+      "prince-naveen",
+      "timothy-mouse"
+    ],
+    "H045": [
+      "mike-wazowski",
+      "piglet",
+      "rapunzel"
+    ],
+    "H055": [
+      "bunny",
+      "piglet"
+    ],
+    "H056": [
+      "oogie-boogie",
+      "sulley",
+      "tramp"
+    ],
+    "H058": [
+      "angel",
+      "jessie"
+    ],
+    "H059": [
+      "ducky",
+      "mad-hatter"
+    ],
+    "H060": [
+      "cheshire-cat",
+      "tinker-bell"
+    ],
+    "H061": [
+      "cruella-de-vil",
+      "tigger"
+    ],
+    "H077": [
+      "jack-skellington",
+      "remy"
+    ],
+    "H078": [
+      "buzz-lightyear",
+      "timothy-mouse"
+    ],
+    "H079": [
+      "ariel",
+      "lucifer",
+      "tiana"
+    ],
+    "H080": [
+      "olaf",
+      "pinocchio"
+    ],
+    "H081": [
+      "minnie-mouse",
+      "winnie-the-pooh"
+    ],
+    "H082": [
+      "finnick",
+      "rapunzel"
+    ],
+    "H083": [
+      "ariel",
+      "evil-queen"
+    ],
+    "H085": [
+      "angel",
+      "lucifer"
+    ],
+    "H086": [
+      "cheshire-cat",
+      "elsa"
+    ],
+    "H087": [
+      "ariel",
+      "pinocchio",
+      "timothy-mouse"
+    ],
+    "H088": [
+      "ducky",
+      "goofy",
+      "heimlich"
+    ],
+    "H089": [
+      "cruella-de-vil",
+      "hamm"
+    ],
+    "H090": [
+      "dale",
+      "winnie-the-pooh"
+    ],
+    "H091": [
+      "buzz-lightyear",
+      "tramp"
+    ],
+    "H112": [
+      "jessie",
+      "prince-naveen"
+    ],
+    "H113": [
+      "emile",
+      "tinker-bell"
+    ],
+    "H118": [
+      "stitch",
+      "tiana"
+    ],
+    "H119": [
+      "donald-duck",
+      "timothy-mouse"
+    ],
+    "H120": [
+      "buzz-lightyear",
+      "cruella-de-vil"
+    ],
+    "H121": [
+      "belle",
+      "sulley"
+    ],
+    "H126": [
+      "lotso",
+      "oogie-boogie"
+    ],
+    "H127": [
+      "alien",
+      "minnie-mouse"
+    ],
+    "H128": [
+      "lady",
+      "rapunzel"
+    ],
+    "H129": [
+      "belle",
+      "daisy-duck"
+    ],
+    "H130": [
+      "alien",
+      "tiana"
+    ],
+    "H131": [
+      "cruella-de-vil",
+      "heimlich"
+    ],
+    "H132": [
+      "alice",
+      "elsa"
+    ],
+    "H133": [
+      "evil-queen",
+      "piglet",
+      "stitch"
+    ],
+    "H134": [
+      "dale",
+      "emile"
+    ],
+    "H136": [
+      "daisy-duck",
+      "winnie-the-pooh"
+    ],
+    "H137": [
+      "lotso",
+      "marie"
+    ],
+    "H139": [
+      "belle",
+      "minnie-mouse"
+    ],
+    "H153": [
+      "luisa",
+      "sulley"
+    ],
+    "H159": [
+      "hamm",
+      "tramp"
+    ],
+    "H179": [
+      "chip",
+      "rapunzel"
+    ],
+    "H188": [
+      "ariel",
+      "oogie-boogie"
+    ],
+    "H201": [
+      "ducky",
+      "eeyore"
+    ],
+    "H209": [
+      "mad-hatter",
+      "olaf"
+    ],
+    "J014": [
+      "dale",
+      "emile"
+    ],
+    "J035": [
+      "dale",
+      "lucifer"
+    ],
+    "J036": [
+      "ducky",
+      "lady"
+    ],
+    "J037": [
+      "hamm",
+      "piglet"
+    ],
+    "J038": [
+      "alice",
+      "lotso"
+    ],
+    "J039": [
+      "jack-skellington",
+      "minnie-mouse"
+    ],
+    "J040": [
+      "bunny",
+      "goofy"
+    ],
+    "J041": [
+      "finnick",
+      "minnie-mouse",
+      "tinker-bell"
+    ],
+    "J042": [
+      "marie",
+      "tiana"
+    ],
+    "J043": [
+      "alice",
+      "olaf"
+    ],
+    "J046": [
+      "lotso",
+      "marie"
+    ],
+    "J047": [
+      "buzz-lightyear",
+      "cruella-de-vil"
+    ],
+    "J048": [
+      "donald-duck",
+      "timothy-mouse"
+    ],
+    "J049": [
+      "stitch",
+      "tiana"
+    ],
+    "J050": [
+      "goofy",
+      "pinocchio"
+    ],
+    "J051": [
+      "lotso",
+      "oogie-boogie"
+    ],
+    "J052": [
+      "ariel",
+      "pinocchio",
+      "timothy-mouse"
+    ],
+    "J053": [
+      "mike-wazowski",
+      "piglet",
+      "rapunzel"
+    ],
+    "J055": [
+      "olaf",
+      "pinocchio"
+    ],
+    "J056": [
+      "ducky",
+      "mad-hatter"
+    ],
+    "J057": [
+      "ariel",
+      "lucifer",
+      "tiana"
+    ],
+    "J058": [
+      "cheshire-cat",
+      "tinker-bell"
+    ],
+    "J059": [
+      "buzz-lightyear",
+      "timothy-mouse"
+    ],
+    "J060": [
+      "cruella-de-vil",
+      "tigger"
+    ],
+    "J061": [
+      "jack-skellington",
+      "remy"
+    ],
+    "J066": [
+      "goofy",
+      "jessie"
+    ],
+    "J067": [
+      "oogie-boogie",
+      "sulley",
+      "tramp"
+    ],
+    "J068": [
+      "bunny",
+      "piglet"
+    ],
+    "J069": [
+      "elsa",
+      "stitch"
+    ],
+    "J070": [
+      "leroy",
+      "prince-naveen"
+    ],
+    "J075": [
+      "chip",
+      "prince-naveen"
+    ],
+    "J076": [
+      "angel",
+      "eeyore",
+      "olaf"
+    ],
+    "J077": [
+      "ariel",
+      "tigger"
+    ],
+    "J078": [
+      "luisa",
+      "remy"
+    ],
+    "J081": [
+      "emile",
+      "lotso"
+    ],
+    "J082": [
+      "finnick",
+      "rapunzel"
+    ],
+    "J083": [
+      "minnie-mouse",
+      "winnie-the-pooh"
+    ],
+    "J086": [
+      "belle",
+      "minnie-mouse"
+    ],
+    "J087": [
+      "bunny",
+      "remy"
+    ],
+    "J088": [
+      "ducky",
+      "eeyore"
+    ],
+    "J093": [
+      "dale",
+      "winnie-the-pooh"
+    ],
+    "J097": [
+      "ducky",
+      "goofy",
+      "heimlich"
+    ],
+    "J098": [
+      "lady",
+      "rapunzel"
+    ],
+    "J099": [
+      "cheshire-cat",
+      "elsa"
+    ],
+    "J101": [
+      "alien",
+      "minnie-mouse"
+    ],
+    "J102": [
+      "buzz-lightyear",
+      "tramp"
+    ],
+    "J107": [
+      "belle",
+      "daisy-duck"
+    ],
+    "J108": [
+      "angel",
+      "lucifer"
+    ],
+    "J109": [
+      "cruella-de-vil",
+      "hamm"
+    ],
+    "J112": [
+      "belle",
+      "sulley"
+    ],
+    "J115": [
+      "jasmine",
+      "tramp"
+    ],
+    "J117": [
+      "elsa",
+      "jessie",
+      "remy"
+    ],
+    "J118": [
+      "ariel",
+      "evil-queen"
+    ],
+    "J119": [
+      "heimlich",
+      "rapunzel"
+    ],
+    "J120": [
+      "daisy-duck",
+      "dale",
+      "eeyore"
+    ],
+    "J121": [
+      "daisy-duck",
+      "mike-wazowski"
+    ],
+    "J123": [
+      "leroy",
+      "sulley"
+    ],
+    "J126": [
+      "hamm",
+      "tramp"
+    ],
+    "J128": [
+      "jasmine",
+      "prince-naveen",
+      "timothy-mouse"
+    ],
+    "J130": [
+      "chip",
+      "rapunzel"
+    ],
+    "J132": [
+      "daisy-duck",
+      "winnie-the-pooh"
+    ],
+    "J135": [
+      "jessie",
+      "prince-naveen"
+    ],
+    "J147": [
+      "luisa",
+      "sulley"
+    ],
+    "J149": [
+      "angel",
+      "finnick"
+    ],
+    "J151": [
+      "ariel",
+      "oogie-boogie"
+    ],
+    "J152": [
+      "evil-queen",
+      "piglet",
+      "stitch"
+    ],
+    "J158": [
+      "cruella-de-vil",
+      "heimlich"
+    ],
+    "J159": [
+      "mad-hatter",
+      "olaf"
+    ],
+    "J160": [
+      "alien",
+      "tiana"
+    ],
+    "J223": [
+      "alice",
+      "elsa"
+    ],
+    "K032": [
+      "elsa",
+      "stitch"
+    ],
+    "K033": [
+      "bunny",
+      "piglet"
+    ],
+    "K034": [
+      "oogie-boogie",
+      "sulley",
+      "tramp"
+    ],
+    "K035": [
+      "goofy",
+      "jessie"
+    ],
+    "K036": [
+      "angel",
+      "donald-duck"
+    ],
+    "K037": [
+      "ducky",
+      "mad-hatter"
+    ],
+    "K038": [
+      "cheshire-cat",
+      "tinker-bell"
+    ],
+    "K039": [
+      "cruella-de-vil",
+      "tigger"
+    ],
+    "K040": [
+      "goofy",
+      "pinocchio"
+    ],
+    "K043": [
+      "dale",
+      "winnie-the-pooh"
+    ],
+    "K044": [
+      "ariel",
+      "tigger"
+    ],
+    "K045": [
+      "finnick",
+      "minnie-mouse",
+      "tinker-bell"
+    ],
+    "K046": [
+      "daisy-duck",
+      "mike-wazowski"
+    ],
+    "K047": [
+      "jasmine",
+      "tramp"
+    ],
+    "K048": [
+      "angel",
+      "eeyore",
+      "olaf"
+    ],
+    "K049": [
+      "donald-duck",
+      "timothy-mouse"
+    ],
+    "K050": [
+      "alice",
+      "olaf"
+    ],
+    "K051": [
+      "leroy",
+      "prince-naveen"
+    ],
+    "K052": [
+      "bunny",
+      "remy",
+      "tinker-bell"
+    ],
+    "K053": [
+      "alice",
+      "elsa"
+    ],
+    "K054": [
+      "cruella-de-vil",
+      "heimlich"
+    ],
+    "K055": [
+      "alien",
+      "tiana"
+    ],
+    "K056": [
+      "mad-hatter",
+      "olaf"
+    ],
+    "K057": [
+      "jack-skellington",
+      "minnie-mouse"
+    ],
+    "K058": [
+      "heimlich",
+      "rapunzel"
+    ],
+    "K062": [
+      "angel",
+      "finnick"
+    ],
+    "K063": [
+      "luisa",
+      "sulley"
+    ],
+    "K064": [
+      "dale",
+      "emile"
+    ],
+    "K065": [
+      "lotso",
+      "marie"
+    ],
+    "K066": [
+      "evil-queen",
+      "piglet",
+      "stitch"
+    ],
+    "K067": [
+      "ariel",
+      "oogie-boogie"
+    ],
+    "K073": [
+      "minnie-mouse",
+      "winnie-the-pooh"
+    ],
+    "K074": [
+      "alice",
+      "lucifer",
+      "tiana"
+    ],
+    "K078": [
+      "daisy-duck",
+      "winnie-the-pooh"
+    ],
+    "K079": [
+      "hamm",
+      "tramp"
+    ],
+    "K080": [
+      "jasmine",
+      "prince-naveen",
+      "timothy-mouse"
+    ],
+    "K083": [
+      "cruella-de-vil",
+      "hamm"
+    ],
+    "K084": [
+      "lady",
+      "rapunzel"
+    ],
+    "K085": [
+      "belle",
+      "daisy-duck"
+    ],
+    "K086": [
+      "leroy",
+      "sulley"
+    ],
+    "K090": [
+      "belle",
+      "sulley"
+    ],
+    "K092": [
+      "chip",
+      "prince-naveen"
+    ],
+    "K093": [
+      "elsa",
+      "jessie",
+      "remy"
+    ],
+    "K094": [
+      "donald-duck",
+      "timothy-mouse"
+    ],
+    "K096": [
+      "lotso",
+      "oogie-boogie"
+    ],
+    "K098": [
+      "stitch",
+      "tiana"
+    ],
+    "K099": [
+      "alice",
+      "lotso"
+    ],
+    "K100": [
+      "ducky",
+      "lady"
+    ],
+    "K106": [
+      "buzz-lightyear",
+      "cruella-de-vil"
+    ],
+    "K107": [
+      "hamm",
+      "piglet"
+    ],
+    "K108": [
+      "dale",
+      "lucifer"
+    ],
+    "K109": [
+      "bunny",
+      "goofy"
+    ],
+    "K110": [
+      "emile",
+      "tinker-bell"
+    ],
+    "K112": [
+      "ariel",
+      "evil-queen"
+    ],
+    "K114": [
+      "finnick",
+      "rapunzel"
+    ],
+    "K115": [
+      "belle",
+      "minnie-mouse"
+    ],
+    "K116": [
+      "olaf",
+      "pinocchio"
+    ],
+    "K117": [
+      "ducky",
+      "eeyore"
+    ],
+    "K120": [
+      "chip",
+      "rapunzel"
+    ],
+    "K121": [
+      "ducky",
+      "goofy",
+      "heimlich"
+    ],
+    "K123": [
+      "alien",
+      "minnie-mouse"
+    ],
+    "K125": [
+      "cheshire-cat",
+      "elsa"
+    ],
+    "K127": [
+      "mike-wazowski",
+      "piglet",
+      "rapunzel"
+    ],
+    "K129": [
+      "luisa",
+      "remy"
+    ],
+    "K131": [
+      "daisy-duck",
+      "dale",
+      "eeyore"
+    ],
+    "K148": [
+      "jessie",
+      "prince-naveen"
+    ],
+    "K149": [
+      "marie",
+      "tiana"
+    ],
+    "K166": [
+      "angel",
+      "lucifer"
+    ],
+    "K179": [
+      "ariel",
+      "pinocchio",
+      "timothy-mouse"
+    ],
+    "L013": [
+      "angel",
+      "eeyore",
+      "olaf"
+    ],
+    "L014": [
+      "alice",
+      "lotso"
+    ],
+    "L015": [
+      "lotso",
+      "oogie-boogie"
+    ],
+    "L016": [
+      "belle",
+      "sulley"
+    ],
+    "L020": [
+      "finnick",
+      "minnie-mouse",
+      "tinker-bell"
+    ],
+    "L023": [
+      "hamm",
+      "piglet"
+    ],
+    "L024": [
+      "donald-duck",
+      "timothy-mouse"
+    ],
+    "L031": [
+      "heimlich",
+      "rapunzel"
+    ],
+    "L033": [
+      "ducky",
+      "lady"
+    ],
+    "L035": [
+      "buzz-lightyear",
+      "tramp"
+    ],
+    "L038": [
+      "emile",
+      "lotso"
+    ],
+    "L047": [
+      "dale",
+      "winnie-the-pooh"
+    ],
+    "L048": [
+      "goofy",
+      "jessie"
+    ],
+    "L049": [
+      "cruella-de-vil",
+      "hamm"
+    ],
+    "L050": [
+      "mickey-mouse",
+      "winnie-the-pooh"
+    ],
+    "L053": [
+      "bunny",
+      "goofy"
+    ],
+    "L055": [
+      "ariel",
+      "tigger"
+    ],
+    "L058": [
+      "ariel",
+      "lucifer",
+      "tiana"
+    ],
+    "L059": [
+      "angel",
+      "lucifer"
+    ],
+    "L060": [
+      "cheshire-cat",
+      "tinker-bell"
+    ],
+    "L062": [
+      "buzz-lightyear",
+      "timothy-mouse"
+    ],
+    "L064": [
+      "cruella-de-vil",
+      "tigger"
+    ],
+    "L077": [
+      "chip",
+      "prince-naveen"
+    ],
+    "L079": [
+      "leroy",
+      "prince-naveen"
+    ],
+    "L081": [
+      "dale",
+      "lucifer"
+    ],
+    "L083": [
+      "daisy-duck",
+      "mike-wazowski"
+    ],
+    "L099": [
+      "ariel",
+      "oogie-boogie"
+    ],
+    "L109": [
+      "evil-queen",
+      "piglet",
+      "stitch"
+    ],
+    "L119": [
+      "lotso",
+      "marie"
+    ],
+    "L129": [
+      "luisa",
+      "sulley"
+    ],
+    "L145": [
+      "dale",
+      "emile"
+    ],
+    "L148": [
+      "jasmine",
+      "prince-naveen",
+      "timothy-mouse"
+    ],
+    "L151": [
+      "angel",
+      "finnick"
+    ],
+    "L153": [
+      "alien",
+      "minnie-mouse"
+    ],
+    "L154": [
+      "bunny",
+      "remy",
+      "tinker-bell"
+    ],
+    "L165": [
+      "mad-hatter",
+      "olaf"
+    ],
+    "L168": [
+      "jack-skellington",
+      "minnie-mouse"
+    ],
+    "L181": [
+      "daisy-duck",
+      "dale",
+      "eeyore"
+    ],
+    "N012": [
+      "ducky",
+      "lady"
+    ],
+    "N013": [
+      "lotso",
+      "oogie-boogie"
+    ],
+    "N014": [
+      "jasmine",
+      "tramp"
+    ],
+    "N016": [
+      "hamm",
+      "piglet"
+    ],
+    "N018": [
+      "elsa",
+      "jessie",
+      "remy"
+    ],
+    "N020": [
+      "alice",
+      "lotso"
+    ],
+    "N021": [
+      "stitch",
+      "tiana"
+    ],
+    "N023": [
+      "donald-duck",
+      "timothy-mouse"
+    ],
+    "N025": [
+      "buzz-lightyear",
+      "cruella-de-vil"
+    ],
+    "N027": [
+      "belle",
+      "sulley"
+    ],
+    "N029": [
+      "angel",
+      "eeyore",
+      "olaf"
+    ],
+    "N030": [
+      "buzz-lightyear",
+      "tramp"
+    ],
+    "N049": [
+      "ducky",
+      "eeyore"
+    ],
+    "N064": [
+      "mad-hatter",
+      "olaf"
+    ],
+    "N065": [
+      "heimlich",
+      "rapunzel"
+    ],
+    "N066": [
+      "cruella-de-vil",
+      "heimlich"
+    ],
+    "N067": [
+      "bunny",
+      "remy",
+      "tinker-bell"
+    ],
+    "N068": [
+      "evil-queen",
+      "piglet",
+      "stitch"
+    ],
+    "N069": [
+      "ariel",
+      "oogie-boogie"
+    ],
+    "N084": [
+      "goofy",
+      "pinocchio"
+    ],
+    "N085": [
+      "jack-skellington",
+      "remy"
+    ],
+    "N086": [
+      "cruella-de-vil",
+      "tigger"
+    ],
+    "N087": [
+      "cheshire-cat",
+      "tinker-bell"
+    ],
+    "N088": [
+      "ariel",
+      "lucifer",
+      "tiana"
+    ],
+    "N089": [
+      "ducky",
+      "mad-hatter"
+    ],
+    "N091": [
+      "alice",
+      "elsa"
+    ],
+    "N092": [
+      "alien",
+      "tiana"
+    ],
+    "N093": [
+      "jack-skellington",
+      "minnie-mouse"
+    ],
+    "N095": [
+      "leroy",
+      "prince-naveen"
+    ],
+    "N096": [
+      "chip",
+      "prince-naveen"
+    ],
+    "N097": [
+      "finnick",
+      "minnie-mouse",
+      "tinker-bell"
+    ],
+    "N098": [
+      "marie",
+      "tiana"
+    ],
+    "N099": [
+      "dale",
+      "lucifer"
+    ],
+    "N100": [
+      "jessie",
+      "prince-naveen"
+    ],
+    "N111": [
+      "angel",
+      "donald-duck"
+    ],
+    "N112": [
+      "minnie-mouse",
+      "winnie-the-pooh"
+    ],
+    "N113": [
+      "goofy",
+      "jessie"
+    ],
+    "N114": [
+      "finnick",
+      "rapunzel"
+    ],
+    "N115": [
+      "oogie-boogie",
+      "sulley",
+      "tramp"
+    ],
+    "N116": [
+      "ariel",
+      "evil-queen"
+    ],
+    "N117": [
+      "bunny",
+      "piglet"
+    ],
+    "N118": [
+      "emile",
+      "lotso"
+    ],
+    "N119": [
+      "elsa",
+      "stitch"
+    ],
+    "N121": [
+      "olaf",
+      "pinocchio"
+    ],
+    "N122": [
+      "buzz-lightyear",
+      "timothy-mouse"
+    ],
+    "N123": [
+      "lady",
+      "rapunzel"
+    ],
+    "N124": [
+      "angel",
+      "lucifer"
+    ],
+    "N125": [
+      "cheshire-cat",
+      "elsa"
+    ],
+    "N126": [
+      "ariel",
+      "pinocchio",
+      "timothy-mouse"
+    ],
+    "N127": [
+      "alien",
+      "minnie-mouse"
+    ],
+    "N128": [
+      "chip",
+      "rapunzel"
+    ],
+    "N129": [
+      "cruella-de-vil",
+      "hamm"
+    ],
+    "N130": [
+      "dale",
+      "winnie-the-pooh"
+    ],
+    "N131": [
+      "daisy-duck",
+      "winnie-the-pooh"
+    ],
+    "N132": [
+      "lotso",
+      "marie"
+    ],
+    "N134": [
+      "belle",
+      "minnie-mouse"
+    ],
+    "N135": [
+      "dale",
+      "emile"
+    ],
+    "N136": [
+      "hamm",
+      "tramp"
+    ],
+    "N137": [
+      "luisa",
+      "sulley"
+    ],
+    "N138": [
+      "jasmine",
+      "prince-naveen",
+      "timothy-mouse"
+    ],
+    "N139": [
+      "angel",
+      "finnick"
+    ],
+    "N143": [
+      "bunny",
+      "goofy"
+    ],
+    "N145": [
+      "daisy-duck",
+      "mike-wazowski"
+    ],
+    "N148": [
+      "ariel",
+      "tigger"
+    ],
+    "N196": [
+      "leroy",
+      "sulley"
+    ],
+    "N199": [
+      "belle",
+      "daisy-duck"
+    ],
+    "N222": [
+      "emile",
+      "tinker-bell"
+    ],
+    "N228": [
+      "ducky",
+      "goofy",
+      "heimlich"
+    ],
+    "N239": [
+      "daisy-duck",
+      "dale",
+      "eeyore"
+    ]
+  },
+  "disputed": {
+    "A011": [
+      [
+        "ariel",
+        "cheshire-cat",
+        "cruella-de-vil",
+        "eeyore",
+        "mickey-mouse"
+      ],
+      [
+        "ariel",
+        "cheshire-cat",
+        "cruella-de-vil",
+        "daisy-duck",
+        "eeyore"
+      ]
+    ],
+    "A012": [
+      [
+        "angel",
+        "finnick",
+        "mad-hatter",
+        "piglet",
+        "rapunzel"
+      ],
+      [
+        "angel",
+        "finnick",
+        "mad-hatter",
+        "mickey-mouse",
+        "piglet"
+      ]
+    ],
+    "A016": [
+      [
+        "belle",
+        "dale",
+        "goofy",
+        "hamm",
+        "heimlich",
+        "prince-naveen",
+        "sulley"
+      ],
+      [
+        "belle",
+        "dale",
+        "goofy",
+        "hamm",
+        "heimlich",
+        "mike-wazowski",
+        "prince-naveen"
+      ]
+    ],
+    "A017": [
+      [
+        "ducky",
+        "elsa",
+        "evil-queen",
+        "stitch",
+        "tinker-bell"
+      ],
+      [
+        "ducky",
+        "elsa",
+        "evil-queen",
+        "mickey-mouse",
+        "stitch"
+      ],
+      [
+        "ariel",
+        "cheshire-cat",
+        "cruella-de-vil",
+        "eeyore",
+        "mickey-mouse"
+      ]
+    ],
+    "A021": [
+      [
+        "belle",
+        "goofy",
+        "jessie",
+        "luisa",
+        "timothy-mouse"
+      ],
+      [
+        "belle",
+        "goofy",
+        "jessie",
+        "luisa",
+        "piglet",
+        "timothy-mouse"
+      ],
+      [
+        "jack-skellington",
+        "minnie-mouse"
+      ]
+    ],
+    "A022": [
+      [
+        "ariel",
+        "cruella-de-vil",
+        "leroy",
+        "lucifer",
+        "pinocchio",
+        "rapunzel",
+        "tiana"
+      ],
+      [
+        "heimlich",
+        "rapunzel"
+      ]
+    ],
+    "A023": [
+      [
+        "bunny",
+        "goofy"
+      ],
+      [
+        "dale",
+        "emile",
+        "lady",
+        "rapunzel",
+        "sulley"
+      ]
+    ],
+    "A024": [
+      [
+        "angel",
+        "bunny",
+        "elsa",
+        "mike-wazowski",
+        "tinker-bell"
+      ],
+      [
+        "ariel",
+        "tigger"
+      ]
+    ],
+    "A025": [
+      [
+        "finnick",
+        "minnie-mouse",
+        "tinker-bell"
+      ],
+      [
+        "ariel",
+        "goofy",
+        "remy",
+        "tigger",
+        "winnie-the-pooh"
+      ]
+    ],
+    "A026": [
+      [
+        "daisy-duck",
+        "mike-wazowski"
+      ],
+      [
+        "buzz-lightyear",
+        "daisy-duck",
+        "jack-skellington",
+        "minnie-mouse",
+        "olaf"
+      ]
+    ],
+    "A027": [
+      [
+        "alice",
+        "leroy",
+        "oogie-boogie",
+        "prince-naveen",
+        "sulley",
+        "timothy-mouse"
+      ],
+      [
+        "dale",
+        "lucifer"
+      ]
+    ],
+    "A028": [
+      [
+        "chip",
+        "prince-naveen"
+      ],
+      [
+        "finnick",
+        "hamm",
+        "lotso",
+        "piglet",
+        "tiana",
+        "tramp"
+      ],
+      [
+        "eeyore",
+        "finnick",
+        "hamm",
+        "lotso",
+        "piglet",
+        "tiana",
+        "tramp"
+      ]
+    ],
+    "A029": [
+      [
+        "ducky",
+        "lady"
+      ],
+      [
+        "jasmine",
+        "lotso",
+        "oogie-boogie",
+        "prince-naveen",
+        "tiana"
+      ]
+    ],
+    "A030": [
+      [
+        "cruella-de-vil",
+        "donald-duck",
+        "minnie-mouse",
+        "olaf",
+        "stitch"
+      ],
+      [
+        "jasmine",
+        "tramp"
+      ]
+    ],
+    "A031": [
+      [
+        "hamm",
+        "piglet"
+      ],
+      [
+        "dale",
+        "heimlich",
+        "lady",
+        "piglet",
+        "rapunzel"
+      ]
+    ],
+    "A032": [
+      [
+        "elsa",
+        "jessie",
+        "remy"
+      ],
+      [
+        "alien",
+        "goofy",
+        "pinocchio",
+        "remy",
+        "tinker-bell"
+      ]
+    ],
+    "A033": [
+      [
+        "alice",
+        "lotso"
+      ],
+      [
+        "belle",
+        "daisy-duck",
+        "elsa",
+        "mike-wazowski",
+        "timothy-mouse",
+        "winnie-the-pooh"
+      ]
+    ],
+    "A034": [
+      [
+        "angel",
+        "ariel",
+        "ducky",
+        "finnick",
+        "jessie",
+        "lucifer",
+        "marie"
+      ],
+      [
+        "angel",
+        "eeyore",
+        "olaf"
+      ]
+    ],
+    "A035": [
+      [
+        "ariel",
+        "cruella-de-vil",
+        "eeyore",
+        "remy",
+        "tigger"
+      ],
+      [
+        "belle",
+        "sulley"
+      ]
+    ],
+    "A036": [
+      [
+        "bunny",
+        "dale",
+        "evil-queen",
+        "goofy",
+        "piglet"
+      ],
+      [
+        "buzz-lightyear",
+        "cruella-de-vil"
+      ]
+    ],
+    "A037": [
+      [
+        "donald-duck",
+        "timothy-mouse"
+      ],
+      [
+        "buzz-lightyear",
+        "cheshire-cat",
+        "ducky",
+        "sulley",
+        "tramp"
+      ]
+    ],
+    "A038": [
+      [
+        "elsa",
+        "emile",
+        "lotso",
+        "marie",
+        "rapunzel"
+      ],
+      [
+        "stitch",
+        "tiana"
+      ]
+    ],
+    "A039": [
+      [
+        "buzz-lightyear",
+        "tramp"
+      ],
+      [
+        "alice",
+        "angel",
+        "chip",
+        "daisy-duck",
+        "lucifer",
+        "tiana"
+      ]
+    ],
+    "A040": [
+      [
+        "donald-duck",
+        "hamm",
+        "jessie",
+        "minnie-mouse",
+        "olaf",
+        "stitch",
+        "timothy-mouse"
+      ],
+      [
+        "lotso",
+        "oogie-boogie"
+      ]
+    ],
+    "B002": [
+      [
+        "buzz-lightyear",
+        "luisa",
+        "mickey-mouse",
+        "minnie-mouse",
+        "tinker-bell"
+      ],
+      [
+        "buzz-lightyear",
+        "luisa",
+        "minnie-mouse",
+        "timothy-mouse",
+        "tinker-bell"
+      ]
+    ],
+    "B005": [
+      [
+        "alice",
+        "chip",
+        "tiana",
+        "tramp"
+      ],
+      [
+        "alice",
+        "chip",
+        "ducky",
+        "tiana",
+        "tramp"
+      ]
+    ],
+    "B008": [
+      [
+        "belle",
+        "dale",
+        "goofy",
+        "hamm",
+        "heimlich",
+        "prince-naveen",
+        "sulley"
+      ],
+      [
+        "belle",
+        "dale",
+        "goofy",
+        "heimlich",
+        "prince-naveen",
+        "sulley"
+      ]
+    ],
+    "B013": [
+      [
+        "alien",
+        "daisy-duck",
+        "emile",
+        "mickey-mouse",
+        "winnie-the-pooh"
+      ],
+      [
+        "alien",
+        "daisy-duck",
+        "emile",
+        "tramp",
+        "winnie-the-pooh"
+      ]
+    ],
+    "B033": [
+      [
+        "bunny",
+        "goofy"
+      ],
+      [
+        "dale",
+        "emile",
+        "lady",
+        "rapunzel",
+        "sulley"
+      ]
+    ],
+    "B034": [
+      [
+        "angel",
+        "finnick",
+        "mad-hatter",
+        "mickey-mouse",
+        "piglet"
+      ],
+      [
+        "finnick",
+        "minnie-mouse",
+        "tinker-bell"
+      ],
+      [
+        "angel",
+        "finnick",
+        "mad-hatter",
+        "piglet",
+        "rapunzel"
+      ]
+    ],
+    "B036": [
+      [
+        "elsa",
+        "emile",
+        "lotso",
+        "marie",
+        "rapunzel"
+      ],
+      [
+        "ducky",
+        "lady"
+      ]
+    ],
+    "B037": [
+      [
+        "hamm",
+        "piglet"
+      ],
+      [
+        "jasmine",
+        "lotso",
+        "oogie-boogie",
+        "prince-naveen",
+        "tiana"
+      ]
+    ],
+    "B038": [
+      [
+        "alice",
+        "lotso"
+      ],
+      [
+        "donald-duck",
+        "hamm",
+        "jessie",
+        "minnie-mouse",
+        "olaf",
+        "stitch",
+        "timothy-mouse"
+      ]
+    ],
+    "B039": [
+      [
+        "ariel",
+        "goofy",
+        "remy",
+        "tigger",
+        "winnie-the-pooh"
+      ],
+      [
+        "belle",
+        "sulley"
+      ]
+    ],
+    "B040": [
+      [
+        "ariel",
+        "cheshire-cat",
+        "cruella-de-vil",
+        "daisy-duck",
+        "eeyore"
+      ],
+      [
+        "ariel",
+        "cruella-de-vil",
+        "daisy-duck",
+        "ducky",
+        "eeyore"
+      ],
+      [
+        "donald-duck",
+        "timothy-mouse"
+      ]
+    ],
+    "B043": [
+      [
+        "eeyore",
+        "finnick",
+        "hamm",
+        "lotso",
+        "piglet",
+        "tiana",
+        "tramp"
+      ],
+      [
+        "goofy",
+        "pinocchio"
+      ]
+    ],
+    "B044": [
+      [
+        "daisy-duck",
+        "dale",
+        "eeyore"
+      ],
+      [
+        "angel",
+        "bunny",
+        "jasmine",
+        "minnie-mouse",
+        "olaf"
+      ]
+    ],
+    "B046": [
+      [
+        "alice",
+        "angel",
+        "chip",
+        "daisy-duck",
+        "lucifer",
+        "tiana"
+      ],
+      [
+        "emile",
+        "lotso"
+      ]
+    ],
+    "B048": [
+      [
+        "olaf",
+        "pinocchio"
+      ],
+      [
+        "buzz-lightyear",
+        "cheshire-cat",
+        "ducky",
+        "sulley",
+        "tramp"
+      ]
+    ],
+    "B049": [
+      [
+        "cruella-de-vil",
+        "tigger"
+      ],
+      [
+        "buzz-lightyear",
+        "daisy-duck",
+        "jack-skellington",
+        "minnie-mouse",
+        "olaf"
+      ]
+    ],
+    "B050": [
+      [
+        "angel",
+        "ariel",
+        "ducky",
+        "finnick",
+        "jessie",
+        "lucifer",
+        "marie"
+      ],
+      [
+        "alice",
+        "elsa"
+      ]
+    ],
+    "B051": [
+      [
+        "angel",
+        "bunny",
+        "elsa",
+        "mike-wazowski",
+        "tinker-bell"
+      ],
+      [
+        "alien",
+        "tiana"
+      ]
+    ],
+    "B054": [
+      [
+        "belle",
+        "daisy-duck"
+      ],
+      [
+        "dale",
+        "heimlich",
+        "mad-hatter",
+        "prince-naveen",
+        "sulley"
+      ]
+    ],
+    "B055": [
+      [
+        "belle",
+        "goofy",
+        "jessie",
+        "luisa",
+        "piglet",
+        "timothy-mouse"
+      ],
+      [
+        "belle",
+        "goofy",
+        "luisa",
+        "piglet",
+        "timothy-mouse"
+      ],
+      [
+        "marie",
+        "tiana"
+      ]
+    ],
+    "B058": [
+      [
+        "ariel",
+        "cruella-de-vil",
+        "eeyore",
+        "remy",
+        "tigger"
+      ],
+      [
+        "leroy",
+        "sulley"
+      ]
+    ],
+    "B100": [
+      [
+        "luisa",
+        "sulley"
+      ],
+      [
+        "oogie-boogie",
+        "sulley",
+        "tramp"
+      ]
+    ],
+    "C007": [
+      [
+        "alice",
+        "chip",
+        "ducky",
+        "mickey-mouse",
+        "tramp"
+      ],
+      [
+        "alice",
+        "chip",
+        "ducky",
+        "tiana",
+        "tramp"
+      ]
+    ],
+    "C010": [
+      [
+        "dale",
+        "heimlich",
+        "lady",
+        "piglet",
+        "rapunzel"
+      ],
+      [
+        "belle",
+        "dale",
+        "goofy",
+        "hamm",
+        "heimlich",
+        "prince-naveen",
+        "sulley"
+      ]
+    ],
+    "C015": [
+      [
+        "belle",
+        "dale",
+        "goofy",
+        "hamm",
+        "heimlich",
+        "prince-naveen",
+        "sulley"
+      ],
+      [
+        "jack-skellington",
+        "remy"
+      ]
+    ],
+    "C016": [
+      [
+        "ducky",
+        "mad-hatter"
+      ],
+      [
+        "alien",
+        "daisy-duck",
+        "emile",
+        "tramp",
+        "winnie-the-pooh"
+      ]
+    ],
+    "C022": [
+      [
+        "finnick",
+        "rapunzel"
+      ],
+      [
+        "buzz-lightyear",
+        "luisa",
+        "minnie-mouse",
+        "timothy-mouse",
+        "tinker-bell"
+      ]
+    ],
+    "C029": [
+      [
+        "buzz-lightyear",
+        "timothy-mouse"
+      ],
+      [
+        "ariel",
+        "cruella-de-vil",
+        "leroy",
+        "lucifer",
+        "pinocchio",
+        "rapunzel",
+        "tiana"
+      ]
+    ],
+    "C031": [
+      [
+        "leroy",
+        "sulley"
+      ],
+      [
+        "dale",
+        "heimlich",
+        "mad-hatter",
+        "prince-naveen",
+        "sulley"
+      ],
+      [
+        "dale",
+        "heimlich",
+        "mad-hatter",
+        "mickey-mouse",
+        "sulley"
+      ],
+      [
+        "dale",
+        "heimlich",
+        "mad-hatter",
+        "mickey-mouse",
+        "mike-wazowski"
+      ]
+    ],
+    "C033": [
+      [
+        "oogie-boogie",
+        "sulley",
+        "tramp"
+      ],
+      [
+        "jasmine",
+        "lotso",
+        "oogie-boogie",
+        "prince-naveen",
+        "tiana"
+      ]
+    ],
+    "C035": [
+      [
+        "cruella-de-vil",
+        "tigger"
+      ],
+      [
+        "ariel",
+        "goofy",
+        "remy",
+        "tigger",
+        "winnie-the-pooh"
+      ]
+    ],
+    "C038": [
+      [
+        "angel",
+        "bunny",
+        "jasmine",
+        "minnie-mouse",
+        "olaf"
+      ],
+      [
+        "heimlich",
+        "rapunzel"
+      ],
+      [
+        "angel",
+        "bunny",
+        "jasmine",
+        "mickey-mouse",
+        "olaf"
+      ]
+    ],
+    "C044": [
+      [
+        "finnick",
+        "minnie-mouse",
+        "tinker-bell"
+      ],
+      [
+        "belle",
+        "goofy",
+        "jessie",
+        "luisa",
+        "piglet",
+        "timothy-mouse"
+      ]
+    ],
+    "C048": [
+      [
+        "angel",
+        "ariel",
+        "ducky",
+        "finnick",
+        "jessie",
+        "lucifer",
+        "marie"
+      ],
+      [
+        "dale",
+        "lucifer"
+      ]
+    ],
+    "C052": [
+      [
+        "ducky",
+        "lady"
+      ],
+      [
+        "buzz-lightyear",
+        "cheshire-cat",
+        "ducky",
+        "sulley",
+        "tramp"
+      ]
+    ],
+    "C055": [
+      [
+        "daisy-duck",
+        "dale",
+        "eeyore"
+      ],
+      [
+        "angel",
+        "bunny",
+        "elsa",
+        "mike-wazowski",
+        "tinker-bell"
+      ]
+    ],
+    "C056": [
+      [
+        "hamm",
+        "piglet"
+      ],
+      [
+        "ariel",
+        "cheshire-cat",
+        "cruella-de-vil",
+        "daisy-duck",
+        "eeyore"
+      ]
+    ],
+    "C059": [
+      [
+        "lotso",
+        "marie"
+      ],
+      [
+        "eeyore",
+        "finnick",
+        "hamm",
+        "lotso",
+        "piglet",
+        "tiana",
+        "tramp"
+      ]
+    ],
+    "C071": [
+      [
+        "donald-duck",
+        "hamm",
+        "jessie",
+        "minnie-mouse",
+        "olaf",
+        "stitch",
+        "timothy-mouse"
+      ],
+      [
+        "angel",
+        "finnick"
+      ]
+    ],
+    "D015": [
+      [
+        "minnie-mouse",
+        "winnie-the-pooh"
+      ],
+      [
+        "eeyore",
+        "finnick",
+        "hamm",
+        "lotso",
+        "piglet",
+        "tiana",
+        "tramp"
+      ]
+    ],
+    "D017": [
+      [
+        "alien",
+        "goofy",
+        "pinocchio",
+        "remy",
+        "tinker-bell"
+      ],
+      [
+        "angel",
+        "donald-duck"
+      ]
+    ],
+    "D031": [
+      [
+        "dale",
+        "emile",
+        "lady",
+        "rapunzel",
+        "sulley"
+      ],
+      [
+        "dale",
+        "emile",
+        "lady",
+        "mickey-mouse",
+        "rapunzel"
+      ]
+    ],
+    "D032": [
+      [
+        "angel",
+        "ariel",
+        "ducky",
+        "finnick",
+        "jessie",
+        "lucifer",
+        "marie"
+      ],
+      [
+        "buzz-lightyear",
+        "timothy-mouse"
+      ]
+    ],
+    "D036": [
+      [
+        "belle",
+        "goofy",
+        "jessie",
+        "luisa",
+        "piglet",
+        "timothy-mouse"
+      ],
+      [
+        "oogie-boogie",
+        "sulley",
+        "tramp"
+      ]
+    ],
+    "D041": [
+      [
+        "elsa",
+        "emile",
+        "lotso",
+        "marie",
+        "rapunzel"
+      ],
+      [
+        "heimlich",
+        "rapunzel"
+      ]
+    ],
+    "D045": [
+      [
+        "jasmine",
+        "mickey-mouse",
+        "oogie-boogie",
+        "prince-naveen",
+        "tiana"
+      ],
+      [
+        "jasmine",
+        "lotso",
+        "oogie-boogie",
+        "prince-naveen",
+        "tiana"
+      ],
+      [
+        "ariel",
+        "tramp"
+      ],
+      [
+        "ariel",
+        "tigger"
+      ]
+    ],
+    "D047": [
+      [
+        "finnick",
+        "minnie-mouse",
+        "tinker-bell"
+      ],
+      [
+        "ariel",
+        "cruella-de-vil",
+        "leroy",
+        "lucifer",
+        "pinocchio",
+        "rapunzel",
+        "tiana"
+      ],
+      [
+        "angel",
+        "ariel",
+        "cruella-de-vil",
+        "pinocchio",
+        "rapunzel",
+        "tiana"
+      ]
+    ],
+    "D050": [
+      [
+        "buzz-lightyear",
+        "cheshire-cat",
+        "ducky",
+        "sulley",
+        "tramp"
+      ],
+      [
+        "goofy",
+        "pinocchio"
+      ]
+    ],
+    "D053": [
+      [
+        "angel",
+        "bunny",
+        "elsa",
+        "mike-wazowski",
+        "tinker-bell"
+      ],
+      [
+        "chip",
+        "prince-naveen"
+      ]
+    ],
+    "D055": [
+      [
+        "ducky",
+        "lady"
+      ],
+      [
+        "ariel",
+        "goofy",
+        "remy",
+        "tigger",
+        "winnie-the-pooh"
+      ]
+    ],
+    "D056": [
+      [
+        "ducky",
+        "eeyore"
+      ],
+      [
+        "dale",
+        "heimlich",
+        "mad-hatter",
+        "prince-naveen",
+        "sulley"
+      ]
+    ],
+    "D058": [
+      [
+        "alice",
+        "angel",
+        "chip",
+        "daisy-duck",
+        "lucifer",
+        "tiana"
+      ],
+      [
+        "daisy-duck",
+        "dale",
+        "eeyore"
+      ]
+    ],
+    "D061": [
+      [
+        "elsa",
+        "jessie",
+        "remy"
+      ],
+      [
+        "buzz-lightyear",
+        "daisy-duck",
+        "jack-skellington",
+        "minnie-mouse",
+        "olaf"
+      ]
+    ],
+    "E013": [
+      [
+        "jack-skellington",
+        "lotso",
+        "olaf",
+        "oogie-boogie",
+        "pinocchio",
+        "remy"
+      ],
+      [
+        "jack-skellington",
+        "remy"
+      ]
+    ],
+    "E016": [
+      [
+        "donald-duck",
+        "heimlich",
+        "jessie",
+        "minnie-mouse",
+        "olaf",
+        "stitch",
+        "timothy-mouse"
+      ],
+      [
+        "goofy",
+        "jessie"
+      ]
+    ],
+    "E020": [
+      [
+        "ducky",
+        "elsa",
+        "evil-queen",
+        "stitch",
+        "tinker-bell"
+      ],
+      [
+        "angel",
+        "donald-duck"
+      ]
+    ],
+    "E023": [
+      [
+        "cruella-de-vil",
+        "donald-duck",
+        "minnie-mouse",
+        "olaf",
+        "stitch"
+      ],
+      [
+        "cheshire-cat",
+        "tinker-bell"
+      ],
+      [
+        "donald-duck",
+        "mickey-mouse",
+        "minnie-mouse",
+        "olaf",
+        "stitch"
+      ]
+    ],
+    "E027": [
+      [
+        "ducky",
+        "mad-hatter"
+      ],
+      [
+        "alien",
+        "goofy",
+        "pinocchio",
+        "remy",
+        "tinker-bell"
+      ]
+    ],
+    "E032": [
+      [
+        "elsa",
+        "emile",
+        "lotso",
+        "marie",
+        "rapunzel"
+      ],
+      [
+        "cruella-de-vil",
+        "donald-duck",
+        "minnie-mouse",
+        "olaf",
+        "stitch"
+      ]
+    ],
+    "E049": [
+      [
+        "buzz-lightyear",
+        "daisy-duck",
+        "jack-skellington",
+        "minnie-mouse",
+        "olaf"
+      ],
+      [
+        "lotso",
+        "oogie-boogie"
+      ]
+    ],
+    "E052": [
+      [
+        "ariel",
+        "cheshire-cat",
+        "cruella-de-vil",
+        "daisy-duck",
+        "eeyore"
+      ],
+      [
+        "cheshire-cat",
+        "eeyore"
+      ]
+    ],
+    "E057": [
+      [
+        "dale",
+        "emile",
+        "lady",
+        "rapunzel",
+        "sulley"
+      ],
+      [
+        "dale",
+        "emile",
+        "lady",
+        "mickey-mouse",
+        "rapunzel"
+      ]
+    ],
+    "F024": [
+      [
+        "donald-duck",
+        "hamm",
+        "jessie",
+        "minnie-mouse",
+        "olaf",
+        "timothy-mouse"
+      ],
+      [
+        "ducky",
+        "lady"
+      ]
+    ],
+    "F027": [
+      [
+        "stitch",
+        "tiana"
+      ],
+      [
+        "alice",
+        "leroy",
+        "oogie-boogie",
+        "prince-naveen",
+        "sulley",
+        "timothy-mouse"
+      ]
+    ],
+    "F030": [
+      [
+        "daisy-duck",
+        "mike-wazowski"
+      ],
+      [
+        "elsa",
+        "emile",
+        "lotso",
+        "marie",
+        "rapunzel"
+      ]
+    ],
+    "F035": [
+      [
+        "dale",
+        "emile"
+      ],
+      [
+        "dale",
+        "emile",
+        "lady",
+        "rapunzel",
+        "sulley"
+      ]
+    ],
+    "F036": [
+      [
+        "alice",
+        "lotso"
+      ],
+      [
+        "alien",
+        "goofy",
+        "pinocchio",
+        "remy",
+        "tinker-bell"
+      ]
+    ],
+    "F041": [
+      [
+        "angel",
+        "ariel",
+        "ducky",
+        "finnick",
+        "jessie",
+        "lucifer",
+        "marie"
+      ],
+      [
+        "jasmine",
+        "tramp"
+      ]
+    ],
+    "F042": [
+      [
+        "belle",
+        "daisy-duck",
+        "elsa",
+        "mike-wazowski",
+        "timothy-mouse",
+        "winnie-the-pooh"
+      ],
+      [
+        "finnick",
+        "minnie-mouse",
+        "tinker-bell"
+      ]
+    ],
+    "F043": [
+      [
+        "dale",
+        "heimlich",
+        "mad-hatter",
+        "prince-naveen",
+        "sulley"
+      ],
+      [
+        "ariel",
+        "tigger"
+      ]
+    ],
+    "F044": [
+      [
+        "bunny",
+        "goofy"
+      ],
+      [
+        "buzz-lightyear",
+        "daisy-duck",
+        "jack-skellington",
+        "mickey-mouse",
+        "minnie-mouse"
+      ]
+    ],
+    "F051": [
+      [
+        "alice",
+        "elsa"
+      ],
+      [
+        "eeyore",
+        "finnick",
+        "hamm",
+        "lotso",
+        "piglet",
+        "tiana",
+        "tramp"
+      ]
+    ],
+    "F053": [
+      [
+        "angel",
+        "bunny",
+        "elsa",
+        "mike-wazowski",
+        "tinker-bell"
+      ],
+      [
+        "evil-queen",
+        "piglet",
+        "stitch"
+      ]
+    ],
+    "F056": [
+      [
+        "ariel",
+        "cruella-de-vil",
+        "eeyore",
+        "remy",
+        "tigger"
+      ],
+      [
+        "goofy",
+        "pinocchio"
+      ]
+    ],
+    "F059": [
+      [
+        "elsa",
+        "stitch"
+      ],
+      [
+        "ariel",
+        "cruella-de-vil",
+        "leroy",
+        "lucifer",
+        "pinocchio",
+        "rapunzel",
+        "tiana"
+      ]
+    ],
+    "G041": [
+      [
+        "dale",
+        "prince-naveen"
+      ],
+      [
+        "chip",
+        "prince-naveen"
+      ]
+    ],
+    "G093": [
+      [
+        "daisy-duck",
+        "dale",
+        "eeyore"
+      ],
+      [
+        "daisy-duck",
+        "dale"
+      ]
+    ],
+    "H040": [
+      [
+        "bunny",
+        "remy",
+        "tinker-bell"
+      ],
+      [
+        "remy",
+        "tinker-bell"
+      ]
+    ],
+    "H057": [
+      [
+        "donald-duck",
+        "goofy"
+      ],
+      [
+        "goofy",
+        "jessie"
+      ]
+    ],
+    "J100": [
+      [
+        "remy",
+        "tinker-bell"
+      ],
+      [
+        "emile",
+        "tinker-bell"
+      ]
+    ]
+  }
+}

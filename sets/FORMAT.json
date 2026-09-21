@@ -26,7 +26,7 @@
     "itemNumber": "Optional manufacturer SKU.",
     "upc": "Optional barcode.",
     "released": "Optional release date, YYYY, YYYY-MM or YYYY-MM-DD.",
-    "figuresPerCapsule": "How many figures come in one capsule. Used to validate the code files.",
+    "figuresPerCapsule": "How many figures come in one capsule, or a nonempty list of allowed sizes for lines with multiple package formats. Used to validate the code files.",
     "official": "Optional URL to the manufacturer's own page for this product.",
     "sourced": "Where the roster came from. Shown to the user. Be honest here.",
     "verified": "true only if every figure is confirmed against an official source.",

@@ -190,8 +190,11 @@ test('every shipped code names four real figures from its own set', () => {
     const seen = Object.entries(data.codes);
     assert.ok(seen.length > 0, `${file}: ships no codes at all`);
     for (const [code, figures] of seen) {
-      assert.strictEqual(figures.length, set.figuresPerCapsule || 4,
-        `${file}: code ${code} does not hold a full capsule`);
+      const allowedSizes = Array.isArray(set.figuresPerCapsule)
+        ? set.figuresPerCapsule
+        : [set.figuresPerCapsule || 4];
+      assert.ok(allowedSizes.includes(figures.length),
+        `${file}: code ${code} has ${figures.length} figures, allowed sizes are ${allowedSizes.join(', ')}`);
       assert.strictEqual(new Set(figures).size, figures.length,
         `${file}: code ${code} lists the same figure twice`);
       for (const id of figures) {

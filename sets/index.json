@@ -167,6 +167,7 @@
     "brand": "Disney Doorables",
     "packaging": "Ticket to Fun Multi Peek Collection",
     "emoji": "🎟️",
-    "total": 50
+    "total": 50,
+    "codeFile": "codes-disney-ticket-to-fun.json"
   }
 ]

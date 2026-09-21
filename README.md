@@ -42,7 +42,7 @@ has its own numbering, so `A001` and `L002` are different capsules from
 different production runs. That is genuinely why an unknown code shows up
 occasionally: it is from a batch nobody has written down yet, not a bug.
 
-**1,166 codes ship with the app**, across sixteen sets:
+**1,975 codes ship with the app**, across sixteen sets:
 
 | Set | Codes | Batches | Figures covered |
 | --- | --- | --- | --- |
@@ -62,14 +62,14 @@ occasionally: it is from a batch nobody has written down yet, not a bug.
 | Small Stars Series 1 | 8 | — | 8 of 8 |
 | Small Stars Series 2 | 8 | — | 8 of 8 |
 | Small Stars Series 3 | 8 | — | 8 of 8 |
-| Series 16: Ticket to Fun | — | — | 50 of 50 |
+| Series 16: Ticket to Fun | 809 | 13 | 50 of 50 |
 
 Not every set holds four figures. A Cruisers pack holds one, a Grogu Moments
 box holds one scene, a Toy Story bag holds three and a Squish Squadron bag
 holds five. A Small Stars backpack holds one figure. The app takes the number
 from the data rather than assuming.
 
-Where collectors disagreed about a code — 32 of them — the app shows **every**
+Where collectors disagreed about a code — 136 of them — the app shows **every**
 version reported rather than quietly picking one.
 
 Open a figure's card and it also works the other way round: it lists **every**
