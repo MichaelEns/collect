@@ -62,6 +62,7 @@ const SHELL = [
   '/collect/sets/sw-grogu-mini.json',
   '/collect/sets/sw-grogu-moments.json',
   '/collect/sets/codes-sw-grogu-moments.json',
+  '/collect/sets/disney-ticket-to-fun.json',
 ];
 
 const NETWORK_TIMEOUT_MS = 2500;

@@ -62,6 +62,7 @@ occasionally: it is from a batch nobody has written down yet, not a bug.
 | Small Stars Series 1 | 8 | — | 8 of 8 |
 | Small Stars Series 2 | 8 | — | 8 of 8 |
 | Small Stars Series 3 | 8 | — | 8 of 8 |
+| Series 16: Ticket to Fun | — | — | 50 of 50 |
 
 Not every set holds four figures. A Cruisers pack holds one, a Grogu Moments
 box holds one scene, a Toy Story bag holds three and a Squish Squadron bag

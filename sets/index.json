@@ -159,5 +159,14 @@
     "iconColor": "#8d58d6",
     "total": 8,
     "codeFile": "codes-ts-small-stars-s3.json"
+  },
+  {
+    "id": "disney-ticket-to-fun",
+    "file": "disney-ticket-to-fun.json",
+    "name": "Series 16: Ticket to Fun",
+    "brand": "Disney Doorables",
+    "packaging": "Ticket to Fun Multi Peek Collection",
+    "emoji": "🎟️",
+    "total": 50
   }
 ]
