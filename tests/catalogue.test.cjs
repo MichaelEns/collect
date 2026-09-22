@@ -18,7 +18,7 @@ const CODE = 'pumpkin-hazel-nebula-squid';
 
 /** Enough of Workers KV to run the handler: values, metadata, no expiry. */
 function fakeKV() {
-  const map = new Map();
+  const map = new Map([[`p:${CODE}`, { value: '{}' }]]);
   return {
     map,
     async get(key) {

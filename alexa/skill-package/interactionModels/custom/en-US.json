@@ -1,0 +1,361 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "joe's collection",
+      "intents": [
+        {
+          "name": "LinkCollectionIntent",
+          "slots": [
+            {
+              "name": "familyCode",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "use sharing code {familyCode}",
+            "link sharing code {familyCode}",
+            "connect with code {familyCode}",
+            "set the family code to {familyCode}"
+          ]
+        },
+        {
+          "name": "NeedCountIntent",
+          "slots": [
+            {
+              "name": "package",
+              "type": "PACKAGE_KIND"
+            }
+          ],
+          "samples": [
+            "how many {package} guys does Joe need",
+            "how many {package} figures does Joe need",
+            "how many {package} does Joe need",
+            "what does Joe need from {package}",
+            "how many are missing from {package}"
+          ]
+        },
+        {
+          "name": "CodeLookupIntent",
+          "slots": [
+            {
+              "name": "package",
+              "type": "PACKAGE_KIND"
+            },
+            {
+              "name": "capsuleCode",
+              "type": "CAPSULE_CODE"
+            }
+          ],
+          "samples": [
+            "what's in {package} code {capsuleCode}",
+            "what is in {package} code {capsuleCode}",
+            "look up {package} code {capsuleCode}",
+            "check {package} code {capsuleCode}"
+          ]
+        },
+        {
+          "name": "FigureCodeIntent",
+          "slots": [
+            {
+              "name": "figure",
+              "type": "FIGURE_NAME"
+            },
+            {
+              "name": "package",
+              "type": "PACKAGE_KIND"
+            }
+          ],
+          "samples": [
+            "what code is {figure} in the {package}",
+            "what codes is {figure} in for the {package}",
+            "which {package} codes contain {figure}",
+            "find {figure} in the {package}",
+            "where is {figure} in the {package}"
+          ]
+        },
+        {
+          "name": "UnlinkCollectionIntent",
+          "slots": [],
+          "samples": [
+            "forget my sharing code",
+            "unlink Joe's collection",
+            "disconnect the collection"
+          ]
+        },
+        {
+          "name": "PackageClarificationIntent",
+          "slots": [
+            {
+              "name": "color",
+              "type": "PACKAGE_COLOR"
+            }
+          ],
+          "samples": [
+            "{color}",
+            "the {color} one",
+            "{color} please"
+          ]
+        },
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.FallbackIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        }
+      ],
+      "types": [
+        {
+          "name": "PACKAGE_KIND",
+          "values": [
+            {
+              "name": {
+                "value": "gray Death Star",
+                "synonyms": [
+                  "grey Death Star",
+                  "Galaxy Peek series one"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "red Death Star",
+                "synonyms": [
+                  "Galaxy Peek series two"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "blue Cargo Drop",
+                "synonyms": [
+                  "Galaxy Peek series three"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "orange Cargo Drop",
+                "synonyms": [
+                  "Galaxy Peek series four"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "gray A T A T",
+                "synonyms": [
+                  "grey A T A T",
+                  "Galaxy Peek series five"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "blue Toy Story backpack",
+                "synonyms": [
+                  "blue backpack",
+                  "Small Stars series one"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "green Toy Story backpack",
+                "synonyms": [
+                  "green backpack",
+                  "Small Stars series two"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "purple Toy Story backpack",
+                "synonyms": [
+                  "purple backpack",
+                  "Small Stars series three"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "Toy Story backpack",
+                "synonyms": [
+                  "Toy Story backpacks"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "Toy Story blind bag",
+                "synonyms": [
+                  "Toy Story bag"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "Ticket to Fun capsule",
+                "synonyms": [
+                  "Ticket to Fun",
+                  "series sixteen"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "CAPSULE_CODE",
+          "values": [
+            {
+              "name": {
+                "value": "I8",
+                "synonyms": [
+                  "I eight",
+                  "eye eight",
+                  "I zero zero eight"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "A1",
+                "synonyms": [
+                  "A one",
+                  "A zero zero one"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "8",
+                "synonyms": [
+                  "eight",
+                  "zero eight"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "O4",
+                "synonyms": [
+                  "O four",
+                  "oh four",
+                  "letter O four"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "O17",
+                "synonyms": [
+                  "O seventeen",
+                  "oh seventeen",
+                  "letter O seventeen"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PACKAGE_COLOR",
+          "values": [
+            {
+              "name": {
+                "value": "gray",
+                "synonyms": [
+                  "grey"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "red"
+              }
+            },
+            {
+              "name": {
+                "value": "blue"
+              }
+            },
+            {
+              "name": {
+                "value": "green"
+              }
+            },
+            {
+              "name": {
+                "value": "purple"
+              }
+            },
+            {
+              "name": {
+                "value": "orange"
+              }
+            }
+          ]
+        },
+        {
+          "name": "FIGURE_NAME",
+          "values": [
+            {
+              "name": {
+                "value": "Queen Amidala",
+                "synonyms": [
+                  "Amidala",
+                  "Padme Amidala"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "Princess Leia",
+                "synonyms": [
+                  "Leia"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "Darth Vader",
+                "synonyms": [
+                  "Vader"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "Anakin Skywalker",
+                "synonyms": [
+                  "Anakin"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "Buzz Lightyear",
+                "synonyms": [
+                  "Buzz"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "Woody"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

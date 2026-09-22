@@ -1,0 +1,48 @@
+{
+  "manifest": {
+    "manifestVersion": "1.0",
+    "publishingInformation": {
+      "locales": {
+        "en-US": {
+          "name": "Joe's Collection",
+          "summary": "Ask what Joe needs, what a package code contains, or which codes contain a figure.",
+          "description": "Use a four-word sharing code to connect Joe's collection tracker, then ask how many figures he still needs, what a package code contains, or which package codes contain a named figure. Package colors distinguish each series.",
+          "examplePhrases": [
+            "Alexa, ask Joe's collection how many red Death Star guys does Joe need",
+            "Alexa, ask Joe's collection what's in gray Death Star code I eight",
+            "Alexa, ask Joe's collection what code is Queen Amidala in the red Death Star"
+          ],
+          "keywords": [
+            "collection",
+            "collectibles",
+            "package codes"
+          ],
+          "smallIconUri": "https://michaelens.github.io/collect/alexa/icon-108.png",
+          "largeIconUri": "https://michaelens.github.io/collect/icon-512.png"
+        }
+      },
+      "isAvailableWorldwide": false,
+      "testingInstructions": "This skill has no account linking. Pair the dedicated empty certification collection by saying: \"Alexa, ask Joe's collection to use sharing code foxglove lizard donut donut.\" Then test: (1) \"Alexa, ask Joe's collection how many red Death Star guys does Joe need.\" Expected: Joe needs 25 of 25. (2) \"Alexa, ask Joe's collection what's in gray Death Star code I eight.\" Expected: four figure names and that Joe needs all four. (3) \"Alexa, ask Joe's collection what code is Queen Amidala in the red Death Star.\" Expected: all twelve recorded package codes. The certification code contains no family data and may be reset after review. This is an independent personal collection utility. Third-party product and character names are used only to identify lawfully purchased figures and their packaging; the skill uses no third-party logos, artwork, audio, or images and does not claim affiliation or endorsement.",
+      "category": "ORGANIZERS_AND_ASSISTANTS",
+      "distributionCountries": [
+        "US"
+      ]
+    },
+    "apis": {
+      "custom": {}
+    },
+    "privacyAndCompliance": {
+      "allowsPurchases": false,
+      "usesPersonalInfo": true,
+      "isChildDirected": false,
+      "isExportCompliant": true,
+      "containsAds": false,
+      "locales": {
+        "en-US": {
+          "privacyPolicyUrl": "https://michaelens.github.io/collect/alexa/privacy.html",
+          "termsOfUseUrl": "https://michaelens.github.io/collect/alexa/terms.html"
+        }
+      }
+    }
+  }
+}

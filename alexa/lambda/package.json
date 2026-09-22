@@ -1,0 +1,18 @@
+{
+  "name": "joes-collection-alexa-skill",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Family-only Alexa interface to Joe's shared collection",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test ../../tests/alexa.test.cjs"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "dependencies": {
+    "ask-sdk-core": "^2.14.0",
+    "ask-sdk-dynamodb-persistence-adapter": "^2.14.0",
+    "node-fetch": "^2.7.0"
+  }
+}

@@ -136,6 +136,8 @@ async function readCode(request, env) {
   const raw = request.headers.get('X-Family-Code');
   const code = normaliseCode(raw);
   if (!code) return null;
+  // Four valid words are only a credential after /v1/new allocated them.
+  if (await env.COLLECT.get(progressKey(code)) === null) return null;
   return code;
 }
 

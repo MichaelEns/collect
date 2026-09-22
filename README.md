@@ -28,6 +28,9 @@ have Boba Fett.
 - **Progress bar and a celebration** when a set is finished.
 - Everything is saved on the device, and stays there unless you deliberately
   switch sharing on.
+- **Ask Alexa what Joe still needs or what a package code contains.** The
+  optional family skill uses the same four-word sharing code, with no Amazon
+  account linking. See [`alexa/README.md`](alexa/README.md).
 
 ## Telling what is in a capsule before you buy it
 
