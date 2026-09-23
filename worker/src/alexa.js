@@ -142,6 +142,25 @@ function resolvedSlot(envelope, name) {
   return values && values[0] ? values[0].value.name : rawSlot(envelope, name);
 }
 
+function resolvedSlotValues(envelope, name) {
+  const slots = envelope.request && envelope.request.intent &&
+    envelope.request.intent.slots || {};
+  const slot = slots[name];
+  const authorities = slot && slot.resolutions &&
+    slot.resolutions.resolutionsPerAuthority || [];
+  const resolved = authorities.flatMap((authority) =>
+    (authority.values || []).map((entry) => entry.value && entry.value.name));
+  return [...new Set([...resolved, rawSlot(envelope, name)].filter(Boolean))];
+}
+
+function capsuleCodeSlot(envelope) {
+  const letter = resolvedSlot(envelope, 'codeLetter');
+  const number = resolvedSlot(envelope, 'codeNumber');
+  if (letter && number) return `${letter} ${number}`;
+  const values = resolvedSlotValues(envelope, 'capsuleCode');
+  return values.length > 1 ? values : values[0];
+}
+
 function alexaResponse(speech, reprompt, sessionAttributes = {}) {
   const result = {
     version: '1.0',
@@ -370,7 +389,7 @@ export async function handleAlexaEnvelope(
 
     if (intentName === 'CodeLookupIntent') {
       const resolution = packageResolution(envelope);
-      const capsuleCode = resolvedSlot(envelope, 'capsuleCode');
+      const capsuleCode = capsuleCodeSlot(envelope);
       if (resolution.status === 'ambiguous') {
         rememberPackageQuestion(
           sessionAttributes, resolution, 'lookup', capsuleCode);

@@ -64,6 +64,21 @@ function envelope(intentName, slots = {}, attributes = {}) {
   };
 }
 
+function resolvedSlot(name, value, resolutions) {
+  return {
+    name,
+    value,
+    resolutions: {
+      resolutionsPerAuthority: [{
+        status: { code: 'ER_SUCCESS_MATCH' },
+        values: resolutions.map((resolution) => ({
+          value: { name: resolution },
+        })),
+      }],
+    },
+  };
+}
+
 test('Alexa endpoint refuses unsigned requests', async () => {
   const request = new Request('https://worker.example/alexa', {
     method: 'POST',
@@ -166,4 +181,48 @@ test('Alexa reverse lookup returns figure codes through the Worker backend', asy
       },
     });
   assert.match(answer.response.outputSpeech.text, /codes A 001 and B 002/);
+});
+
+test('Alexa keeps alternate code resolutions when speech drops the letter', async () => {
+  const env = environment([[`p:${FAMILY_CODE}`, '{}']]);
+  await handleAlexaEnvelope(
+    envelope('LinkCollectionIntent', { familyCode: FAMILY_CODE }),
+    env,
+    {});
+  const request = envelope('CodeLookupIntent', {
+    package: 'red Death Star',
+    capsuleCode: 'placeholder',
+  });
+  request.request.intent.slots.capsuleCode =
+    resolvedSlot('capsuleCode', '8', ['8', 'I8']);
+
+  const answer = await handleAlexaEnvelope(request, env, {
+    async lookup(packageInfo, code) {
+      assert.equal(packageInfo.label, 'red Death Star');
+      assert.deepEqual(code, ['8', 'I8']);
+      return { code: 'I8', label: packageInfo.label, entries: [] };
+    },
+  });
+  assert.match(answer.response.outputSpeech.text, /code I 8/);
+});
+
+test('Alexa combines separately recognized code letters and numbers', async () => {
+  const env = environment([[`p:${FAMILY_CODE}`, '{}']]);
+  await handleAlexaEnvelope(
+    envelope('LinkCollectionIntent', { familyCode: FAMILY_CODE }),
+    env,
+    {});
+  const request = envelope('CodeLookupIntent', {
+    package: 'red Death Star',
+    codeLetter: 'J',
+    codeNumber: '8',
+  });
+
+  await handleAlexaEnvelope(request, env, {
+    async lookup(packageInfo, code) {
+      assert.equal(packageInfo.label, 'red Death Star');
+      assert.equal(code, 'J 8');
+      return { code: 'J8', label: packageInfo.label, entries: [] };
+    },
+  });
 });

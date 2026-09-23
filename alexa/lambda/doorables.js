@@ -238,9 +238,12 @@ function compactCapsuleCode(raw, leadingOhIsLetter) {
 }
 
 function capsuleCodeCandidates(raw) {
-  const letterO = compactCapsuleCode(raw, true);
-  const zero = compactCapsuleCode(raw, false);
-  return [...new Set([letterO, zero].filter(Boolean))];
+  const inputs = Array.isArray(raw) ? raw : [raw];
+  const candidates = inputs.flatMap((input) => [
+    compactCapsuleCode(input, true),
+    compactCapsuleCode(input, false),
+  ]);
+  return [...new Set(candidates.filter(Boolean))];
 }
 
 function normaliseCapsuleCode(raw) {
@@ -276,6 +279,36 @@ function normaliseFigureName(raw) {
     .replace(/[^a-z0-9]+/g, ' ')
     .trim()
     .replace(/\s+/g, ' ');
+}
+
+function editDistance(left, right) {
+  const previous = Array.from({ length: right.length + 1 }, (_, index) => index);
+  for (let leftIndex = 1; leftIndex <= left.length; leftIndex += 1) {
+    const current = [leftIndex];
+    for (let rightIndex = 1; rightIndex <= right.length; rightIndex += 1) {
+      current[rightIndex] = Math.min(
+        current[rightIndex - 1] + 1,
+        previous[rightIndex] + 1,
+        previous[rightIndex - 1] +
+          (left[leftIndex - 1] === right[rightIndex - 1] ? 0 : 1));
+    }
+    previous.splice(0, previous.length, ...current);
+  }
+  return previous[right.length];
+}
+
+function closestFigure(candidates, wanted) {
+  const scored = candidates.map((candidate) => ({
+    candidate,
+    distance: editDistance(normaliseFigureName(candidate.figure.name), wanted),
+  })).sort((left, right) => left.distance - right.distance);
+  const best = scored[0];
+  if (!best) return null;
+  const maximumDistance = wanted.length <= 5
+    ? 1
+    : Math.max(2, Math.floor(wanted.length * 0.25));
+  const uniquelyBest = !scored[1] || scored[1].distance > best.distance;
+  return best.distance <= maximumDistance && uniquelyBest ? best.candidate : null;
 }
 
 function isOwned(progress, setId, figureId) {
@@ -409,17 +442,22 @@ class DoorablesService {
     const wanted = normaliseFigureName(rawFigure);
     if (!wanted) return { status: 'unknown', label: packageInfo.label };
     const sets = await this.loadSets(packageInfo);
-    const candidates = [];
+    const figures = [];
 
     for (const { metadata, set } of sets) {
       for (const figure of set.figures) {
-        const name = normaliseFigureName(figure.name);
-        const id = normaliseFigureName(figure.id);
-        if (name === wanted || id === wanted ||
-            name.split(' ').includes(wanted) || name.endsWith(` ${wanted}`)) {
-          candidates.push({ metadata, set, figure });
-        }
+        figures.push({ metadata, set, figure });
       }
+    }
+    let candidates = figures.filter(({ figure }) => {
+      const name = normaliseFigureName(figure.name);
+      const id = normaliseFigureName(figure.id);
+      return name === wanted || id === wanted ||
+        name.split(' ').includes(wanted) || name.endsWith(` ${wanted}`);
+    });
+    if (!candidates.length) {
+      const closest = closestFigure(figures, wanted);
+      if (closest) candidates = [closest];
     }
     if (candidates.length !== 1) {
       return {

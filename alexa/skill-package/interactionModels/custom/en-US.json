@@ -13,7 +13,11 @@
           ],
           "samples": [
             "use sharing code {familyCode}",
+            "use my sharing code {familyCode}",
+            "use code {familyCode}",
             "link sharing code {familyCode}",
+            "connect to sharing code {familyCode}",
+            "connect Joe's collection to {familyCode}",
             "connect with code {familyCode}",
             "set the family code to {familyCode}"
           ]
@@ -44,13 +48,27 @@
             {
               "name": "capsuleCode",
               "type": "CAPSULE_CODE"
+            },
+            {
+              "name": "codeLetter",
+              "type": "CODE_LETTER"
+            },
+            {
+              "name": "codeNumber",
+              "type": "AMAZON.NUMBER"
             }
           ],
           "samples": [
             "what's in {package} code {capsuleCode}",
             "what is in {package} code {capsuleCode}",
+            "what's in {package} {codeLetter} {codeNumber}",
+            "what is in {package} {codeLetter} {codeNumber}",
+            "what's in {package} code {codeLetter} {codeNumber}",
+            "what is in {package} code {codeLetter} {codeNumber}",
             "look up {package} code {capsuleCode}",
-            "check {package} code {capsuleCode}"
+            "look up {package} {codeLetter} {codeNumber}",
+            "check {package} code {capsuleCode}",
+            "check {package} {codeLetter} {codeNumber}"
           ]
         },
         {
@@ -68,6 +86,9 @@
           "samples": [
             "what code is {figure} in the {package}",
             "what codes is {figure} in for the {package}",
+            "what codes have {figure} in the {package}",
+            "what codes had {figure} in the {package}",
+            "which codes have {figure} in the {package}",
             "which {package} codes contain {figure}",
             "find {figure} in the {package}",
             "where is {figure} in the {package}"
@@ -122,6 +143,8 @@
                 "value": "gray Death Star",
                 "synonyms": [
                   "grey Death Star",
+                  "gray Death Stars",
+                  "grey Death Stars",
                   "Galaxy Peek series one"
                 ]
               }
@@ -130,6 +153,7 @@
               "name": {
                 "value": "red Death Star",
                 "synonyms": [
+                  "red Death Stars",
                   "Galaxy Peek series two"
                 ]
               }
@@ -211,6 +235,37 @@
                 ]
               }
             }
+          ]
+        },
+        {
+          "name": "CODE_LETTER",
+          "values": [
+            { "name": { "value": "A", "synonyms": ["ay", "letter A"] } },
+            { "name": { "value": "B", "synonyms": ["bee", "letter B"] } },
+            { "name": { "value": "C", "synonyms": ["see", "sea", "letter C"] } },
+            { "name": { "value": "D", "synonyms": ["dee", "letter D"] } },
+            { "name": { "value": "E", "synonyms": ["ee", "letter E"] } },
+            { "name": { "value": "F", "synonyms": ["eff", "letter F"] } },
+            { "name": { "value": "G", "synonyms": ["gee", "letter G"] } },
+            { "name": { "value": "H", "synonyms": ["aitch", "letter H"] } },
+            { "name": { "value": "I", "synonyms": ["eye", "letter I"] } },
+            { "name": { "value": "J", "synonyms": ["jay", "letter J"] } },
+            { "name": { "value": "K", "synonyms": ["kay", "letter K"] } },
+            { "name": { "value": "L", "synonyms": ["el", "letter L"] } },
+            { "name": { "value": "M", "synonyms": ["em", "letter M"] } },
+            { "name": { "value": "N", "synonyms": ["en", "letter N"] } },
+            { "name": { "value": "O", "synonyms": ["oh", "letter O"] } },
+            { "name": { "value": "P", "synonyms": ["pee", "letter P"] } },
+            { "name": { "value": "Q", "synonyms": ["cue", "queue", "letter Q"] } },
+            { "name": { "value": "R", "synonyms": ["are", "letter R"] } },
+            { "name": { "value": "S", "synonyms": ["ess", "letter S"] } },
+            { "name": { "value": "T", "synonyms": ["tee", "tea", "letter T"] } },
+            { "name": { "value": "U", "synonyms": ["you", "letter U"] } },
+            { "name": { "value": "V", "synonyms": ["vee", "letter V"] } },
+            { "name": { "value": "W", "synonyms": ["double you", "letter W"] } },
+            { "name": { "value": "X", "synonyms": ["ex", "letter X"] } },
+            { "name": { "value": "Y", "synonyms": ["why", "letter Y"] } },
+            { "name": { "value": "Z", "synonyms": ["zee", "zed", "letter Z"] } }
           ]
         },
         {
@@ -312,7 +367,10 @@
                 "value": "Queen Amidala",
                 "synonyms": [
                   "Amidala",
-                  "Padme Amidala"
+                  "Padme Amidala",
+                  "Queen Amadala",
+                  "Queen Amidalla",
+                  "Queen Amygdala"
                 ]
               }
             },

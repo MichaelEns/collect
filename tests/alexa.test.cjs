@@ -143,6 +143,14 @@ test('spoken capsule codes match the app leading-zero semantics', () => {
   assert.equal(normaliseCapsuleCode('oh four'), 'O4');
 });
 
+test('all Alexa slot resolution candidates remain available for package lookup', async () => {
+  const service = serviceWith({});
+  const packageInfo = resolvePackage('gray Death Star').packageInfo;
+  const result = await service.lookup(packageInfo, ['8', 'I8'], {});
+  assert.equal(result.code, 'I8');
+  assert.equal(result.entries[0].variants[0].names[0], 'Chopper');
+});
+
 test('red Death Star need counts use Joe\'s shared progress', async () => {
   const service = serviceWith({
     'sw-galaxy-peek-s2': {
@@ -194,6 +202,14 @@ test('Queen Amidala reverse lookup returns every red Death Star code', async () 
   assert.match(speech, /sources disagree about code A 001/);
 });
 
+test('a close Alexa transcription still finds a unique figure', async () => {
+  const service = serviceWith({});
+  const packageInfo = resolvePackage('red Death Star').packageInfo;
+  const result = await service.findFigureCodes(packageInfo, 'Queen Amygdala');
+  assert.equal(result.status, 'ok');
+  assert.equal(result.figure, 'Queen Amidala');
+});
+
 test('spoken O batches are not silently confused with number-only codes', async () => {
   const service = serviceWith({});
   const packageInfo = resolvePackage('gray Death Star').packageInfo;
@@ -231,8 +247,28 @@ test('the interaction model contains the requested phrases and color follow-up',
   const reverse = model.intents.find((intent) => intent.name === 'FigureCodeIntent');
   const clarification = model.intents.find(
     (intent) => intent.name === 'PackageClarificationIntent');
+  const codeLetters = new Set(model.types.find(
+    (type) => type.name === 'CODE_LETTER').values.map(
+    (entry) => entry.name.value));
+  const usedCodeLetters = new Set();
+  for (const file of fs.readdirSync(path.join(__dirname, '..', 'sets'))) {
+    if (!/^codes-.*\.json$/.test(file)) continue;
+    const codeData = JSON.parse(fs.readFileSync(
+      path.join(__dirname, '..', 'sets', file), 'utf8'));
+    for (const section of ['codes', 'disputed']) {
+      for (const code of Object.keys(codeData[section] || {})) {
+        const match = code.match(/^([A-Z]+)/);
+        if (match) for (const letter of match[1]) usedCodeLetters.add(letter);
+      }
+    }
+  }
   assert.ok(need.samples.includes('how many {package} guys does Joe need'));
   assert.ok(lookup.samples.includes("what's in {package} code {capsuleCode}"));
+  assert.ok(lookup.samples.includes("what's in {package} {codeLetter} {codeNumber}"));
   assert.ok(reverse.samples.includes('what code is {figure} in the {package}'));
+  assert.ok(reverse.samples.includes('what codes have {figure} in the {package}'));
   assert.ok(clarification.samples.includes('{color}'));
+  assert.deepEqual(
+    [...usedCodeLetters].filter((letter) => !codeLetters.has(letter)),
+    []);
 });

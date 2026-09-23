@@ -32,6 +32,24 @@ function resolvedSlot(handlerInput, name) {
   return values && values[0] ? values[0].value.name : rawSlot(handlerInput, name);
 }
 
+function resolvedSlotValues(handlerInput, name) {
+  const slots = handlerInput.requestEnvelope.request.intent.slots || {};
+  const slot = slots[name];
+  const authorities = slot && slot.resolutions &&
+    slot.resolutions.resolutionsPerAuthority || [];
+  const resolved = authorities.flatMap((authority) =>
+    (authority.values || []).map((entry) => entry.value && entry.value.name));
+  return [...new Set([...resolved, rawSlot(handlerInput, name)].filter(Boolean))];
+}
+
+function capsuleCodeSlot(handlerInput) {
+  const letter = resolvedSlot(handlerInput, 'codeLetter');
+  const number = resolvedSlot(handlerInput, 'codeNumber');
+  if (letter && number) return `${letter} ${number}`;
+  const values = resolvedSlotValues(handlerInput, 'capsuleCode');
+  return values.length > 1 ? values : values[0];
+}
+
 async function attributes(handlerInput) {
   return handlerInput.attributesManager.getPersistentAttributes();
 }
@@ -171,9 +189,10 @@ const CodeLookupIntentHandler = {
         'Joe\'s collection is not linked yet. Say, use sharing code, followed by the four words.');
     }
     const resolution = packageResolution(handlerInput);
+    const capsuleCode = capsuleCodeSlot(handlerInput);
     if (resolution.status === 'ambiguous') {
       rememberPackageQuestion(
-        handlerInput, resolution, 'lookup', resolvedSlot(handlerInput, 'capsuleCode'));
+        handlerInput, resolution, 'lookup', capsuleCode);
       return response(handlerInput, resolution.speech, resolution.speech);
     }
     if (resolution.status !== 'ok') {
@@ -181,7 +200,7 @@ const CodeLookupIntentHandler = {
         'I did not recognize that package. Include its color and package shape.');
     }
     return answerLookup(
-      handlerInput, code, resolution.packageInfo, resolvedSlot(handlerInput, 'capsuleCode'));
+      handlerInput, code, resolution.packageInfo, capsuleCode);
   },
 };
 
