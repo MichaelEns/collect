@@ -1,6 +1,7 @@
 'use strict';
 
 const Alexa = require('ask-sdk-core');
+const fetch = require('node-fetch');
 const {
   DoorablesError,
   DoorablesService,
@@ -11,7 +12,7 @@ const {
   resolvePackage,
 } = require('./doorables');
 
-const service = new DoorablesService();
+const service = new DoorablesService({ fetch });
 
 function isIntent(handlerInput, name) {
   return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest' &&

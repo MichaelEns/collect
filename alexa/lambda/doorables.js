@@ -1,6 +1,5 @@
 'use strict';
 
-const fetch = require('node-fetch');
 const FAMILY_WORDS = new Set(require('./family-words.json'));
 
 const DEFAULT_SYNC_ENDPOINT =
@@ -286,10 +285,14 @@ function isOwned(progress, setId, figureId) {
 
 class DoorablesService {
   constructor(options = {}) {
-    this.fetch = options.fetch || fetch;
-    this.syncEndpoint = options.syncEndpoint || process.env.COLLECT_SYNC_ENDPOINT ||
+    const runtimeEnv = typeof process !== 'undefined' && process.env ? process.env : {};
+    this.fetch = options.fetch || globalThis.fetch;
+    if (typeof this.fetch !== 'function') {
+      throw new TypeError('DoorablesService requires a fetch implementation.');
+    }
+    this.syncEndpoint = options.syncEndpoint || runtimeEnv.COLLECT_SYNC_ENDPOINT ||
       DEFAULT_SYNC_ENDPOINT;
-    this.dataBase = (options.dataBase || process.env.COLLECT_DATA_BASE ||
+    this.dataBase = (options.dataBase || runtimeEnv.COLLECT_DATA_BASE ||
       DEFAULT_DATA_BASE).replace(/\/+$/, '');
     this.cache = new Map();
   }

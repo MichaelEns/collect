@@ -1,8 +1,13 @@
 {
   "name": "collect-sync-worker",
   "private": true,
+  "type": "module",
   "description": "Sync worker for the collection tracker. Deploy with: npm install && npx wrangler deploy",
+  "dependencies": {
+    "@peculiar/x509": "^2.1.0",
+    "reflect-metadata": "^0.2.2"
+  },
   "devDependencies": {
-    "wrangler": "^4"
+    "wrangler": "^4.132.0"
   }
 }

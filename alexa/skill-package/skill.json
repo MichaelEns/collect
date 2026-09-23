@@ -29,7 +29,12 @@
       ]
     },
     "apis": {
-      "custom": {}
+      "custom": {
+        "endpoint": {
+          "uri": "https://collect-sync.michaelens.workers.dev/alexa",
+          "sslCertificateType": "Wildcard"
+        }
+      }
     },
     "privacyAndCompliance": {
       "allowsPurchases": false,

@@ -2,9 +2,8 @@
 
 This custom skill reads the same live family collection as the web app. It
 uses the existing four-word sharing code instead of Amazon account linking.
-The code is stored per Alexa user in the encrypted DynamoDB table that Amazon
-provisions for an Alexa-hosted skill. It is never placed in the skill source or
-repeated in a spoken response.
+The code is stored in Workers KV under a one-way hash of the Alexa user ID. It
+is never placed in the skill source or repeated in a spoken response.
 
 ## What to say
 
@@ -32,19 +31,19 @@ color rather than guessing.
 ## Deploy
 
 1. Deploy the credential check in `worker/src/index.js` with
-   `cd worker; npx wrangler deploy`. This makes a well-formed but unallocated
+   `cd worker; npx wrangler deploy`. The same deployment publishes the signed
+   Alexa HTTPS endpoint at `/alexa` and makes a well-formed but unallocated
    four-word code fail pairing instead of looking like an empty collection.
 2. In the [Alexa Developer Console](https://developer.amazon.com/alexa/console/ask),
    create a **Custom** skill named **Joe's Collection**, choose
-   **Alexa-hosted (Node.js)**, and use the **Start from scratch** template.
-3. Copy `lambda/` and `skill-package/` from this directory over the
-   corresponding folders in the Alexa-hosted Git repository. Keep any
-   Alexa-generated endpoint fields if its generated `skill.json` contains
-   them; the checked-in manifest intentionally leaves endpoint provisioning to
-   Alexa-hosted Skills.
-4. Deploy the code, then build the interaction model. Amazon supplies
-   `DYNAMODB_PERSISTENCE_TABLE_NAME`; no AWS account, Lambda ARN, OAuth client,
-   or new server secret is required.
+   **Provision your own**, and use the **Start from scratch** template.
+3. Deploy `skill-package/skill.json` and
+   `skill-package/interactionModels/custom/en-US.json`. The manifest points to
+   `https://collect-sync.michaelens.workers.dev/alexa`.
+4. Set `ALEXA_SKILL_ID` in `worker/wrangler.toml` to the created skill ID and
+   redeploy the Worker. No AWS account, Lambda ARN, OAuth client, or new server
+   secret is required. The Worker verifies Amazon's signing certificate,
+   request signature, timestamp, and skill ID before handling a request.
 5. In **Test**, enable development testing and pair a test account. The code is
    validated against the collection worker before it is saved.
 6. For the three family households, either invite each Amazon account to a
@@ -63,7 +62,9 @@ have access.
 From the repository root:
 
 ```powershell
-npm test --prefix .\alexa\lambda
+$tests = @((Get-ChildItem .\tests\*.test.mjs).FullName) +
+  @((Get-ChildItem .\tests\*.test.cjs).FullName)
+node --test $tests
 ```
 
 The tests use local fixtures and never read or print a real family code.

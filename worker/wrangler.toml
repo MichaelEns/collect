@@ -31,3 +31,4 @@ simple = { limit = 60, period = 60 }
 # Comma separated. Set to the published origin so a random page a child opens
 # cannot read the collection using a code cached in their browser.
 ALLOWED_ORIGINS = "https://michaelens.github.io"
+ALEXA_SKILL_ID = "amzn1.ask.skill.00cc0524-8f23-4c1b-b8a9-1b20e6d1631c"

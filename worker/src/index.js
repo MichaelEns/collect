@@ -35,6 +35,7 @@
 
 import { mergeAll } from './merge.js';
 import { makeCode, normaliseCode } from './code.js';
+import { handleAlexaRequest } from './alexa.js';
 
 /** Photos are shrunk to 480px before they ever leave the device. */
 const MAX_PHOTO_BYTES = 512 * 1024;
@@ -281,6 +282,9 @@ async function handle(request, env) {
 
 export default {
   async fetch(request, env) {
+    const path = new URL(request.url).pathname.replace(/\/+$/, '') || '/';
+    if (path === '/alexa') return handleAlexaRequest(request, env);
+
     const cors = corsHeaders(request, env);
 
     if (request.method === 'OPTIONS') {
