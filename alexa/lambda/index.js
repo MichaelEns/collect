@@ -8,6 +8,7 @@ const {
   figureCodesSpeech,
   lookupSpeech,
   needSpeech,
+  normaliseCapsuleCode,
   normaliseFamilyCode,
   resolvePackage,
 } = require('./doorables');
@@ -42,11 +43,28 @@ function resolvedSlotValues(handlerInput, name) {
   return [...new Set([...resolved, rawSlot(handlerInput, name)].filter(Boolean))];
 }
 
+function capsuleCodeValues(handlerInput) {
+  const raw = rawSlot(handlerInput, 'capsuleCode');
+  const rawCode = normaliseCapsuleCode(raw);
+  const resolved = resolvedSlotValues(handlerInput, 'capsuleCode');
+  const safeResolved = resolved.filter((value) => {
+    const resolvedCode = normaliseCapsuleCode(value);
+    if (!rawCode || !resolvedCode || resolvedCode === rawCode) {
+      return resolvedCode === rawCode;
+    }
+    const rawNumber = rawCode.match(/^(\d+)$/);
+    const resolvedLetterCode = resolvedCode.match(/^[A-Z]+(\d+)$/);
+    return Boolean(rawNumber && resolvedLetterCode &&
+      rawNumber[1] === resolvedLetterCode[1]);
+  });
+  return [...new Set([raw, ...safeResolved].filter(Boolean))];
+}
+
 function capsuleCodeSlot(handlerInput) {
   const letter = resolvedSlot(handlerInput, 'codeLetter');
   const number = resolvedSlot(handlerInput, 'codeNumber');
   if (letter && number) return `${letter} ${number}`;
-  const values = resolvedSlotValues(handlerInput, 'capsuleCode');
+  const values = capsuleCodeValues(handlerInput);
   return values.length > 1 ? values : values[0];
 }
 
@@ -66,7 +84,10 @@ function response(handlerInput, speech, reprompt) {
 }
 
 function packageResolution(handlerInput) {
-  return resolvePackage(resolvedSlot(handlerInput, 'package'));
+  const spoken = resolvePackage(rawSlot(handlerInput, 'package'));
+  return spoken.status === 'unknown'
+    ? resolvePackage(resolvedSlot(handlerInput, 'package'))
+    : spoken;
 }
 
 function rememberPackageQuestion(

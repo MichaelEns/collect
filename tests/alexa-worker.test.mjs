@@ -206,6 +206,58 @@ test('Alexa keeps alternate code resolutions when speech drops the letter', asyn
   assert.match(answer.response.outputSpeech.text, /code I 8/);
 });
 
+test('Alexa ignores unrelated fuzzy package and code resolutions', async () => {
+  const env = environment([[`p:${FAMILY_CODE}`, '{}']]);
+  await handleAlexaEnvelope(
+    envelope('LinkCollectionIntent', { familyCode: FAMILY_CODE }),
+    env,
+    {});
+  const request = envelope('CodeLookupIntent', {
+    package: 'ticket to fun',
+    capsuleCode: 'D 22',
+  });
+  request.request.intent.slots.package = resolvedSlot(
+    'package',
+    'ticket to fun',
+    ['blue Cargo Drop', 'Ticket to Fun capsule']);
+  request.request.intent.slots.capsuleCode = resolvedSlot(
+    'capsuleCode',
+    'D 22',
+    ['A1']);
+
+  await handleAlexaEnvelope(request, env, {
+    async lookup(packageInfo, code) {
+      assert.equal(packageInfo.label, 'Ticket to Fun capsule');
+      assert.equal(code, 'D 22');
+      return { code: 'D22', label: packageInfo.label, entries: [] };
+    },
+  });
+});
+
+test('Alexa trusts the spoken backpack color over fuzzy package resolution order', async () => {
+  const env = environment([[`p:${FAMILY_CODE}`, '{}']]);
+  await handleAlexaEnvelope(
+    envelope('LinkCollectionIntent', { familyCode: FAMILY_CODE }),
+    env,
+    {});
+  const request = envelope('CodeLookupIntent', {
+    package: 'green backpack',
+    capsuleCode: '11',
+  });
+  request.request.intent.slots.package = resolvedSlot(
+    'package',
+    'green backpack',
+    ['blue Toy Story backpack', 'green Toy Story backpack']);
+
+  await handleAlexaEnvelope(request, env, {
+    async lookup(packageInfo, code) {
+      assert.equal(packageInfo.label, 'green Toy Story backpack');
+      assert.equal(code, '11');
+      return { code: '11', label: packageInfo.label, entries: [] };
+    },
+  });
+});
+
 test('Alexa combines separately recognized code letters and numbers', async () => {
   const env = environment([[`p:${FAMILY_CODE}`, '{}']]);
   await handleAlexaEnvelope(
