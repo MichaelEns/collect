@@ -171,11 +171,29 @@ function capsuleCodeValues(envelope) {
   return [...new Set([raw, ...safeResolved].filter(Boolean))];
 }
 
+function codeFromPackageSlot(envelope) {
+  const raw = rawSlot(envelope, 'package');
+  const tokens = String(raw || '').match(/[a-z]+|\d+/gi) || [];
+  for (let length = Math.min(4, tokens.length); length > 0; length -= 1) {
+    const suffix = tokens.slice(-length).join(' ');
+    if (!normaliseCapsuleCode(suffix)) continue;
+    const packageText = tokens.slice(0, -length).join(' ');
+    if (resolvePackage(packageText).status === 'ok') return suffix;
+  }
+  return undefined;
+}
+
 function capsuleCodeSlot(envelope) {
-  const letter = resolvedSlot(envelope, 'codeLetter');
-  const number = resolvedSlot(envelope, 'codeNumber');
+  const letter = rawSlot(envelope, 'codeLetter') ||
+    resolvedSlot(envelope, 'codeLetter');
+  const number = rawSlot(envelope, 'codeNumber') ||
+    resolvedSlot(envelope, 'codeNumber');
   if (letter && number) return `${letter} ${number}`;
   const values = capsuleCodeValues(envelope);
+  if (values.length) return values.length > 1 ? values : values[0];
+  if (number) return number;
+  const packageCode = codeFromPackageSlot(envelope);
+  if (packageCode) return packageCode;
   return values.length > 1 ? values : values[0];
 }
 

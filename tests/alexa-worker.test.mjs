@@ -258,6 +258,64 @@ test('Alexa trusts the spoken backpack color over fuzzy package resolution order
   });
 });
 
+test('Alexa recovers a numeric code appended to the package slot', async () => {
+  const env = environment([[`p:${FAMILY_CODE}`, '{}']]);
+  await handleAlexaEnvelope(
+    envelope('LinkCollectionIntent', { familyCode: FAMILY_CODE }),
+    env,
+    {});
+  const request = envelope('CodeLookupIntent', {
+    package: 'green backpack 11',
+  });
+
+  await handleAlexaEnvelope(request, env, {
+    async lookup(packageInfo, code) {
+      assert.equal(packageInfo.label, 'green Toy Story backpack');
+      assert.equal(code, '11');
+      return { code: '11', label: packageInfo.label, entries: [] };
+    },
+  });
+});
+
+test('Alexa recovers a lettered code appended to the package slot', async () => {
+  const env = environment([[`p:${FAMILY_CODE}`, '{}']]);
+  await handleAlexaEnvelope(
+    envelope('LinkCollectionIntent', { familyCode: FAMILY_CODE }),
+    env,
+    {});
+  const request = envelope('CodeLookupIntent', {
+    package: 'ticket to fun D 22',
+  });
+
+  await handleAlexaEnvelope(request, env, {
+    async lookup(packageInfo, code) {
+      assert.equal(packageInfo.label, 'Ticket to Fun capsule');
+      assert.equal(code, 'D 22');
+      return { code: 'D22', label: packageInfo.label, entries: [] };
+    },
+  });
+});
+
+test('Alexa uses a partial number slot when the letter slot is absent', async () => {
+  const env = environment([[`p:${FAMILY_CODE}`, '{}']]);
+  await handleAlexaEnvelope(
+    envelope('LinkCollectionIntent', { familyCode: FAMILY_CODE }),
+    env,
+    {});
+  const request = envelope('CodeLookupIntent', {
+    package: 'green backpack',
+    codeNumber: '11',
+  });
+
+  await handleAlexaEnvelope(request, env, {
+    async lookup(packageInfo, code) {
+      assert.equal(packageInfo.label, 'green Toy Story backpack');
+      assert.equal(code, '11');
+      return { code: '11', label: packageInfo.label, entries: [] };
+    },
+  });
+});
+
 test('Alexa combines separately recognized code letters and numbers', async () => {
   const env = environment([[`p:${FAMILY_CODE}`, '{}']]);
   await handleAlexaEnvelope(

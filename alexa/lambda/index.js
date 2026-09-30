@@ -60,11 +60,29 @@ function capsuleCodeValues(handlerInput) {
   return [...new Set([raw, ...safeResolved].filter(Boolean))];
 }
 
+function codeFromPackageSlot(handlerInput) {
+  const raw = rawSlot(handlerInput, 'package');
+  const tokens = String(raw || '').match(/[a-z]+|\d+/gi) || [];
+  for (let length = Math.min(4, tokens.length); length > 0; length -= 1) {
+    const suffix = tokens.slice(-length).join(' ');
+    if (!normaliseCapsuleCode(suffix)) continue;
+    const packageText = tokens.slice(0, -length).join(' ');
+    if (resolvePackage(packageText).status === 'ok') return suffix;
+  }
+  return undefined;
+}
+
 function capsuleCodeSlot(handlerInput) {
-  const letter = resolvedSlot(handlerInput, 'codeLetter');
-  const number = resolvedSlot(handlerInput, 'codeNumber');
+  const letter = rawSlot(handlerInput, 'codeLetter') ||
+    resolvedSlot(handlerInput, 'codeLetter');
+  const number = rawSlot(handlerInput, 'codeNumber') ||
+    resolvedSlot(handlerInput, 'codeNumber');
   if (letter && number) return `${letter} ${number}`;
   const values = capsuleCodeValues(handlerInput);
+  if (values.length) return values.length > 1 ? values : values[0];
+  if (number) return number;
+  const packageCode = codeFromPackageSlot(handlerInput);
+  if (packageCode) return packageCode;
   return values.length > 1 ? values : values[0];
 }
 
