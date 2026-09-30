@@ -265,6 +265,26 @@ function capsuleCodeAsrCandidates(candidates) {
   }))];
 }
 
+function codeDataCandidates(candidates, codeData) {
+  const knownCodes = [
+    ...Object.keys(codeData.codes || {}),
+    ...Object.keys(codeData.disputed || {}),
+  ];
+  const hasNumericCodes = knownCodes.some((code) => /^\d+$/.test(code));
+  const hasLetterCodes = knownCodes.some((code) => /^[A-Z]+\d+$/.test(code));
+
+  if (hasLetterCodes && !hasNumericCodes) {
+    return capsuleCodeAsrCandidates(candidates);
+  }
+  if (hasNumericCodes && !hasLetterCodes) {
+    return [...new Set(candidates.flatMap((candidate) => {
+      const match = candidate.match(/^[A-Z](\d+)$/);
+      return match ? [codeKey(match[1])] : [];
+    }))];
+  }
+  return [];
+}
+
 function codeKey(raw) {
   const compact = String(raw || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
   const match = compact.match(/^([A-Z]*)(\d+)$/);
@@ -409,15 +429,20 @@ class DoorablesService {
     if (!candidates.length) {
       throw new DoorablesError('invalid-capsule-code', 'That package code was unclear.');
     }
-    const asrCandidates = capsuleCodeAsrCandidates(candidates)
+    const sets = await this.loadSets(packageInfo);
+    const codeSets = await Promise.all(sets.map(async ({ metadata, set }) => {
+      if (!set.codeFile) return { metadata, set, codeData: null };
+      const codeData = await this.fetchJson(`${this.dataBase}/${set.codeFile}`, {}, true);
+      return { metadata, set, codeData };
+    }));
+    const asrCandidates = [...new Set(codeSets.flatMap(({ codeData }) =>
+      codeData ? codeDataCandidates(candidates, codeData) : []))]
       .filter((candidate) => !candidates.includes(candidate));
     const searchCandidates = [...candidates, ...asrCandidates];
-    const sets = await this.loadSets(packageInfo);
     const matches = new Map(searchCandidates.map((candidate) => [candidate, []]));
 
-    for (const { metadata, set } of sets) {
-      if (!set.codeFile) continue;
-      const codeData = await this.fetchJson(`${this.dataBase}/${set.codeFile}`, {}, true);
+    for (const { metadata, set, codeData } of codeSets) {
+      if (!codeData) continue;
       for (const candidate of searchCandidates) {
         let agreed = null;
         let disputed = null;
@@ -553,11 +578,13 @@ function lookupSpeech(result) {
       continue;
     }
     const variant = entry.variants[0];
-    const ownership = variant.missing === 0
-      ? `Joe has all ${variant.total} of them.`
-      : variant.missing === variant.total
-        ? `Joe still needs all ${variant.total}.`
-        : `Joe still needs ${variant.missing} of those ${variant.total} figures.`;
+    const ownership = variant.total === 1
+      ? variant.missing === 0 ? 'Joe already has it.' : 'Joe still needs it.'
+      : variant.missing === 0
+        ? `Joe has all ${variant.total} of them.`
+        : variant.missing === variant.total
+          ? `Joe still needs all ${variant.total}.`
+          : `Joe still needs ${variant.missing} of those ${variant.total} figures.`;
     parts.push(`${prefix}${humanList(variant.names)}. ${ownership}`);
   }
   return `${result.label} code ${spokenCode} contains ${parts.join(' ')}`;
@@ -594,6 +621,7 @@ module.exports = {
   PACKAGES,
   capsuleCodeAsrCandidates,
   capsuleCodeCandidates,
+  codeDataCandidates,
   codeKey,
   figureCodesSpeech,
   lookupSpeech,

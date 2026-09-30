@@ -9,6 +9,7 @@ const {
   DoorablesError,
   DoorablesService,
   capsuleCodeAsrCandidates,
+  codeDataCandidates,
   figureCodesSpeech,
   lookupSpeech,
   needSpeech,
@@ -172,6 +173,18 @@ test('a numeric Alexa transcription can recover a leading letter A', () => {
   assert.deepEqual(capsuleCodeAsrCandidates(['1', 'I8']), []);
 });
 
+test('Alexa recovery follows the package code format instead of guessing globally', () => {
+  assert.deepEqual(codeDataCandidates(['81'], {
+    codes: { A001: ['one'] },
+  }), ['A1']);
+  assert.deepEqual(codeDataCandidates(['A11'], {
+    codes: { '01': ['one'], '11': ['eleven'] },
+  }), ['11']);
+  assert.deepEqual(codeDataCandidates(['811'], {
+    codes: { '075': ['bare'], A011: ['lettered'] },
+  }), []);
+});
+
 test('blue cargo capsule code 81 falls back to A1 when no numeric code exists', async () => {
   const service = serviceWith({});
   const packageInfo = resolvePackage('blue cargo capsule').packageInfo;
@@ -190,6 +203,96 @@ test('a real numeric code takes precedence over an Alexa letter recovery', async
   const result = await service.lookup(packageInfo, '81', {});
   assert.equal(result.code, '81');
   assert.deepEqual(result.entries[0].variants[0].names, ['Yoda']);
+});
+
+test('numeric-only packages ignore a spurious Alexa letter and keep one-figure counts', async () => {
+  const responses = new Map([
+    [`${DATA}/index.json`, {
+      status: 200,
+      body: [{ id: 'ts-small-stars-s2', name: 'Small Stars Series 2', file: 'b2.json' }],
+    }],
+    [`${DATA}/b2.json`, {
+      status: 200,
+      body: {
+        id: 'ts-small-stars-s2',
+        codeFile: 'codes-b2.json',
+        figures: [{ id: 'forky', name: 'Forky' }],
+      },
+    }],
+    [`${DATA}/codes-b2.json`, {
+      status: 200,
+      body: { codes: { 11: ['forky'] } },
+    }],
+  ]);
+  const service = new DoorablesService({
+    fetch: mockFetch(responses),
+    syncEndpoint: SYNC,
+    dataBase: DATA,
+  });
+  const packageInfo = resolvePackage('green backpack').packageInfo;
+  const result = await service.lookup(packageInfo, 'A11', {});
+  assert.equal(result.code, '11');
+  assert.equal(
+    lookupSpeech(result),
+    'green Toy Story backpack code 11 contains Forky. Joe still needs it.');
+});
+
+test('mixed-format Ticket to Fun codes never use the Cargo Drop A recovery', () => {
+  const candidates = codeDataCandidates(['811'], {
+    codes: { '075': ['two-pack'], A011: ['five-pack'] },
+  });
+  assert.deepEqual(candidates, []);
+});
+
+test('Ticket to Fun lookups replace prior results and preserve each package count', async () => {
+  const figures = Array.from({ length: 7 }, (_, index) => ({
+    id: `figure-${index + 1}`,
+    name: `Figure ${index + 1}`,
+  }));
+  const responses = new Map([
+    [`${DATA}/index.json`, {
+      status: 200,
+      body: [{
+        id: 'disney-ticket-to-fun',
+        name: 'Ticket to Fun',
+        file: 'ticket.json',
+      }],
+    }],
+    [`${DATA}/ticket.json`, {
+      status: 200,
+      body: {
+        id: 'disney-ticket-to-fun',
+        codeFile: 'codes-ticket.json',
+        figures,
+      },
+    }],
+    [`${DATA}/codes-ticket.json`, {
+      status: 200,
+      body: {
+        codes: {
+          '075': ['figure-1', 'figure-2'],
+          A011: ['figure-1', 'figure-2', 'figure-3', 'figure-4', 'figure-5'],
+        },
+      },
+    }],
+  ]);
+  const service = new DoorablesService({
+    fetch: mockFetch(responses),
+    syncEndpoint: SYNC,
+    dataBase: DATA,
+  });
+  const packageInfo = resolvePackage('ticket to fun').packageInfo;
+
+  const malformed = await service.lookup(packageInfo, '811', {});
+  assert.equal(malformed.entries.length, 0);
+
+  const multi = await service.lookup(packageInfo, 'A11', {});
+  assert.equal(multi.entries[0].variants[0].total, 5);
+
+  const mini = await service.lookup(packageInfo, '75', {});
+  assert.equal(mini.entries[0].variants[0].total, 2);
+  assert.match(lookupSpeech(mini), /Figure 1 and Figure 2/);
+  assert.doesNotMatch(lookupSpeech(mini), /Figure 3/);
 });
 
 test('all Alexa slot resolution candidates remain available for package lookup', async () => {

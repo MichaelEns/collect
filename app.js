@@ -808,7 +808,9 @@
    * zeros are ignored when matching; the stored spelling is still what shows.
    */
   function codeKey(code) {
-    return normaliseCode(code).replace(/^([A-Z]+)0*(\d+)$/, '$1$2');
+    const compact = normaliseCode(code);
+    const match = compact.match(/^([A-Z]*)(\d+)$/);
+    return match ? match[1] + String(Number(match[2])) : compact;
   }
 
   /** Built once per set rather than per keystroke. */

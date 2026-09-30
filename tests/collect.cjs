@@ -290,7 +290,12 @@ async function main() {
     await evalJs('window.fetch = window.__realFetch; 1');
     // Put Series 2 back, since the checks that follow are written against it.
     await evalJs("location.hash = '#set=sw-galaxy-peek-s2'; 1");
-    await new Promise((r) => setTimeout(r, 700));
+    for (let i = 0; i < 20; i += 1) {
+      const ready = await evalJs(
+        "String((window.__collect.state.set || {}).id === 'sw-galaxy-peek-s2')");
+      if (ready === 'true') break;
+      await new Promise((r) => setTimeout(r, 100));
+    }
 
     /* ------------------------------------------------- the capsule finder */
 
@@ -717,11 +722,11 @@ async function main() {
         && /BLUE backpack wave/.test(smallStarsOne.sourced),
       JSON.stringify(smallStarsOne));
     await evalJs(`(() => { const el = document.getElementById('code-input');
-      el.value = '008'; el.dispatchEvent(new Event('input', { bubbles: true })); return 1; })()`);
+      el.value = '8'; el.dispatchEvent(new Event('input', { bubbles: true })); return 1; })()`);
     await new Promise((r) => setTimeout(r, 400));
     const smallStarsOneCode = JSON.parse(await evalJs(
       "JSON.stringify([...document.querySelectorAll('.chip-name')].map(c => c.textContent))"));
-    check('Series 1 finds Slinky Dog by the complete blue-wave code guide',
+    check('Series 1 accepts a single digit for a zero-padded blue-wave code',
       JSON.stringify(smallStarsOneCode) === JSON.stringify(['Slinky Dog']),
       JSON.stringify(smallStarsOneCode));
 
@@ -745,6 +750,26 @@ async function main() {
       JSON.stringify(smallStarsTwo));
     check('the shared finder wording fits printed Small Stars package codes',
       /printed on the package/i.test(smallStarsTwo.hint), smallStarsTwo.hint);
+    await evalJs(`(() => { const el = document.getElementById('code-input');
+      el.value = '1'; el.dispatchEvent(new Event('input', { bubbles: true })); return 1; })()`);
+    await new Promise((r) => setTimeout(r, 250));
+    const smallStarsSingleDigit = JSON.parse(await evalJs(
+      "JSON.stringify([...document.querySelectorAll('.chip-name')].map(c => c.textContent))"));
+    check('Series 2 accepts single digit 1 for stored code 01',
+      JSON.stringify(smallStarsSingleDigit) === JSON.stringify(['Woody']),
+      JSON.stringify(smallStarsSingleDigit));
+    await evalJs(`(() => { const el = document.getElementById('code-input');
+      el.value = '11'; el.dispatchEvent(new Event('input', { bubbles: true })); return 1; })()`);
+    await new Promise((r) => setTimeout(r, 250));
+    const smallStarsEleven = JSON.parse(await evalJs(`JSON.stringify({
+      chips: [...document.querySelectorAll('.chip-name')].map(c => c.textContent),
+      verdict: (document.querySelector('.finder-verdict') || {}).textContent || '',
+    })`));
+    check('changing to green backpack code 11 replaces the prior result with Forky alone',
+      JSON.stringify(smallStarsEleven.chips) === JSON.stringify(['Forky'])
+        && /this one/i.test(smallStarsEleven.verdict)
+        && !/four/i.test(smallStarsEleven.verdict),
+      JSON.stringify(smallStarsEleven));
 
     await evalJs("location.hash = '#set=ts-small-stars-s3'; 1");
     await new Promise((r) => setTimeout(r, 1200));
