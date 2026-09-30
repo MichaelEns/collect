@@ -21,12 +21,20 @@ const PACKAGES = [
   {
     label: 'blue Cargo Drop',
     setIds: ['sw-galaxy-peek-s3'],
-    aliases: ['blue cargo drop', 'galaxy peek series 3'],
+    aliases: [
+      'blue cargo drop',
+      'blue cargo capsule',
+      'galaxy peek series 3',
+    ],
   },
   {
     label: 'orange Cargo Drop',
     setIds: ['sw-galaxy-peek-s4'],
-    aliases: ['orange cargo drop', 'galaxy peek series 4'],
+    aliases: [
+      'orange cargo drop',
+      'orange cargo capsule',
+      'galaxy peek series 4',
+    ],
   },
   {
     label: 'gray A T A T',
@@ -250,6 +258,13 @@ function normaliseCapsuleCode(raw) {
   return capsuleCodeCandidates(raw)[0] || null;
 }
 
+function capsuleCodeAsrCandidates(candidates) {
+  return [...new Set(candidates.flatMap((candidate) => {
+    const match = candidate.match(/^8(\d+)$/);
+    return match ? [codeKey(`A${match[1]}`)] : [];
+  }))];
+}
+
 function codeKey(raw) {
   const compact = String(raw || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
   const match = compact.match(/^([A-Z]*)(\d+)$/);
@@ -394,13 +409,16 @@ class DoorablesService {
     if (!candidates.length) {
       throw new DoorablesError('invalid-capsule-code', 'That package code was unclear.');
     }
+    const asrCandidates = capsuleCodeAsrCandidates(candidates)
+      .filter((candidate) => !candidates.includes(candidate));
+    const searchCandidates = [...candidates, ...asrCandidates];
     const sets = await this.loadSets(packageInfo);
-    const matches = new Map(candidates.map((candidate) => [candidate, []]));
+    const matches = new Map(searchCandidates.map((candidate) => [candidate, []]));
 
     for (const { metadata, set } of sets) {
       if (!set.codeFile) continue;
       const codeData = await this.fetchJson(`${this.dataBase}/${set.codeFile}`, {}, true);
-      for (const candidate of candidates) {
+      for (const candidate of searchCandidates) {
         let agreed = null;
         let disputed = null;
         for (const [sourceCode, ids] of Object.entries(codeData.codes || {})) {
@@ -425,7 +443,14 @@ class DoorablesService {
       }
     }
 
-    const found = [...matches.entries()].filter(([, entries]) => entries.length);
+    const exactFound = candidates
+      .map((candidate) => [candidate, matches.get(candidate)])
+      .filter(([, entries]) => entries.length);
+    const found = exactFound.length
+      ? exactFound
+      : asrCandidates
+        .map((candidate) => [candidate, matches.get(candidate)])
+        .filter(([, entries]) => entries.length);
     if (found.length > 1) {
       return {
         code: found[0][0],
@@ -567,6 +592,7 @@ module.exports = {
   DoorablesError,
   DoorablesService,
   PACKAGES,
+  capsuleCodeAsrCandidates,
   capsuleCodeCandidates,
   codeKey,
   figureCodesSpeech,

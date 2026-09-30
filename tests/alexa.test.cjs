@@ -8,6 +8,7 @@ const test = require('node:test');
 const {
   DoorablesError,
   DoorablesService,
+  capsuleCodeAsrCandidates,
   figureCodesSpeech,
   lookupSpeech,
   needSpeech,
@@ -21,6 +22,7 @@ const DATA = 'https://data.example/sets';
 const INDEX = [
   { id: 'sw-galaxy-peek-s1', name: 'Galaxy Peek Series 1', file: 's1.json' },
   { id: 'sw-galaxy-peek-s2', name: 'Galaxy Peek Series 2', file: 's2.json' },
+  { id: 'sw-galaxy-peek-s3', name: 'Galaxy Peek Series 3', file: 's3.json' },
   { id: 'ts-small-stars-s1', name: 'Small Stars Series 1', file: 'b1.json' },
   { id: 'ts-small-stars-s2', name: 'Small Stars Series 2', file: 'b2.json' },
   { id: 'ts-small-stars-s3', name: 'Small Stars Series 3', file: 'b3.json' },
@@ -44,6 +46,16 @@ const S2 = {
     { id: 'amidala', name: 'Queen Amidala' },
   ],
 };
+const S3 = {
+  id: 'sw-galaxy-peek-s3',
+  codeFile: 'codes-s3.json',
+  figures: [
+    { id: 'grogu', name: 'Grogu' },
+    { id: 'ki-adi-mundi', name: 'Ki-Adi-Mundi' },
+    { id: 'mae-assassin', name: 'Mae (Assassin)' },
+    { id: 'yoda', name: 'Yoda' },
+  ],
+};
 
 function mockFetch(responses) {
   return async (url) => {
@@ -59,12 +71,15 @@ function mockFetch(responses) {
   };
 }
 
-function serviceWith(progress = {}) {
+function serviceWith(progress = {}, series3Codes = {
+  A001: ['grogu', 'ki-adi-mundi', 'mae-assassin', 'yoda'],
+}) {
   const responses = new Map([
     [SYNC, { status: 200, body: { progress } }],
     [`${DATA}/index.json`, { status: 200, body: INDEX }],
     [`${DATA}/s1.json`, { status: 200, body: S1 }],
     [`${DATA}/s2.json`, { status: 200, body: S2 }],
+    [`${DATA}/s3.json`, { status: 200, body: S3 }],
     [`${DATA}/codes-s1.json`, {
       status: 200,
       body: {
@@ -88,6 +103,12 @@ function serviceWith(progress = {}) {
         disputed: {
           A001: [['anakin', 'rex'], ['anakin', 'amidala']],
         },
+      },
+    }],
+    [`${DATA}/codes-s3.json`, {
+      status: 200,
+      body: {
+        codes: series3Codes,
       },
     }],
   ]);
@@ -127,6 +148,8 @@ test('packaging language resolves to the intended set', () => {
     ['sw-galaxy-peek-s1']);
   assert.deepEqual(resolvePackage('purple Toy Story backpacks').packageInfo.setIds,
     ['ts-small-stars-s3']);
+  assert.deepEqual(resolvePackage('blue cargo capsule').packageInfo.setIds,
+    ['sw-galaxy-peek-s3']);
 });
 
 test('an uncolored Toy Story backpack prompts instead of guessing a wave', () => {
@@ -141,6 +164,32 @@ test('spoken capsule codes match the app leading-zero semantics', () => {
   assert.equal(normaliseCapsuleCode('A zero zero one'), 'A1');
   assert.equal(normaliseCapsuleCode('eighty three'), '83');
   assert.equal(normaliseCapsuleCode('oh four'), 'O4');
+});
+
+test('a numeric Alexa transcription can recover a leading letter A', () => {
+  assert.deepEqual(capsuleCodeAsrCandidates(['81']), ['A1']);
+  assert.deepEqual(capsuleCodeAsrCandidates(['801']), ['A1']);
+  assert.deepEqual(capsuleCodeAsrCandidates(['1', 'I8']), []);
+});
+
+test('blue cargo capsule code 81 falls back to A1 when no numeric code exists', async () => {
+  const service = serviceWith({});
+  const packageInfo = resolvePackage('blue cargo capsule').packageInfo;
+  const result = await service.lookup(packageInfo, '81', {});
+  assert.equal(result.code, 'A1');
+  assert.deepEqual(result.entries[0].variants[0].names,
+    ['Grogu', 'Ki-Adi-Mundi', 'Mae (Assassin)', 'Yoda']);
+});
+
+test('a real numeric code takes precedence over an Alexa letter recovery', async () => {
+  const service = serviceWith({}, {
+    81: ['yoda'],
+    A001: ['grogu', 'ki-adi-mundi', 'mae-assassin', 'yoda'],
+  });
+  const packageInfo = resolvePackage('blue cargo capsule').packageInfo;
+  const result = await service.lookup(packageInfo, '81', {});
+  assert.equal(result.code, '81');
+  assert.deepEqual(result.entries[0].variants[0].names, ['Yoda']);
 });
 
 test('all Alexa slot resolution candidates remain available for package lookup', async () => {
