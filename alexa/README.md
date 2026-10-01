@@ -1,20 +1,15 @@
 # Joe's Collection Alexa skill
 
-This custom skill reads the same live family collections as the web app. It
-uses four-word owner or sharing codes instead of Amazon account linking. Codes
-are stored in Workers KV under a one-way hash of the Alexa user ID. They are
-never placed in the skill source or repeated in a spoken response.
+This custom skill reads the same live family collection as the web app. It
+uses the existing four-word sharing code instead of Amazon account linking.
+The code is stored in Workers KV under a one-way hash of the Alexa user ID. It
+is never placed in the skill source or repeated in a spoken response.
 
-One Alexa account can link several independent collections. For example, the
-Echo at Grandma's house can select Joe's contributor-shared collection or
-Grandma's house-only collection without merging their progress.
-
-On Echo Show, launch displays a responsive collection overview. Tap a set to
-open its figure grid; owner and contributor links may mark a figure found,
-while a viewer link is read-only. Personal or privately seeded pictures use
-15-minute encrypted image URLs that do not disclose the collection code. The
-included widget shows the selected collection's total in the Widget Panel and
-opens the full checklist when tapped.
+On an Echo Show, opening the skill displays the same linked collection as a
+touchable set and figure grid. Tapping a figure updates the same shared
+progress as the PWA. An optional Widget Panel tile shows total progress and
+opens the checklist. There is no second pairing, role, household, or sharing
+system in the Alexa layer.
 
 ## What to say
 
@@ -30,12 +25,6 @@ Then ask, for example:
 > Alexa, ask Joe's collection what's in gray Death Star code I eight.
 
 > Alexa, ask Joe's collection what code is Queen Amidala in the red Death Star.
-
-With more than one collection linked:
-
-> Alexa, ask Joe's collection which collections are linked.
-
-> Alexa, ask Joe's collection to switch to Grandma's House.
 
 That reverse lookup returns every recorded code for the named figure, including
 separately identified disputed collector reports.
@@ -57,42 +46,35 @@ color rather than guessing.
 3. Deploy `skill-package/skill.json` and
    `skill-package/interactionModels/custom/en-US.json`. The manifest points to
    `https://collect-sync.michaelens.workers.dev/alexa`.
-4. Enable **APL**, **Data Store**, and **Data Store Packages** for the skill.
-   Deploy the `JoesCollectionSummary` package under
-   `skill-package/dataStorePackages/`.
-5. Set `ALEXA_SKILL_ID` in `worker/wrangler.toml` to the created skill ID.
-   Configure the private image key:
+4. Enable **APL**, **Data Store**, and **Data Store Packages**, then deploy the
+   `JoesCollectionSummary` package under `skill-package/dataStorePackages/`.
+5. Set `ALEXA_SKILL_ID` in `worker/wrangler.toml`. Configure the private-image
+   signing key and Alexa Skill Messaging credentials:
 
    ```powershell
    cd worker
    npx wrangler secret put ALEXA_IMAGE_SIGNING_KEY
-   ```
-
-6. Create Alexa Skill Messaging/Login with Amazon credentials with the
-   `alexa::datastore` scope, then configure them so the widget can refresh:
-
-   ```powershell
    npx wrangler secret put ALEXA_CLIENT_ID
    npx wrangler secret put ALEXA_CLIENT_SECRET
    npx wrangler deploy
    ```
 
-   The Worker verifies Amazon's signing certificate, request signature,
-   timestamp, and skill ID before handling a skill request. Widget image
-   requests are independently protected with short-lived AES-GCM tokens.
-7. In **Test**, enable development testing and pair a test account. The code is
+   Image URLs are encrypted and expire after fifteen minutes. Widget
+   credentials use the `alexa::datastore` scope. The Worker verifies Amazon's
+   signing certificate, request signature, timestamp, and skill ID for skill
+   requests.
+6. In **Test**, enable development testing and pair a test account. The code is
    validated against the collection worker before it is saved.
-8. For the family households, either invite each Amazon account to a
+7. For the three family households, either invite each Amazon account to a
    90-day beta or publish the skill for durable access. A published listing
    does not expose the collection: without its four-word code the skill has no
    data to read. Use the included privacy-policy and terms URLs during
    certification.
 
-Alexa voice history may retain what was spoken during pairing. A code has the
-same owner, contributor, or viewer authority in Alexa as in the PWA. Use
-**forget my sharing code** to unlink the selected collection, or **forget every
-collection** to remove all saved codes from that Alexa account. Revoke a share
-code in the PWA when every device using it should lose access.
+Alexa voice history may retain what was spoken during pairing. Anyone who
+learns the four words has the same collection access as a browser with that
+code, so use **forget my sharing code** on an account that should no longer
+have access.
 
 ## Test locally
 

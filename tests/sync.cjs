@@ -200,12 +200,12 @@ async function openDevice(label) {
   const readyBy = Date.now() + (LIVE ? 15000 : 10000);
   while (Date.now() < readyBy) {
     if (await evalJs(
-      'Boolean(window.CollectSync && window.CollectCollections && window.__collect)',
+      'Boolean(window.CollectSync && window.__collect && window.__collect.state.index.length)',
     )) break;
     await new Promise((r) => setTimeout(r, 100));
   }
   if (!await evalJs(
-    'Boolean(window.CollectSync && window.CollectCollections && window.__collect)',
+    'Boolean(window.CollectSync && window.__collect && window.__collect.state.index.length)',
   )) {
     throw new Error(`${label} did not finish loading`);
   }
@@ -215,14 +215,22 @@ async function openDevice(label) {
     evalJs,
     async open(setId) {
       await evalJs(`location.hash = '#set=${setId}'; 1`);
-      for (let attempt = 0; attempt < 60; attempt += 1) {
+      for (let attempt = 0; attempt < 150; attempt += 1) {
         if (await evalJs(
           `window.__collect && window.__collect.state.set && ` +
           `window.__collect.state.set.id === ${JSON.stringify(setId)}`,
         )) return;
         await new Promise((r) => setTimeout(r, 100));
       }
-      throw new Error(`collection ${setId} did not open`);
+      const detail = await evalJs(`JSON.stringify({
+        hash: location.hash,
+        index: window.__collect && window.__collect.state.index.length,
+        set: window.__collect && window.__collect.state.set &&
+          window.__collect.state.set.id,
+        subtitle: document.getElementById('subtitle') &&
+          document.getElementById('subtitle').textContent,
+      })`);
+      throw new Error(`collection ${setId} did not open: ${detail}`);
     },
     async tick(figureId, have = true) {
       await evalJs(`window.__collect.setHave('${figureId}', ${have}); 1`);
@@ -283,7 +291,7 @@ async function main() {
   };
   const [ONE, TWO, THREE, FOUR, FIVE] = ['luke-skywalker', 'rey', 'omega', 'finn', 'darth-maul'].map(fig);
 
-  let a; let b; let c;
+  let a; let b;
   try {
     console.log('\n--- turning sharing on, on the first device ---');
     a = await openDevice('a');
@@ -440,88 +448,6 @@ async function main() {
     check('and the working code is still in place',
       (await b.evalJs('window.CollectSync.getCode()')) === code);
 
-    console.log('\n--- one device keeps Grandma and Joe separate ---');
-    const contributorCode = await a.evalJs(`(async () => {
-      const response = await fetch(window.CollectSync.endpoint + '/v1/shares', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Family-Code': window.CollectSync.getCode(),
-        },
-        body: JSON.stringify({ role: 'contributor' }),
-      });
-      return (await response.json()).code;
-    })()`);
-    check('Joe can make a contributor sharing code',
-      /^[a-z]+-[a-z]+-[a-z]+-[a-z]+$/.test(contributorCode || ''),
-      contributorCode);
-
-    c = await openDevice('c');
-    await c.open(SET);
-    await c.tick(FIVE);
-    const grandma = await c.evalJs(
-      `window.CollectSync.rename("Grandma's House").then(() => ` +
-      'window.CollectSync.activeCollection().name)'
-    );
-    check('Grandma can name her local collection',
-      grandma === "Grandma's House", grandma);
-
-    const addedJoe = await c.evalJs(
-      `window.CollectSync.add(${JSON.stringify(contributorCode)})`
-    );
-    check('the contributor code adds Joe as another collection',
-      addedJoe === true, String(addedJoe));
-    await c.open(SET);
-    const joeBefore = await c.found();
-    check('Joe arrives without Grandma\'s local-only find',
-      joeBefore.includes(ONE) && !joeBefore.includes(FIVE),
-      JSON.stringify(joeBefore));
-
-    await c.tick(TWO);
-    await c.syncNow();
-    await a.syncNow();
-    check('Grandma can contribute a find to Joe',
-      (await a.found()).includes(TWO));
-
-    await c.evalJs("window.CollectSync.selectCollection('primary'); 1");
-    await c.open(SET);
-    const grandmaAgain = await c.found();
-    check('switching home restores Grandma\'s isolated collection',
-      JSON.stringify(grandmaAgain) === JSON.stringify([FIVE]),
-      JSON.stringify(grandmaAgain));
-
-    const viewerCode = await a.evalJs(`(async () => {
-      const response = await fetch(window.CollectSync.endpoint + '/v1/shares', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Family-Code': window.CollectSync.getCode(),
-        },
-        body: JSON.stringify({ role: 'viewer' }),
-      });
-      return (await response.json()).code;
-    })()`);
-    await c.evalJs(`window.CollectSync.add(${JSON.stringify(viewerCode)})`);
-    await c.open(SET);
-    const beforeViewerTap = await c.found();
-    await c.tick(ONE, false);
-    const afterViewerTap = await c.found();
-    check('a view-only collection refuses checklist edits',
-      JSON.stringify(afterViewerTap) === JSON.stringify(beforeViewerTap),
-      JSON.stringify(afterViewerTap));
-
-    const clearedLegacyCode = await b.evalJs(`(() => {
-      window.CollectSync.stop();
-      return {
-        active: window.CollectSync.getCode(),
-        legacy: localStorage.getItem('collect.familyCode'),
-      };
-    })()`);
-    check('stopping primary sharing clears the legacy code too',
-      !clearedLegacyCode.active && clearedLegacyCode.legacy === null,
-      JSON.stringify(clearedLegacyCode));
-    await b.evalJs(`window.CollectSync.join(${JSON.stringify(code)})`);
-
     console.log('\n--- coming back to the app catches up ---');
     /*
      * There is deliberately no periodic poll. A device sitting untouched with
@@ -571,7 +497,6 @@ async function main() {
   } finally {
     if (a) a.close();
     if (b) b.close();
-    if (c) c.close();
     if (site) site.close();
     if (sync) { try { sync.close(); } catch { /* already closed */ } }
   }

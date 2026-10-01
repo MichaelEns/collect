@@ -6,7 +6,7 @@
         "en-US": {
           "name": "Joe's Collection",
           "summary": "Ask about Joe's collection or browse it on Echo Show.",
-          "description": "Use four-word owner or sharing codes to connect one or more collection trackers. Ask how many figures are still needed, what a package code contains, or which package codes contain a named figure. On Echo Show, browse and update a touchable checklist and install a progress widget. Viewer sharing codes remain read-only.",
+          "description": "Use the same four-word sharing code as Joe's Collection Tracker, then ask how many figures he still needs, what a package code contains, or which package codes contain a named figure. On Echo Show, browse and update the touchable checklist and install a progress widget.",
           "examplePhrases": [
             "Alexa, ask Joe's collection how many red Death Star guys does Joe need",
             "Alexa, ask Joe's collection what's in gray Death Star code I eight",

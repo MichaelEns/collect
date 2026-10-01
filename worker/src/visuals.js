@@ -27,13 +27,13 @@ export function renderDocument(document, data, token) {
   };
 }
 
-export async function dashboardDirective(queryService, progress, access) {
+export async function dashboardDirective(queryService, progress) {
   const sets = await queryService.collectionSets(progress);
   const found = sets.reduce((total, set) => total + set.found, 0);
   const total = sets.reduce((sum, set) => sum + set.total, 0);
   return renderDocument(dashboardDocument, {
-    title: access.name,
-    subtitle: `${found} of ${total} found · ${access.role === 'viewer' ? 'View only' : 'Tap a set to open it'}`,
+    title: "Joe's Collection",
+    subtitle: `${found} of ${total} found · Tap a set to open it`,
     sets: sets.map((set) => ({
       ...set,
       complete: set.total > 0 && set.found === set.total,
@@ -41,22 +41,21 @@ export async function dashboardDirective(queryService, progress, access) {
   }, 'collection-dashboard');
 }
 
-export async function setDirective(queryService, progress, access, setId, env) {
+export async function setDirective(queryService, progress, familyCode, setId, env) {
   const sets = await queryService.collectionSets(progress);
   const set = sets.find((item) => item.id === setId);
-  if (!set) return dashboardDirective(queryService, progress, access);
+  if (!set) return dashboardDirective(queryService, progress);
   return renderDocument(setDocument, {
     title: set.name,
-    subtitle: `${set.found} of ${set.total} found · ${access.name}` +
-      (access.role === 'viewer' ? ' · View only' : ''),
+    subtitle: `${set.found} of ${set.total} found · Joe's Collection`,
     setId: set.id,
-    canEdit: access.role !== 'viewer',
+    canEdit: true,
     figures: await Promise.all(set.figures.map(async (figure) => ({
       ...figure,
       initials: initials(figure.name),
       image: await collectionImageUrl(
         env,
-        access.collectionCode,
+        familyCode,
         set.id,
         figure.id,
       ),
