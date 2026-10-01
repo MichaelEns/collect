@@ -113,6 +113,14 @@ async function main() {
       if (r.exceptionDetails) throw new Error(r.exceptionDetails.exception?.description || 'threw');
       return r.result.value;
     };
+    const waitFor = async (expression, label, timeoutMs = 15000) => {
+      const deadline = Date.now() + timeoutMs;
+      while (Date.now() < deadline) {
+        if (await evalJs(expression)) return;
+        await new Promise((resolve) => setTimeout(resolve, 100));
+      }
+      throw new Error(`timed out waiting for ${label}`);
+    };
 
     await rpc(ws, id++, 'Runtime.enable', {});
     await rpc(ws, id++, 'Log.enable', {});
@@ -123,7 +131,11 @@ async function main() {
 
     // Series 1 is the worst case: 276 codes, 21 distinct capsules.
     await rpc(ws, id++, 'Page.navigate', { url: `${base}hunt.html#set=sw-galaxy-peek-s1` });
-    await new Promise((r) => setTimeout(r, 3500));
+    await waitFor(
+      "window.__hunt && window.__hunt.state.sets.length > 0 && " +
+      "document.querySelectorAll('.hunt-row').length > 0",
+      'Series 1 hunt cards',
+    );
 
     console.log('\n--- Series 1: 276 codes, 21 distinct capsules ---');
 
@@ -187,7 +199,11 @@ async function main() {
 
     // And the all-series view, which is what opens by default.
     await rpc(ws, id++, 'Page.navigate', { url: `${base}hunt.html` });
-    await new Promise((r) => setTimeout(r, 3500));
+    await waitFor(
+      "window.__hunt && window.__hunt.state.sets.length > 0 && " +
+      "document.querySelectorAll('.hunt-row').length > 0",
+      'all-series hunt cards',
+    );
     console.log('\n--- every series at once ---');
     const all = JSON.parse(await evalJs(`JSON.stringify((() => {
       const cards = [...document.querySelectorAll('.hunt-row')];

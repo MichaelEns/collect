@@ -1098,7 +1098,7 @@ body {
 .sync button { margin: 0 0 6px; }
 .sync .primary { width: 100%; }
 
-#sync-code-input {
+.sync-code-input {
   width: 100%;
   margin: 0 0 10px;
   padding: 11px 12px;
@@ -1110,7 +1110,7 @@ body {
   border-radius: 12px;
 }
 
-#sync-code-input:focus { outline: none; border-color: var(--accent); }
+.sync-code-input:focus { outline: none; border-color: var(--accent); }
 
 /*
  * The code is read aloud across a room and typed with a thumb, so it is set
@@ -1157,6 +1157,82 @@ body {
 }
 
 .sync-status.bad { color: var(--gold); }
+
+.collection-switcher {
+  margin: 0 0 18px;
+  padding: 16px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+.collection-switcher h2,
+.sync-shares h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+}
+
+.collection-switcher-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.collection-switcher-row select {
+  min-width: 0;
+  flex: 1;
+  padding: 10px 12px;
+  color: var(--ink);
+  background: var(--bg-1);
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  font: 700 .85rem/1.2 inherit;
+}
+
+.collection-switcher-row .link-button {
+  flex: 0 0 auto;
+  margin: 0;
+}
+
+.sync-shares {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.share-list {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.share-list li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 10px;
+  align-items: center;
+  padding: 9px 0;
+  border-top: 1px solid var(--line);
+}
+
+.share-list .sync-code {
+  grid-column: 1;
+  margin: 0;
+  padding: 8px;
+  font-size: .8rem;
+}
+
+.share-list .share-role {
+  grid-column: 1;
+  color: var(--muted);
+  font-size: .72rem;
+}
+
+.share-list .link-button {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  margin: 0;
+}
 
 /* ---------------------------------------------------- putting a mistake right */
 

@@ -1,0 +1,90 @@
+{
+  "type": "APL",
+  "version": "2024.3",
+  "theme": "dark",
+  "mainTemplate": {
+    "parameters": ["payload"],
+    "items": [
+      {
+        "type": "Container",
+        "width": "100vw",
+        "height": "100vh",
+        "background": "#12193a",
+        "paddingLeft": "5vw",
+        "paddingRight": "5vw",
+        "paddingTop": "4vh",
+        "paddingBottom": "3vh",
+        "items": [
+          {
+            "type": "Text",
+            "text": "${payload.title}",
+            "fontSize": "7vh",
+            "fontWeight": "700",
+            "color": "#ffffff",
+            "maxLines": 1
+          },
+          {
+            "type": "Text",
+            "text": "${payload.subtitle}",
+            "fontSize": "3.2vh",
+            "color": "#b8c3ff",
+            "spacing": "1vh",
+            "maxLines": 2
+          },
+          {
+            "type": "Sequence",
+            "width": "100%",
+            "height": "72vh",
+            "scrollDirection": "vertical",
+            "data": "${payload.sets}",
+            "spacing": "1.4vh",
+            "items": [
+              {
+                "type": "TouchWrapper",
+                "onPress": {
+                  "type": "SendEvent",
+                  "arguments": ["openSet", "${data.id}"]
+                },
+                "item": {
+                  "type": "Container",
+                  "direction": "row",
+                  "alignItems": "center",
+                  "paddingLeft": "2.4vw",
+                  "paddingRight": "2.4vw",
+                  "paddingTop": "1.8vh",
+                  "paddingBottom": "1.8vh",
+                  "background": "#202a59",
+                  "borderRadius": "18dp",
+                  "items": [
+                    {
+                      "type": "Text",
+                      "text": "${data.emoji}",
+                      "fontSize": "5vh",
+                      "width": "10vw"
+                    },
+                    {
+                      "type": "Text",
+                      "text": "${data.name}",
+                      "fontSize": "3.6vh",
+                      "fontWeight": "700",
+                      "color": "#ffffff",
+                      "grow": 1,
+                      "maxLines": 2
+                    },
+                    {
+                      "type": "Text",
+                      "text": "${data.found} / ${data.total}",
+                      "fontSize": "3.4vh",
+                      "fontWeight": "700",
+                      "color": "${data.complete ? '#43d17c' : '#ffc93d'}"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

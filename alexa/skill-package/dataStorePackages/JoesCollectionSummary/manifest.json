@@ -1,0 +1,39 @@
+{
+  "packageVersion": "1.0",
+  "packageType": "APL_PACKAGE",
+  "publishingInformation": {
+    "schemaVersion": "1.0",
+    "locales": {
+      "en-US": [
+        {
+          "targetViewport": "WIDGET_M",
+          "metadata": {
+            "name": "Joe's Collection",
+            "description": "See the selected collection's progress and open the full checklist.",
+            "keywords": [
+              "collection",
+              "Doorables",
+              "checklist"
+            ],
+            "iconUri": "https://michaelens.github.io/collect/alexa/widget-icon-450.png",
+            "previews": [
+              "https://michaelens.github.io/collect/alexa/widget-preview-328x552.png"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "manifest": {
+    "id": "JoesCollectionSummary",
+    "version": "1.0.0",
+    "installStateChanges": "INFORM",
+    "updateStateChanges": "INFORM",
+    "appliesTo": "${viewport.mode == 'HUB'}",
+    "presentationDefinitions": [
+      {
+        "url": "presentations/default.tpl"
+      }
+    ]
+  }
+}

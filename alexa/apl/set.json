@@ -1,0 +1,133 @@
+{
+  "type": "APL",
+  "version": "2024.3",
+  "theme": "dark",
+  "mainTemplate": {
+    "parameters": ["payload"],
+    "items": [
+      {
+        "type": "Container",
+        "width": "100vw",
+        "height": "100vh",
+        "background": "#12193a",
+        "paddingLeft": "4vw",
+        "paddingRight": "4vw",
+        "paddingTop": "3vh",
+        "paddingBottom": "3vh",
+        "items": [
+          {
+            "type": "Container",
+            "direction": "row",
+            "alignItems": "center",
+            "items": [
+              {
+                "type": "TouchWrapper",
+                "onPress": {
+                  "type": "SendEvent",
+                  "arguments": ["dashboard"]
+                },
+                "item": {
+                  "type": "Text",
+                  "text": "‹",
+                  "fontSize": "7vh",
+                  "color": "#7ee8ff",
+                  "width": "8vw"
+                }
+              },
+              {
+                "type": "Container",
+                "grow": 1,
+                "items": [
+                  {
+                    "when": "${data.image}",
+                    "type": "Image",
+                    "source": "${data.image}",
+                    "width": "10vh",
+                    "height": "10vh",
+                    "scale": "best-fill",
+                    "borderRadius": "12dp"
+                  },
+                  {
+                    "when": "${!data.image}",
+                    "type": "Text",
+                    "text": "${payload.title}",
+                    "fontSize": "5.6vh",
+                    "fontWeight": "700",
+                    "color": "#ffffff",
+                    "maxLines": 1
+                  },
+                  {
+                    "type": "Text",
+                    "text": "${payload.subtitle}",
+                    "fontSize": "2.8vh",
+                    "color": "#b8c3ff",
+                    "maxLines": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "GridSequence",
+            "width": "100%",
+            "height": "79vh",
+            "childWidth": "22vw",
+            "childHeight": "24vh",
+            "scrollDirection": "vertical",
+            "data": "${payload.figures}",
+            "spacing": "1.2vw",
+            "items": [
+              {
+                "type": "TouchWrapper",
+                "disabled": "${!payload.canEdit}",
+                "onPress": {
+                  "type": "SendEvent",
+                  "arguments": ["toggleFigure", "${payload.setId}", "${data.id}"]
+                },
+                "item": {
+                  "type": "Container",
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                  "paddingLeft": "1vw",
+                  "paddingRight": "1vw",
+                  "paddingTop": "1vh",
+                  "paddingBottom": "1vh",
+                  "background": "${data.have ? '#174d35' : '#202a59'}",
+                  "borderColor": "${data.have ? '#43d17c' : '#354176'}",
+                  "borderWidth": "2dp",
+                  "borderRadius": "18dp",
+                  "items": [
+                    {
+                      "type": "Text",
+                      "text": "${data.initials}",
+                      "fontSize": "6vh",
+                      "fontWeight": "700",
+                      "color": "${data.have ? '#ffffff' : '#7f8bc6'}"
+                    },
+                    {
+                      "type": "Text",
+                      "text": "${data.name}",
+                      "fontSize": "2.5vh",
+                      "fontWeight": "700",
+                      "textAlign": "center",
+                      "color": "#ffffff",
+                      "maxLines": 2,
+                      "spacing": "1vh"
+                    },
+                    {
+                      "type": "Text",
+                      "text": "${data.have ? '✓ Found' : 'Missing'}",
+                      "fontSize": "2.2vh",
+                      "color": "${data.have ? '#8dffbc' : '#b8c3ff'}",
+                      "spacing": "0.8vh"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

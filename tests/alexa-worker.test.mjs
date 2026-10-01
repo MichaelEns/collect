@@ -64,6 +64,20 @@ function envelope(intentName, slots = {}, attributes = {}) {
   };
 }
 
+function aplEnvelope(request, attributes = {}) {
+  const result = envelope('AMAZON.HelpIntent', {}, attributes);
+  result.context.System.device = {
+    supportedInterfaces: {
+      'Alexa.Presentation.APL': {},
+    },
+  };
+  result.request = {
+    timestamp: new Date().toISOString(),
+    ...request,
+  };
+  return result;
+}
+
 function resolvedSlot(name, value, resolutions) {
   return {
     name,
@@ -139,7 +153,7 @@ test('Alexa pairing persists by hashed user ID and supports a later need query',
     envelope('LinkCollectionIntent', { familyCode: FAMILY_CODE }),
     env,
     queryService);
-  assert.match(linked.response.outputSpeech.text, /collection is linked/);
+  assert.match(linked.response.outputSpeech.text, /is linked and selected/i);
   const storedKeys = [...env.COLLECT.values.keys()]
     .filter((key) => key.startsWith('alexa-user:'));
   assert.equal(storedKeys.length, 1);
@@ -152,6 +166,195 @@ test('Alexa pairing persists by hashed user ID and supports a later need query',
   assert.equal(
     answer.response.outputSpeech.text,
     'Joe needs 24 of the 25 red Death Star figures.');
+});
+
+test('Alexa upgrades a legacy raw linked code without making the user pair again', async () => {
+  const env = environment([[`p:${FAMILY_CODE}`, '{}']]);
+  await handleAlexaEnvelope(
+    envelope('LinkCollectionIntent', { familyCode: FAMILY_CODE }),
+    env,
+    {},
+  );
+  const userKey = [...env.COLLECT.values.keys()]
+    .find((key) => key.startsWith('alexa-user:'));
+  await env.COLLECT.put(userKey, FAMILY_CODE);
+
+  const answer = await handleAlexaEnvelope(
+    envelope('NeedCountIntent', { package: 'red Death Star' }),
+    env,
+    {
+      async countNeeded() {
+        return { label: 'red Death Star', total: 25, missing: 25 };
+      },
+    },
+  );
+  assert.equal(
+    answer.response.outputSpeech.text,
+    'Joe needs 25 of the 25 red Death Star figures.',
+  );
+});
+
+test('Alexa links and selects independent household collections', async () => {
+  const grandmaCode = 'mustang-melody-cactus-glimmer';
+  const env = environment([
+    [`p:${FAMILY_CODE}`, JSON.stringify({
+      'sw-galaxy-peek-s2': { amidala: { have: true } },
+    })],
+    [`info:${FAMILY_CODE}`, JSON.stringify({ name: "Joe's Collection" })],
+    [`p:${grandmaCode}`, JSON.stringify({
+      'sw-galaxy-peek-s2': { rey: { have: true } },
+    })],
+    [`info:${grandmaCode}`, JSON.stringify({ name: "Grandma's House" })],
+  ]);
+
+  await handleAlexaEnvelope(
+    envelope('LinkCollectionIntent', { familyCode: FAMILY_CODE }),
+    env,
+    {},
+  );
+  await handleAlexaEnvelope(
+    envelope('LinkCollectionIntent', { familyCode: grandmaCode }),
+    env,
+    {},
+  );
+
+  const listed = await handleAlexaEnvelope(
+    envelope('ListCollectionsIntent'),
+    env,
+    {},
+  );
+  assert.match(listed.response.outputSpeech.text, /Joe's Collection/);
+  assert.match(listed.response.outputSpeech.text, /Grandma's House/);
+
+  const selected = await handleAlexaEnvelope(
+    envelope('SelectCollectionIntent', {
+      collectionName: "Grandma's House",
+    }),
+    env,
+    {},
+  );
+  assert.equal(
+    selected.response.outputSpeech.text,
+    "Grandma's House is selected.",
+  );
+
+  await handleAlexaEnvelope(
+    envelope('NeedCountIntent', { package: 'red Death Star' }),
+    env,
+    {
+      async countNeeded(packageInfo, progress) {
+        assert.equal(packageInfo.label, 'red Death Star');
+        assert.equal(progress['sw-galaxy-peek-s2'].rey.have, true);
+        assert.equal(progress['sw-galaxy-peek-s2'].amidala, undefined);
+        return { label: packageInfo.label, total: 25, missing: 24 };
+      },
+    },
+  );
+});
+
+test('Echo Show launch renders the selected collection dashboard', async () => {
+  const env = environment([
+    [`p:${FAMILY_CODE}`, JSON.stringify({
+      'sw-galaxy-peek-s2': { amidala: { have: true } },
+    })],
+    [`info:${FAMILY_CODE}`, JSON.stringify({ name: "Joe's Collection" })],
+  ]);
+  await handleAlexaEnvelope(
+    envelope('LinkCollectionIntent', { familyCode: FAMILY_CODE }),
+    env,
+    {},
+  );
+
+  const response = await handleAlexaEnvelope(
+    aplEnvelope({ type: 'LaunchRequest' }),
+    env,
+    {
+      async collectionSets(progress) {
+        assert.equal(progress['sw-galaxy-peek-s2'].amidala.have, true);
+        return [{
+          id: 'sw-galaxy-peek-s2',
+          name: 'Galaxy Peek Series 2',
+          emoji: '🔴',
+          found: 1,
+          total: 25,
+          figures: [],
+        }];
+      },
+    },
+  );
+
+  assert.equal(response.response.shouldEndSession, false);
+  assert.equal(
+    response.response.directives[0].type,
+    'Alexa.Presentation.APL.RenderDocument',
+  );
+  assert.equal(
+    response.response.directives[0].datasources.payload.title,
+    "Joe's Collection",
+  );
+  assert.equal(
+    response.response.directives[0].datasources.payload.sets[0].found,
+    1,
+  );
+});
+
+test('Echo Show touch toggles contributors but not viewers', async () => {
+  const viewerCode = 'bluejay-sequoia-pangolin-ruby';
+  const env = environment([
+    [`p:${FAMILY_CODE}`, JSON.stringify({
+      'sw-galaxy-peek-s2': { amidala: { have: false, updatedAt: 1 } },
+    })],
+    [`info:${FAMILY_CODE}`, JSON.stringify({ name: "Joe's Collection" })],
+    [`share:${viewerCode}`, JSON.stringify({
+      collectionCode: FAMILY_CODE,
+      role: 'viewer',
+      createdAt: 1,
+    })],
+  ]);
+  const catalogue = async (progress) => [{
+    id: 'sw-galaxy-peek-s2',
+    name: 'Galaxy Peek Series 2',
+    emoji: '🔴',
+    found: progress['sw-galaxy-peek-s2'].amidala.have ? 1 : 0,
+    total: 1,
+    figures: [{
+      id: 'amidala',
+      name: 'Queen Amidala',
+      rarity: 'ultra-rare',
+      have: progress['sw-galaxy-peek-s2'].amidala.have,
+    }],
+  }];
+
+  await handleAlexaEnvelope(
+    envelope('LinkCollectionIntent', { familyCode: FAMILY_CODE }),
+    env,
+    {},
+  );
+  const touch = aplEnvelope({
+    type: 'Alexa.Presentation.APL.UserEvent',
+    arguments: ['toggleFigure', 'sw-galaxy-peek-s2', 'amidala'],
+  });
+  const changed = await handleAlexaEnvelope(touch, env, {
+    collectionSets: catalogue,
+  });
+  assert.equal(
+    changed.response.directives[0].datasources.payload.figures[0].have,
+    true,
+  );
+
+  await handleAlexaEnvelope(
+    envelope('LinkCollectionIntent', { familyCode: viewerCode }),
+    env,
+    {},
+  );
+  const unchanged = await handleAlexaEnvelope(touch, env, {
+    collectionSets: catalogue,
+  });
+  assert.match(unchanged.response.outputSpeech.text, /only view/);
+  assert.equal(
+    unchanged.response.directives[0].datasources.payload.figures[0].have,
+    true,
+  );
 });
 
 test('Alexa reverse lookup returns figure codes through the Worker backend', async () => {

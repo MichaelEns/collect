@@ -412,6 +412,31 @@ class DoorablesService {
     }));
   }
 
+  async collectionSets(progress) {
+    const index = await this.fetchJson(`${this.dataBase}/index.json`, {}, true);
+    return Promise.all(index.map(async (metadata) => {
+      const set = await this.fetchJson(
+        `${this.dataBase}/${metadata.file}`,
+        {},
+        true,
+      );
+      const figures = set.figures.map((figure) => ({
+        id: figure.id,
+        name: figure.name,
+        rarity: figure.rarity || '',
+        have: isOwned(progress, set.id, figure.id),
+      }));
+      return {
+        id: set.id,
+        name: set.name,
+        emoji: set.emoji || '',
+        found: figures.filter((figure) => figure.have).length,
+        total: figures.length,
+        figures,
+      };
+    }));
+  }
+
   async countNeeded(packageInfo, progress) {
     const sets = await this.loadSets(packageInfo);
     let total = 0;

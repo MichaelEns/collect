@@ -36,6 +36,37 @@
 
   <!-- Which collection are we looking at. -->
   <section id="picker" aria-label="Your collections">
+    <section class="collection-switcher" aria-labelledby="collection-switcher-title">
+      <h2 id="collection-switcher-title">Whose collection?</h2>
+      <div class="collection-switcher-row">
+        <select id="collection-select" aria-label="Current collection"></select>
+        <button id="collection-rename" type="button" class="link-button">Rename</button>
+      </div>
+      <p id="collection-access" class="sync-hint"></p>
+      <div class="sync-row">
+        <button id="collection-new" type="button" class="link-button">
+          New collection for this house
+        </button>
+        <button id="collection-add-open" type="button" class="link-button">
+          Add a shared collection
+        </button>
+        <button id="collection-remove" type="button" class="link-button danger" hidden>
+          Remove from this device
+        </button>
+      </div>
+      <div id="collection-add" hidden>
+        <p class="sync-hint">
+          Type a view or contribute code. This adds the other collection
+          without mixing it into the collection selected above.
+        </p>
+        <input id="collection-add-code" class="sync-code-input" type="text"
+               autocomplete="off" autocapitalize="none" spellcheck="false"
+               placeholder="moon-ewok-brave-comet" />
+        <button id="collection-add-go" type="button" class="primary">Add it</button>
+        <button id="collection-add-cancel" type="button" class="link-button">Never mind</button>
+      </div>
+    </section>
+
     <ul id="set-list" class="set-list"></ul>
     <p id="picker-empty" class="empty" hidden>No sets are installed yet.</p>
 
@@ -64,25 +95,43 @@
           Type the four words from your other device. Capitals and spaces do
           not matter.
         </p>
-        <input id="sync-code-input" type="text" autocomplete="off" autocapitalize="none"
+        <input id="sync-code-input" class="sync-code-input" type="text"
+               autocomplete="off" autocapitalize="none"
                spellcheck="false" placeholder="moon-ewok-brave-comet" />
         <button id="sync-join-go" type="button" class="primary">Join it</button>
         <button id="sync-join-cancel" type="button" class="link-button">Never mind</button>
       </div>
 
       <div id="sync-on" hidden>
-        <p class="sync-hint">Your family code — type it on any other device:</p>
+        <p id="sync-code-label" class="sync-hint">
+          Your owner code — keep it private and use it to recover this collection:
+        </p>
         <p id="sync-code" class="sync-code"></p>
         <div class="sync-row">
           <button id="sync-copy" type="button" class="link-button">Copy it</button>
           <button id="sync-now" type="button" class="link-button">Sync now</button>
           <button id="sync-stop" type="button" class="link-button danger">Stop sharing</button>
         </div>
-        <p class="sync-warn">
-          Anyone with these four words can see and change this collection, so
-          keep them in the family.
+        <p id="sync-code-warning" class="sync-warn">
+          This owner code can rename, share, and fully change the collection.
         </p>
       </div>
+
+      <section id="sync-shares" class="sync-shares" hidden aria-labelledby="sync-shares-title">
+        <h3 id="sync-shares-title">Sharing codes</h3>
+        <p class="sync-hint">
+          A contribute code lets family add finds. A view code can only look.
+          Revoke either code here without changing your owner code.
+        </p>
+        <div class="collection-switcher-row">
+          <select id="sync-share-role" aria-label="Sharing permission">
+            <option value="contributor">Can add and change finds</option>
+            <option value="viewer">Can only view</option>
+          </select>
+          <button id="sync-share-create" type="button" class="link-button">Make code</button>
+        </div>
+        <ul id="sync-share-list" class="share-list"></ul>
+      </section>
 
       <p id="sync-status" class="sync-status" role="status" aria-live="polite"></p>
     </section>
@@ -221,6 +270,7 @@
 <div id="cheer" hidden aria-live="polite"></div>
 <canvas id="fx" aria-hidden="true"></canvas>
 
+<script src="/collect/collections.js"></script>
 <script src="/collect/app.js"></script>
 <script src="/collect/sync.js"></script>
 <script src="/collect/sync-ui.js"></script>

@@ -32,3 +32,11 @@ simple = { limit = 60, period = 60 }
 # cannot read the collection using a code cached in their browser.
 ALLOWED_ORIGINS = "https://michaelens.github.io"
 ALEXA_SKILL_ID = "amzn1.ask.skill.00cc0524-8f23-4c1b-b8a9-1b20e6d1631c"
+
+# Echo Show private photos use short-lived encrypted URLs. Configure once:
+#   npx wrangler secret put ALEXA_IMAGE_SIGNING_KEY
+#
+# The persistent widget uses Alexa's Data Store API. Configure the skill's
+# Login with Amazon credentials as Worker secrets:
+#   npx wrangler secret put ALEXA_CLIENT_ID
+#   npx wrangler secret put ALEXA_CLIENT_SECRET

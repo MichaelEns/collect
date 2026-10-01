@@ -104,6 +104,40 @@
           ]
         },
         {
+          "name": "UnlinkAllCollectionsIntent",
+          "slots": [],
+          "samples": [
+            "forget every collection",
+            "unlink all collections",
+            "disconnect every collection"
+          ]
+        },
+        {
+          "name": "ListCollectionsIntent",
+          "slots": [],
+          "samples": [
+            "list my collections",
+            "which collections are linked",
+            "what collections do I have"
+          ]
+        },
+        {
+          "name": "SelectCollectionIntent",
+          "slots": [
+            {
+              "name": "collectionName",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "select {collectionName}",
+            "use {collectionName}",
+            "switch to {collectionName}",
+            "show {collectionName}",
+            "open {collectionName}"
+          ]
+        },
+        {
           "name": "PackageClarificationIntent",
           "slots": [
             {

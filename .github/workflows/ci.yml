@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: worker/package-lock.json
+      - run: npm ci --prefix worker
+      - name: Unit and contract tests
+        shell: pwsh
+        run: |
+          $tests = @((Get-ChildItem ./tests/*.test.mjs).FullName) +
+            @((Get-ChildItem ./tests/*.test.cjs).FullName)
+          node --test $tests
+      - name: Bundle Worker
+        working-directory: worker
+        run: npx wrangler deploy --dry-run

@@ -5,8 +5,8 @@
       "locales": {
         "en-US": {
           "name": "Joe's Collection",
-          "summary": "Ask what Joe needs, what a package code contains, or which codes contain a figure.",
-          "description": "Use a four-word sharing code to connect Joe's collection tracker, then ask how many figures he still needs, what a package code contains, or which package codes contain a named figure. Package colors distinguish each series.",
+          "summary": "Ask about Joe's collection or browse it on Echo Show.",
+          "description": "Use four-word owner or sharing codes to connect one or more collection trackers. Ask how many figures are still needed, what a package code contains, or which package codes contain a named figure. On Echo Show, browse and update a touchable checklist and install a progress widget. Viewer sharing codes remain read-only.",
           "examplePhrases": [
             "Alexa, ask Joe's collection how many red Death Star guys does Joe need",
             "Alexa, ask Joe's collection what's in gray Death Star code I eight",
@@ -33,7 +33,32 @@
         "endpoint": {
           "uri": "https://collect-sync.michaelens.workers.dev/alexa",
           "sslCertificateType": "Wildcard"
-        }
+        },
+        "interfaces": [
+          {
+            "type": "ALEXA_PRESENTATION_APL"
+          },
+          {
+            "type": "ALEXA_DATA_STORE"
+          },
+          {
+            "type": "ALEXA_DATASTORE_PACKAGEMANAGER",
+            "packages": [
+              {
+                "id": "JoesCollectionSummary"
+              }
+            ]
+          },
+          {
+            "type": "ALEXA_EXTENSION",
+            "autoInitializedExtensions": [],
+            "requestedExtensions": [
+              {
+                "uri": "alexaext:datastore:10"
+              }
+            ]
+          }
+        ]
       }
     },
     "privacyAndCompliance": {

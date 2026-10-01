@@ -28,9 +28,12 @@ have Boba Fett.
 - **Progress bar and a celebration** when a set is finished.
 - Everything is saved on the device, and stays there unless you deliberately
   switch sharing on.
-- **Ask Alexa what Joe still needs or what a package code contains.** The
-  optional family skill uses the same four-word sharing code, with no Amazon
-  account linking. See [`alexa/README.md`](alexa/README.md).
+- **Ask Alexa what Joe still needs or what a package code contains.** On an
+  Echo Show, browse the same checklist as a touchable grid and keep a progress
+  widget in the Widget Panel. See [`alexa/README.md`](alexa/README.md).
+- **Keep more than one collection on one device.** Joe's shared collection can
+  be available at Grandma's house without combining it with the figures that
+  stay at Grandma's house.
 
 ## Telling what is in a capsule before you buy it
 
@@ -280,6 +283,7 @@ containing unconfirmed entries.
 
 ```
 index.html              one page: picker, grid, finder, figure card
+collections.js          local collection profiles and isolated storage keys
 app.js                  storage, photos, code lookup, rendering
 sets/                   one file per collection, plus codes-*.json
 tools/build_codes.cjs   rebuilds the code files from the community sheet
@@ -291,17 +295,31 @@ Progress lives in `localStorage`; photos live in IndexedDB, shrunk to 480px
 first — a few full-size phone photos would blow the quota and start throwing,
 taking the progress data down with them.
 
-## Sharing a collection between devices
+## Collections, devices, and sharing
 
 Optional, off until switched on, and the app is fully usable without it.
 
-One **family code** — four words like `comet-ewok-brave-moon` — identifies a
-collection. There is no account and no password, because the person using this
-is six. He can read four words off a sticky note once; he cannot manage a login.
+Each device starts with one local collection. It can add more without combining
+their progress: select **New collection for this house** for a separate local
+checklist, or **Add a shared collection** to attach another family's checklist.
+Progress, undo history, wishlists, photos, and catalogue pictures are
+namespaced by collection. The original collection keeps the original storage
+keys, so upgrading never moves a child's existing data.
 
-Turn it on, and the code appears. Type it on a second device and the two keep
-each other up to date: found marks, spares, codes he has written down, and his
-photos.
+Turning on sharing creates an **owner code** — four words like
+`comet-ewok-brave-moon`. It can recover, rename, share, and fully change the
+collection, so it stays with the collection's owner.
+
+The owner can mint and revoke narrower codes:
+
+- A **contribute code** can add or change finds and personal photos. This is
+  the right code for Grandma to use with Joe's collection.
+- A **view code** can read progress and pictures but cannot change anything.
+
+Revoking one share code does not rotate the owner code or disconnect other
+family members. There is no account or password: holding a generated code is
+the capability, because a child can read four words off a sticky note but
+cannot manage a login.
 
 ### What it costs
 
@@ -392,8 +410,10 @@ realistic. Requests from any origin other than the app's own are refused, so a
 random page cannot read the collection using a cached code.
 
 What is stored is a list of toy names and photos of toys. Anyone holding the
-four words can read and change it, so keep them in the family; if they leak,
-turn sharing off and on again for a new code.
+owner code can fully manage it; a share code grants only its displayed role.
+Keep all codes in the family. Revoke a leaked share code. An owner code is deliberately a recovery capability and is not individually
+revocable today, so do not distribute it; use revocable share codes for other
+people and devices.
 
 ## Tests
 

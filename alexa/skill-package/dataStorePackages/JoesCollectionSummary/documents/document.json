@@ -1,0 +1,72 @@
+{
+  "type": "APL",
+  "version": "2024.3",
+  "theme": "dark",
+  "extensions": [
+    {
+      "name": "DataStore",
+      "uri": "alexaext:datastore:10"
+    }
+  ],
+  "settings": {
+    "DataStore": {
+      "dataBindings": [
+        {
+          "namespace": "JoesCollection",
+          "key": "summary",
+          "dataBindingName": "CollectionSummary",
+          "dataType": "OBJECT"
+        }
+      ]
+    }
+  },
+  "mainTemplate": {
+    "parameters": ["payload"],
+    "items": [
+      {
+        "type": "TouchWrapper",
+        "onPress": {
+          "type": "SendEvent",
+          "interactionMode": "OPEN_SKILL",
+          "arguments": ["dashboard"]
+        },
+        "item": {
+          "type": "Container",
+          "width": "100vw",
+          "height": "100vh",
+          "background": "#12193a",
+          "paddingLeft": "24dp",
+          "paddingRight": "24dp",
+          "paddingTop": "24dp",
+          "paddingBottom": "24dp",
+          "justifyContent": "spaceBetween",
+          "items": [
+            {
+              "type": "Text",
+              "text": "${CollectionSummary ? CollectionSummary.title : payload.title}",
+              "fontSize": "34dp",
+              "fontWeight": "700",
+              "color": "#ffffff",
+              "maxLines": 2
+            },
+            {
+              "type": "Text",
+              "text": "${CollectionSummary ? CollectionSummary.progress : payload.progress}",
+              "fontSize": "27dp",
+              "fontWeight": "700",
+              "color": "#ffc93d",
+              "maxLines": 2
+            },
+            {
+              "type": "Text",
+              "text": "Tap to open the checklist",
+              "fontSize": "20dp",
+              "color": "#b8c3ff",
+              "maxLines": 1
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
