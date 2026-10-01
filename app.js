@@ -15,8 +15,9 @@
 'use strict';
 
 (function () {
-  const PROGRESS_KEY = (setId) => `collect.progress.${setId}`;
-  const HISTORY_KEY = (setId) => `collect.history.${setId}`;
+  const collections = window.CollectCollections;
+  const PROGRESS_KEY = (setId) => collections.storageKey('progress', setId);
+  const HISTORY_KEY = (setId) => collections.storageKey('history', setId);
   const DB_NAME = 'collect';
   const STORE = 'photos';
   const CAT_STORE = 'catalogue';
@@ -220,6 +221,7 @@
    * zero — so any real edit beats them, which is what we want.
    */
   function setEntry(figureId, changes) {
+    if (!collections.canEdit()) return;
     const current = entry(figureId);
     const before = {
       have: current.have,
@@ -292,7 +294,7 @@
   const catOp = (mode, run) => storeOp(CAT_STORE, mode, run);
   const binOp = (mode, run) => storeOp(BIN_STORE, mode, run);
 
-  const photoKey = (figureId) => `${state.set.id}/${figureId}`;
+  const photoKey = (figureId) => collections.mediaKey(state.set.id, figureId);
   const getPhoto = (key) => photoOp('readonly', (s) => s.get(key));
   const putPhoto = (key, blob) => photoOp('readwrite', (s) => s.put(blob, key));
   const delPhoto = (key) => photoOp('readwrite', (s) => s.delete(key));
@@ -576,12 +578,20 @@
       list.appendChild(li);
     }
     $('picker-empty').hidden = state.index.length > 0;
+    $('title').textContent = collections.active().name;
+    $('subtitle').textContent = 'Pick a set to start';
   }
 
   function renderCollection() {
     const set = state.set;
     $('title').textContent = set.name;
-    $('subtitle').textContent = set.brand + (set.packaging ? ' · ' + set.packaging : '');
+    $('subtitle').textContent = `${collections.active().name} · ${set.brand}` +
+      (set.packaging ? ' · ' + set.packaging : '');
+    const readOnly = !collections.canEdit();
+    for (const id of ['sheet-have', 'dupe-up', 'dupe-down', 'photo-input', 'photo-remove']) {
+      const control = $(id);
+      if (control) control.disabled = readOnly;
+    }
     renderHistory();
 
     const total = set.figures.length;
@@ -1061,6 +1071,7 @@
   }
 
   function setHave(figureId, have) {
+    if (!collections.canEdit()) return;
     const got = entry(figureId);
     // Codes survive un-marking: they describe the capsule, not the ownership,
     // and losing hard-won findings to a mis-tap would be its own small tragedy.
@@ -1160,7 +1171,7 @@
       $('picker').hidden = false;
       $('collection').hidden = true;
       $('back').hidden = true;
-      $('title').textContent = 'My Collection';
+      $('title').textContent = collections.active().name;
       $('subtitle').textContent = 'Pick a set to start';
       renderPicker();
       return;
@@ -1210,6 +1221,13 @@
   $('back').addEventListener('click', () => { location.hash = ''; });
   window.addEventListener('hashchange', route);
   window.addEventListener('resize', sizeCanvas);
+  document.addEventListener('collect:collection-changed', () => {
+    state.set = null;
+    state.codes = null;
+    state.progress = {};
+    location.hash = '';
+    route();
+  });
 
   /* ------------------------------------------------------------------- init */
 
@@ -1240,6 +1258,7 @@
     openSheet,
     closeSheet,
     route,
+    collection: collections,
     countFound: () => (state.set ? state.set.figures.filter((f) => entry(f.id).have).length : 0),
     photos: {
       get: getPhoto,

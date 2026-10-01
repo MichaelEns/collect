@@ -34,8 +34,20 @@
  */
 
 import { mergeAll } from './merge.js';
-import { makeCode, normaliseCode } from './code.js';
+import {
+  allocateCode,
+  canContribute,
+  collectionInfo,
+  createShare,
+  isOwner,
+  listShares,
+  progressKey,
+  resolveAccess,
+  revokeShare,
+  setCollectionName,
+} from './access.js';
 import { handleAlexaRequest } from './alexa.js';
+import { handleAlexaImage } from './alexa-image.js';
 
 /** Photos are shrunk to 480px before they ever leave the device. */
 const MAX_PHOTO_BYTES = 512 * 1024;
@@ -67,8 +79,6 @@ function corsHeaders(request, env) {
   };
 }
 
-/** Progress for a whole family, all sets together. It is only ~12KB full. */
-const progressKey = (code) => `p:${code}`;
 const photoIndexKey = (code) => `idx:${code}`;
 const photoKey = (code, setId, figureId) => `ph:${code}:${setId}:${figureId}`;
 
@@ -133,13 +143,8 @@ async function limited(request, env) {
   return !success;
 }
 
-async function readCode(request, env) {
-  const raw = request.headers.get('X-Family-Code');
-  const code = normaliseCode(raw);
-  if (!code) return null;
-  // Four valid words are only a credential after /v1/new allocated them.
-  if (await env.COLLECT.get(progressKey(code)) === null) return null;
-  return code;
+async function readAccess(request, env) {
+  return resolveAccess(env, request.headers.get('X-Family-Code'));
 }
 
 async function handle(request, env) {
@@ -152,20 +157,87 @@ async function handle(request, env) {
 
   // A new code needs no credentials — that is the point of it.
   if (path === '/v1/new' && request.method === 'POST') {
-    for (let attempt = 0; attempt < 5; attempt += 1) {
-      const code = makeCode();
-      // Vanishingly unlikely at 2^32, but a collision would hand one family
-      // another family's collection, so it is checked rather than assumed.
-      if (await env.COLLECT.get(progressKey(code)) === null) {
-        await env.COLLECT.put(progressKey(code), JSON.stringify({}));
-        return json({ code });
-      }
+    const code = await allocateCode(env);
+    if (!code) return json({ error: 'could not allocate a code' }, 503);
+    let body = {};
+    try {
+      const raw = await request.text();
+      if (raw) body = JSON.parse(raw);
+    } catch {
+      return json({ error: 'not json' }, 400);
     }
-    return json({ error: 'could not allocate a code' }, 503);
+    await env.COLLECT.put(progressKey(code), JSON.stringify({}));
+    const info = await setCollectionName(env, code, body && body.name);
+    return json({ code, name: info.name, role: 'owner' });
   }
 
-  const code = await readCode(request, env);
-  if (!code) return json({ error: 'that is not a family code' }, 401);
+  const access = await readAccess(request, env);
+  if (!access) return json({ error: 'that is not a family code' }, 401);
+  const code = access.collectionCode;
+
+  if (path === '/v1/access' && request.method === 'GET') {
+    return json({
+      name: access.name,
+      role: access.role,
+    });
+  }
+
+  if (path === '/v1/collection-info') {
+    if (request.method === 'GET') {
+      return json({
+        ...(await collectionInfo(env, code)),
+        role: access.role,
+      });
+    }
+    if (request.method === 'PUT') {
+      if (!isOwner(access)) return json({ error: 'owner access required' }, 403);
+      const raw = await request.text();
+      if (raw.length > 4096) return json({ error: 'too much' }, 413);
+      let body;
+      try { body = JSON.parse(raw); } catch { return json({ error: 'not json' }, 400); }
+      return json({
+        ...(await setCollectionName(env, code, body && body.name)),
+        role: access.role,
+      });
+    }
+    return json({ error: 'method' }, 405);
+  }
+
+  if (path === '/v1/shares') {
+    if (!isOwner(access)) return json({ error: 'owner access required' }, 403);
+    if (request.method === 'GET') {
+      return json({ shares: await listShares(env, code) });
+    }
+    if (request.method === 'POST') {
+      const raw = await request.text();
+      if (raw.length > 4096) return json({ error: 'too much' }, 413);
+      let body;
+      try { body = JSON.parse(raw); } catch { return json({ error: 'not json' }, 400); }
+      const share = await createShare(env, code, body && body.role);
+      return share
+        ? json(share, 201)
+        : json({ error: 'role must be viewer or contributor' }, 400);
+    }
+    return json({ error: 'method' }, 405);
+  }
+
+  const sharePath = /^\/v1\/shares\/([^/]+)$/.exec(path);
+  if (sharePath) {
+    if (!isOwner(access)) return json({ error: 'owner access required' }, 403);
+    if (request.method !== 'DELETE') return json({ error: 'method' }, 405);
+    const removed = await revokeShare(
+      env,
+      code,
+      decodeURIComponent(sharePath[1]),
+    );
+    return removed
+      ? json({ ok: true })
+      : json({ error: 'no such share' }, 404);
+  }
+
+  if (path === '/v1/new') {
+    return json({ error: 'method' }, 405);
+  }
 
   if (path === '/v1/collection') {
     if (request.method === 'GET') {
@@ -174,11 +246,16 @@ async function handle(request, env) {
         progress: stored,
         photos: await readPhotoIndex(env, code),
         catalogue: await readCatalogueIndex(env, code),
+        name: access.name,
+        role: access.role,
         serverTime: Date.now(),
       });
     }
 
     if (request.method === 'POST') {
+      if (!canContribute(access)) {
+        return json({ error: 'contributor access required' }, 403);
+      }
       const raw = await request.text();
       if (raw.length > MAX_BODY_BYTES) return json({ error: 'too much' }, 413);
       let body;
@@ -201,6 +278,8 @@ async function handle(request, env) {
         progress: merged,
         photos: await readPhotoIndex(env, code),
         catalogue: await readCatalogueIndex(env, code),
+        name: access.name,
+        role: access.role,
         serverTime: now,
       });
     }
@@ -211,10 +290,9 @@ async function handle(request, env) {
    * Photos and catalogue pictures differ only in which namespace they land in,
    * so one handler serves both rather than two that can drift apart.
    *
-   * Both are writable with the family code. The seed tool being the only thing
-   * that writes catalogue pictures is a convention of ours, not something the
-   * worker can enforce: it authenticates with the same code the app does, so
-   * there is nothing here to tell them apart.
+   * A contributor may change progress and personal photos. Catalogue pictures
+   * remain owner-only because they describe the shared reference data for
+   * everyone using the collection.
    */
   const image = /^\/v1\/(photo|catalogue)\/([^/]+)\/([^/]+)$/.exec(path);
   if (image) {
@@ -244,6 +322,13 @@ async function handle(request, env) {
     }
 
     if (request.method === 'PUT') {
+      if (isPhoto ? !canContribute(access) : !isOwner(access)) {
+        return json({
+          error: isPhoto
+            ? 'contributor access required'
+            : 'owner access required',
+        }, 403);
+      }
       const hash = (request.headers.get('X-Photo-Hash') || '').slice(0, 64);
       if (!/^[a-f0-9]{8,64}$/.test(hash)) return json({ error: 'bad hash' }, 400);
       const bytes = await request.arrayBuffer();
@@ -265,6 +350,13 @@ async function handle(request, env) {
     }
 
     if (request.method === 'DELETE') {
+      if (isPhoto ? !canContribute(access) : !isOwner(access)) {
+        return json({
+          error: isPhoto
+            ? 'contributor access required'
+            : 'owner access required',
+        }, 403);
+      }
       const wire = `${setId}:${figureId}`;
       await env.COLLECT.delete(key);
       const index = await readIdx(env, code);
@@ -283,6 +375,9 @@ async function handle(request, env) {
 export default {
   async fetch(request, env) {
     const path = new URL(request.url).pathname.replace(/\/+$/, '') || '/';
+    if (path.startsWith('/alexa/image/')) {
+      return handleAlexaImage(request, env);
+    }
     if (path === '/alexa') return handleAlexaRequest(request, env);
 
     const cors = corsHeaders(request, env);

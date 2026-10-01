@@ -151,6 +151,14 @@ async function main() {
       if (r.exceptionDetails) throw new Error(r.exceptionDetails.exception?.description || 'threw');
       return r.result.value;
     };
+    const waitFor = async (expression, label, timeoutMs = 10000) => {
+      const deadline = Date.now() + timeoutMs;
+      while (Date.now() < deadline) {
+        if (await evalJs(expression)) return;
+        await new Promise((resolve) => setTimeout(resolve, 100));
+      }
+      throw new Error(`timed out waiting for ${label}`);
+    };
 
     await rpc(ws, id++, 'Runtime.enable', {});
     await rpc(ws, id++, 'Page.enable', {});
@@ -169,7 +177,17 @@ async function main() {
     // figures never touches it and the upgrade would not run at all. This is
     // the path a child actually takes: open the app, tap a series.
     await rpc(ws, id++, 'Page.navigate', { url: `${base}#set=sw-galaxy-peek-s1` });
-    await new Promise((r) => setTimeout(r, 3500));
+    await waitFor(
+      "window.__collect && window.__collect.state.set && " +
+      "window.__collect.state.set.id === 'sw-galaxy-peek-s1'",
+      'Series 1 collection',
+    );
+    await waitFor(
+      "new Promise(resolve => { const r = indexedDB.open('collect'); " +
+      "r.onsuccess = () => { const v = r.result.version; r.result.close(); resolve(v >= 3); }; " +
+      "r.onerror = () => resolve(false); })",
+      'IndexedDB schema upgrade',
+    );
 
     const after = JSON.parse(await evalJs(READ_BACK));
     console.log('\n--- after the new code has opened it ---');

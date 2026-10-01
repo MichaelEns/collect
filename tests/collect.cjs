@@ -132,6 +132,14 @@ async function main() {
       if (r.exceptionDetails) throw new Error(r.exceptionDetails.exception?.description || 'threw');
       return r.result.value;
     };
+    const waitFor = async (expression, label, timeoutMs = 10000) => {
+      const deadline = Date.now() + timeoutMs;
+      while (Date.now() < deadline) {
+        if (await evalJs(expression)) return;
+        await new Promise((resolve) => setTimeout(resolve, 100));
+      }
+      throw new Error(`timed out waiting for ${label}`);
+    };
 
     await rpc(ws, id++, 'Runtime.enable', {});
     await rpc(ws, id++, 'Log.enable', {});
@@ -140,7 +148,10 @@ async function main() {
       width: 390, height: 844, deviceScaleFactor: 2, mobile: true,
     });
     await rpc(ws, id++, 'Page.navigate', { url: base });
-    await new Promise((r) => setTimeout(r, 2500));
+    await waitFor(
+      'window.__collect && window.__collect.state.index.length > 0',
+      'collection picker',
+    );
 
     /* ------------------------------------------------------------- picker */
 
@@ -184,7 +195,10 @@ async function main() {
 
     console.log('\n--- opening Series 2 ---');
     await evalJs("location.hash = '#set=sw-galaxy-peek-s2'; 1");
-    await new Promise((r) => setTimeout(r, 900));
+    await waitFor(
+      "window.__collect.state.set && window.__collect.state.set.id === 'sw-galaxy-peek-s2'",
+      'Galaxy Peek Series 2',
+    );
 
     const grid = JSON.parse(await evalJs(`JSON.stringify({
       title: document.getElementById('title').textContent,
@@ -538,7 +552,10 @@ async function main() {
 
     console.log('\n--- the other set is separate ---');
     await evalJs("location.hash = '#set=sw-galaxy-peek-s1'; 1");
-    await new Promise((r) => setTimeout(r, 900));
+    await waitFor(
+      "window.__collect.state.set && window.__collect.state.set.id === 'sw-galaxy-peek-s1'",
+      'Galaxy Peek Series 1',
+    );
     const s1 = JSON.parse(await evalJs(`JSON.stringify({
       title: document.getElementById('title').textContent,
       progress: document.getElementById('progress-text').textContent,
@@ -650,7 +667,10 @@ async function main() {
      * itself instead of showing an empty finder that looks broken.
      */
     await evalJs("location.hash = '#set=sw-cruisers-s1'; 1");
-    await new Promise((r) => setTimeout(r, 1200));
+    await waitFor(
+      "window.__collect.state.set && window.__collect.state.set.id === 'sw-cruisers-s1'",
+      'Galactic Cruisers Series 1',
+    );
     const cruisers = JSON.parse(await evalJs(`JSON.stringify({
       title: document.getElementById('title').textContent,
       figures: document.querySelectorAll('.fig').length,
@@ -691,7 +711,10 @@ async function main() {
       /already have this one/i.test(owned), owned);
 
     await evalJs("location.hash = '#set=sw-cruisers-s3'; 1");
-    await new Promise((r) => setTimeout(r, 1200));
+    await waitFor(
+      "window.__collect.state.set && window.__collect.state.set.id === 'sw-cruisers-s3'",
+      'Galactic Cruisers Series 3',
+    );
     const noCodes = JSON.parse(await evalJs(`JSON.stringify({
       figures: document.querySelectorAll('.fig').length,
       finderShown: !document.getElementById('finder').hidden,

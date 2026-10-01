@@ -5,6 +5,14 @@ import {
   cryptoProvider,
 } from '@peculiar/x509';
 import doorables from '../../alexa/lambda/doorables.js';
+import { canContribute, progressKey, resolveAccess } from './access.js';
+import { mergeAll } from './merge.js';
+import {
+  dashboardDirective,
+  setDirective,
+  supportsApl,
+} from './visuals.js';
+import { updateCollectionWidget } from './widget.js';
 
 const {
   DoorablesError,
@@ -180,7 +188,14 @@ function codeFromPackageSlot(envelope) {
     const packageText = tokens.slice(0, -length).join(' ');
     if (resolvePackage(packageText).status === 'ok') return suffix;
   }
+
   return undefined;
+}
+
+function spokenList(items) {
+  if (items.length < 2) return items[0] || '';
+  if (items.length === 2) return `${items[0]} and ${items[1]}`;
+  return `${items.slice(0, -1).join(', ')}, and ${items[items.length - 1]}`;
 }
 
 function capsuleCodeSlot(envelope) {
@@ -197,21 +212,89 @@ function capsuleCodeSlot(envelope) {
   return values.length > 1 ? values : values[0];
 }
 
-function alexaResponse(speech, reprompt, sessionAttributes = {}) {
+function alexaResponse(
+  speech,
+  reprompt,
+  sessionAttributes = {},
+  directives = [],
+) {
   const result = {
     version: '1.0',
     sessionAttributes,
     response: {
       outputSpeech: { type: 'PlainText', text: speech },
-      shouldEndSession: !reprompt,
+      shouldEndSession: !reprompt && directives.length === 0,
     },
   };
+  if (directives.length) result.response.directives = directives;
   if (reprompt) {
     result.response.reprompt = {
       outputSpeech: { type: 'PlainText', text: reprompt },
     };
   }
+
   return result;
+}
+
+async function visualForDashboard(envelope, env, access, queryService) {
+  const progress = await readProgress(env, access);
+  try {
+    await updateCollectionWidget(
+      envelope,
+      env,
+      queryService,
+      progress,
+      access,
+    );
+  } catch (error) {
+    const detail = error instanceof Error ? error.message : 'unknown failure';
+    console.warn(`Alexa widget refresh failed: ${detail}`);
+  }
+  if (!supportsApl(envelope)) return [];
+  return [await dashboardDirective(queryService, progress, access)];
+}
+
+async function refreshWidget(envelope, env, access, progress, queryService) {
+  try {
+    await updateCollectionWidget(
+      envelope,
+      env,
+      queryService,
+      progress,
+      access,
+    );
+  } catch (error) {
+    const detail = error instanceof Error ? error.message : 'unknown failure';
+    console.warn(`Alexa widget refresh failed: ${detail}`);
+  }
+}
+
+async function toggleFigure(env, access, setId, figureId, queryService) {
+  if (!canContribute(access)) return readProgress(env, access);
+  const current = await readProgress(env, access);
+  const sets = await queryService.collectionSets(current);
+  const set = sets.find((item) => item.id === setId);
+  const figure = set && set.figures.find((item) => item.id === figureId);
+  if (!figure) {
+    throw new DoorablesError('invalid-figure', 'That figure was not found.');
+  }
+  const previous = current[setId] && current[setId][figureId] || {};
+  const incoming = {
+    [setId]: {
+      [figureId]: {
+        have: !figure.have,
+        dupes: Number(previous.dupes) || 0,
+        codes: Array.isArray(previous.codes) ? previous.codes : [],
+        updatedAt: Date.now(),
+      },
+    },
+  };
+  const merged = mergeAll(current, incoming, Date.now());
+  await env.COLLECT.put(
+    progressKey(access.collectionCode),
+    JSON.stringify(merged),
+  );
+  return merged;
 }
 
 function userId(envelope) {
@@ -230,12 +313,56 @@ async function userKey(envelope) {
   return `alexa-user:${hash}`;
 }
 
-async function linkedCode(envelope, env) {
-  return env.COLLECT.get(await userKey(envelope));
+function emptyLinks() {
+  return { version: 2, activeCode: '', collections: [] };
 }
 
-async function readProgress(env, familyCode) {
-  const raw = await env.COLLECT.get(`p:${familyCode}`);
+async function linkedCollections(envelope, env) {
+  const raw = await env.COLLECT.get(await userKey(envelope));
+  if (!raw) return emptyLinks();
+  try {
+    const parsed = JSON.parse(raw);
+    if (parsed && parsed.version === 2 && Array.isArray(parsed.collections)) {
+      return {
+        version: 2,
+        activeCode: String(parsed.activeCode || ''),
+        collections: parsed.collections
+          .filter((item) => item && typeof item.code === 'string')
+          .map((item) => ({
+            code: item.code,
+            name: String(item.name || 'My Collection').slice(0, 60),
+            role: ['owner', 'contributor', 'viewer'].includes(item.role)
+              ? item.role
+              : 'viewer',
+          })),
+      };
+    }
+  } catch { /* a v1 value is the raw four-word code */ }
+  return {
+    version: 2,
+    activeCode: raw,
+    collections: [{ code: raw, name: "Joe's Collection", role: 'owner' }],
+  };
+}
+
+async function saveLinkedCollections(envelope, env, links) {
+  await env.COLLECT.put(await userKey(envelope), JSON.stringify(links));
+}
+
+async function activeCollection(envelope, env) {
+  const links = await linkedCollections(envelope, env);
+  if (!links.collections.length) return { links, access: null };
+  const linked = links.collections.find((item) => item.code === links.activeCode) ||
+    links.collections[0];
+  const access = await resolveAccess(env, linked.code);
+  if (!access) {
+    throw new DoorablesError('invalid-code', 'The linked sharing code no longer works.');
+  }
+  return { links, access };
+}
+
+async function readProgress(env, access) {
+  const raw = await env.COLLECT.get(progressKey(access.collectionCode));
   if (raw === null) {
     throw new DoorablesError('invalid-code', 'That sharing code is not allocated.');
   }
@@ -264,15 +391,15 @@ function rememberPackageQuestion(
   };
 }
 
-async function answerNeed(env, familyCode, packageInfo, sessionAttributes, queryService) {
-  const progress = await readProgress(env, familyCode);
+async function answerNeed(env, access, packageInfo, sessionAttributes, queryService) {
+  const progress = await readProgress(env, access);
   const result = await queryService.countNeeded(packageInfo, progress);
   return alexaResponse(needSpeech(result), undefined, sessionAttributes);
 }
 
 async function answerLookup(
-  env, familyCode, packageInfo, capsuleCode, sessionAttributes, queryService) {
-  const progress = await readProgress(env, familyCode);
+  env, access, packageInfo, capsuleCode, sessionAttributes, queryService) {
+  const progress = await readProgress(env, access);
   try {
     const result = await queryService.lookup(packageInfo, capsuleCode, progress);
     return alexaResponse(lookupSpeech(result), undefined, sessionAttributes);
@@ -287,8 +414,8 @@ async function answerLookup(
 }
 
 async function answerFigureCodes(
-  env, familyCode, packageInfo, figure, sessionAttributes, queryService) {
-  await readProgress(env, familyCode);
+  env, access, packageInfo, figure, sessionAttributes, queryService) {
+  await readProgress(env, access);
   const result = await queryService.findFigureCodes(packageInfo, figure);
   return alexaResponse(figureCodesSpeech(result), undefined, sessionAttributes);
 }
@@ -302,17 +429,94 @@ export async function handleAlexaEnvelope(
 
   try {
     if (requestType === 'LaunchRequest') {
-      const code = await linkedCode(envelope, env);
-      const speech = code
-        ? 'Joe\'s collection is linked. Ask how many red Death Star figures Joe needs, ' +
+      const { links, access } = await activeCollection(envelope, env);
+      const speech = access
+        ? `${access.name} is selected. Ask how many red Death Star figures Joe needs, ` +
           'or ask what is in gray Death Star code I 8.'
         : 'First link Joe\'s collection. Say, use sharing code, followed by the four words.';
       return alexaResponse(
-        speech, 'What would you like to know?', sessionAttributes);
+        speech,
+        'What would you like to know?',
+        { ...sessionAttributes, linkedCollectionCount: links.collections.length },
+        access
+          ? await visualForDashboard(envelope, env, access, queryService)
+          : [],
+      );
     }
 
     if (requestType === 'SessionEndedRequest') {
       return { version: '1.0', response: {} };
+    }
+
+    if (requestType === 'Alexa.DataStore.PackageManager.UsagesInstalled' ||
+        requestType === 'Alexa.DataStore.PackageManager.UpdateRequest') {
+      const { access } = await activeCollection(envelope, env);
+      if (access) {
+        await refreshWidget(
+          envelope,
+          env,
+          access,
+          await readProgress(env, access),
+          queryService,
+        );
+      }
+      return { version: '1.0', response: {} };
+    }
+
+    if (requestType.startsWith('Alexa.DataStore.')) {
+      return { version: '1.0', response: {} };
+    }
+
+    if (requestType === 'Alexa.Presentation.APL.UserEvent') {
+      const { access } = await activeCollection(envelope, env);
+      if (!access) {
+        return alexaResponse(
+          'Link a collection before opening it on this screen.',
+          undefined,
+          sessionAttributes,
+        );
+      }
+      const [action, setId, figureId] = request.arguments || [];
+      if (action === 'dashboard') {
+        return alexaResponse(
+          `Showing ${access.name}.`,
+          undefined,
+          sessionAttributes,
+          await visualForDashboard(envelope, env, access, queryService),
+        );
+      }
+      if (action === 'openSet') {
+        const progress = await readProgress(env, access);
+        return alexaResponse(
+          'Opening the set.',
+          undefined,
+          sessionAttributes,
+          [await setDirective(queryService, progress, access, setId, env)],
+        );
+      }
+      if (action === 'toggleFigure') {
+        const progress = await toggleFigure(
+          env,
+          access,
+          setId,
+          figureId,
+          queryService,
+        );
+        await refreshWidget(envelope, env, access, progress, queryService);
+        return alexaResponse(
+          access.role === 'viewer'
+            ? 'This sharing code can only view the collection.'
+            : 'Updated.',
+          undefined,
+          sessionAttributes,
+          [await setDirective(queryService, progress, access, setId, env)],
+        );
+      }
+      return alexaResponse(
+        'I did not understand that screen action.',
+        undefined,
+        sessionAttributes,
+      );
     }
 
     if (requestType !== 'IntentRequest') {
@@ -327,26 +531,110 @@ export async function handleAlexaEnvelope(
           'A sharing code has four words. Please say, use sharing code, followed by all four.',
           'What are the four words?', sessionAttributes);
       }
-      try {
-        await readProgress(env, familyCode);
-      } catch (error) {
-        if (error instanceof DoorablesError && error.code === 'invalid-code') {
-          return alexaResponse(
-            'That sharing code was not recognized. Please check the four words and try again.',
-            'What are the four words?', sessionAttributes);
-        }
-        throw error;
+      const access = await resolveAccess(env, familyCode);
+      if (!access) {
+        return alexaResponse(
+          'That sharing code was not recognized. Please check the four words and try again.',
+          'What are the four words?', sessionAttributes);
       }
-      await env.COLLECT.put(await userKey(envelope), familyCode);
+      const links = await linkedCollections(envelope, env);
+      const existing = links.collections.find((item) => item.code === familyCode);
+      if (existing) {
+        existing.name = access.name;
+        existing.role = access.role;
+      } else {
+        links.collections.push({
+          code: familyCode,
+          name: access.name,
+          role: access.role,
+        });
+      }
+      links.activeCode = familyCode;
+      await saveLinkedCollections(envelope, env, links);
+      await refreshWidget(
+        envelope,
+        env,
+        access,
+        await readProgress(env, access),
+        queryService,
+      );
       return alexaResponse(
-        'Joe\'s collection is linked. I will not repeat the sharing code.',
+        `${access.name} is linked and selected. I will not repeat the sharing code.`,
         undefined, sessionAttributes);
     }
 
     if (intentName === 'UnlinkCollectionIntent') {
+      const links = await linkedCollections(envelope, env);
+      const selected = links.collections.find((item) => item.code === links.activeCode) ||
+        links.collections[0];
+      if (!selected) {
+        return alexaResponse(
+          'No collection is linked to this Alexa account.',
+          undefined, sessionAttributes);
+      }
+      links.collections = links.collections.filter((item) => item.code !== selected.code);
+      links.activeCode = links.collections[0] ? links.collections[0].code : '';
+      if (links.collections.length) {
+        await saveLinkedCollections(envelope, env, links);
+      } else {
+        await env.COLLECT.delete(await userKey(envelope));
+      }
+      return alexaResponse(
+        `${selected.name} is unlinked from this Alexa account.`,
+        undefined, sessionAttributes);
+    }
+
+    if (intentName === 'UnlinkAllCollectionsIntent') {
       await env.COLLECT.delete(await userKey(envelope));
       return alexaResponse(
-        'Joe\'s collection is unlinked from this Alexa account.',
+        'All collections are unlinked from this Alexa account.',
+        undefined, sessionAttributes);
+    }
+
+    if (intentName === 'ListCollectionsIntent') {
+      const links = await linkedCollections(envelope, env);
+      if (!links.collections.length) {
+        return alexaResponse(
+          'No collection is linked yet.',
+          undefined, sessionAttributes);
+      }
+      const names = links.collections.map((item) => item.name);
+      return alexaResponse(
+        names.length === 1
+          ? `${names[0]} is linked.`
+          : `The linked collections are ${spokenList(names)}.`,
+        undefined, sessionAttributes);
+    }
+
+    if (intentName === 'SelectCollectionIntent') {
+      const wanted = String(rawSlot(envelope, 'collectionName') || '')
+        .toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+      const links = await linkedCollections(envelope, env);
+      const matches = links.collections.filter((item) => {
+        const name = item.name.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+        return name === wanted || name.includes(wanted) || wanted.includes(name);
+      });
+      if (matches.length !== 1) {
+        return alexaResponse(
+          matches.length
+            ? 'More than one collection matched. Please use the full name.'
+            : 'I could not find that linked collection.',
+          undefined, sessionAttributes);
+      }
+      links.activeCode = matches[0].code;
+      await saveLinkedCollections(envelope, env, links);
+      const selectedAccess = await resolveAccess(env, matches[0].code);
+      if (selectedAccess) {
+        await refreshWidget(
+          envelope,
+          env,
+          selectedAccess,
+          await readProgress(env, selectedAccess),
+          queryService,
+        );
+      }
+      return alexaResponse(
+        `${matches[0].name} is selected.`,
         undefined, sessionAttributes);
     }
 
@@ -368,8 +656,8 @@ export async function handleAlexaEnvelope(
         'Try asking how many red Death Star figures Joe needs.', sessionAttributes);
     }
 
-    const familyCode = await linkedCode(envelope, env);
-    if (!familyCode) {
+    const { access } = await activeCollection(envelope, env);
+    if (!access) {
       return alexaResponse(
         'Joe\'s collection is not linked yet. Say, use sharing code, followed by the four words.',
         undefined, sessionAttributes);
@@ -397,16 +685,16 @@ export async function handleAlexaEnvelope(
       delete sessionAttributes.pendingPackage;
       if (pending.operation === 'lookup') {
         return answerLookup(
-          env, familyCode, resolution.packageInfo, pending.capsuleCode,
+          env, access, resolution.packageInfo, pending.capsuleCode,
           sessionAttributes, queryService);
       }
       if (pending.operation === 'figure-codes') {
         return answerFigureCodes(
-          env, familyCode, resolution.packageInfo, pending.figure,
+          env, access, resolution.packageInfo, pending.figure,
           sessionAttributes, queryService);
       }
       return answerNeed(
-        env, familyCode, resolution.packageInfo, sessionAttributes, queryService);
+        env, access, resolution.packageInfo, sessionAttributes, queryService);
     }
 
     if (intentName === 'NeedCountIntent') {
@@ -423,7 +711,7 @@ export async function handleAlexaEnvelope(
           undefined, sessionAttributes);
       }
       return answerNeed(
-        env, familyCode, resolution.packageInfo, sessionAttributes, queryService);
+        env, access, resolution.packageInfo, sessionAttributes, queryService);
     }
 
     if (intentName === 'CodeLookupIntent') {
@@ -441,7 +729,7 @@ export async function handleAlexaEnvelope(
           undefined, sessionAttributes);
       }
       return answerLookup(
-        env, familyCode, resolution.packageInfo, capsuleCode,
+        env, access, resolution.packageInfo, capsuleCode,
         sessionAttributes, queryService);
     }
 
@@ -460,7 +748,7 @@ export async function handleAlexaEnvelope(
           undefined, sessionAttributes);
       }
       return answerFigureCodes(
-        env, familyCode, resolution.packageInfo, figure,
+        env, access, resolution.packageInfo, figure,
         sessionAttributes, queryService);
     }
 
@@ -468,7 +756,8 @@ export async function handleAlexaEnvelope(
       'I did not understand that request.', undefined, sessionAttributes);
   } catch (error) {
     const code = error instanceof DoorablesError ? error.code : 'internal';
-    console.error(`Alexa request failed: ${code}`);
+    const detail = error instanceof Error ? error.message : 'unknown failure';
+    console.error(`Alexa request failed: ${code}: ${detail}`);
     if (code === 'invalid-code') {
       return alexaResponse(
         'The saved sharing code no longer works. Please link Joe\'s collection again.',
