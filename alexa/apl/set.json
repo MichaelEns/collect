@@ -2,14 +2,14 @@
   "type": "APL",
   "version": "1.3",
   "theme": "dark",
+  "background": "#12193a",
   "mainTemplate": {
-    "parameters": ["payload"],
+    "parameters": ["collection"],
     "items": [
       {
         "type": "Container",
         "width": "100vw",
         "height": "100vh",
-        "background": "#12193a",
         "paddingLeft": "4vw",
         "paddingRight": "4vw",
         "paddingTop": "3vh",
@@ -29,6 +29,7 @@
                 "item": {
                   "type": "Text",
                   "text": "‹",
+                  "fontFamily": "sans-serif",
                   "fontSize": "7vh",
                   "color": "#7ee8ff",
                   "width": "8vw"
@@ -40,7 +41,8 @@
                 "items": [
                   {
                     "type": "Text",
-                    "text": "${payload.title}",
+                    "text": "${collection.title}",
+                    "fontFamily": "sans-serif",
                     "fontSize": "5.6vh",
                     "fontWeight": "700",
                     "color": "#ffffff",
@@ -48,7 +50,8 @@
                   },
                   {
                     "type": "Text",
-                    "text": "${payload.subtitle}",
+                    "text": "${collection.subtitle}",
+                    "fontFamily": "sans-serif",
                     "fontSize": "2.8vh",
                     "color": "#b8c3ff",
                     "maxLines": 1
@@ -58,72 +61,101 @@
             ]
           },
           {
-            "type": "GridSequence",
+            "type": "ScrollView",
             "width": "100%",
             "height": "79vh",
-            "childWidth": "22vw",
-            "childHeight": "24vh",
             "scrollDirection": "vertical",
-            "data": "${payload.figures}",
-            "spacing": "1.2vw",
-            "items": [
-              {
-                "type": "TouchWrapper",
-                "disabled": "${!payload.canEdit}",
-                "onPress": {
-                  "type": "SendEvent",
-                  "arguments": ["toggleFigure", "${payload.setId}", "${data.id}"]
-                },
-                "item": {
-                  "type": "Container",
-                  "alignItems": "center",
-                  "justifyContent": "center",
-                  "paddingLeft": "1vw",
-                  "paddingRight": "1vw",
-                  "paddingTop": "1vh",
-                  "paddingBottom": "1vh",
-                  "background": "${data.have ? '#174d35' : '#202a59'}",
-                  "borderColor": "${data.have ? '#43d17c' : '#354176'}",
-                  "borderWidth": "2dp",
-                  "borderRadius": "18dp",
-                  "items": [
-                    {
-                      "when": "${data.image}",
-                      "type": "Image",
-                      "source": "${data.image}",
-                      "width": "10vh",
-                      "height": "10vh",
-                      "scale": "best-fill"
-                    },
-                    {
-                      "when": "${!data.image}",
-                      "type": "Text",
-                      "text": "${data.initials}",
-                      "fontSize": "6vh",
-                      "fontWeight": "700",
-                      "color": "${data.have ? '#ffffff' : '#7f8bc6'}"
-                    },
-                    {
-                      "type": "Text",
-                      "text": "${data.name}",
-                      "fontSize": "2.5vh",
-                      "fontWeight": "700",
-                      "textAlign": "center",
-                      "color": "#ffffff",
-                      "maxLines": 2,
-                      "spacing": "1vh"
-                    },
-                    {
-                      "type": "Text",
-                      "text": "${data.have ? '✓ Found' : 'Missing'}",
-                      "fontSize": "2.2vh",
-                      "color": "${data.have ? '#8dffbc' : '#b8c3ff'}",
-                      "spacing": "0.8vh"
+            "spacing": "1.4vh",
+            "item": {
+              "type": "Container",
+              "width": "100%",
+              "direction": "row",
+              "wrap": "wrap",
+              "data": "${collection.figures}",
+              "items": [
+                {
+                  "type": "TouchWrapper",
+                  "width": "25%",
+                  "height": "26vh",
+                  "disabled": "${!collection.canEdit}",
+                  "onPress": {
+                    "type": "SendEvent",
+                    "arguments": ["toggleFigure", "${collection.setId}", "${data.id}"]
+                  },
+                  "item": {
+                    "type": "Frame",
+                    "id": "figure-card-${data.id}",
+                    "width": "96%",
+                    "height": "24vh",
+                    "paddingLeft": "1vw",
+                    "paddingRight": "1vw",
+                    "paddingTop": "1vh",
+                    "paddingBottom": "1vh",
+                    "backgroundColor": "${data.have ? '#174d35' : '#202a59'}",
+                    "borderColor": "${data.have ? '#43d17c' : '#354176'}",
+                    "borderWidth": "2dp",
+                    "borderRadius": "18dp",
+                    "item": {
+                      "type": "Container",
+                      "width": "100%",
+                      "height": "100%",
+                      "alignItems": "center",
+                      "justifyContent": "center",
+                      "items": [
+                        {
+                          "type": "Container",
+                          "width": "10vh",
+                          "height": "10vh",
+                          "items": [
+                            {
+                              "type": "Text",
+                              "text": "${data.initials}",
+                              "fontFamily": "sans-serif",
+                              "width": "100%",
+                              "height": "100%",
+                              "textAlign": "center",
+                              "textAlignVertical": "center",
+                              "fontSize": "6vh",
+                              "fontWeight": "700",
+                              "color": "${data.have ? '#ffffff' : '#7f8bc6'}"
+                            },
+                            {
+                              "when": "${data.image}",
+                              "type": "Image",
+                              "id": "photo-${data.id}",
+                              "source": "${data.image}",
+                              "position": "absolute",
+                              "width": "100%",
+                              "height": "100%",
+                              "scale": "best-fill"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "Text",
+                          "text": "${data.name}",
+                          "fontFamily": "sans-serif",
+                          "fontSize": "2.5vh",
+                          "fontWeight": "700",
+                          "textAlign": "center",
+                          "color": "#ffffff",
+                          "maxLines": 2,
+                          "spacing": "1vh"
+                        },
+                        {
+                          "type": "Text",
+                          "text": "${data.have ? '✓ Found' : 'Missing'}",
+                          "fontFamily": "sans-serif",
+                          "fontSize": "2.2vh",
+                          "color": "${data.have ? '#8dffbc' : '#b8c3ff'}",
+                          "spacing": "0.8vh"
+                        }
+                      ]
                     }
-                  ]
+                  }
                 }
-              }
-            ]
+              ]
+            }
           }
         ]
       }

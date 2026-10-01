@@ -8,6 +8,8 @@
     "reflect-metadata": "^0.2.2"
   },
   "devDependencies": {
+    "apl-viewhost-web": "2024.3.0",
+    "playwright": "^1.58.2",
     "wrangler": "^4.132.0"
   }
 }

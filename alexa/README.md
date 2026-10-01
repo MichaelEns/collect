@@ -86,4 +86,15 @@ $tests = @((Get-ChildItem .\tests\*.test.mjs).FullName) +
 node --test $tests
 ```
 
+The APL tests run the actual Worker documents and data sources in Amazon's
+WebAssembly APL renderer, checking visible text, layout, and touch events on
+small and large Echo Show viewports. Install dependencies with
+`npm ci --prefix worker`; Windows uses installed Edge, while Linux uses
+`cd worker; npx playwright install --with-deps chromium`.
+
+Full-screen documents use APL 1.3 components, including a wrapping container
+instead of the newer `GridSequence`. Widgets use APL 1.8 for `SendEvent`'s
+`OPEN_SKILL` interaction mode. Template parameters bind the named `collection`
+data source, not the reserved `payload` map.
+
 The tests use local fixtures and never read or print a real family code.

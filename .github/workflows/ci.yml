@@ -19,6 +19,9 @@ jobs:
           cache: npm
           cache-dependency-path: worker/package-lock.json
       - run: npm ci --prefix worker
+      - name: Install APL test browser
+        working-directory: worker
+        run: npx playwright install --with-deps chromium
       - name: Unit and contract tests
         shell: pwsh
         run: |

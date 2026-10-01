@@ -1,7 +1,8 @@
 {
   "type": "APL",
-  "version": "1.3",
+  "version": "1.8",
   "theme": "dark",
+  "background": "#12193a",
   "extensions": [
     {
       "name": "DataStore",
@@ -21,7 +22,7 @@
     }
   },
   "mainTemplate": {
-    "parameters": ["payload"],
+    "parameters": ["collection"],
     "items": [
       {
         "type": "TouchWrapper",
@@ -34,7 +35,6 @@
           "type": "Container",
           "width": "100vw",
           "height": "100vh",
-          "background": "#12193a",
           "paddingLeft": "24dp",
           "paddingRight": "24dp",
           "paddingTop": "24dp",
@@ -43,7 +43,8 @@
           "items": [
             {
               "type": "Text",
-              "text": "${CollectionSummary ? CollectionSummary.title : payload.title}",
+              "text": "${CollectionSummary ? CollectionSummary.title : collection.title}",
+              "fontFamily": "sans-serif",
               "fontSize": "34dp",
               "fontWeight": "700",
               "color": "#ffffff",
@@ -51,7 +52,8 @@
             },
             {
               "type": "Text",
-              "text": "${CollectionSummary ? CollectionSummary.progress : payload.progress}",
+              "text": "${CollectionSummary ? CollectionSummary.progress : collection.progress}",
+              "fontFamily": "sans-serif",
               "fontSize": "27dp",
               "fontWeight": "700",
               "color": "#ffc93d",
@@ -60,6 +62,7 @@
             {
               "type": "Text",
               "text": "Tap to open the checklist",
+              "fontFamily": "sans-serif",
               "fontSize": "20dp",
               "color": "#b8c3ff",
               "maxLines": 1
