@@ -67,15 +67,14 @@ test('widget gallery images have Amazon-required dimensions', () => {
   );
 });
 
-test('widget summary reflects the selected collection only', async () => {
+test('widget summary reflects Joe\'s linked collection', async () => {
   assert.deepEqual(
     await widgetSummary(
       queryService,
       { set: { figure: { have: true } } },
-      { name: "Grandma's House" },
     ),
     {
-      title: "Grandma's House",
+      title: "Joe's Collection",
       progress: '1 of 2 found',
       found: 1,
       total: 2,
@@ -116,7 +115,6 @@ test('widget updates target the Alexa user data store', async () => {
       },
       queryService,
       { set: { figure: { have: true } } },
-      { name: "Joe's Collection" },
     );
     assert.equal(updated, true);
   } finally {

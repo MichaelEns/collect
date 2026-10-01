@@ -36,12 +36,12 @@ function alexaUserId(envelope) {
     envelope.session && envelope.session.user && envelope.session.user.userId;
 }
 
-export async function widgetSummary(queryService, progress, access) {
+export async function widgetSummary(queryService, progress) {
   const sets = await queryService.collectionSets(progress);
   const found = sets.reduce((total, set) => total + set.found, 0);
   const total = sets.reduce((sum, set) => sum + set.total, 0);
   return {
-    title: access.name,
+    title: "Joe's Collection",
     progress: `${found} of ${total} found`,
     found,
     total,
@@ -53,14 +53,13 @@ export async function updateCollectionWidget(
   env,
   queryService,
   progress,
-  access,
 ) {
   const token = await skillToken(env);
   const userId = alexaUserId(envelope);
   if (!token || !userId) return false;
   const endpoint = env.ALEXA_DATASTORE_ENDPOINT ||
     'https://api.amazonalexa.com';
-  const summary = await widgetSummary(queryService, progress, access);
+  const summary = await widgetSummary(queryService, progress);
   const response = await fetch(`${endpoint}/v1/datastore/commands`, {
     method: 'POST',
     headers: {

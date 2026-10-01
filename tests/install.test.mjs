@@ -170,14 +170,7 @@ test('a navigation lands on the page that was actually asked for', () => {
 /* ------------------------------------------------------------ boundaries */
 
 /** Every script the app actually ships. Miss one and the checks below lie. */
-const SCRIPTS = [
-  'collections.js',
-  'app.js',
-  'hunt.js',
-  'sync.js',
-  'sync-ui.js',
-  'sw.js',
-];
+const SCRIPTS = ['app.js', 'hunt.js', 'sync.js', 'sync-ui.js', 'sw.js'];
 
 test('the boundary checks cover every script every page loads', () => {
   /*

@@ -1,4 +1,3 @@
-import { progressKey } from './access.js';
 import { createImageToken, readImageToken } from './image-token.js';
 
 const SAFE_ID = /^[a-z0-9][a-z0-9-]{0,127}$/;
@@ -32,7 +31,7 @@ export async function handleAlexaImage(request, env) {
     url.searchParams.get('token'),
   );
   if (!collectionCode ||
-      await env.COLLECT.get(progressKey(collectionCode)) === null) {
+      await env.COLLECT.get(`p:${collectionCode}`) === null) {
     return new Response('Image link expired.', { status: 401 });
   }
 

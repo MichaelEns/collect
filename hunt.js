@@ -24,9 +24,8 @@
 'use strict';
 
 (function () {
-  const collections = window.CollectCollections;
-  const PROGRESS_KEY = (setId) => collections.storageKey('progress', setId);
-  const WISHLIST_KEY = () => collections.storageKey('wishlist');
+  const PROGRESS_KEY = (setId) => `collect.progress.${setId}`;
+  const WISHLIST_KEY = 'collect.wishlist';
   const DB_NAME = 'collect';
   const STORE = 'photos';
   const CAT_STORE = 'catalogue';
@@ -60,13 +59,13 @@
    */
   function loadWishlist() {
     try {
-      return JSON.parse(window.localStorage.getItem(WISHLIST_KEY()) || '{}') || {};
+      return JSON.parse(window.localStorage.getItem(WISHLIST_KEY) || '{}') || {};
     } catch { return {}; }
   }
 
   function saveWishlist() {
     try {
-      window.localStorage.setItem(WISHLIST_KEY(), JSON.stringify(state.wishlist));
+      window.localStorage.setItem(WISHLIST_KEY, JSON.stringify(state.wishlist));
     } catch { /* private mode: the screen is still right */ }
   }
 
@@ -110,7 +109,7 @@
 
   /** His own photo wins; the catalogue picture is the fallback. Same order as the app. */
   async function pictureFor(setId, figureId) {
-    const key = collections.mediaKey(setId, figureId);
+    const key = `${setId}/${figureId}`;
     return (await readImage(STORE, key)) || (await readImage(CAT_STORE, key));
   }
 
@@ -479,10 +478,6 @@
         + 'loaded. Open the app once while online, then come back.</p>';
       return;
     }
-
-    document.addEventListener('collect:collection-changed', () => {
-      location.reload();
-    });
     state.loadMs = Date.now() - began;
     const wanted = setFromHash();
     state.filter = state.sets.some((s) => s.id === wanted) ? wanted : 'all';

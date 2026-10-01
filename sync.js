@@ -1,17 +1,44 @@
 /*
- * Keeping one or more collections on more than one device.
+ * Keeping one collection on more than one device.
  *
- * The primary collection keeps every original storage key. Additional
- * collections are namespaced by collections.js. Sync always captures the
- * active collection before crossing the network, so changing collections
- * while a request is in flight cannot write Joe's response into Grandma's
- * local collection.
+ * The app was built to work with no network at all, and that does not change:
+ * everything here is an extra layer on top of local storage, and every part of
+ * it is allowed to fail. If sync never succeeds, the app behaves exactly as it
+ * did before — which is why nothing below is ever awaited on a path a child is
+ * waiting for.
+ *
+ * There is no account and no password. One four-word "family code" identifies a
+ * collection, and holding it is what grants access. A six-year-old cannot
+ * manage a login; he can read four words off a sticky note, once, on a second
+ * device.
+ *
+ * The merge deliberately lives on the server, not here. This file pushes
+ * everything it has and adopts whatever comes back. That means two devices can
+ * never disagree about what merging means, which is the usual way sync starts
+ * eating people's data.
+ *
+ * Talking to the app
+ * ------------------
+ * Through events, so neither file has to load first:
+ *   collect:changed   the app says something was edited   -> we schedule a push
+ *   collect:synced    we say remote data was adopted      -> the app re-renders
+ *   collect:sync-state we say the status changed          -> the app redraws it
  */
 'use strict';
 
 (function () {
   const ENDPOINT = 'https://collect-sync.michaelens.workers.dev';
-  const collections = window.CollectCollections;
+
+  const CODE_KEY = 'collect.familyCode';
+  const HASH_KEY = 'collect.photoHashes';
+  const CAT_HASH_KEY = 'collect.catalogueHashes';
+  const PROGRESS_KEY = (setId) => `collect.progress.${setId}`;
+
+  /*
+   * Workers KV allows 1,000 writes a day. A tick is one edit and an
+   * enthusiastic afternoon is hundreds of them, so pushes are batched: wait
+   * for a lull, and never push more often than the floor below.
+   */
   const QUIET_MS = 2500;
   const MIN_GAP_MS = 8000;
 
@@ -28,12 +55,12 @@
   const store = {
     get(key) { try { return window.localStorage.getItem(key); } catch { return null; } },
     set(key, value) { try { window.localStorage.setItem(key, value); } catch { /* full */ } },
+    remove(key) { try { window.localStorage.removeItem(key); } catch { /* ignore */ } },
   };
 
-  const getCode = () => collections.active().code || '';
+  const getCode = () => store.get(CODE_KEY) || '';
 
-  function setStatus(status, detail = '', collectionId = collections.activeId()) {
-    if (collectionId !== collections.activeId()) return;
+  function setStatus(status, detail = '') {
     state.status = status;
     state.detail = detail;
     document.dispatchEvent(new CustomEvent('collect:sync-state', {
@@ -41,13 +68,10 @@
     }));
   }
 
-  async function call(path, {
-    method = 'GET',
-    body,
-    headers = {},
-    raw = false,
-    code = getCode(),
-  } = {}) {
+  /* ------------------------------------------------------------- the wire */
+
+  async function call(path, { method = 'GET', body, headers = {}, raw = false } = {}) {
+    const code = getCode();
     const response = await fetch(ENDPOINT + path, {
       method,
       headers: { ...(code ? { 'X-Family-Code': code } : {}), ...headers },
@@ -56,132 +80,114 @@
     if (!response.ok) {
       const error = new Error(`sync ${method} ${path} -> ${response.status}`);
       error.status = response.status;
-      try { error.payload = await response.json(); } catch { /* not json */ }
       throw error;
     }
     return raw ? response : response.json();
   }
 
-  function progressKey(collectionId, setId) {
-    return collections.storageKey('progress', setId, collectionId);
-  }
+  /* ----------------------------------------------------------- local reads */
 
-  function localProgress(collectionId) {
+  /** Every set's progress, in the shape the server merges. */
+  function localProgress() {
     const out = {};
     for (const meta of (window.__collect && window.__collect.state.index) || []) {
       let saved = {};
-      try {
-        saved = JSON.parse(store.get(progressKey(collectionId, meta.id)) || '{}') || {};
-      } catch { saved = {}; }
+      try { saved = JSON.parse(store.get(PROGRESS_KEY(meta.id)) || '{}') || {}; } catch { saved = {}; }
+      // Skip sets he has never touched, so a push stays small.
       if (Object.keys(saved).length) out[meta.id] = saved;
     }
     return out;
   }
 
-  function adoptProgress(progress, collectionId) {
+  function adoptProgress(progress) {
     let changed = false;
     for (const [setId, entries] of Object.entries(progress || {})) {
       const next = JSON.stringify(entries);
-      const key = progressKey(collectionId, setId);
-      if (next !== (store.get(key) || '{}')) {
-        store.set(key, next);
+      if (next !== (store.get(PROGRESS_KEY(setId)) || '{}')) {
+        store.set(PROGRESS_KEY(setId), next);
         changed = true;
       }
     }
     return changed;
   }
 
-  function ledger(kind, collectionId) {
-    const key = collections.storageKey(kind, '', collectionId);
+  /* ---------------------------------------------------------------- photos */
+
+  /*
+   * Two ledgers, because a photo and a catalogue picture of the same figure
+   * share the key "setId/figureId" — one ledger would have them overwrite each
+   * other's hashes and each would look perpetually changed to the other.
+   */
+  function ledger(storeKey) {
     const all = () => {
-      try { return JSON.parse(store.get(key) || '{}') || {}; } catch { return {}; }
+      try { return JSON.parse(store.get(storeKey) || '{}') || {}; } catch { return {}; }
     };
     return {
       all,
-      set(item, hash) {
-        const values = all();
-        values[item] = hash;
-        store.set(key, JSON.stringify(values));
-      },
-      drop(item) {
-        const values = all();
-        delete values[item];
-        store.set(key, JSON.stringify(values));
-      },
+      set(key, hash) { const a = all(); a[key] = hash; store.set(storeKey, JSON.stringify(a)); },
+      drop(key) { const a = all(); delete a[key]; store.set(storeKey, JSON.stringify(a)); },
     };
   }
 
+  const hashes = ledger(HASH_KEY);
+  const catHashes = ledger(CAT_HASH_KEY);
+
+  /** First 32 bits of a SHA-256, which is plenty to notice a photo changed. */
   async function hashBlob(blob) {
     const digest = await crypto.subtle.digest('SHA-256', await blob.arrayBuffer());
     return [...new Uint8Array(digest).slice(0, 8)]
-      .map((byte) => byte.toString(16).padStart(2, '0')).join('');
+      .map((b) => b.toString(16).padStart(2, '0')).join('');
   }
 
   const photos = () => (window.__collect && window.__collect.photos) || null;
   const catalogue = () => (window.__collect && window.__collect.catalogue) || null;
 
-  function mediaParts(key, collectionId) {
-    const prefix = collections.mediaPrefix(collectionId);
-    if (prefix) {
-      if (!String(key).startsWith(prefix)) return null;
-      const parts = String(key).slice(prefix.length).split('/');
-      return parts.length === 2 ? parts : null;
-    }
-    const parts = String(key).split('/');
-    return parts.length === 2 ? parts : null;
-  }
-
-  function collectionMediaKeys(keys, collectionId) {
-    return keys.filter((key) => mediaParts(key, collectionId));
-  }
-
-  async function syncPhotos(remote, collectionId, code, canUpload) {
+  /**
+   * Reconciles photos in both directions.
+   *
+   * Runs after progress, and never blocks it: a photo is nice to have on the
+   * other device, whereas knowing whether he already owns Boba Fett is the
+   * thing he is standing in a shop trying to find out.
+   */
+  async function syncPhotos(remote) {
     const api = photos();
     if (!api) return false;
-    const allKeys = await api.keys();
-    const localKeys = collectionMediaKeys(allKeys, collectionId);
-    const hashes = ledger('photoHashes', collectionId);
+    const localKeys = await api.keys();
     const known = hashes.all();
     let pulled = false;
 
-    if (canUpload) {
-      for (const key of localKeys) {
-        const [setId, figureId] = mediaParts(key, collectionId);
-        const wire = `${setId}:${figureId}`;
-        const blob = await api.get(key);
-        if (!blob) continue;
+    for (const key of localKeys) {
+      // IndexedDB keys are "setId/figureId"; the wire uses "setId:figureId".
+      const [setId, figureId] = key.split('/');
+      if (!setId || !figureId) continue;
+      const wire = `${setId}:${figureId}`;
+      const blob = await api.get(key);
+      if (!blob) continue;
 
-        let hash = known[key];
-        if (!hash) {
-          hash = await hashBlob(blob);
-          hashes.set(key, hash);
-        }
-        if (remote[wire] === hash) continue;
+      let hash = known[key];
+      if (!hash) { hash = await hashBlob(blob); hashes.set(key, hash); }
+      if (remote[wire] === hash) continue;
 
-        try {
-          await call(`/v1/photo/${encodeURIComponent(setId)}/${encodeURIComponent(figureId)}`, {
-            method: 'PUT',
-            body: blob,
-            headers: { 'X-Photo-Hash': hash },
-            code,
-          });
-          remote[wire] = hash;
-        } catch { /* try again next time */ }
-      }
+      try {
+        await call(`/v1/photo/${encodeURIComponent(setId)}/${encodeURIComponent(figureId)}`, {
+          method: 'PUT', body: blob, headers: { 'X-Photo-Hash': hash },
+        });
+        remote[wire] = hash;
+      } catch { /* try again next time */ }
     }
 
     for (const [wire, hash] of Object.entries(remote)) {
       const [setId, figureId] = wire.split(':');
       if (!setId || !figureId) continue;
-      const key = collections.mediaKey(setId, figureId, collectionId);
+      const key = `${setId}/${figureId}`;
       if (localKeys.includes(key) && hashes.all()[key] === hash) continue;
       if (localKeys.includes(key)) continue;
       try {
         const response = await call(
-          `/v1/photo/${encodeURIComponent(setId)}/${encodeURIComponent(figureId)}`,
-          { raw: true, code },
+          `/v1/photo/${encodeURIComponent(setId)}/${encodeURIComponent(figureId)}`, { raw: true }
         );
-        await api.put(key, await response.blob());
+        const blob = await response.blob();
+        await api.put(key, blob);
         hashes.set(key, hash);
         pulled = true;
       } catch { /* try again next time */ }
@@ -189,249 +195,158 @@
     return pulled;
   }
 
-  async function syncCatalogue(remote, collectionId, code) {
+  /* ------------------------------------------------------------- catalogue */
+
+  /**
+   * Brings down catalogue pictures. One direction only.
+   *
+   * These are seeded once from a machine at home, not produced on a phone, so a
+   * device has nothing to contribute and should never push. That also means a
+   * device cannot corrupt the set for everyone else by uploading something odd.
+   *
+   * Unlike a photo, a catalogue picture is legitimately replaceable — a better
+   * one may be seeded later — so a changed hash re-pulls rather than being
+   * skipped because a file already exists.
+   */
+  async function syncCatalogue(remote) {
     const api = catalogue();
     if (!api) return false;
-    const allKeys = await api.keys();
-    const localKeys = collectionMediaKeys(allKeys, collectionId);
-    const hashes = ledger('catalogueHashes', collectionId);
-    const known = hashes.all();
+    const localKeys = await api.keys();
+    const known = catHashes.all();
     let changed = false;
 
     for (const [wire, hash] of Object.entries(remote)) {
       const [setId, figureId] = wire.split(':');
       if (!setId || !figureId) continue;
-      const key = collections.mediaKey(setId, figureId, collectionId);
+      const key = `${setId}/${figureId}`;
       if (localKeys.includes(key) && known[key] === hash) continue;
       try {
         const response = await call(
           `/v1/catalogue/${encodeURIComponent(setId)}/${encodeURIComponent(figureId)}`,
-          { raw: true, code },
+          { raw: true }
         );
-        await api.put(key, await response.blob());
-        hashes.set(key, hash);
+        const blob = await response.blob();
+        await api.put(key, blob);
+        catHashes.set(key, hash);
         changed = true;
       } catch { /* try again next time */ }
     }
 
+    // Dropped from the seed means dropped here. A picture withdrawn at home
+    // should stop showing on the tablet rather than living on forever.
     for (const key of localKeys) {
-      const [setId, figureId] = mediaParts(key, collectionId);
+      const [setId, figureId] = key.split('/');
+      if (!setId || !figureId) continue;
       if (`${setId}:${figureId}` in remote) continue;
       try {
         await api.delete(key);
-        hashes.drop(key);
+        catHashes.drop(key);
         changed = true;
       } catch { /* try again next time */ }
     }
+
     return changed;
   }
 
+  /* ------------------------------------------------------------ the cycle */
+
   async function run() {
-    const profile = collections.active();
-    const code = profile.code;
     if (!getCode()) { setStatus('off'); return; }
     if (state.inFlight) { state.pending = true; return; }
     state.inFlight = true;
-    setStatus('syncing', '', profile.id);
+    setStatus('syncing');
 
     try {
-      const canUpload = profile.role !== 'viewer';
-      const result = await call('/v1/collection', canUpload ? {
+      const result = await call('/v1/collection', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ progress: localProgress(profile.id) }),
-        code,
-      } : { code });
-
-      collections.update(profile.id, {
-        name: result.name || profile.name,
-        role: result.role || profile.role,
+        body: JSON.stringify({ progress: localProgress() }),
       });
-      const changed = adoptProgress(result.progress, profile.id);
+
+      const changed = adoptProgress(result.progress);
       state.lastSyncAt = Date.now();
       state.lastPushAt = Date.now();
-      if (changed && profile.id === collections.activeId()) {
-        document.dispatchEvent(new CustomEvent('collect:synced'));
-      }
-      setStatus('ok', '', profile.id);
+      if (changed) document.dispatchEvent(new CustomEvent('collect:synced'));
+      setStatus('ok');
 
-      const pulled = await syncPhotos(
-        result.photos || {},
-        profile.id,
-        code,
-        canUpload,
-      );
-      if (pulled && profile.id === collections.activeId()) {
-        document.dispatchEvent(new CustomEvent('collect:synced'));
-      }
+      const pulled = await syncPhotos(result.photos || {});
+      if (pulled) document.dispatchEvent(new CustomEvent('collect:synced'));
 
+      /*
+       * Deliberately gated on the field being present rather than defaulting to
+       * {}. A worker deployed before catalogue support answers without the key
+       * at all, and treating that as "the seed is empty" would have every
+       * device delete every picture it had.
+       */
       if (result.catalogue) {
-        const catalogueChanged = await syncCatalogue(
-          result.catalogue,
-          profile.id,
-          code,
-        );
-        if (catalogueChanged && profile.id === collections.activeId()) {
-          document.dispatchEvent(new CustomEvent('collect:synced'));
-        }
+        const catChanged = await syncCatalogue(result.catalogue);
+        if (catChanged) document.dispatchEvent(new CustomEvent('collect:synced'));
       }
-    } catch (error) {
-      if (error.status === 401) {
-        setStatus('bad-code', 'That code was not recognised.', profile.id);
-      } else if (error.status === 403) {
-        setStatus('error', 'This sharing code cannot change that collection.', profile.id);
-      } else if (error.status === 429) {
-        setStatus('offline', 'Too many tries just now.', profile.id);
-      } else {
-        setStatus(
-          navigator.onLine ? 'error' : 'offline',
-          'Not synced yet.',
-          profile.id,
-        );
-      }
+    } catch (err) {
+      /*
+       * A wrong code is worth interrupting for; anything else is not. Being
+       * offline is the normal state of this app, and a red banner every time
+       * he opens it in a shop would train him to ignore the one that matters.
+       */
+      if (err.status === 401) setStatus('bad-code', 'That code was not recognised.');
+      else if (err.status === 429) setStatus('offline', 'Too many tries just now.');
+      else setStatus(navigator.onLine ? 'error' : 'offline', 'Not synced yet.');
     } finally {
       state.inFlight = false;
-      if (state.pending) {
-        state.pending = false;
-        schedule();
-      }
+      if (state.pending) { state.pending = false; schedule(); }
     }
   }
 
+  /** Waits for a lull, then pushes — but never faster than MIN_GAP_MS. */
   function schedule() {
     if (!getCode()) return;
     if (state.timer) clearTimeout(state.timer);
     const since = Date.now() - state.lastPushAt;
     const wait = Math.max(QUIET_MS, MIN_GAP_MS - since);
-    state.timer = setTimeout(() => {
-      state.timer = null;
-      run();
-    }, wait);
+    state.timer = setTimeout(() => { state.timer = null; run(); }, wait);
   }
 
-  function normaliseCode(raw) {
-    const code = String(raw || '').toLowerCase().trim()
-      .split(/[^a-z]+/).filter(Boolean).join('-');
-    return code.split('-').length === 4 ? code : '';
-  }
-
-  async function inspectCode(raw) {
-    const code = normaliseCode(raw);
-    if (!code) {
-      setStatus('bad-code', 'A sharing code is four words.');
-      return null;
-    }
-    try {
-      return {
-        code,
-        ...(await call('/v1/access', { code })),
-      };
-    } catch (error) {
-      setStatus(
-        error.status === 401 ? 'bad-code' : 'error',
-        error.status === 401
-          ? 'That code was not recognised.'
-          : 'Could not reach sharing.',
-      );
-      return null;
-    }
-  }
+  /* -------------------------------------------------------------- the API */
 
   const api = {
     endpoint: ENDPOINT,
     getCode,
     status: () => ({ ...state }),
-    collections: () => collections.all(),
-    activeCollection: () => collections.active(),
-    selectCollection: collections.select,
 
     async create() {
-      const active = collections.active();
-      const result = await call('/v1/new', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: active.name }),
-        code: '',
-      });
-      collections.update(active.id, result);
+      const { code } = await call('/v1/new', { method: 'POST' });
+      store.set(CODE_KEY, code);
       await run();
-      return result.code;
+      return code;
     },
 
+    /**
+     * Joins an existing collection. Pulls before pushing, so this device's
+     * data and the other device's data both survive the first contact.
+     */
     async join(raw) {
-      const access = await inspectCode(raw);
-      if (!access) return false;
-      if (access.role === 'viewer' &&
-          Object.keys(localProgress(collections.activeId())).length) {
-        setStatus(
-          'error',
-          'This collection already has local finds. Add the view-only code as another collection instead.',
-        );
+      const code = String(raw || '').toLowerCase().trim().split(/[^a-z]+/).filter(Boolean).join('-');
+      if (code.split('-').length !== 4) {
+        setStatus('bad-code', 'A family code is four words.');
         return false;
       }
-      collections.updateActive(access);
+      const previous = getCode();
+      store.set(CODE_KEY, code);
+      try {
+        await call('/v1/collection');
+      } catch (err) {
+        if (previous) store.set(CODE_KEY, previous); else store.remove(CODE_KEY);
+        setStatus(err.status === 401 ? 'bad-code' : 'error',
+          err.status === 401 ? 'That code was not recognised.' : 'Could not reach sync.');
+        return false;
+      }
       await run();
-      return true;
-    },
-
-    async add(raw) {
-      const access = await inspectCode(raw);
-      if (!access) return false;
-      collections.add(access);
-      await run();
-      return true;
-    },
-
-    addLocal(name) {
-      return collections.add({ name, role: 'owner' });
-    },
-
-    removeActive() {
-      return collections.remove(collections.activeId());
-    },
-
-    async rename(name) {
-      const active = collections.active();
-      collections.updateActive({ name });
-      if (!active.code || active.role !== 'owner') return collections.active();
-      const result = await call('/v1/collection-info', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name }),
-        code: active.code,
-      });
-      collections.update(active.id, result);
-      return collections.active();
-    },
-
-    async shares() {
-      if (!collections.isOwner() || !getCode()) return [];
-      return (await call('/v1/shares')).shares || [];
-    },
-
-    async createShare(role) {
-      if (!collections.isOwner() || !getCode()) return null;
-      return call('/v1/shares', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ role }),
-      });
-    },
-
-    async revokeShare(code) {
-      if (!collections.isOwner() || !getCode()) return false;
-      await call(`/v1/shares/${encodeURIComponent(code)}`, {
-        method: 'DELETE',
-      });
       return true;
     },
 
     stop() {
-      collections.updateActive({ code: '', role: 'owner' });
-      if (state.timer) {
-        clearTimeout(state.timer);
-        state.timer = null;
-      }
+      store.remove(CODE_KEY);
+      if (state.timer) { clearTimeout(state.timer); state.timer = null; }
       setStatus('off');
     },
 
@@ -442,19 +357,28 @@
   window.CollectSync = api;
 
   document.addEventListener('collect:changed', schedule);
-  document.addEventListener('collect:collection-changed', () => {
-    if (state.timer) {
-      clearTimeout(state.timer);
-      state.timer = null;
-    }
-    state.status = getCode() ? 'syncing' : 'off';
-    state.detail = '';
-    state.lastSyncAt = 0;
-    document.dispatchEvent(new CustomEvent('collect:sync-state', {
-      detail: { status: state.status, message: '', lastSyncAt: 0 },
-    }));
-    if (getCode()) run();
-  });
+
+  /*
+   * When a device syncs
+   * -------------------
+   *   - shortly after the app opens
+   *   - after an edit, once things go quiet
+   *   - when the app is brought back to the front
+   *   - when the network comes back
+   *
+   * There is deliberately NO periodic poll. A device sitting untouched with
+   * the app open will show stale data until something wakes it.
+   *
+   * That is safe because of the merge rather than the timing: being stale
+   * costs a stale SCREEN, never data. When the device does sync, the union
+   * rule means nothing it holds is dropped, and per-figure newest-wins means
+   * nothing it did is overwritten. It catches up rather than losing.
+   *
+   * Coming back to the app is also the only moment the staleness could
+   * matter, since it is the moment somebody looks at the screen — and phones
+   * fire visibilitychange on app switch, tab change and screen lock, so in
+   * practice it fires constantly.
+   */
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible' && getCode()) run();
   });
