@@ -1,4 +1,5 @@
 node_modules/
+.wrangler/
 *.log
 c-*.png
 tools/rosters.generated.json
