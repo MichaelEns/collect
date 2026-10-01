@@ -33,8 +33,9 @@ test('private image tokens conceal the collection code and expire', async () => 
   assert.ok(token.length > 40);
   assert.equal(token.includes(CODE), false);
   assert.equal(await readImageToken(SECRET, token, now), CODE);
+  const tampered = (token[0] === 'A' ? 'B' : 'A') + token.slice(1);
   assert.equal(
-    await readImageToken(SECRET, token.slice(0, -1) + 'x', now),
+    await readImageToken(SECRET, tampered, now),
     null,
   );
   assert.equal(
