@@ -46,6 +46,7 @@ test('the widget package references a data-bound APL document', () => {
   const document = readJson('documents/document.json');
   assert.equal(manifest.packageType, 'APL_PACKAGE');
   assert.equal(manifest.manifest.id, 'JoesCollectionSummary');
+  assert.equal(manifest.manifest.version, '1.0.1');
   assert.equal(manifest.manifest.installStateChanges, 'INFORM');
   assert.equal(presentation.documentUrl, 'documents/document.json');
   assert.equal(presentation.datasourceUrl, 'datasources/default.json');

@@ -26,7 +26,7 @@
   },
   "manifest": {
     "id": "JoesCollectionSummary",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "installStateChanges": "INFORM",
     "updateStateChanges": "INFORM",
     "appliesTo": "${viewport.mode == 'HUB'}",
