@@ -22,7 +22,7 @@ export function renderDocument(document, data, token) {
     token,
     document,
     datasources: {
-      payload: data,
+      collection: data,
     },
   };
 }

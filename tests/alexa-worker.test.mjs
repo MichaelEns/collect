@@ -204,11 +204,11 @@ test('Echo Show launch renders the linked collection dashboard', async () => {
     'Alexa.Presentation.APL.RenderDocument',
   );
   assert.equal(
-    response.response.directives[0].datasources.payload.title,
+    response.response.directives[0].datasources.collection.title,
     "Joe's Collection",
   );
   assert.equal(
-    response.response.directives[0].datasources.payload.sets[0].found,
+    response.response.directives[0].datasources.collection.sets[0].found,
     1,
   );
 });
@@ -249,7 +249,7 @@ test('Echo Show touch updates the same single shared collection', async () => {
     { collectionSets: catalogue },
   );
   assert.equal(
-    response.response.directives[0].datasources.payload.figures[0].have,
+    response.response.directives[0].datasources.collection.figures[0].have,
     true,
   );
   const stored = JSON.parse(

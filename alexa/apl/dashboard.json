@@ -2,14 +2,14 @@
   "type": "APL",
   "version": "1.3",
   "theme": "dark",
+  "background": "#12193a",
   "mainTemplate": {
-    "parameters": ["payload"],
+    "parameters": ["collection"],
     "items": [
       {
         "type": "Container",
         "width": "100vw",
         "height": "100vh",
-        "background": "#12193a",
         "paddingLeft": "5vw",
         "paddingRight": "5vw",
         "paddingTop": "4vh",
@@ -17,7 +17,8 @@
         "items": [
           {
             "type": "Text",
-            "text": "${payload.title}",
+            "text": "${collection.title}",
+            "fontFamily": "sans-serif",
             "fontSize": "7vh",
             "fontWeight": "700",
             "color": "#ffffff",
@@ -25,7 +26,8 @@
           },
           {
             "type": "Text",
-            "text": "${payload.subtitle}",
+            "text": "${collection.subtitle}",
+            "fontFamily": "sans-serif",
             "fontSize": "3.2vh",
             "color": "#b8c3ff",
             "spacing": "1vh",
@@ -36,49 +38,60 @@
             "width": "100%",
             "height": "72vh",
             "scrollDirection": "vertical",
-            "data": "${payload.sets}",
+            "data": "${collection.sets}",
             "spacing": "1.4vh",
             "items": [
               {
                 "type": "TouchWrapper",
+                "width": "100%",
+                "spacing": "1.4vh",
                 "onPress": {
                   "type": "SendEvent",
                   "arguments": ["openSet", "${data.id}"]
                 },
                 "item": {
-                  "type": "Container",
-                  "direction": "row",
-                  "alignItems": "center",
+                  "type": "Frame",
+                  "id": "set-card-${data.id}",
+                  "width": "100%",
                   "paddingLeft": "2.4vw",
                   "paddingRight": "2.4vw",
                   "paddingTop": "1.8vh",
                   "paddingBottom": "1.8vh",
-                  "background": "#202a59",
+                  "backgroundColor": "#202a59",
                   "borderRadius": "18dp",
-                  "items": [
-                    {
-                      "type": "Text",
-                      "text": "${data.emoji}",
-                      "fontSize": "5vh",
-                      "width": "10vw"
-                    },
-                    {
-                      "type": "Text",
-                      "text": "${data.name}",
-                      "fontSize": "3.6vh",
-                      "fontWeight": "700",
-                      "color": "#ffffff",
-                      "grow": 1,
-                      "maxLines": 2
-                    },
-                    {
-                      "type": "Text",
-                      "text": "${data.found} / ${data.total}",
-                      "fontSize": "3.4vh",
-                      "fontWeight": "700",
-                      "color": "${data.complete ? '#43d17c' : '#ffc93d'}"
-                    }
-                  ]
+                  "item": {
+                    "type": "Container",
+                    "width": "100%",
+                    "direction": "row",
+                    "alignItems": "center",
+                    "items": [
+                      {
+                        "type": "Text",
+                        "text": "${data.emoji}",
+                        "fontFamily": "sans-serif",
+                        "fontSize": "5vh",
+                        "width": "10vw"
+                      },
+                      {
+                        "type": "Text",
+                        "text": "${data.name}",
+                        "fontFamily": "sans-serif",
+                        "fontSize": "3.6vh",
+                        "fontWeight": "700",
+                        "color": "#ffffff",
+                        "grow": 1,
+                        "maxLines": 2
+                      },
+                      {
+                        "type": "Text",
+                        "text": "${data.found} / ${data.total}",
+                        "fontFamily": "sans-serif",
+                        "fontSize": "3.4vh",
+                        "fontWeight": "700",
+                        "color": "${data.complete ? '#43d17c' : '#ffc93d'}"
+                      }
+                    ]
+                  }
                 }
               }
             ]

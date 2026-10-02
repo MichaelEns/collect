@@ -50,14 +50,14 @@ test('the widget package references a data-bound APL document', () => {
   assert.equal(presentation.documentUrl, 'documents/document.json');
   assert.equal(presentation.datasourceUrl, 'datasources/default.json');
   assert.equal(document.extensions[0].uri, 'alexaext:datastore:10');
-  assert.equal(document.version, '1.3');
+  assert.equal(document.version, '1.8');
   assert.equal(
     document.settings.DataStore.dataBindings[0].namespace,
     'JoesCollection',
   );
 });
 
-test('full-screen documents fit the Echo Show APL 1.3 runtime', () => {
+test('full-screen documents use the APL 1.3 component set', () => {
   const dashboard = JSON.parse(
     fs.readFileSync(path.join(ROOT, 'alexa', 'apl', 'dashboard.json'), 'utf8'),
   );
@@ -67,16 +67,8 @@ test('full-screen documents fit the Echo Show APL 1.3 runtime', () => {
   assert.equal(dashboard.version, '1.3');
   assert.equal(set.version, '1.3');
 
-  const grid = set.mainTemplate.items[0].items[1];
-  const cardItems = grid.items[0].item.items;
-  assert.ok(
-    cardItems.some((item) => item.type === 'Image' && item.source === '${data.image}'),
-    'figure images must render inside each grid card',
-  );
-  assert.ok(
-    cardItems.some((item) => item.type === 'Text' && item.text === '${data.initials}'),
-    'figure initials must remain as the no-image fallback',
-  );
+  assert.ok(!JSON.stringify(set).includes('GridSequence'),
+    'GridSequence requires APL 1.4 and cannot be used in an APL 1.3 document');
 });
 
 test('widget gallery images have Amazon-required dimensions', () => {
