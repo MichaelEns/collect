@@ -48,6 +48,9 @@ color rather than guessing.
    `https://collect-sync.michaelens.workers.dev/alexa`.
 4. Enable **APL**, **Data Store**, and **Data Store Packages**, then deploy the
    `JoesCollectionSummary` package under `skill-package/dataStorePackages/`.
+   For updates, increment the widget's `manifest.version`, upload the skill
+   package, and submit it for certification. A Worker deployment updates
+   full-screen documents, but does not publish the installed widget package.
 5. Set `ALEXA_SKILL_ID` in `worker/wrangler.toml`. Configure the private-image
    signing key and Alexa Skill Messaging credentials:
 
