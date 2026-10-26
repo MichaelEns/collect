@@ -969,6 +969,22 @@ async function main() {
       JSON.stringify(offlineFinder.chips.slice().sort()) === JSON.stringify(wantNames),
       JSON.stringify(offlineFinder.chips) + ' want ' + JSON.stringify(wantNames));
 
+    await evalJs("location.hash = '#set=sw-galaxy-peek-s5'; 1");
+    await waitFor(
+      "window.__collect.state.set && window.__collect.state.set.id === 'sw-galaxy-peek-s5'",
+      'Galaxy Peek Series 5 from the offline cache',
+    );
+    const newCapsule = await typeCode('B018');
+    check('the newly added Series 5 B018 capsule works offline',
+      JSON.stringify(newCapsule.chips.slice().sort()) === JSON.stringify(
+        ['Bantha', 'Max Rebo', 'Shaak Ti', 'Tusken Raider']),
+      JSON.stringify(newCapsule.chips));
+    const shortNewCapsule = await typeCode('B18');
+    check('the new capsule also matches without leading zeros',
+      JSON.stringify(shortNewCapsule.chips) === JSON.stringify(newCapsule.chips)
+        && shortNewCapsule.chips.length === 4,
+      JSON.stringify(shortNewCapsule.chips));
+
     const offlineProblems = problems.slice(problemsBeforeOffline)
       .filter((p) => !/ERR_FAILED|ERR_CONNECTION|Failed to load resource/i.test(p));
     check('nothing broke offline beyond the fetch we killed on purpose',
