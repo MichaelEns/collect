@@ -332,6 +332,26 @@ test('gray Death Star I8 returns contents and how many Joe needs', async () => {
   assert.match(lookupSpeech(result), /Joe still needs 2 of those 4 figures/);
 });
 
+test('the shipped grey AT-AT B018 code returns its community-recorded contents', async () => {
+  const files = ['index.json', 'sw-galaxy-peek-s5.json', 'codes-sw-galaxy-peek-s5.json'];
+  const responses = new Map(files.map((file) => [
+    `${DATA}/${file}`,
+    {
+      status: 200,
+      body: JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'sets', file), 'utf8')),
+    },
+  ]));
+  const service = new DoorablesService({ fetch: mockFetch(responses), dataBase: DATA });
+  const packageInfo = resolvePackage('grey AT-AT').packageInfo;
+  const result = await service.lookup(packageInfo, 'B eighteen', {});
+  assert.equal(result.code, 'B18');
+  assert.equal(result.entries.length, 1);
+  assert.equal(result.entries[0].disputed, false);
+  assert.deepEqual(result.entries[0].variants[0].names,
+    ['Bantha', 'Max Rebo', 'Shaak Ti', 'Tusken Raider']);
+  assert.equal(result.entries[0].variants[0].missing, 4);
+});
+
 test('disputed package codes preserve every reported version', async () => {
   const service = serviceWith({});
   const packageInfo = resolvePackage('red Death Star').packageInfo;

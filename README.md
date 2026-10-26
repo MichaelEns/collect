@@ -46,7 +46,7 @@ has its own numbering, so `A001` and `L002` are different capsules from
 different production runs. That is genuinely why an unknown code shows up
 occasionally: it is from a batch nobody has written down yet, not a bug.
 
-**1,975 codes ship with the app**, across sixteen sets:
+**1,976 codes ship with the app**, across sixteen sets:
 
 | Set | Codes | Batches | Figures covered |
 | --- | --- | --- | --- |
@@ -54,7 +54,7 @@ occasionally: it is from a batch nobody has written down yet, not a bug.
 | Galaxy Peek Series 2 | 198 | 13 (A–TL) | 25 of 25 |
 | Galaxy Peek Series 3 | 49 | 5 (A–TL) | 25 of 25 |
 | Galaxy Peek Series 4 | 72 | 2 | 25 of 25 |
-| Galaxy Peek Series 5 | 62 | 2 | 25 of 25 |
+| Galaxy Peek Series 5 | 63 | 2 | 25 of 25 |
 | Galactic Cruisers Series 1 | 126 | 17 (A–MO) | 10 of 10 |
 | Galactic Cruisers Series 2 | 40 | 5 (A–TL) | 10 of 10 |
 | Galactic Cruisers Series 3 | — | — | checklist only |
