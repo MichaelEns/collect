@@ -985,6 +985,49 @@ async function main() {
         && shortNewCapsule.chips.length === 4,
       JSON.stringify(shortNewCapsule.chips));
 
+    await evalJs("location.hash = '#set=disney-ticket-to-fun'; 1");
+    await waitFor(
+      "window.__collect.state.set && window.__collect.state.set.id === 'disney-ticket-to-fun'",
+      'Ticket to Fun from the offline cache',
+    );
+    const ticketProgress = await evalJs(`JSON.stringify(Object.fromEntries(
+      Object.entries(localStorage).filter(([key]) => key.startsWith('collect.progress.'))
+    ))`);
+    const ticketCodes = {
+      H010: ['Alien', 'Goofy', 'Pinocchio', 'Remy', 'Tinker Bell'],
+      H048: ['Ariel', 'Cruella De Vil', 'Eeyore', 'Remy', 'Tigger'],
+      H052: ['Alice', 'Angel', 'Chip', 'Daisy Duck', 'Lucifer', 'Tiana'],
+      H066: ['Belle', 'Daisy Duck', 'Elsa', 'Mike Wazowski', 'Timothy Mouse', 'Winnie the Pooh'],
+    };
+    for (const [code, expected] of Object.entries(ticketCodes)) {
+      const result = await typeCode(code);
+      check(`Ticket to Fun ${code} returns its published Multi contents offline`,
+        JSON.stringify(result.chips.slice().sort()) === JSON.stringify(expected.slice().sort()),
+        JSON.stringify(result.chips));
+    }
+    const ticketShort = await typeCode('h 10');
+    check('the new H code matches lowercase, spaces and omitted leading zeros',
+      JSON.stringify(ticketShort.chips.slice().sort()) === JSON.stringify(ticketCodes.H010.slice().sort()),
+      JSON.stringify(ticketShort.chips));
+    const ticketMixed = await typeCode('H038');
+    check('Ticket to Fun H038 shows both Mini and Multi instead of guessing',
+      /disputed/.test(ticketMixed.cls)
+        && JSON.stringify(ticketMixed.chips.slice().sort()) === JSON.stringify([
+          'Goofy', 'Pinocchio', 'Buzz Lightyear', 'Cheshire Cat', 'Ducky', 'Sulley', 'Tramp',
+        ].sort()),
+      JSON.stringify(ticketMixed));
+    const ticketExisting = await typeCode('H015');
+    check('an existing Mini code also exposes its newly reported Multi contents',
+      /disputed/.test(ticketExisting.cls)
+        && JSON.stringify(ticketExisting.chips.slice().sort()) === JSON.stringify([
+          'Bunny', 'Goofy', 'Dale', 'Heimlich', 'Lady', 'Piglet', 'Rapunzel',
+        ].sort()),
+      JSON.stringify(ticketExisting));
+    check('looking up new H codes does not change any saved collection progress',
+      ticketProgress === await evalJs(`JSON.stringify(Object.fromEntries(
+        Object.entries(localStorage).filter(([key]) => key.startsWith('collect.progress.'))
+      ))`));
+
     const offlineProblems = problems.slice(problemsBeforeOffline)
       .filter((p) => !/ERR_FAILED|ERR_CONNECTION|Failed to load resource/i.test(p));
     check('nothing broke offline beyond the fetch we killed on purpose',
