@@ -46,7 +46,8 @@ has its own numbering, so `A001` and `L002` are different capsules from
 different production runs. That is genuinely why an unknown code shows up
 occasionally: it is from a batch nobody has written down yet, not a bug.
 
-**1,976 codes ship with the app**, across sixteen sets:
+**1,972 codes ship with the app**, across seventeen sets. These counts cover
+agreed mappings; codes with alternative reported contents are listed separately.
 
 | Set | Codes | Batches | Figures covered |
 | --- | --- | --- | --- |
@@ -66,15 +67,24 @@ occasionally: it is from a batch nobody has written down yet, not a bug.
 | Small Stars Series 1 | 8 | — | 8 of 8 |
 | Small Stars Series 2 | 8 | — | 8 of 8 |
 | Small Stars Series 3 | 8 | — | 8 of 8 |
-| Series 16: Ticket to Fun | 809 | 13 | 50 of 50 |
+| Series 16: Ticket to Fun | 805 | 13 | 50 of 50 |
 
 Not every set holds four figures. A Cruisers pack holds one, a Grogu Moments
 box holds one scene, a Toy Story bag holds three and a Squish Squadron bag
 holds five. A Small Stars backpack holds one figure. The app takes the number
 from the data rather than assuming.
 
-Where collectors disagreed about a code — 136 of them — the app shows **every**
+Where collectors reported alternatives for a code — 145 of them — the app shows **every**
 version reported rather than quietly picking one.
+
+Ticket to Fun's H batch was refreshed from the public community sheet on
+November 15, 2026: it now covers 76 codes (65 agreed and 11 with alternatives).
+Five are newly recorded here: `H010`, `H038`, `H048`, `H052` and `H066`.
+Eight existing H codes gained Multi reports as well. Mini and Multi packs can
+reuse a code, so alternatives are not always a disagreement about the same
+package; match the two/three-figure Mini or five-to-seven-figure Multi contents
+to the package in hand. Existing reports and figure IDs are retained, so this
+update does not change found marks or spares.
 
 Open a figure's card and it also works the other way round: it lists **every**
 capsule known to contain that figure, grouped by batch. No truncation. One

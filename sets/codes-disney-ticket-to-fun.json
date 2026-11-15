@@ -4,7 +4,8 @@
     "title": "Ticket to Fun code spreadsheet",
     "credit": "Disney Doorables collecting community",
     "url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTKKIoEPPo4cpdp4uBOzwfMMKDFCspT3x5HJDchW9uC1qL1wI1oKRZfWsRvFif8WM2RVBThaRqsWrrH/pubhtml?gid=186500807&single=true",
-    "retrieved": "2026-09-21"
+    "retrieved": "2026-11-15",
+    "notes": "H-batch entries refreshed from the public Ticket tab on 2026-11-15; other batches retain the 2026-09-21 snapshot. Mini and Multi packages can share a code; all reported contents are retained as alternatives."
   },
   "batches": {
     "#": 1,
@@ -15,7 +16,7 @@
     "E": 87,
     "F": 68,
     "G": 70,
-    "H": 69,
+    "H": 65,
     "J": 70,
     "K": 69,
     "L": 38,
@@ -2317,9 +2318,12 @@
       "daisy-duck",
       "winnie-the-pooh"
     ],
-    "H015": [
-      "bunny",
-      "goofy"
+    "H010": [
+      "alien",
+      "goofy",
+      "pinocchio",
+      "remy",
+      "tinker-bell"
     ],
     "H016": [
       "dale",
@@ -2341,10 +2345,6 @@
     "H020": [
       "ducky",
       "lady"
-    ],
-    "H021": [
-      "daisy-duck",
-      "mike-wazowski"
     ],
     "H022": [
       "jasmine",
@@ -2375,11 +2375,6 @@
       "dale",
       "eeyore"
     ],
-    "H029": [
-      "angel",
-      "eeyore",
-      "olaf"
-    ],
     "H030": [
       "elsa",
       "stitch"
@@ -2392,36 +2387,29 @@
       "emile",
       "lotso"
     ],
-    "H033": [
-      "elsa",
-      "jessie",
-      "remy"
-    ],
     "H035": [
       "luisa",
       "remy"
-    ],
-    "H036": [
-      "alice",
-      "olaf"
-    ],
-    "H037": [
-      "leroy",
-      "sulley"
-    ],
-    "H042": [
-      "angel",
-      "finnick"
     ],
     "H044": [
       "jasmine",
       "prince-naveen",
       "timothy-mouse"
     ],
-    "H045": [
-      "mike-wazowski",
-      "piglet",
-      "rapunzel"
+    "H048": [
+      "ariel",
+      "cruella-de-vil",
+      "eeyore",
+      "remy",
+      "tigger"
+    ],
+    "H052": [
+      "alice",
+      "angel",
+      "chip",
+      "daisy-duck",
+      "lucifer",
+      "tiana"
     ],
     "H055": [
       "bunny",
@@ -2447,6 +2435,14 @@
     "H061": [
       "cruella-de-vil",
       "tigger"
+    ],
+    "H066": [
+      "belle",
+      "daisy-duck",
+      "elsa",
+      "mike-wazowski",
+      "timothy-mouse",
+      "winnie-the-pooh"
     ],
     "H077": [
       "jack-skellington",
@@ -5139,6 +5135,101 @@
         "dale"
       ]
     ],
+    "H015": [
+      [
+        "bunny",
+        "goofy"
+      ],
+      [
+        "dale",
+        "heimlich",
+        "lady",
+        "piglet",
+        "rapunzel"
+      ]
+    ],
+    "H021": [
+      [
+        "daisy-duck",
+        "mike-wazowski"
+      ],
+      [
+        "cruella-de-vil",
+        "donald-duck",
+        "minnie-mouse",
+        "olaf",
+        "stitch"
+      ]
+    ],
+    "H029": [
+      [
+        "angel",
+        "eeyore",
+        "olaf"
+      ],
+      [
+        "jasmine",
+        "lotso",
+        "oogie-boogie",
+        "prince-naveen",
+        "tiana"
+      ]
+    ],
+    "H033": [
+      [
+        "elsa",
+        "jessie",
+        "remy"
+      ],
+      [
+        "dale",
+        "emile",
+        "lady",
+        "rapunzel",
+        "sulley"
+      ]
+    ],
+    "H036": [
+      [
+        "alice",
+        "olaf"
+      ],
+      [
+        "elsa",
+        "emile",
+        "lotso",
+        "marie",
+        "rapunzel"
+      ]
+    ],
+    "H037": [
+      [
+        "leroy",
+        "sulley"
+      ],
+      [
+        "angel",
+        "ariel",
+        "ducky",
+        "finnick",
+        "jessie",
+        "lucifer",
+        "marie"
+      ]
+    ],
+    "H038": [
+      [
+        "goofy",
+        "pinocchio"
+      ],
+      [
+        "buzz-lightyear",
+        "cheshire-cat",
+        "ducky",
+        "sulley",
+        "tramp"
+      ]
+    ],
     "H040": [
       [
         "bunny",
@@ -5148,6 +5239,35 @@
       [
         "remy",
         "tinker-bell"
+      ]
+    ],
+    "H042": [
+      [
+        "angel",
+        "finnick"
+      ],
+      [
+        "bunny",
+        "dale",
+        "evil-queen",
+        "goofy",
+        "piglet"
+      ]
+    ],
+    "H045": [
+      [
+        "mike-wazowski",
+        "piglet",
+        "rapunzel"
+      ],
+      [
+        "donald-duck",
+        "hamm",
+        "jessie",
+        "minnie-mouse",
+        "olaf",
+        "stitch",
+        "timothy-mouse"
       ]
     ],
     "H057": [

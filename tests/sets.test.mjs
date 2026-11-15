@@ -540,7 +540,7 @@ test('the README does not overstate what ships', () => {
   assert.strictEqual(Number(claimed.replace(/,/g, '')), total,
     `README says ${claimed} codes ship, but ${total} do`);
 
-  const claimedDisputed = (readme.match(/disagreed about a code — ([\d]+) of them/) || [])[1];
+  const claimedDisputed = (readme.match(/reported alternatives for a code — ([\d]+) of them/) || [])[1];
   assert.ok(claimedDisputed, 'the README no longer states how many codes are disputed');
   assert.strictEqual(Number(claimedDisputed), disputed,
     `README says ${claimedDisputed} codes are disputed, but ${disputed} are`);
