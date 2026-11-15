@@ -34,6 +34,7 @@
     "numberNote": "Optional. Where that number is printed. Must mention the checklist inside.",
     "codeNote": "Optional. Explains where the capsule code is, that the leading letter is the batch, and that the codes are unofficial. Tested for all three.",
     "codeFile": "Optional. Name of the codes-*.json file holding the capsule lookup for this set.",
+    "unmappedFigureIds": "Optional explicit list of figure ids with no recorded code, for documented partial coverage. Must exactly match the computed gaps, with a partial-coverage countNote and codeNote. Omit for complete code tables.",
     "codeLink": "Optional URL to the community code list.",
     "codeLinkLabel": "Optional label for that link.",
     "rarities": "Optional list of { id, label, colour } in increasing rarity.",

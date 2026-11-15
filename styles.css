@@ -1034,6 +1034,9 @@ body {
  * Grouping by batch is what makes showing all of them workable: the leading
  * letter is the batch, so only one row ever needs scanning.
  */
+.known-code.disputed { border-style: dashed; }
+.known-code.disputed::after { content: ' ?'; }
+
 .known-code-count {
   margin: 0 0 10px;
   font-size: .78rem;

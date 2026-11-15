@@ -105,7 +105,8 @@
     "brand": "Star Wars Doorables",
     "packaging": "Mini capsule, one Grogu inside",
     "emoji": "🥚",
-    "total": 12
+    "total": 12,
+    "codeFile": "codes-sw-grogu-mini.json"
   },
   {
     "id": "sw-grogu-moments",

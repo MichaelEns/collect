@@ -77,5 +77,6 @@ test('the H refresh keeps existing disagreements and accurate batch counts', () 
   assert.equal(hCodes.length + hDisputed.length, 76);
   assert.equal(codes.source.retrieved, '2026-11-15');
   assert.match(codes.source.notes, /H.batch.*2026-11-15/);
-  assert.match(codes.source.notes, /other batches.*2026-09-21/);
+  assert.match(codes.source.notes, /All Ticket tab batches/);
+  assert.match(codes.source.notes, /Previously shipped reports are retained/);
 });

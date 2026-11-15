@@ -854,13 +854,16 @@
     };
   }
 
-  /** Every known code whose capsule contains this figure. */
+  /** Every code whose agreed contents or reported alternatives include this figure. */
   function codesContaining(figureId) {
     if (!state.codes) return [];
-    return Object.entries(state.codes.codes || {})
+    const agreed = Object.entries(state.codes.codes || {})
       .filter(([, ids]) => ids.includes(figureId))
-      .map(([code]) => code)
-      .sort();
+      .map(([code]) => code);
+    const alternatives = Object.entries(state.codes.disputed || {})
+      .filter(([, variants]) => variants.some((ids) => ids.includes(figureId)))
+      .map(([code]) => code);
+    return agreed.concat(alternatives).sort();
   }
 
   function figureChip(figure) {
@@ -946,10 +949,13 @@
 
   function renderFinder() {
     const finder = $('finder');
-    const count = state.codes ? Object.keys(state.codes.codes || {}).length : 0;
+    const codes = state.codes
+      ? Object.keys(state.codes.codes || {}).concat(Object.keys(state.codes.disputed || {}))
+      : [];
+    const count = codes.length;
     finder.hidden = count === 0;
     if (!count) return;
-    const batches = Object.keys(state.codes.batches || {}).length;
+    const batches = new Set(codes.map((code) => (code.match(/^[A-Z]+/) || ['#'])[0])).size;
     $('finder-hint').textContent = `Type the code printed on the package and we`
       + ` will tell you what is inside. We know ${count} codes`
       + `${batches ? ` across ${batches} batches` : ''}.`;
@@ -997,6 +1003,12 @@
         const chip = document.createElement('span');
         chip.className = 'known-code';
         chip.textContent = code;
+        if (state.codes.disputed?.[code]) {
+          const label = `${code}: this figure appears in a reported alternative, not every report`;
+          chip.classList.add('disputed');
+          chip.title = label;
+          chip.setAttribute('aria-label', label);
+        }
         codesWrap.appendChild(chip);
       }
       row.appendChild(codesWrap);
@@ -1007,6 +1019,10 @@
       ? 'That is the only capsule we know of with this one inside.'
       : `${codes.length} capsules in ${byBatch.size} `
         + `${byBatch.size === 1 ? 'batch' : 'batches'} have this one inside.`;
+    if (codes.some((code) => state.codes.disputed?.[code])) {
+      more.textContent = `${codes.length} recorded ${codes.length === 1 ? 'code mentions' : 'codes mention'} this figure.`
+        + ' Codes marked ? include it in an alternative report; check the finder before buying.';
+    }
   }
 
   $('code-input').addEventListener('input', (event) => {

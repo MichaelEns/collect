@@ -6,7 +6,8 @@
   "url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42/pubhtml?gid=1710958071&single=true",
   "csv": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42/pub?output=csv&gid=1710958071&single=true",
   "via": "https://disney-doorables.fandom.com/wiki/Star_Wars_Galaxy_Peek_Series_2",
-  "retrieved": "2026-09-13"
+  "retrieved": "2026-11-15",
+  "notes": "Public Star Wars hand-maintained and form-response tabs checked on 2026-11-15; all previously shipped reports retained. Conflicting contents remain alternatives, not a guaranteed mapping."
  },
  "batches": {
   "A": 10,
@@ -18,7 +19,7 @@
   "G": 10,
   "H": 9,
   "HO": 1,
-  "I": 6,
+  "I": 7,
   "IO": 2,
   "J": 10,
   "K": 9,
@@ -261,6 +262,9 @@
   ],
   "HO011": [
    "stormtrooper"
+  ],
+  "I010": [
+   "ahsoka-tano"
   ],
   "I011": [
    "darth-vader"

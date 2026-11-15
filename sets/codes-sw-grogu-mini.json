@@ -1,0 +1,29 @@
+{
+ "setId": "sw-grogu-mini",
+ "source": {
+  "title": "Doorables Codes 5 : StarWars - Grogu Mini Capsule (Grogu 2)",
+  "credit": "@FuzzyLuzzi and the Disney Doorables collecting community",
+  "url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42/pubhtml?gid=1710958071&single=true",
+  "csv": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42/pub?output=csv&gid=1710958071&single=true",
+  "retrieved": "2026-11-15",
+  "notes": "Public Star Wars hand-maintained and form-response tabs checked on 2026-11-15; all previously shipped reports retained. Conflicting contents remain alternatives, not a guaranteed mapping."
+ },
+ "batches": {
+  "TL": 1
+ },
+ "codes": {
+  "TL001": [
+   "anzellan-hug"
+  ]
+ },
+ "disputed": {
+  "C017": [
+   [
+    "anzellan-hug"
+   ],
+   [
+    "macaron-cookie"
+   ]
+  ]
+ }
+}

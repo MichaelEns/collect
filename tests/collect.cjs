@@ -480,7 +480,10 @@ async function main() {
       path.join(__dirname, '..', 'sets', 'codes-sw-galaxy-peek-s2.json'), 'utf8'
     ));
     const expected = Object.entries(s2codes.codes)
-      .filter(([, ids]) => ids.includes('anakin-padawan')).map(([c]) => c).sort();
+      .filter(([, ids]) => ids.includes('anakin-padawan')).map(([c]) => c)
+      .concat(Object.entries(s2codes.disputed || {})
+        .filter(([, variants]) => variants.some((ids) => ids.includes('anakin-padawan')))
+        .map(([code]) => code)).sort();
     check('every capsule containing it is listed, not just the first few',
       JSON.stringify(known.shown.slice().sort()) === JSON.stringify(expected),
       `showed ${known.shown.length} of ${expected.length}`);
@@ -1023,7 +1026,100 @@ async function main() {
           'Bunny', 'Goofy', 'Dale', 'Heimlich', 'Lady', 'Piglet', 'Rapunzel',
         ].sort()),
       JSON.stringify(ticketExisting));
+
+    const allTicketCodes = JSON.parse(fs.readFileSync(
+      path.join(ROOT, 'sets', 'codes-disney-ticket-to-fun.json'), 'utf8'));
+    const ticketRoster = JSON.parse(fs.readFileSync(
+      path.join(ROOT, 'sets', 'disney-ticket-to-fun.json'), 'utf8'));
+    for (const code of ['027', 'F009', 'G001', 'L012', 'M015', 'MO019', 'N133', 'O037', 'P017', 'Q027']) {
+      const result = await typeCode(code);
+      const expected = allTicketCodes.codes[code]
+        .map((id) => ticketRoster.figures.find((figure) => figure.id === id).name).sort();
+      check(`new Ticket to Fun ${code} is available offline`,
+        JSON.stringify(result.chips.slice().sort()) === JSON.stringify(expected),
+        JSON.stringify(result.chips));
+    }
+    const numericAlternative = await typeCode('075');
+    check('new conflicting contents for an existing numeric code do not erase the old report',
+      /disputed/.test(numericAlternative.cls)
+        && JSON.stringify(numericAlternative.chips.slice().sort()) === JSON.stringify(
+          ['Emile', 'Tinker Bell', 'Angel', 'Finnick'].sort()),
+      JSON.stringify(numericAlternative));
     check('looking up new H codes does not change any saved collection progress',
+      ticketProgress === await evalJs(`JSON.stringify(Object.fromEntries(
+        Object.entries(localStorage).filter(([key]) => key.startsWith('collect.progress.'))
+      ))`));
+
+    for (const [setId, codes] of [
+      ['sw-galaxy-peek-s5', ['B011', 'B019', 'B023']],
+      ['sw-cruisers-s1', ['I010']],
+      ['sw-grogu-moments', ['C010', 'C013', 'C014', 'C015', 'C016', 'C017']],
+    ]) {
+      await evalJs(`location.hash = '#set=${setId}'; 1`);
+      await waitFor(
+        `window.__collect.state.set && window.__collect.state.set.id === '${setId}'`,
+        `${setId} from the offline cache`,
+      );
+      const roster = JSON.parse(fs.readFileSync(path.join(ROOT, 'sets', `${setId}.json`), 'utf8'));
+      const table = JSON.parse(fs.readFileSync(path.join(ROOT, 'sets', roster.codeFile), 'utf8'));
+      for (const code of codes) {
+        const result = await typeCode(code);
+        const expected = table.codes[code]
+          .map((id) => roster.figures.find((figure) => figure.id === id).name).sort();
+        check(`${setId} ${code} names the recorded contents offline`,
+          JSON.stringify(result.chips.slice().sort()) === JSON.stringify(expected),
+          JSON.stringify(result.chips));
+      }
+    }
+    const sceneConflict = await typeCode('C011');
+    check('Grogu Moments C011 retains Classroom and Droids as separate alternatives',
+      /disputed/.test(sceneConflict.cls)
+        && JSON.stringify(sceneConflict.chips.slice().sort()) === JSON.stringify(['Classroom', 'Droids']),
+      JSON.stringify(sceneConflict));
+
+    await evalJs("location.hash = '#set=sw-grogu-mini'; 1");
+    await waitFor(
+      "window.__collect.state.set && window.__collect.state.set.id === 'sw-grogu-mini'",
+      'Grogu Mini and its newly precached code table',
+    );
+    const mini = await typeCode('tl 1');
+    check('Grogu Mini now has a working normalized offline code lookup',
+      JSON.stringify(mini.chips) === JSON.stringify(['Anzellan Hug']),
+      JSON.stringify(mini));
+    const miniConflict = await typeCode('C017');
+    check('Grogu Mini C017 shows both conflicting one-figure reports',
+      /disputed/.test(miniConflict.cls)
+        && JSON.stringify(miniConflict.chips.slice().sort()) === JSON.stringify(
+          ['Anzellan Hug', 'Macaron Cookie']),
+      JSON.stringify(miniConflict));
+    const partial = JSON.parse(await evalJs(`JSON.stringify({
+      figures: document.querySelectorAll('.fig').length,
+      sourced: document.getElementById('sourced').textContent,
+      hint: document.getElementById('finder-hint').textContent,
+    })`));
+    check('partial code coverage does not remove any of the twelve Grogu figures',
+      partial.figures === 12 && /only 2 of the 12/.test(partial.sourced),
+      JSON.stringify(partial));
+    check('the finder counts the alternative code and its batch too',
+      /We know 2 codes across 2 batches/.test(partial.hint), partial.hint);
+    await evalJs("window.__collect.openSheet(window.__collect.state.set.figures.find(f => f.id === 'macaron-cookie')); 1");
+    const reverse = JSON.parse(await evalJs(`JSON.stringify({
+      codes: [...document.querySelectorAll('#known-code-list .known-code')].map((node) => node.textContent),
+      marked: document.querySelector('#known-code-list .known-code.disputed')?.getAttribute('aria-label'),
+      marker: getComputedStyle(document.querySelector('#known-code-list .known-code'), '::after').content,
+      note: document.getElementById('known-code-more').textContent,
+    })`));
+    check('a figure known only through an alternative lists its possible code with a warning',
+      JSON.stringify(reverse.codes) === JSON.stringify(['C017'])
+        && /reported alternative/.test(reverse.marked)
+        && reverse.marker.includes('?')
+        && /check the finder before buying/.test(reverse.note),
+      JSON.stringify(reverse));
+    await evalJs("document.getElementById('sheet-close').click(); 1");
+    const unmapped = await typeCode('C099');
+    check('unrecorded Grogu codes still report unknown instead of guessing',
+      /unknown/.test(unmapped.cls) && unmapped.chips.length === 0, JSON.stringify(unmapped));
+    check('the complete code refresh never changes saved finds or spares',
       ticketProgress === await evalJs(`JSON.stringify(Object.fromEntries(
         Object.entries(localStorage).filter(([key]) => key.startsWith('collect.progress.'))
       ))`));

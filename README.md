@@ -46,7 +46,7 @@ has its own numbering, so `A001` and `L002` are different capsules from
 different production runs. That is genuinely why an unknown code shows up
 occasionally: it is from a batch nobody has written down yet, not a bug.
 
-**1,972 codes ship with the app**, across seventeen sets. These counts cover
+**2,130 codes ship with the app**, across seventeen sets. These counts cover
 agreed mappings; codes with alternative reported contents are listed separately.
 
 | Set | Codes | Batches | Figures covered |
@@ -55,26 +55,26 @@ agreed mappings; codes with alternative reported contents are listed separately.
 | Galaxy Peek Series 2 | 198 | 13 (A–TL) | 25 of 25 |
 | Galaxy Peek Series 3 | 49 | 5 (A–TL) | 25 of 25 |
 | Galaxy Peek Series 4 | 72 | 2 | 25 of 25 |
-| Galaxy Peek Series 5 | 63 | 2 | 25 of 25 |
-| Galactic Cruisers Series 1 | 126 | 17 (A–MO) | 10 of 10 |
+| Galaxy Peek Series 5 | 66 | 2 | 25 of 25 |
+| Galactic Cruisers Series 1 | 127 | 17 (A–MO) | 10 of 10 |
 | Galactic Cruisers Series 2 | 40 | 5 (A–TL) | 10 of 10 |
 | Galactic Cruisers Series 3 | — | — | checklist only |
 | Squish Squadron Series 1 | 58 | 5 (A–E) | 35 of 35 |
 | Squish Squadron Series 2 | 71 | 2 | 35 of 35 |
-| Grogu Mini Capsule | — | — | checklist only |
-| Grogu Moments | 34 | 6 (A–F) | 8 of 8 |
+| Grogu Mini Capsule | 1 | 2 (C, TL) | 2 of 12, including alternatives |
+| Grogu Moments | 40 | 6 (A–F) | 8 of 8 |
 | Toy Story | 156 | 2 | 15 of 15 |
 | Small Stars Series 1 | 8 | — | 8 of 8 |
 | Small Stars Series 2 | 8 | — | 8 of 8 |
 | Small Stars Series 3 | 8 | — | 8 of 8 |
-| Series 16: Ticket to Fun | 805 | 13 | 50 of 50 |
+| Series 16: Ticket to Fun | 952 | 18 | 50 of 50 |
 
 Not every set holds four figures. A Cruisers pack holds one, a Grogu Moments
 box holds one scene, a Toy Story bag holds three and a Squish Squadron bag
 holds five. A Small Stars backpack holds one figure. The app takes the number
 from the data rather than assuming.
 
-Where collectors reported alternatives for a code — 145 of them — the app shows **every**
+Where collectors reported alternatives for a code — 172 of them — the app shows **every**
 version reported rather than quietly picking one.
 
 Ticket to Fun's H batch was refreshed from the public community sheet on
@@ -86,11 +86,25 @@ package; match the two/three-figure Mini or five-to-seven-figure Multi contents
 to the package in hand. Existing reports and figure IDs are retained, so this
 update does not change found marks or spares.
 
+The same day's full-source refresh adds **185 more package codes**: 172 in
+Ticket to Fun's other batches, three in Galaxy Peek Series 5, one in Galactic
+Cruisers Series 1, seven in Grogu Moments and two in Grogu Mini Capsule.
+Ticket to Fun also retains new contents reports for 26 existing codes.
+Grogu Mini's `TL001` names Anzellan Hug; `C017` has conflicting reports for
+Anzellan Hug and Macaron Cookie. Grogu Moments `C011` similarly has Classroom
+and Droids reports. Those alternatives stay explicit. Only two of the twelve
+Grogu Mini figures have recorded codes; the other ten retain their checklist
+entries and a visible partial-coverage note. Two Toy Story submissions, `035`
+and `42`, omit the batch letter and are not assigned an invented one. No
+additional Small Stars mapping was sufficiently verified to add.
+
 Open a figure's card and it also works the other way round: it lists **every**
 capsule known to contain that figure, grouped by batch. No truncation. One
 figure appears in 48 different capsules across 12 batches, and all 48 are
 shown — a capped list quietly answers "no" for the codes it hides, which is the
 opposite of useful when it is being checked against a capsule in hand.
+Alternative reports are included here too, marked with **?**, and explained
+as possibilities rather than a guarantee.
 
 ### An earlier version of this README was wrong about this
 
