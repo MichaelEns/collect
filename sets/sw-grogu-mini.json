@@ -7,6 +7,18 @@
  "emoji": "🥚",
  "official": "https://justplayproducts.com/collections/star-wars-doorables/",
  "figuresPerCapsule": 1,
+ "unmappedFigureIds": [
+  "bone-broth",
+  "butterfly",
+  "camtono",
+  "droid-ride",
+  "hover-pram",
+  "imperial-helmet",
+  "mudhorn-egg",
+  "mythosaur-necklace",
+  "sorgan-frog",
+  "translucent"
+ ],
  "verified": false,
  "sourced": "12 figures. The checklist published on the Doorables wiki. Just Play has not published a checklist for this line, so treat it as very good community data rather than gospel.",
  "rarities": [
@@ -95,5 +107,7 @@
  ],
  "codeLink": "https://disney-doorables.fandom.com/wiki/Grogu_Mini_Capsule",
  "codeLinkLabel": "Grogu Mini Capsule on the Doorables wiki",
- "countNote": "Nobody has written down any bag codes for this one yet, so there is nothing to look up — this is a checklist only. If codes start being collected, they will appear here."
+ "codeFile": "codes-sw-grogu-mini.json",
+ "codeNote": "Partial collector code coverage: look for the batch letter and number on the bottom or back of the package. The public Star Wars sheet calls this line Grogu 2. TL001 is reported as Anzellan Hug; C017 has reports for Anzellan Hug and Macaron Cookie, so both alternatives are shown. These reports are unofficial, not a manufacturer guarantee.",
+ "countNote": "Partial code coverage: reports currently identify only 2 of the 12 Grogu figures. The other 10 remain on the checklist, but their package codes have not been mapped."
 }

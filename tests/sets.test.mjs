@@ -462,7 +462,7 @@ test('every set points at its own wiki page, not somebody else\'s', () => {
   }
 });
 
-test('every figure appears in at least one known capsule code', () => {
+test('code coverage is complete or declares the exact unmapped figures', () => {
   /*
    * A figure no code names is one the finder can never help with: type any
    * code you like and it will never say "this one has Yoda in it".
@@ -481,9 +481,17 @@ test('every figure appears in at least one known capsule code', () => {
     for (const variants of Object.values(codes.disputed || {})) {
       for (const ids of variants) for (const id of ids) covered.add(id);
     }
-    const orphans = set.figures.filter((f) => !covered.has(f.id)).map((f) => f.name);
-    assert.deepStrictEqual(orphans, [],
-      `${file}: no capsule code names ${orphans.join(', ')}, so the finder can never find them`);
+    const orphans = set.figures.filter((f) => !covered.has(f.id)).map((f) => f.id);
+    const documented = set.unmappedFigureIds ?? [];
+    assert.ok(Array.isArray(documented), `${file}: unmappedFigureIds must be a list`);
+    assert.strictEqual(new Set(documented).size, documented.length);
+    if (documented.length) {
+      assert.ok(covered.size > 0, `${file}: partial coverage still needs actual mappings`);
+      assert.match(set.countNote || '', /partial code coverage/i);
+      assert.match(set.codeNote || '', /partial/i);
+    }
+    assert.deepStrictEqual(orphans.slice().sort(), documented.slice().sort(),
+      `${file}: recorded code coverage differs from the explicitly documented missing figure ids`);
   }
 });
 

@@ -6,11 +6,12 @@
   "url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42/pubhtml?gid=1710958071&single=true",
   "csv": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42/pub?output=csv&gid=1710958071&single=true",
   "via": "https://disney-doorables.fandom.com/wiki/Star_Wars_Galaxy_Peek_Series_2",
-  "retrieved": "2026-10-26"
+  "retrieved": "2026-11-15",
+  "notes": "Public Star Wars hand-maintained and form-response tabs checked on 2026-11-15; all previously shipped reports retained. Conflicting contents remain alternatives, not a guaranteed mapping."
  },
  "batches": {
   "A": 36,
-  "B": 27
+  "B": 30
  },
  "codes": {
   "A001": [
@@ -271,6 +272,12 @@
    "imperial-royal-guard",
    "supreme-leader-snoke"
   ],
+  "B011": [
+   "darth-maul",
+   "leia",
+   "luke-skywalker",
+   "porg"
+  ],
   "B012": [
    "han-solo",
    "shaak-ti",
@@ -313,6 +320,12 @@
    "shaak-ti",
    "tusken-raider"
   ],
+  "B019": [
+   "4-lom",
+   "emperor-palpatine",
+   "jango-fett",
+   "watto"
+  ],
   "B020": [
    "blurrg",
    "dengar",
@@ -330,6 +343,12 @@
    "shaak-ti",
    "tauntaun",
    "tusken-raider"
+  ],
+  "B023": [
+   "4-lom",
+   "aurra-sing",
+   "jango-fett",
+   "supreme-leader-snoke"
   ],
   "B024": [
    "bossk",

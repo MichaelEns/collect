@@ -5,23 +5,18 @@
   "credit": "@FuzzyLuzzi and the Disney Doorables collecting community",
   "url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42/pubhtml",
   "csv": "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiHU-MXVyliejDfgndH4DG3m-rizR1wVEfgT3WUknA2eCtKyVxus-P4-PKi-bOHkbjV8SBKSiQ2P42/pub?output=csv&single=true",
-  "retrieved": "2026-08-09"
+  "retrieved": "2026-11-15",
+  "notes": "Public Star Wars hand-maintained and form-response tabs checked on 2026-11-15; all previously shipped reports retained. Conflicting contents remain alternatives, not a guaranteed mapping."
  },
  "batches": {
   "A": 8,
   "AF": 1,
   "B": 8,
-  "C": 1,
+  "C": 7,
   "E": 8,
   "F": 8
  },
  "codes": {
-  "A10": [
-   "droids"
-  ],
-  "A11": [
-   "meditate"
-  ],
   "A012": [
    "classroom"
   ],
@@ -40,11 +35,14 @@
   "A017": [
    "meditate-glow"
   ],
+  "A10": [
+   "droids"
+  ],
+  "A11": [
+   "meditate"
+  ],
   "AF036": [
    "boar"
-  ],
-  "B10": [
-   "spider-eggs"
   ],
   "B011": [
    "stormtroopers"
@@ -64,11 +62,32 @@
   "B016": [
    "meditate-glow"
   ],
+  "B10": [
+   "spider-eggs"
+  ],
   "B17": [
    "boar"
   ],
+  "C010": [
+   "frogs"
+  ],
   "C012": [
    "meditate-glow"
+  ],
+  "C013": [
+   "boar"
+  ],
+  "C014": [
+   "meditate"
+  ],
+  "C015": [
+   "spider-eggs"
+  ],
+  "C016": [
+   "stormtroopers"
+  ],
+  "C017": [
+   "classroom"
   ],
   "E010": [
    "frogs"
@@ -119,5 +138,14 @@
    "meditate-glow"
   ]
  },
- "disputed": {}
+ "disputed": {
+  "C011": [
+   [
+    "classroom"
+   ],
+   [
+    "droids"
+   ]
+  ]
+ }
 }
